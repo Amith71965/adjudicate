@@ -3,7 +3,8 @@ name: adjudicate
 services:
   db:
     image: pgvector/pgvector:pg17
-    container_name: adjudicate-db
+    # No fixed container_name: a throwaway project (clean-clone verify) must be able to
+    # run beside the dev stack on another port without a name collision.
     environment:
       POSTGRES_USER: adjudicate
       POSTGRES_PASSWORD: adjudicate   # local-only dev credential
@@ -19,7 +20,7 @@ services:
       - -c
       - max_connections=40
     ports:
-      - "127.0.0.1:54329:5432"
+      - "127.0.0.1:${ADJUDICATE_DB_PORT:-54329}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     mem_limit: 768m
