@@ -1,0 +1,221 @@
+"""Parse raw PDFs into the structured corpus, then extract verdicts — idempotently."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from collections.abc import Iterator
+from pathlib import Path
+
+import httpx
+import psycopg
+import pytest
+
+from adjudicate.llm.client import LlmClient
+from adjudicate.migrate import apply_migrations
+from adjudicate.parse.pipeline import PARSER_VERSION, extract_pending, parse_pending
+
+pytestmark = pytest.mark.db
+
+FIX = Path(__file__).parent / "fixtures" / "decisions"
+REPO_MIGRATIONS = Path(__file__).resolve().parents[2] / "db" / "migrations"
+FIXTURES = {
+    "SEP152026_01B2203": "EB-1A",  # merits (remand)
+    "SEP172026_06B2203": "EB-1A",  # merits (stage 2)
+    "JUN092025_02B5203": "EB-2/NIW",  # motion
+    "JAN312005_06B2203": "EB-1A",  # legacy
+}
+
+type Conn = psycopg.Connection[tuple[object, ...]]
+DEC = "decision d JOIN raw_decision r ON r.id = d.raw_decision_id"
+
+
+@pytest.fixture
+def db(scratch_db_url: str) -> Iterator[Conn]:
+    with psycopg.connect(scratch_db_url, autocommit=True) as conn:
+        apply_migrations(conn, REPO_MIGRATIONS)
+        for did, visa in FIXTURES.items():
+            body = (FIX / f"{did}.pdf").read_bytes()
+            conn.execute(
+                "INSERT INTO raw_decision (url, decision_id, category, visa_type, listing_topic,"
+                " issued_year, content, sha256, byte_size, fetched_at)"
+                " VALUES (%s, %s, 'c', %s, 19, %s, %s, %s, %s, now())",
+                (
+                    f"https://www.uscis.gov/{did}.pdf",
+                    did,
+                    visa,
+                    int(did[5:9]),
+                    body,
+                    hashlib.sha256(body).hexdigest(),
+                    len(body),
+                ),
+            )
+        yield conn
+
+
+def _one(conn: Conn, sql: str, *args: object) -> tuple[object, ...]:
+    row = conn.execute(sql, args).fetchone()
+    assert row is not None
+    return row
+
+
+def test_every_fetched_pdf_becomes_one_classified_decision(db: Conn) -> None:
+    stats = parse_pending(db)
+    assert stats.parsed == 4
+    kinds = dict(db.execute(f"SELECT r.decision_id, d.kind FROM {DEC}"))
+    assert kinds == {
+        "SEP152026_01B2203": "merits",
+        "SEP172026_06B2203": "merits",
+        "JUN092025_02B5203": "motion",
+        "JAN312005_06B2203": "legacy_format",
+    }
+
+
+def test_merits_decisions_get_sections_outcome_and_citations(db: Conn) -> None:
+    parse_pending(db)
+    (outcome,) = _one(
+        db,
+        f"SELECT outcome FROM {DEC} WHERE r.decision_id = 'SEP172026_06B2203'",
+    )
+    assert outcome == "dismissed"
+    kinds = {
+        str(k)
+        for (k,) in db.execute(
+            "SELECT s.kind FROM decision_section s JOIN raw_decision r"
+            " ON r.id = (SELECT raw_decision_id FROM decision WHERE id = s.decision_id)"
+            " WHERE r.decision_id = 'SEP172026_06B2203'"
+        )
+    }
+    assert {"law", "analysis", "final_merits"} <= kinds
+    (n,) = _one(db, "SELECT count(*) FROM decision_citation WHERE reporter = '596 F.3d 1115'")
+    assert n == 2
+
+
+def test_section_offsets_slice_the_stored_text(db: Conn) -> None:
+    parse_pending(db)
+    rows = db.execute(
+        "SELECT d.text, s.start_char, s.end_char, s.title FROM decision_section s"
+        " JOIN decision d ON d.id = s.decision_id WHERE s.kind = 'final_merits'"
+    ).fetchall()
+    assert rows
+    for text, start, end, title in rows:
+        assert (
+            str(text)[int(str(start)) : int(str(end))]
+            .lstrip()
+            .split(".", 1)[1]
+            .strip()
+            .startswith(str(title))
+        )
+
+
+def test_reparse_is_idempotent_and_versioned(db: Conn) -> None:
+    parse_pending(db)
+    again = parse_pending(db)
+    assert again.parsed == 0
+    (version,) = _one(db, "SELECT DISTINCT parser_version FROM decision")
+    assert version == PARSER_VERSION
+
+
+def test_unreadable_pdf_is_recorded_not_skipped(db: Conn) -> None:
+    db.execute(
+        "INSERT INTO raw_decision (url, decision_id, category, visa_type, content, sha256,"
+        " byte_size, fetched_at) VALUES ('https://www.uscis.gov/bad.pdf', 'BAD', 'c', 'EB-1A',"
+        " '\\x255044462d312e340a2525454f460a', repeat('a', 64), 15, now())"
+    )
+    stats = parse_pending(db)
+    assert stats.failed == 1
+    (kind, reason) = _one(
+        db,
+        f"SELECT kind, kind_reason FROM {DEC} WHERE r.decision_id = 'BAD'",
+    )
+    assert kind == "unreadable" and "text layer" in str(reason)
+
+
+def _fake_llm(tmp_path: Path, calls: list[str]) -> LlmClient:
+    def handler(request: httpx.Request) -> httpx.Response:
+        user = json.loads(request.content)["messages"][1]["content"]
+        calls.append(user)
+        quote = "we conclude he has not demonstrated eligibility for this"
+        if "Branski" not in user:  # the remand fixture
+            quote = (
+                "we will withdraw the decision and remand the matter for entry of a new decision"
+            )
+        payload = {
+            "criteria": [
+                {"criterion": "judging", "director": "met", "aao": "not_addressed", "quote": quote}
+            ],
+            "final_merits": "not_met",
+        }
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"message": {"content": json.dumps(payload)}}],
+                "usage": {"prompt_tokens": 1000, "completion_tokens": 100, "cost": 0.0002},
+            },
+        )
+
+    return LlmClient(
+        api_key="sk-test",
+        budget_usd=1.0,
+        cache_dir=tmp_path,
+        transport=httpx.MockTransport(handler),
+    )
+
+
+def test_extraction_runs_only_on_eb1a_merits_and_records_cost(db: Conn, tmp_path: Path) -> None:
+    parse_pending(db)
+    calls: list[str] = []
+    stats = extract_pending(db, _fake_llm(tmp_path, calls))
+    assert stats.extracted == 2 and len(calls) == 2  # motion + legacy skipped
+    (n, model, cost) = _one(
+        db, "SELECT count(*), max(model), sum(cost_usd) FROM decision_extraction"
+    )
+    assert n == 2 and model == "anthropic/claude-haiku-5.5" and float(str(cost)) > 0
+    (verdicts,) = _one(db, "SELECT count(*) FROM criterion_verdict")
+    assert verdicts == 2
+
+
+def test_extraction_is_idempotent(db: Conn, tmp_path: Path) -> None:
+    parse_pending(db)
+    calls: list[str] = []
+    client = _fake_llm(tmp_path, calls)
+    extract_pending(db, client)
+    again = extract_pending(db, client)
+    assert again.extracted == 0 and len(calls) == 2
+
+
+def test_extraction_failure_is_recorded_and_the_run_continues(db: Conn, tmp_path: Path) -> None:
+    parse_pending(db)
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        bad = {
+            "criteria": [
+                {
+                    "criterion": "judging",
+                    "director": "met",
+                    "aao": "met",
+                    "quote": "this sentence is not in the decision at all",
+                }
+            ],
+            "final_merits": "not_met",
+        }
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"message": {"content": json.dumps(bad)}}],
+                "usage": {"cost": 0.0001},
+            },
+        )
+
+    client = LlmClient(
+        api_key="sk-test",
+        budget_usd=1.0,
+        cache_dir=tmp_path,
+        transport=httpx.MockTransport(handler),
+    )
+    stats = extract_pending(db, client)
+    assert stats.failed == 2 and stats.extracted == 0
+    (n,) = _one(db, "SELECT count(*) FROM decision_extraction WHERE error LIKE 'GroundingError%'")
+    assert n == 2
+    (verdicts,) = _one(db, "SELECT count(*) FROM criterion_verdict")
+    assert verdicts == 0  # an ungrounded extraction never enters the corpus

@@ -42,7 +42,7 @@ select = ["E", "F", "I", "B", "UP", "SIM", "RUF", "S", "BLE", "TRY"]
 ignore = ["TRY003"]
 
 [tool.ruff.lint.per-file-ignores]
-"py/tests/**" = ["S101", "S603", "S607"]
+"py/tests/**" = ["S101", "S603", "S607", "S608"]  # S608: tests interpolate constant SQL fragments only
 
 [tool.mypy]
 python_version = "3.14"
