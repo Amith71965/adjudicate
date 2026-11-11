@@ -108,3 +108,34 @@ def test_repairs_are_counted_by_rule() -> None:
 def test_normalise_is_idempotent() -> None:
     once = n("8 C.F .R. § 103.S(a)(l )(iv) from thel        in 2007 ofthe")
     assert n(once) == once
+
+
+class TestHeavierRedactionResidue:
+    """Cases from the L-1 fixture, whose OCR is markedly worse than the EB-1A ones."""
+
+    @pytest.mark.parametrize(
+        ("raw", "fixed"),
+        [
+            ("of howl             !operates in", f"of how {REDACTED} operates in"),
+            (
+                '"[k]nowledge of howl                can be used cohesively            I',
+                f'"[k]nowledge of how {REDACTED} can be used cohesively {REDACTED}',
+            ),
+            ("onl           I", f"on {REDACTED}"),
+            ("information aboutl                       I", f"information about {REDACTED}"),
+            (
+                "special knowledge of its~                                  I",
+                f"special knowledge of its {REDACTED}",
+            ),
+            ("with other, third-party!                 I", f"with other, third-party {REDACTED}"),
+            (
+                "requisite knowledge o~                land how                                 I",
+                f"requisite knowledge o {REDACTED} and how {REDACTED}",
+            ),
+        ],
+    )
+    def test_fused_glyphs_on_either_side_of_a_bar(self, raw: str, fixed: str) -> None:
+        assert n(raw) == fixed
+
+    def test_prose_exclamation_is_untouched(self) -> None:
+        assert n("Approved! The record shows") == "Approved! The record shows"
