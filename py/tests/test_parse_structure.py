@@ -163,13 +163,16 @@ def test_case_citation_names(remand: str) -> None:
     assert names["596 F.3d 1115"] == "Kazarian v. USCIS"
 
 
-def test_criterion_heading_wrapped_across_two_lines_is_recognised() -> None:
-    # Real layout (DEC012025_01B2203): "B. Leading or Critical\nRole" became an untyped "Role".
+def test_unrecognised_subheading_falls_back_to_the_cfr_cite_in_its_opening() -> None:
+    # Real layout (DEC012025_01B2203): the heading is just "B. Role"; its first sentence
+    # cites (h)(3)(viii). A heading the taxonomy cannot place must not lose the criterion.
     text = (
         "I. LAW\nlaw\nII. ANALYSIS\nintro\nA. Original Contributions of Major Significance\n"
-        "body\nB. Leading or Critical\nRole\nThe regulation at 8 C.F.R. § 204.5(h)(3)(viii).\n"
-        "III. CONCLUSION\ndone\n"
+        "body\nB. Role\nThe regulation at 8 C.F.R. § 204.5(h)(3)(viii) calls for evidence.\n"
+        "C. The Petitioner\nbackground that cites 204.5(h)(3)(iv) only much later "
+        + "x " * 200
+        + "\nIII. CONCLUSION\ndone\n"
     )
-    got = [(s.kind, s.criterion) for s in split_sections(text)]
-    assert (SectionKind.CRITERION, Criterion.LEADING_ROLE) in got
-    assert (SectionKind.OTHER, None) not in got
+    got = [(s.title, s.kind, s.criterion) for s in split_sections(text)]
+    assert ("Role", SectionKind.CRITERION, Criterion.LEADING_ROLE) in got
+    assert ("The Petitioner", SectionKind.OTHER, None) in got  # cite outside the opening
