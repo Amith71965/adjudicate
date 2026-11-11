@@ -13,6 +13,7 @@ from dataclasses import dataclass
 
 import psycopg
 
+from adjudicate.db import require_autocommit
 from adjudicate.harvest.http import FetchError, PoliteClient
 from adjudicate.harvest.listing import ListingEntry, dedupe, parse_listing
 
@@ -108,6 +109,7 @@ def harvest(
     fetch_limit: int | None = None,
     log: Callable[[str], None] = lambda _msg: None,
 ) -> HarvestStats:
+    require_autocommit(conn, "harvest")
     stats = HarvestStats()
     with conn.transaction():
         row = conn.execute(

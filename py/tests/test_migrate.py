@@ -63,7 +63,7 @@ def test_misnamed_sql_file_is_an_error_not_a_skip(
     _write(tmp_path, "0001_a.sql", "CREATE TABLE t (v int);")
     _write(tmp_path, bad, "CREATE TABLE u (v int);")
     with (
-        psycopg.connect(scratch_db_url) as conn,
+        psycopg.connect(scratch_db_url, autocommit=True) as conn,
         pytest.raises(MigrationError, match=re.escape(bad)),
     ):
         apply_migrations(conn, tmp_path)
