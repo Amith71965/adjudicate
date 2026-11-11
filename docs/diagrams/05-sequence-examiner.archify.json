@@ -1,0 +1,191 @@
+{
+ "schema_version": 1,
+ "diagram_type": "sequence",
+ "meta": {
+  "title": "Adversarial examiner loop",
+  "subtitle": "One prong of one claimed criterion; citations validated after generation",
+  "output": ".archify/sequence-examiner-20261111-033910/seq.html",
+  "quality_profile": "showcase",
+  "locale": "en"
+ },
+ "participants": [
+  {
+   "id": "rev",
+   "type": "external",
+   "label": "Attorney / eval",
+   "sublabel": "draft petition"
+  },
+  {
+   "id": "ex",
+   "type": "backend",
+   "label": "Examiner",
+   "sublabel": "TypeScript, per prong"
+  },
+  {
+   "id": "api",
+   "type": "backend",
+   "label": "Retrieval API",
+   "sublabel": "FastAPI + pgvector"
+  },
+  {
+   "id": "llm",
+   "type": "external",
+   "label": "Claude Haiku 5.5",
+   "sublabel": "OpenRouter"
+  },
+  {
+   "id": "val",
+   "type": "backend",
+   "label": "Citation validator",
+   "sublabel": "pure, in-process"
+  }
+ ],
+ "segments": [
+  {
+   "from": 185,
+   "to": 312,
+   "label": "Retrieve AAO reasoning"
+  },
+  {
+   "from": 320,
+   "to": 450,
+   "label": "Generate + validate"
+  },
+  {
+   "from": 462,
+   "to": 545,
+   "label": "One retry, then prune or drop"
+  },
+  {
+   "from": 560,
+   "to": 592,
+   "label": "Report"
+  }
+ ],
+ "messages": [
+  {
+   "id": "m1",
+   "from": "rev",
+   "to": "ex",
+   "y": 165,
+   "label": "examine(petition)",
+   "variant": "emphasis",
+   "note": "claimed criteria × prongs"
+  },
+  {
+   "id": "m2",
+   "from": "ex",
+   "to": "api",
+   "y": 200,
+   "label": "GET /search?criterion&visa=EB-1A&k=6"
+  },
+  {
+   "id": "m3",
+   "from": "api",
+   "to": "ex",
+   "y": 228,
+   "label": "top-6 hits",
+   "variant": "dashed"
+  },
+  {
+   "id": "m4",
+   "from": "ex",
+   "to": "api",
+   "y": 256,
+   "label": "GET /passages/{chunk_id}",
+   "note": "full chunk body, not the snippet"
+  },
+  {
+   "id": "m5",
+   "from": "api",
+   "to": "ex",
+   "y": 300,
+   "label": "passage bodies",
+   "variant": "dashed"
+  },
+  {
+   "id": "m6",
+   "from": "ex",
+   "to": "llm",
+   "y": 332,
+   "label": "prong test + filed evidence + passages",
+   "variant": "emphasis",
+   "note": "maxRetries 0, temperature 0"
+  },
+  {
+   "id": "m7",
+   "from": "llm",
+   "to": "ex",
+   "y": 376,
+   "label": "ProngReview: facially_met, risk, objection, citations",
+   "variant": "dashed"
+  },
+  {
+   "id": "m8",
+   "from": "ex",
+   "to": "val",
+   "y": 410,
+   "label": "validate(citations, retrieved)"
+  },
+  {
+   "id": "m9",
+   "from": "val",
+   "to": "ex",
+   "y": 438,
+   "label": "not_retrieved / decision_mismatch / not_verbatim",
+   "variant": "dashed"
+  },
+  {
+   "id": "m10",
+   "from": "ex",
+   "to": "llm",
+   "y": 476,
+   "label": "one corrective retry, problems listed",
+   "variant": "security"
+  },
+  {
+   "id": "m11",
+   "from": "llm",
+   "to": "ex",
+   "y": 504,
+   "label": "revised review",
+   "variant": "dashed"
+  },
+  {
+   "id": "m12",
+   "from": "ex",
+   "to": "val",
+   "y": 532,
+   "label": "re-validate; prune invalid citations"
+  },
+  {
+   "id": "m13",
+   "from": "ex",
+   "to": "rev",
+   "y": 576,
+   "label": "grounded objections, dropped (recorded), RFE risk",
+   "variant": "emphasis"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Measured (dev / held-out, 16 petitions each)",
+   "items": [
+    "149 / 150 objections; 0 of 694 citations fabricated",
+    "mode B: 22/22 and 24/24 planted halves caught",
+    "mode D: 16/16 and 16/16 planted waivers caught",
+    "false flags on complete two-part claims: 7% / 10%"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Fails loudly",
+   "items": [
+    "retrieval error → throws; never reviews without precedent",
+    "no passages → dropped, model not called",
+    "unreviewed prong → risk 0.5, never a pass"
+   ]
+  }
+ ]
+}

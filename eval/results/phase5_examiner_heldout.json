@@ -8,6 +8,8 @@
     "hits": 174,
     "inputTokens": 0,
     "outputTokens": 0,
+    "unknownUsageCalls": 0,
+    "cacheWriteFailures": 0,
     "estimated_cost_usd": 0,
     "note": "calls/tokens count this run's provider calls only; cache hits are free"
   },
@@ -53,6 +55,8 @@
         "original_contributions": 0.8,
         "leading_role": 0.964
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -362,6 +366,8 @@
         "judging": 0.35,
         "published_material": 0.99
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -608,6 +614,8 @@
         "scholarly_articles": 0.8,
         "awards": 0.45
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -877,16 +885,18 @@
     },
     {
       "petition_id": "P04",
-      "rfe_risk": 0.3408,
+      "rfe_risk": 0.3502,
       "criterion_risk": {
         "scholarly_articles": 0.45,
         "membership": 0.7725,
         "leading_role": 0.7075,
         "judging": 0.4,
         "high_salary": 0.35,
-        "original_contributions": 0.9325,
+        "original_contributions": 0.97,
         "awards": 0.4
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -1166,6 +1176,8 @@
         "scholarly_articles": 0.45,
         "leading_role": 0.988
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -1358,6 +1370,8 @@
         "high_salary": 0.45,
         "leading_role": 0.6975
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -1680,6 +1694,8 @@
         "judging": 0.35,
         "leading_role": 0.97
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -1955,6 +1971,8 @@
         "leading_role": 0.75,
         "published_material": 0.61
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -2192,6 +2210,8 @@
         "scholarly_articles": 0.35,
         "leading_role": 0.98
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -2429,6 +2449,8 @@
         "high_salary": 0.35,
         "leading_role": 0.7525
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -2676,6 +2698,8 @@
         "awards": 0.5,
         "membership": 0.99
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -2953,6 +2977,8 @@
         "original_contributions": 0.945,
         "high_salary": 0.4
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -3140,16 +3166,18 @@
     },
     {
       "petition_id": "P13",
-      "rfe_risk": 0.6187,
+      "rfe_risk": 0.6206,
       "criterion_risk": {
         "leading_role": 0.97,
         "published_material": 0.61,
         "judging": 0.35,
         "membership": 0.945,
-        "original_contributions": 0.975,
+        "original_contributions": 0.98,
         "high_salary": 0.35,
         "awards": 0.6
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -3434,6 +3462,8 @@
         "leading_role": 0.725,
         "original_contributions": 0.94
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -3745,6 +3775,8 @@
         "scholarly_articles": 0.35,
         "awards": 0.6
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -3958,6 +3990,8 @@
         "membership": 0.99,
         "high_salary": 0.35
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",

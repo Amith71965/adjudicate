@@ -4,11 +4,13 @@
   "cache_version": "examiner-v3",
   "set": "eval/synthetic/phase5_petitions.json",
   "llm": {
-    "calls": 0,
+    "calls": 1,
     "hits": 169,
-    "inputTokens": 0,
-    "outputTokens": 0,
-    "estimated_cost_usd": 0,
+    "inputTokens": 4114,
+    "outputTokens": 1224,
+    "unknownUsageCalls": 0,
+    "cacheWriteFailures": 0,
+    "estimated_cost_usd": 0.001,
     "note": "calls/tokens count this run's provider calls only; cache hits are free"
   },
   "score": {
@@ -17,8 +19,8 @@
     "citations": 350,
     "fabricated_citations": 0,
     "fabricated": [],
-    "first_attempt_invalid_citations": 4,
-    "retried": 4,
+    "first_attempt_invalid_citations": 5,
+    "retried": 5,
     "dropped": {},
     "mode_b": {
       "planted": 22,
@@ -53,6 +55,8 @@
         "original_contributions": 0.8,
         "published_material": 0.5775
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -355,6 +359,8 @@
         "awards": 0.45,
         "leading_role": 0.725
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -588,6 +594,8 @@
         "high_salary": 0.35,
         "membership": 0.99
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -866,6 +874,8 @@
         "judging": 0.3,
         "original_contributions": 0.9175
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -1122,14 +1132,16 @@
     },
     {
       "petition_id": "P05",
-      "rfe_risk": 0.8804,
+      "rfe_risk": 0.9171,
       "criterion_risk": {
         "original_contributions": 0.76,
-        "published_material": 0.72,
+        "published_material": 0.86,
         "leading_role": 0.956,
         "membership": 0.775,
         "high_salary": 0.35
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -1378,6 +1390,8 @@
         "scholarly_articles": 0.35,
         "leading_role": 0.67
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -1662,6 +1676,8 @@
         "awards": 0.6,
         "leading_role": 0.67
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -1967,14 +1983,16 @@
     },
     {
       "petition_id": "P08",
-      "rfe_risk": 0.7604,
+      "rfe_risk": 0.7691,
       "criterion_risk": {
         "scholarly_articles": 0.35,
         "judging": 0.35,
         "membership": 0.975,
         "awards": 0.5,
-        "original_contributions": 0.96
+        "original_contributions": 0.98
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -2184,6 +2202,8 @@
         "leading_role": 0.964,
         "scholarly_articles": 0.6
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -2403,6 +2423,8 @@
         "original_contributions": 0.94,
         "published_material": 0.992
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -2672,15 +2694,17 @@
     },
     {
       "petition_id": "P11",
-      "rfe_risk": 0.6025,
+      "rfe_risk": 0.6471,
       "criterion_risk": {
         "judging": 0.3,
         "scholarly_articles": 0.4,
         "membership": 0.975,
-        "published_material": 0.78,
+        "published_material": 0.89,
         "commercial_success": 0.8,
         "high_salary": 0.5
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -2899,7 +2923,7 @@
     },
     {
       "petition_id": "P12",
-      "rfe_risk": 0.4322,
+      "rfe_risk": 0.3832,
       "criterion_risk": {
         "awards": 0.55,
         "scholarly_articles": 0.4,
@@ -2907,8 +2931,10 @@
         "leading_role": 0.968,
         "high_salary": 0.35,
         "original_contributions": 0.9025,
-        "commercial_success": 0.85
+        "commercial_success": 0.7
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -3134,25 +3160,25 @@
           "artifact_ids": [
             "A09"
           ],
-          "attempts": 1,
-          "facially_met": false,
-          "risk": 0.85,
-          "objection": "The evidence is a set of distributor reports of ticket and recording sales for performances led by the beneficiary. Those reports show gross sales volume but do not show that the beneficiary himself achieved commercial success. The criterion requires that sales volume reflect his individual commercial success relative to others in similar pursuits in the performing arts. The reports say nothing about the beneficiary's share, the comparative market position of these productions, or how his work distinguished him from peers. Reports covering performances he led are not shown to be attributable to his individual contribution, and the record contains no benchmark data for comparable performers. Sales from recordings alone are insufficient in themselves, and the reports must be tied to the beneficiary's own role and standing in the field.",
+          "attempts": 2,
+          "facially_met": true,
+          "risk": 0.7,
+          "objection": "Exhibit A09 consists of distributor reports of ticket and recording sales for performances led by the beneficiary. The reports give aggregate volume figures but do not show that the volume reflects the beneficiary's commercial success relative to others in similar pursuits, as the criterion requires. The record does not establish a comparison group, market share, or industry benchmark, and it does not show that the sales were attributable to his individual work rather than to the productions, co-performers, or distributors. The reports also do not establish that the performances drew substantial audiences or placed him at or near the top of the field. Because the petitioner has not shown genuineness or corroboration for the distributor figures, the reports carry little weight on their own. The officer should request independent comparative data and evidence tying the sales to his personal contribution.",
           "citations": [
+            {
+              "chunk_id": 13126,
+              "decision_id": "JAN232026_02B2203",
+              "quote": "this criterion focuses on volume of sales and box office receipts as a measure of a petitioner's commercial success in the performing arts."
+            },
             {
               "chunk_id": 12379,
               "decision_id": "JUN052026_01B2203",
-              "quote": "This criterion focuses on volume of sales and box office receipts as a measure of the person's commercial success in the performing arts."
+              "quote": "The evidence must show that the volume of sales and box office receipts reflect the person's commercial success relative to others involved in similar pursuits in the performing arts."
             },
             {
               "chunk_id": 15359,
               "decision_id": "MAR232026_01B2203",
-              "quote": "Recording and releasing musical compilations or performing in theatrical, motion picture, or television productions would be insufficient, in and of itself: to satisfy this criterion."
-            },
-            {
-              "chunk_id": 13126,
-              "decision_id": "JAN232026_02B2203",
-              "quote": "The evidence must show that the volume of sales and box office receipts reflect the individual's commercial success relative to others involved in similar pursuits in the performing arts."
+              "quote": "The evidence must show that the volume of sales or box office receipts reflects the alien's commercial success in the performing arts relative to others involved in similar pursuits."
             }
           ]
         }
@@ -3160,14 +3186,16 @@
     },
     {
       "petition_id": "P13",
-      "rfe_risk": 0.816,
+      "rfe_risk": 0.8517,
       "criterion_risk": {
         "high_salary": 0.45,
         "scholarly_articles": 0.5,
         "leading_role": 0.96,
-        "original_contributions": 0.8,
+        "original_contributions": 0.9,
         "published_material": 0.6425
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -3388,15 +3416,17 @@
     },
     {
       "petition_id": "P14",
-      "rfe_risk": 0.7724,
+      "rfe_risk": 0.8956,
       "criterion_risk": {
         "published_material": 0.99,
-        "scholarly_articles": 0.35,
+        "scholarly_articles": 0.8,
         "original_contributions": 0.82,
         "judging": 0.3,
         "membership": 0.74,
         "leading_role": 0.945
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -3675,6 +3705,8 @@
         "membership": 0.976,
         "awards": 0.6
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
@@ -3954,6 +3986,8 @@
         "scholarly_articles": 0.4,
         "original_contributions": 0.9175
       },
+      "complete": true,
+      "unreviewed": [],
       "waiver": [
         {
           "kind": "unclaimed_supported",
