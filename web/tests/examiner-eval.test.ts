@@ -64,10 +64,10 @@ describe("cachedModel", () => {
   });
 });
 
-const reviewed = (criterion: string, prong: string, established: boolean, citations = [{ chunk_id: 7, decision_id: "D1", quote: "the organization has a distinguished reputation" }]): ReviewedProng => ({
+const reviewed = (criterion: string, prong: string, addressed: boolean, citations = [{ chunk_id: 7, decision_id: "D1", quote: "the organization has a distinguished reputation" }]): ReviewedProng => ({
   status: "reviewed", criterion, prong, artifact_ids: ["A01"], attempts: 1, retrieved_chunk_ids: [7],
   first_attempt_problems: [], pruned: [],
-  review: { established, risk: established ? 0.2 : 0.8, objection: "An objection of sufficient length.", citations },
+  review: { addressed, risk: addressed ? 0.2 : 0.8, objection: "An objection of sufficient length.", citations },
 });
 const result = (reviews: ReviewedProng[]): ExaminerResult => ({ petition_id: "P01", reviews, dropped: [], criterion_risk: {}, rfe_risk: 0.5 });
 const DB = new Map([[7, { chunk_id: 7, decision_id: "D1", body: "Here the organization has a distinguished reputation in its field." }]]);
@@ -103,7 +103,7 @@ describe("scoreExaminer", () => {
     expect(s.gate.passed).toBe(false);
   });
 
-  it("catches a planted half only when the missing prong is judged not established", () => {
+  it("catches a planted half only when the missing prong is judged not addressed", () => {
     const missed = goodReviews();
     missed[1] = reviewed("leading_role", "reputation", true);
     const s = scoreExaminer([baseCase(missed)], DB, { minObjections: 4 });

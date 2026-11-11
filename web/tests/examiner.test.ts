@@ -25,8 +25,8 @@ const passages = [
 ];
 const retriever = (out = passages): Retriever & { search: ReturnType<typeof vi.fn> } => ({ search: vi.fn(async () => out) });
 
-const review = (citations: { chunk_id: number; decision_id: string; quote: string }[], established = false) => ({
-  established, risk: established ? 0.2 : 0.85,
+const review = (citations: { chunk_id: number; decision_id: string; quote: string }[], addressed = false) => ({
+  addressed, risk: addressed ? 0.2 : 0.85,
   objection: "The record does not establish the organization's distinguished reputation.", citations,
 });
 const GOOD = { chunk_id: 7, decision_id: "SEP152026_01B2203", quote: "did not submit evidence establishing that the organization" };

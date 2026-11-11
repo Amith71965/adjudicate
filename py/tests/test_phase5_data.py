@@ -28,7 +28,7 @@ def test_prong_review_schema_is_exported_and_committed(tmp_path: Path) -> None:
 
 def test_prong_review_requires_a_real_quote_and_at_least_one_citation() -> None:
     ok = {
-        "established": False,
+        "addressed": False,
         "risk": 0.8,
         "objection": "The record does not show the organization's distinguished reputation.",
         "citations": [{"chunk_id": 7, "decision_id": "SEP152026_01B2203", "quote": "x" * 40}],
@@ -112,3 +112,12 @@ def test_examiner_set_is_deterministic_and_committed() -> None:
 def test_examiner_set_contains_no_pii() -> None:
     for case in generate_examiner_set(n=N, seed=SEED):
         assert scan_for_pii(case.petition.model_dump_json()) == []
+
+
+def test_arts_only_criteria_appear_only_in_arts_fields() -> None:
+    from adjudicate.synth.examiner import ARTS_FIELDS, ARTS_ONLY
+
+    for case in generate_examiner_set(n=N, seed=SEED):
+        if case.petition.field in ARTS_FIELDS:
+            continue
+        assert not ARTS_ONLY & {t for t in case.truth.values() if t}, case.petition.id
