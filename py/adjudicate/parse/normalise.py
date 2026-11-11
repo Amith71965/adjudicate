@@ -67,7 +67,9 @@ _SECTION_S5 = re.compile(r"(§ \d+\.)S(?=\()")
 _CHAIN = re.compile(r"\d+(?:\.\w+)?(?:\s?-?\s?\(\s?[0-9A-Za-z]{1,5}\s?\))+")
 _PAREN = re.compile(r"\(\s?([0-9A-Za-z]{1,5})\s?\)")
 _ROMAN_LOWER = frozenset("ivx")
-_I_AND_N = re.compile(r"\b(\d+ )l&N\b")
+_I_AND_N = re.compile(r"\b(\d+ )[lT]&N\b")
+# "Matter ofO-R-E-", "Matter afChawathe", "Matter a/Christa's": OCR-damaged "of".
+_MATTER_OF = re.compile(r"\bMatter (?:of|af|a/|o/)(?=[A-Z])")
 _EB1 = re.compile(r"\bEB-[Il]\b")
 _GLUED_THE = re.compile(r"\b(of|in|to|and|on|for|at|by|from)the\b")
 _GLUED_CAP = re.compile(r"\b(of|in|to|and|for|at|by|from|with)([A-Z][a-z]{2,})")
@@ -146,6 +148,7 @@ def normalise(text: str) -> Normalised:
         )
     t = fixed_chains
     t = sub("i_and_n", _I_AND_N, r"\1I&N", t)
+    t = sub("matter_of", _MATTER_OF, "Matter of ", t)
     t = sub("eb1", _EB1, "EB-1", t)
     t = sub("glued_word", _GLUED_THE, r"\1 the", t)
     t = sub("glued_word", _GLUED_CAP, r"\1 \2", t)

@@ -169,9 +169,9 @@ def test_unrecognised_subheading_falls_back_to_the_cfr_cite_in_its_opening() -> 
     text = (
         "I. LAW\nlaw\nII. ANALYSIS\nintro\nA. Original Contributions of Major Significance\n"
         "body\nB. Role\nThe regulation at 8 C.F.R. § 204.5(h)(3)(viii) calls for evidence.\n"
-        "C. The Petitioner\nbackground that cites 204.5(h)(3)(iv) only much later "
+        "C. The Petitioner\nbackground "
         + "x " * 200
-        + "\nIII. CONCLUSION\ndone\n"
+        + "and only much later cites 204.5(h)(3)(iv)\nIII. CONCLUSION\ndone\n"
     )
     got = [(s.title, s.kind, s.criterion) for s in split_sections(text)]
     assert ("Role", SectionKind.CRITERION, Criterion.LEADING_ROLE) in got

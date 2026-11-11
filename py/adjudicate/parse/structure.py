@@ -160,6 +160,9 @@ def _sub_kind(title: str) -> tuple[SectionKind, Criterion | None]:
     return SectionKind.OTHER, None
 
 
+_OPENING_CHARS = 250  # a criterion section states its regulation in its first sentence
+
+
 def split_sections(text: str) -> list[Section]:
     """Tile the text into sections at headings (subheadings only inside ANALYSIS)."""
     marks: list[tuple[int, SectionKind, str, Criterion | None]] = []
@@ -174,6 +177,11 @@ def split_sections(text: str) -> list[Section]:
     if analysis_span is not None:
         for m in _SUB.finditer(text, *analysis_span):
             kind, criterion = _sub_kind(m.group(1))
+            if kind is SectionKind.OTHER:
+                # Headings like "B. Role": fall back to the CFR paragraph cited up front.
+                opening = text[m.end() : m.end() + _OPENING_CHARS]
+                if (cite := _CFR_PARAGRAPH.search(opening)) is not None:
+                    kind, criterion = SectionKind.CRITERION, _BY_PARAGRAPH[cite.group(1)]
             marks.append((m.start(), kind, m.group(1), criterion))
     marks.sort(key=lambda mark: mark[0])
     if not marks or marks[0][0] > 0:
