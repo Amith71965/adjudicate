@@ -6,7 +6,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 PY := .venv/bin
 
-.PHONY: help setup up down migrate harvest harvest-stats verify verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
+.PHONY: help setup up down migrate harvest harvest-stats verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
 
 help: ## list targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
@@ -53,6 +53,9 @@ verify-py: lint-py type-py test-py
 verify-web: lint-web type-web test-web
 verify: verify-py verify-web ## full gate: lint, types, tests (python + web)
 	@echo "verify: OK"
+
+verify-clean: ## make verify from a fresh clone on an empty DB (dev volume untouched)
+	scripts/verify-clean-clone.sh $$(git branch --show-current) $${TMPDIR:-/tmp}/adjudicate-verify
 
 nuke: ## stop infra AND delete the corpus volume (destructive)
 	docker compose down -v
