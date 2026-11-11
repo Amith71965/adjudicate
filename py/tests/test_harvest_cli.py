@@ -134,3 +134,12 @@ def test_cli_refuses_to_crawl_on_html_robots(
         sleep=lambda s: None,
     )
     assert code == 2
+
+
+def test_cli_target_fetched_is_idempotent(
+    scratch_db_url: str, db: psycopg.Connection[tuple[object, ...]]
+) -> None:
+    argv = ["--topic", "19", "--max-pages", "3", "--target-fetched", "4"]
+    for _ in range(2):
+        assert main(argv, transport=_site(), database_url=scratch_db_url, sleep=lambda s: None) == 0
+    assert corpus_stats(db).fetched == 4

@@ -355,3 +355,26 @@ def test_unexpected_categories_for_the_topic_are_warned(
     logs: list[str] = []
     _harvest(site, db, max_pages=1, fetch_limit=0, log=logs.append)
     assert any("unexpected" in m and "other" in m for m in logs)
+
+
+def test_target_fetched_makes_repeat_runs_idempotent(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    # --fetch-limit is a per-run cap, so repeating `make harvest` kept fetching more.
+    # A target total per topic makes the make target itself idempotent.
+    first = _harvest(site, db, max_pages=5, target_fetched=30)
+    second = _harvest(site, db, max_pages=5, target_fetched=30)
+    assert (first.fetched, second.fetched, second.discovered_new) == (30, 0, 0)
+
+
+def test_target_fetched_counts_only_rows_matching_min_year(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    _harvest(site, db, max_pages=5, target_fetched=5)  # any year
+    stats = _harvest(site, db, max_pages=5, target_fetched=10, min_year=2026)
+    fetched_2026 = _count(
+        db,
+        "SELECT count(*) FROM raw_decision WHERE content IS NOT NULL AND issued_year >= 2026",
+    )
+    assert fetched_2026 == 10
+    assert stats.fetched == 10 - (fetched_2026 - stats.fetched)
