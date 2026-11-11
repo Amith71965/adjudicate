@@ -1,19 +1,19 @@
 import { describe, expect, it } from "vitest";
 import { MockLanguageModelV4 } from "ai/test";
 import { findMismatches, mapPetition, MapperError } from "@/lib/examiner/mapper";
-import type { PetitionMapping } from "@/lib/examiner/mapper";
+import type { PetitionInput, PetitionMapping } from "@/lib/examiner/mapper";
 
 const CRITERIA = ["awards", "membership", "published_material", "judging", "original_contributions",
   "scholarly_articles", "display", "leading_role", "high_salary", "commercial_success"] as const;
 
-const petition = {
+const petition: PetitionInput = {
   id: "P01", visa: "EB-1A", field: "computational biology", beneficiary: "Dr. Avery Quillfeather",
   artifacts: [
     { id: "A01", kind: "publication", title: "Peer-reviewed journal articles", description: "Three articles.", claimed_criterion: "leading_role" },
     { id: "A02", kind: "record", title: "Peer-review records", description: "Reviews completed.", claimed_criterion: "judging" },
     { id: "A03", kind: "certificate", title: "Online course", description: "Completion certificate.", claimed_criterion: null },
   ],
-} as const;
+};
 
 const row = (best: string | null, strength: number, extra: Record<string, number> = {}) => ({
   best_criterion: best, strength, rationale: "because",
