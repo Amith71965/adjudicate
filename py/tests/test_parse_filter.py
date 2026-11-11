@@ -137,11 +137,6 @@ def test_final_merits_subsection_alone_counts() -> None:
     assert classify(stage_two, VisaType.EB1A).kind is DecisionKind.MERITS
 
 
-ONE_CRITERION_SENTENCE = (
-    "Under 8 C.F.R. § 204.5(h)(3)(viii) the role and under 8 C.F.R. § 204.5(h)(3)(ix) pay."
-)
-
-
 def test_final_merits_mentioned_only_in_prose_does_not_count() -> None:
     prose = SYNTHETIC_APPEAL.replace(
         "Under 8 C.F.R. § 204.5(h)(3)(viii) the role and under 8 C.F.R. § 204.5(h)(3)(ix) pay.",
