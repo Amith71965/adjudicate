@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from adjudicate.hygiene import PII_PATTERNS, scan_for_pii
+from adjudicate.hygiene import PII_PATTERNS, scan_for_pii, scan_tree
 
 REPO = Path(__file__).resolve().parents[2]
 
@@ -55,14 +55,9 @@ def test_pattern_registry_is_compiled() -> None:
     assert all(isinstance(p, re.Pattern) for p in PII_PATTERNS.values())
 
 
+FIXTURE_ROOTS = [REPO / "py" / "tests" / "fixtures", REPO / "web" / "tests" / "fixtures"]
+
+
 def test_committed_fixtures_contain_no_pii() -> None:
-    roots = [REPO / "py" / "tests" / "fixtures", REPO / "web" / "tests" / "fixtures"]
-    findings = [
-        (path, f.kind)
-        for root in roots
-        if root.exists()
-        for path in root.rglob("*")
-        if path.is_file() and path.suffix in {".txt", ".json", ".html", ".md", ".csv"}
-        for f in scan_for_pii(path.read_text(errors="ignore"))
-    ]
-    assert findings == []
+    # Roots must exist (scan_tree raises otherwise), so this can never pass vacuously.
+    assert scan_tree(FIXTURE_ROOTS) == []
