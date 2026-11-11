@@ -25,6 +25,7 @@ class Verdict(StrEnum):
     NOT_MET = "not_met"
     NOT_REACHED = "not_reached"  # expressly reserved / unnecessary to decide
     NOT_ADDRESSED = "not_addressed"  # the decision is silent on it
+    WAIVED = "waived"  # not raised / abandoned on appeal (Matter of O-R-E-) — failure mode D
 
 
 class GroundingError(ValueError):
@@ -64,9 +65,13 @@ For each entry:
 - director: what the USCIS Director (the service center, sometimes called "SCOPS")
   concluded about that criterion: "met", "not_met", or "not_addressed" if the decision
   does not say.
-- aao: the AAO's OWN conclusion: "met"; "not_met"; "not_reached" if the AAO reserved
-  the issue or said it need not decide it; "not_addressed" if the AAO says nothing.
-  If the AAO "agrees with the Director", copy the Director's verdict.
+- aao: the AAO's OWN conclusion: "met"; "not_met"; "not_reached" if the AAO expressly
+  reserved the issue, said it need not decide it, or said it will not disturb or discuss
+  the individual criteria; "waived" if the AAO says the petitioner did not raise,
+  contest or develop it on appeal (waived/abandoned/forfeited); "not_addressed" if the
+  AAO is silent. If the AAO agrees with, adopts or affirms the Director's finding, copy
+  the Director's verdict; if it withdraws a favourable finding, use "not_met". If it
+  says an argument is waived but ALSO concludes the criterion is not met, use "not_met".
 - failed_prong: when aao is "not_met", the specific element that failed, in at most
   ten words (e.g. "organization's distinguished reputation"); otherwise null.
 - quote: ONE sentence copied EXACTLY, character for character, from the decision text,
@@ -75,7 +80,10 @@ For each entry:
 final_merits: the AAO's conclusion on the final merits determination (sustained
 national or international acclaim; among the small percentage at the very top of the
 field): "met", "not_met", "not_reached" (e.g. fewer than three criteria met, or
-remanded without deciding it), or "not_addressed".
+remanded without deciding it — even if the AAO adds an advisory remark that the record
+"in the aggregate" would not support acclaim), or "not_addressed".
+
+Include only criteria the decision names explicitly.
 
 Use only the decision text. Never infer a verdict the text does not state."""
 
