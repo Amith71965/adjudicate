@@ -13,10 +13,11 @@ from adjudicate.hygiene import scan_for_pii
 from adjudicate.parse.structure import Criterion
 from adjudicate.schemas.examiner import ProngReview
 from adjudicate.schemas.petition import export_json_schemas
-from adjudicate.synth.examiner import PRONG_IDS, generate_examiner_set
+from adjudicate.synth.examiner import PRONG_IDS, ExaminerCase, generate_examiner_set
 
 REPO = Path(__file__).resolve().parents[2]
 SEED = 20261112
+HELDOUT_SEED = 20261113
 N = 16
 
 
@@ -28,7 +29,7 @@ def test_prong_review_schema_is_exported_and_committed(tmp_path: Path) -> None:
 
 def test_prong_review_requires_a_real_quote_and_at_least_one_citation() -> None:
     ok = {
-        "addressed": False,
+        "facially_met": False,
         "risk": 0.8,
         "objection": "The record does not show the organization's distinguished reputation.",
         "citations": [{"chunk_id": 7, "decision_id": "SEP152026_01B2203", "quote": "x" * 40}],
@@ -121,3 +122,21 @@ def test_arts_only_criteria_appear_only_in_arts_fields() -> None:
         if case.petition.field in ARTS_FIELDS:
             continue
         assert not ARTS_ONLY & {t for t in case.truth.values() if t}, case.petition.id
+
+
+def test_held_out_set_uses_unseen_half_wordings_and_is_committed() -> None:
+    dev = generate_examiner_set(n=N, seed=SEED)
+    held = generate_examiner_set(n=N, seed=HELDOUT_SEED, heldout=True)
+
+    def half_texts(cases: list[ExaminerCase]) -> set[str]:
+        by_case = ({a.id: a for a in c.petition.artifacts} for c in cases)
+        return {
+            arts[h.artifact_id].description
+            for c, arts in zip(cases, by_case, strict=True)
+            for h in c.planted_halves
+        }
+
+    assert half_texts(dev).isdisjoint(half_texts(held))
+    assert {h.criterion for c in held for h in c.planted_halves} == set(PRONG_IDS)
+    committed = REPO / "eval" / "synthetic" / "phase5_heldout_petitions.json"
+    assert json.loads(committed.read_text()) == [c.to_json() for c in held]
