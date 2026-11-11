@@ -114,7 +114,8 @@ def normalise(text: str) -> Normalised:
             repairs[name] += count
         return new
 
-    t = sub("bar_glyph_line", _BAR_ONLY_LINE, "", text)
+    t = text.replace("\f", "\n")  # pdftotext page breaks; headings may start a page
+    t = sub("bar_glyph_line", _BAR_ONLY_LINE, "", t)
     t = sub("redaction_fragment", _FRAGMENT, rf"\1 {REDACTED} ", t)
     t = sub("redaction_fragment", _FUSED_TAIL, rf"\1 {REDACTED} ", t)
     t = sub("bar_glyph_run", _GLYPH_RUN_EOL, rf"\1 {REDACTED}", t)

@@ -23,7 +23,14 @@ MIN_WORDS = 1000
 MIN_CRITERION_CITATIONS = 2
 _POSTURE_WINDOW = 4000
 
-_MOTION = re.compile(r"before us on (?:a |combined )?motions?\b", re.IGNORECASE)
+# Posture is stated in the caption or the opening paragraph; the ORDER line is a
+# backstop anywhere in the text. A later quote of an earlier motion must not count.
+_MOTION_OPENING = re.compile(
+    r"before us on (?:a |combined )?motions?\b"
+    r"|^Motions? on Administrative Appeals Office Decision",
+    re.IGNORECASE | re.MULTILINE,
+)
+_MOTION_ORDER = re.compile(r"^(?:FURTHER )?ORDER: The motions? to (?:reopen|reconsider)", re.M)
 _ROMAN_HEADING = re.compile(r"^[IVX]+\. [A-Z][A-Z ,'&-]+$", re.MULTILINE)
 _ANALYSIS_HEADING = re.compile(r"^[IVX]+\. ANALYSIS\b", re.MULTILINE)
 _LEGACY_DISCUSSION = re.compile(r"^DISCUSSION:", re.MULTILINE)
@@ -100,7 +107,9 @@ def classify(text: str, visa: VisaType, *, min_words: int = MIN_WORDS) -> Classi
     def result(kind: DecisionKind, reason: str) -> Classification:
         return Classification(kind, words, cites, named, final_merits, [reason])
 
-    if (m := _MOTION.search(text[:_POSTURE_WINDOW])) is not None:
+    if (
+        m := _MOTION_OPENING.search(text[:_POSTURE_WINDOW]) or _MOTION_ORDER.search(text)
+    ) is not None:
         return result(DecisionKind.MOTION, f"posture is a motion: {m.group(0)!r}")
     if pattern is None:
         return result(DecisionKind.OUT_OF_SCOPE, f"visa type {visa.value} is out of scope")
