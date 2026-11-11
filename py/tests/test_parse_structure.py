@@ -176,3 +176,15 @@ def test_unrecognised_subheading_falls_back_to_the_cfr_cite_in_its_opening() -> 
     got = [(s.title, s.kind, s.criterion) for s in split_sections(text)]
     assert ("Role", SectionKind.CRITERION, Criterion.LEADING_ROLE) in got
     assert ("The Petitioner", SectionKind.OTHER, None) in got  # cite outside the opening
+
+
+def test_umbrella_criteria_section_is_not_labelled_by_its_range_cite() -> None:
+    # Real bug (RAG review): "Evidentiary Criteria" opens with "...at 8 C.F.R. § 204.5(h)(3)(i)-(x)"
+    # and the CFR fallback read "(i)" as the awards criterion — 14% of chunks mislabelled.
+    text = (
+        "I. LAW\nlaw\nII. ANALYSIS\nintro\nA. Evidentiary Criteria\n"
+        "He must satisfy at least three of the criteria at 8 C.F.R. § 204.5(h)(3)(i)-(x).\n"
+        "B. Final Merits Determination\nbody\nIII. CONCLUSION\ndone\n"
+    )
+    got = [(s.title, s.kind, s.criterion) for s in split_sections(text)]
+    assert ("Evidentiary Criteria", SectionKind.OTHER, None) in got

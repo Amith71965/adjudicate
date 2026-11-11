@@ -361,3 +361,30 @@ def test_merits_decision_with_a_motion_order_is_reclassified(db: Conn) -> None:
     assert kind == "motion" and "ORDER" in reason
     kind, reason = reconcile_kind("merits", "ok", "unknown")
     assert kind == "merits" and "WARNING" in reason
+
+
+def test_reparse_keeps_extractions_whose_quotes_still_ground(
+    db: Conn, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    parse_pending(db)
+    calls: list[str] = []
+    client = _fake_llm(tmp_path, calls)
+    extract_pending(db, client)
+    monkeypatch.setattr("adjudicate.parse.pipeline.PARSER_VERSION", "test-bump")
+    parse_pending(db)  # same text → every quote still verbatim
+    stats = extract_pending(db, client)
+    assert stats.extracted == 0 and len(calls) == 2  # nothing paid for twice
+    (version,) = _one(db, "SELECT DISTINCT parser_version FROM decision_extraction")
+    assert version == "test-bump"
+
+
+def test_reparse_invalidates_extractions_whose_quotes_no_longer_ground(
+    db: Conn, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    parse_pending(db)
+    client = _fake_llm(tmp_path, [])
+    extract_pending(db, client)
+    db.execute("UPDATE criterion_verdict SET quote = 'a sentence that is not in the text at all'")
+    monkeypatch.setattr("adjudicate.parse.pipeline.PARSER_VERSION", "test-bump")
+    parse_pending(db)
+    assert extract_pending(db, client).extracted == 2
