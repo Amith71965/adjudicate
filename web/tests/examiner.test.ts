@@ -150,6 +150,7 @@ describe("examinePetition: incomplete or failing reviews", () => {
     };
     const { model } = scripted(review([GOOD]));
     await expect(examinePetition(petition, { model, retriever: flaky, concurrency: 2 })).rejects.toThrow(/503/);
+    await new Promise((r) => setTimeout(r, 30)); // let the surviving worker finish its prong
     expect(calls).toBe(2);
   });
 });
