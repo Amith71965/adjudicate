@@ -65,6 +65,13 @@ def test_bad_search_requests_are_rejected(client: TestClient, params: dict[str, 
     assert client.get("/search", params=params).status_code == 422
 
 
+def test_search_by_section_returns_only_final_merits_reasoning(client: TestClient) -> None:
+    r = client.get("/search", params={"q": "sustained acclaim", "k": 5, "section": "final_merits"})
+    hits = r.json()["results"]
+    assert r.status_code == 200 and hits
+    assert {h["section_kind"] for h in hits} == {"final_merits"}
+
+
 def test_passage_round_trip(client: TestClient) -> None:
     hit = client.get("/search", params={"q": "distinguished reputation", "k": 1}).json()["results"][
         0
@@ -96,7 +103,15 @@ def test_database_outage_is_503_not_an_empty_result() -> None:
         assert c.get("/health").status_code == 503
 
 
-@pytest.mark.parametrize("params", [{"q": "x", "visa": "EB-1"}, {"q": "x", "criterion": "bogus"}])
+@pytest.mark.parametrize(
+    "params",
+    [
+        {"q": "x", "visa": "EB-1"},
+        {"q": "x", "criterion": "bogus"},
+        {"q": "x", "section": "bogus"},
+        {"q": "x", "section": "preamble"},  # a real kind, but never chunked: not searchable
+    ],
+)
 def test_unknown_filters_are_rejected_not_silently_empty(
     client: TestClient, params: dict[str, object]
 ) -> None:
