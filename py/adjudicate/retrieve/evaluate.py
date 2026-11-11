@@ -8,6 +8,7 @@ beside hybrid so the fusion has to earn its place.
 from __future__ import annotations
 
 import json
+import random
 import sys
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -53,6 +54,16 @@ def score_mode(
     return out
 
 
+def bootstrap_ci(
+    values: Sequence[float], *, iterations: int = 5000, seed: int = 20261111, alpha: float = 0.05
+) -> tuple[float, float]:
+    """Percentile bootstrap CI of the mean over queries (44 queries → wide; say so)."""
+    rng = random.Random(seed)  # noqa: S311 — reproducible resampling, not security
+    n = len(values)
+    means = sorted(sum(rng.choice(values) for _ in range(n)) / n for _ in range(iterations))
+    return means[int(alpha / 2 * iterations)], means[int((1 - alpha / 2) * iterations) - 1]
+
+
 def main() -> int:
     queries = load_queries(QUERIES)
     relevant = {q.id: set(q.relevant) for q in queries}
@@ -66,6 +77,10 @@ def main() -> int:
                 for q in queries
             }
             scores[mode.value] = score_mode(results, relevant)
+            per_query = [float(bool(relevant[q.id] & set(results[q.id][:10]))) for q in queries]
+            lo, hi = bootstrap_ci(per_query)
+            scores[mode.value]["recall@10_ci95_low"] = lo
+            scores[mode.value]["recall@10_ci95_high"] = hi
             misses[mode.value] = [q.id for q in queries if not relevant[q.id] & set(results[q.id])]
             print(mode.value, {k: round(v, 3) for k, v in scores[mode.value].items()})
     report = {

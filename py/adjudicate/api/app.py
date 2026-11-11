@@ -6,15 +6,26 @@ from __future__ import annotations
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from dataclasses import asdict
+from enum import StrEnum
 from typing import Annotated
 
 import psycopg
 from fastapi import FastAPI, HTTPException, Query
 
+from adjudicate.parse.structure import Criterion
 from adjudicate.retrieve.embed import Embedder
 from adjudicate.retrieve.search import SearchMode, search
 
 type Conn = psycopg.Connection[tuple[object, ...]]
+
+
+class Visa(StrEnum):
+    EB1A = "EB-1A"
+    O1 = "O-1"
+    NIW = "EB-2/NIW"
+
+
+CriterionCode = Criterion
 type ConnFactory = Callable[[], Conn]
 
 
@@ -48,11 +59,19 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
         q: Annotated[str, Query(min_length=1, max_length=2000, pattern=r"\S")],
         k: Annotated[int, Query(ge=1, le=50)] = 10,
         mode: SearchMode = SearchMode.HYBRID,
-        visa: str | None = None,
-        criterion: str | None = None,
+        visa: Visa | None = None,
+        criterion: CriterionCode | None = None,
     ) -> dict[str, object]:
         with db() as conn:
-            hits = search(conn, embedder, q, k=k, mode=mode, visa=visa, criterion=criterion)
+            hits = search(
+                conn,
+                embedder,
+                q,
+                k=k,
+                mode=mode,
+                visa=visa.value if visa else None,
+                criterion=criterion.value if criterion else None,
+            )
         return {"query": q, "mode": mode.value, "results": [asdict(h) for h in hits]}
 
     @app.get("/passages/{chunk_id}")

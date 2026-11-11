@@ -17,7 +17,31 @@ from adjudicate.retrieve.embed import Embedder, vector_literal
 from adjudicate.retrieve.rrf import rrf
 
 type Conn = psycopg.Connection[tuple[object, ...]]
-_TERM = re.compile(r"[A-Za-z]{2,}")
+_TERM = re.compile(r"[A-Za-z0-9]{2,}")
+# Present in nearly every chunk (e.g. "petitioner"/"beneficiary" in 97%): they add only noise
+# to ts_rank_cd, which has no IDF weighting.
+DOMAIN_STOPWORDS = frozenset(
+    {
+        "petitioner",
+        "petitioners",
+        "beneficiary",
+        "beneficiarys",
+        "criterion",
+        "criteria",
+        "evidence",
+        "record",
+        "uscis",
+        "scops",
+        "director",
+        "aao",
+        "appeal",
+        "regulation",
+    }
+)
+
+
+def lexical_terms(query: str) -> list[str]:
+    return sorted({t.lower() for t in _TERM.findall(query)} - DOMAIN_STOPWORDS)
 
 
 class SearchMode(StrEnum):
@@ -55,7 +79,7 @@ def _vector_ids(conn: Conn, qv: str, params: dict[str, object], n: int) -> list[
 
 
 def _lexical_ids(conn: Conn, query: str, params: dict[str, object], n: int) -> list[int]:
-    terms = sorted({t.lower() for t in _TERM.findall(query)})
+    terms = lexical_terms(query)
     if not terms:
         return []
     rows = conn.execute(
@@ -91,6 +115,8 @@ def search(
     params: dict[str, object] = {"visa": visa, "criterion": criterion}
     rankings: list[list[int]] = []
     if mode in (SearchMode.HYBRID, SearchMode.VECTOR):
+        # Filtered HNSW post-filters; iterative scan keeps rare filters from under-filling.
+        conn.execute("SET hnsw.iterative_scan = 'relaxed_order'")
         qv = vector_literal(embedder.embed_query(query))
         rankings.append(_vector_ids(conn, qv, params, candidates))
     if mode in (SearchMode.HYBRID, SearchMode.LEXICAL):
