@@ -109,3 +109,42 @@ def test_niw_merits_is_recognised_by_its_own_framework() -> None:
         "Under Matter of Dhanasar, 26 I&N Dec. 884 (AAO 2016), the first prong; Dhanasar's second.",
     )
     assert classify(niw, VisaType.EB2_NIW).kind is DecisionKind.MERITS
+
+
+def test_stage_two_decision_naming_criteria_in_prose_is_merits() -> None:
+    # Real fixture: Director found 3 criteria met; AAO denies on the final merits
+    # (Kazarian stage 2). It names criteria in prose and never cites (h)(3)(viii).
+    result = classify(_text("SEP172026_06B2203"), VisaType.EB1A)
+    assert result.is_merits
+    assert result.named_criteria >= 3
+    assert result.final_merits_section is True
+
+
+def test_named_criteria_alone_count_as_criterion_analysis() -> None:
+    named = SYNTHETIC_APPEAL.replace(
+        "Under 8 C.F.R. § 204.5(h)(3)(viii) the role and under 8 C.F.R. § 204.5(h)(3)(ix) pay.",
+        "The published material criterion is not met,"
+        " nor is the leading or critical role criterion.",
+    )
+    assert classify(named, VisaType.EB1A).kind is DecisionKind.MERITS
+
+
+def test_final_merits_subsection_alone_counts() -> None:
+    stage_two = SYNTHETIC_APPEAL.replace(
+        "Under 8 C.F.R. § 204.5(h)(3)(viii) the role and under 8 C.F.R. § 204.5(h)(3)(ix) pay.",
+        "\nB. Final Merits Determination\n\nThe totality of the record does not show acclaim.",
+    )
+    assert classify(stage_two, VisaType.EB1A).kind is DecisionKind.MERITS
+
+
+ONE_CRITERION_SENTENCE = (
+    "Under 8 C.F.R. § 204.5(h)(3)(viii) the role and under 8 C.F.R. § 204.5(h)(3)(ix) pay."
+)
+
+
+def test_final_merits_mentioned_only_in_prose_does_not_count() -> None:
+    prose = SYNTHETIC_APPEAL.replace(
+        "Under 8 C.F.R. § 204.5(h)(3)(viii) the role and under 8 C.F.R. § 204.5(h)(3)(ix) pay.",
+        "USCIS then considers the totality in a final merits determination.",
+    )
+    assert classify(prose, VisaType.EB1A).kind is DecisionKind.NO_CRITERION_ANALYSIS
