@@ -2,10 +2,27 @@
   "decision_id": "NOV252025_01B2203",
   "outcome": "dismissed",
   "criteria": {
-    "judging": {"director": "met", "aao": "not_addressed"},
-    "original_contributions": {"director": "not_met", "aao": "not_reached"},
-    "leading_role": {"director": "not_met", "aao": "not_met"}
+    "judging": {
+      "director": "met",
+      "aao": "not_addressed"
+    },
+    "original_contributions": {
+      "director": "not_met",
+      "aao": "not_reached"
+    },
+    "leading_role": {
+      "director": "not_met",
+      "aao": "not_met"
+    },
+    "membership": {
+      "director": "not_met",
+      "aao": "waived"
+    },
+    "high_salary": {
+      "director": "not_met",
+      "aao": "waived"
+    }
   },
   "final_merits": "not_reached",
-  "notes": "Other criteria claimed below were not argued on appeal and are deemed waived (not named in the decision, so not labelled). Leading role for a team or a self-founded venture is not shown to be leading/critical for a distinguished organization."
+  "notes": "Other criteria claimed below were not argued on appeal and are deemed waived (not named in the decision, so not labelled). Leading role for a team or a self-founded venture is not shown to be leading/critical for a distinguished organization. [Label audit 2026-11-10: added membership, high_salary - present in a passage the skim missed; verified against source text.]"
 }

@@ -2,14 +2,39 @@
   "decision_id": "DEC162025_01B2203",
   "outcome": "dismissed",
   "criteria": {
-    "awards": {"director": "not_met", "aao": "not_reached"},
-    "membership": {"director": "not_met", "aao": "not_reached"},
-    "published_material": {"director": "not_met", "aao": "not_reached"},
-    "judging": {"director": "met", "aao": "met"},
-    "original_contributions": {"director": "not_met", "aao": "not_reached"},
-    "scholarly_articles": {"director": "not_met", "aao": "met"},
-    "leading_role": {"director": "met", "aao": "met"}
+    "awards": {
+      "director": "not_met",
+      "aao": "not_reached"
+    },
+    "membership": {
+      "director": "not_met",
+      "aao": "not_reached"
+    },
+    "published_material": {
+      "director": "not_met",
+      "aao": "not_reached"
+    },
+    "judging": {
+      "director": "met",
+      "aao": "met"
+    },
+    "original_contributions": {
+      "director": "not_met",
+      "aao": "not_reached"
+    },
+    "scholarly_articles": {
+      "director": "not_met",
+      "aao": "met"
+    },
+    "leading_role": {
+      "director": "met",
+      "aao": "met"
+    },
+    "high_salary": {
+      "director": "not_met",
+      "aao": "not_reached"
+    }
   },
   "final_merits": "not_met",
-  "notes": "AAO reverses SCOPS on scholarly articles (publications are professional) -> 3 met; need not review the others; SCOPS made no final merits, AAO conducts it and denies. Petitioner claimed six others; only those named are labelled."
+  "notes": "AAO reverses SCOPS on scholarly articles (publications are professional) -> 3 met; need not review the others; SCOPS made no final merits, AAO conducts it and denies. Petitioner claimed six others; only those named are labelled. [Label audit 2026-11-10: added high_salary - present in a passage the skim missed; verified against source text.]"
 }

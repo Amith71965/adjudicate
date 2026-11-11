@@ -2,12 +2,31 @@
   "decision_id": "DEC302025_01B2203",
   "outcome": "sustained",
   "criteria": {
-    "published_material": {"director": "met", "aao": "not_addressed"},
-    "original_contributions": {"director": "met", "aao": "not_addressed"},
-    "scholarly_articles": {"director": "met", "aao": "not_addressed"},
-    "leading_role": {"director": "met", "aao": "not_addressed"},
-    "high_salary": {"director": "met", "aao": "not_addressed"}
+    "published_material": {
+      "director": "met",
+      "aao": "not_addressed"
+    },
+    "original_contributions": {
+      "director": "met",
+      "aao": "not_addressed"
+    },
+    "scholarly_articles": {
+      "director": "met",
+      "aao": "not_addressed"
+    },
+    "leading_role": {
+      "director": "met",
+      "aao": "not_addressed"
+    },
+    "high_salary": {
+      "director": "met",
+      "aao": "not_addressed"
+    },
+    "awards": {
+      "director": "not_met",
+      "aao": "not_addressed"
+    }
   },
   "final_merits": "met",
-  "notes": "The only approval in the gold set. AAO finds SCOPS evaluated achievements piecemeal rather than in totality, and finds sustained acclaim on the whole record. AAO never revisits the step-one criteria (silent -> not_addressed)."
+  "notes": "The only approval in the gold set. AAO finds SCOPS evaluated achievements piecemeal rather than in totality, and finds sustained acclaim on the whole record. AAO never revisits the step-one criteria (silent -> not_addressed). [Label audit 2026-11-10: added awards - present in a passage the skim missed; verified against source text.]"
 }

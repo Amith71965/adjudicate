@@ -2,14 +2,39 @@
   "decision_id": "OCT072025_01B2203",
   "outcome": "dismissed",
   "criteria": {
-    "awards": {"director": "not_met", "aao": "not_met"},
-    "membership": {"director": "not_met", "aao": "not_met"},
-    "published_material": {"director": "not_met", "aao": "not_met"},
-    "judging": {"director": "not_met", "aao": "met"},
-    "original_contributions": {"director": "not_met", "aao": "not_met"},
-    "scholarly_articles": {"director": "met", "aao": "met"},
-    "leading_role": {"director": "not_met", "aao": "not_met"}
+    "awards": {
+      "director": "not_met",
+      "aao": "not_met"
+    },
+    "membership": {
+      "director": "not_met",
+      "aao": "not_met"
+    },
+    "published_material": {
+      "director": "not_met",
+      "aao": "not_met"
+    },
+    "judging": {
+      "director": "not_met",
+      "aao": "met"
+    },
+    "original_contributions": {
+      "director": "not_met",
+      "aao": "not_met"
+    },
+    "scholarly_articles": {
+      "director": "met",
+      "aao": "met"
+    },
+    "leading_role": {
+      "director": "not_met",
+      "aao": "not_met"
+    },
+    "display": {
+      "director": "not_met",
+      "aao": "waived"
+    }
   },
   "final_merits": "not_reached",
-  "notes": "Failure mode D, procedural variant: evidence and claims first raised on appeal after an RFE are not considered (Matter of Soriano). Part of the awards argument 'mentioned but not developed' is waived (Matter of O-R-E-). Decision mis-cites scholarly articles as (h)(3)(iv). Eight criteria claimed; only seven are named."
+  "notes": "Failure mode D, procedural variant: evidence and claims first raised on appeal after an RFE are not considered (Matter of Soriano). Part of the awards argument 'mentioned but not developed' is waived (Matter of O-R-E-). Decision mis-cites scholarly articles as (h)(3)(iv). Eight criteria claimed; only seven are named. [Label audit 2026-11-10: added display - present in a passage the skim missed; verified against source text.]"
 }
