@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Harvest → dedupe → store",
+    "output": ".archify/dataflow-harvest-20261110-200824/harvest.html",
+    "quality_profile": "showcase",
+    "locale": "en"
+  },
+  "stages": [
+    { "label": "Source" },
+    { "label": "Fetch" },
+    { "label": "Parse" },
+    { "label": "Validate" },
+    { "label": "Store" }
+  ],
+  "nodes": [
+    { "id": "robots", "type": "security", "label": "robots.txt", "sublabel": "Crawl-delay 10 s", "stage": 0, "row": 0 },
+    { "id": "index", "type": "external", "label": "AAO index", "sublabel": "uri_1 filter", "stage": 0, "row": 1, "tag": "100 / page" },
+    { "id": "pdfs", "type": "external", "label": "Decision PDFs", "sublabel": "/err/<category>/", "stage": 0, "row": 2 },
+    { "id": "client", "type": "backend", "label": "Polite client", "sublabel": "spacing + backoff", "stage": 1, "row": 1, "tag": "fails loud" },
+    { "id": "parse", "type": "backend", "label": "Listing parser", "sublabel": "row → entry", "stage": 2, "row": 0, "tag": "no silent []" },
+    { "id": "canon", "type": "backend", "label": "Canonicalise", "sublabel": "URL + dedupe", "stage": 2, "row": 1 },
+    { "id": "check", "type": "security", "label": "PDF check", "sublabel": "%PDF magic", "stage": 3, "row": 2, "tag": "sha256" },
+    { "id": "audit", "type": "database", "label": "harvest_run", "sublabel": "per-run audit", "stage": 4, "row": 0 },
+    { "id": "raw", "type": "database", "label": "raw_decision", "sublabel": "one row per URL", "stage": 4, "row": 1, "tag": "bytes + metadata" }
+  ],
+  "flows": [
+    { "id": "robots-delay", "from": "robots", "to": "client", "label": "crawl delay", "variant": "security" },
+    { "id": "index-html", "from": "index", "to": "client", "label": "listing HTML", "variant": "emphasis" },
+    { "id": "pdf-bytes", "from": "pdfs", "to": "client", "label": "PDF bytes", "variant": "emphasis" },
+    { "id": "client-page", "from": "client", "to": "parse", "label": "page HTML" },
+    { "id": "parse-entries", "from": "parse", "to": "canon", "label": "entries" },
+    { "id": "canon-insert", "from": "canon", "to": "raw", "label": "new URLs only", "variant": "emphasis" },
+    { "id": "client-body", "from": "client", "to": "check", "label": "PDF body" },
+    { "id": "check-store", "from": "check", "to": "raw", "label": "bytes + hash", "variant": "emphasis" },
+    { "id": "canon-audit", "from": "canon", "to": "audit", "label": "new count", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Idempotent by construction", "items": ["Discovery: INSERT … ON CONFLICT (url) DO NOTHING", "Fetch touches only rows without content", "A full re-run downloads nothing"] },
+    { "dot": "rose", "title": "Fails loudly", "items": ["Unknown page layout raises, never reads as 'end of results'", "Non-PDF bodies are recorded as fetch_error, not stored", "Any failed document exits non-zero"] },
+    { "dot": "amber", "title": "Durable per document", "items": ["Autocommit connection: each PDF commits on its own", "An interrupted run resumes exactly where it stopped"] }
+  ]
+}
