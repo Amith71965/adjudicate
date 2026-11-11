@@ -215,7 +215,7 @@ def test_extraction_failure_is_recorded_and_the_run_continues(db: Conn, tmp_path
     )
     stats = extract_pending(db, client)
     assert stats.failed == 2 and stats.extracted == 0
-    (n,) = _one(db, "SELECT count(*) FROM decision_extraction WHERE error LIKE 'GroundingError%'")
+    (n,) = _one(db, "SELECT count(*) FROM decision_extraction WHERE error LIKE 'GroundingError%%'")
     assert n == 2
     (verdicts,) = _one(db, "SELECT count(*) FROM criterion_verdict")
     assert verdicts == 0  # an ungrounded extraction never enters the corpus
