@@ -219,3 +219,121 @@ def test_extraction_failure_is_recorded_and_the_run_continues(db: Conn, tmp_path
     assert n == 2
     (verdicts,) = _one(db, "SELECT count(*) FROM criterion_verdict")
     assert verdicts == 0  # an ungrounded extraction never enters the corpus
+
+
+# --- database review (phase 2) -------------------------------------------------------------
+
+
+def test_reparse_after_version_bump_keeps_ids_and_paid_extractions(
+    db: Conn, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    parse_pending(db)
+    extract_pending(db, _fake_llm(tmp_path, []))
+    ids_before = dict(db.execute("SELECT raw_decision_id, id FROM decision"))
+    monkeypatch.setattr("adjudicate.parse.pipeline.PARSER_VERSION", "test-bump")
+    assert parse_pending(db).parsed == 5 - 1  # all readable rows re-parsed (4 fixtures)
+    assert dict(db.execute("SELECT raw_decision_id, id FROM decision")) == ids_before
+    (n,) = _one(db, "SELECT count(*) FROM decision_extraction")
+    assert n == 2  # extraction rows survive the re-parse ...
+
+
+def test_stale_extractions_are_redone_when_the_parser_changes(
+    db: Conn, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    parse_pending(db)
+    calls: list[str] = []
+    client = _fake_llm(tmp_path, calls)
+    extract_pending(db, client)
+    monkeypatch.setattr("adjudicate.parse.pipeline.PARSER_VERSION", "test-bump")
+    parse_pending(db)
+    stats = extract_pending(db, client)  # ... but are re-extracted against the new text
+    assert stats.extracted == 2
+    (version,) = _one(db, "SELECT DISTINCT parser_version FROM decision_extraction")
+    assert version == "test-bump"
+
+
+def test_failed_extractions_can_be_retried_and_keep_their_cost(db: Conn, tmp_path: Path) -> None:
+    parse_pending(db)
+
+    def bad(request: httpx.Request) -> httpx.Response:
+        payload = {
+            "criteria": [
+                {
+                    "criterion": "judging",
+                    "director": "met",
+                    "aao": "met",
+                    "quote": "not in the decision at all, invented",
+                }
+            ],
+            "final_merits": "not_met",
+        }
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"message": {"content": json.dumps(payload)}}],
+                "usage": {"cost": 0.001},
+            },
+        )
+
+    failing = LlmClient(
+        api_key="sk-test",
+        budget_usd=1.0,
+        cache_dir=tmp_path / "a",
+        transport=httpx.MockTransport(bad),
+    )
+    extract_pending(db, failing)
+    assert (
+        extract_pending(db, _fake_llm(tmp_path / "b", [])).extracted == 0
+    )  # not retried by default
+    stats = extract_pending(db, _fake_llm(tmp_path / "c", []), retry_failed=True)
+    assert stats.extracted == 2
+    (attempts, cost) = _one(db, "SELECT min(attempts), min(cost_usd) FROM decision_extraction")
+    assert attempts == 2 and float(str(cost)) >= 0.002  # first (failed) attempt's spend kept
+
+
+def test_sections_store_their_text_with_a_full_text_index(db: Conn) -> None:
+    parse_pending(db)
+    (body, start, end, text) = _one(
+        db,
+        "SELECT s.body, s.start_char, s.end_char, d.text FROM decision_section s"
+        " JOIN decision d ON d.id = s.decision_id WHERE s.kind = 'final_merits' LIMIT 1",
+    )
+    assert body == str(text)[int(str(start)) : int(str(end))]
+    (hits,) = _one(
+        db,
+        "SELECT count(*) FROM decision_section"
+        " WHERE fts @@ plainto_tsquery('english', 'sustained acclaim')",
+    )
+    assert int(str(hits)) >= 1
+
+
+def test_content_without_byte_size_is_rejected(db: Conn) -> None:
+    with pytest.raises(psycopg.errors.CheckViolation):
+        db.execute(
+            "INSERT INTO raw_decision (url, decision_id, category, visa_type, content, sha256,"
+            " fetched_at) VALUES ('https://www.uscis.gov/n.pdf', 'N', 'c', 'EB-1A', '\\x25',"
+            " repeat('b', 64), now())"
+        )
+
+
+def test_decision_ids_are_unique_across_the_corpus(db: Conn) -> None:
+    with pytest.raises(psycopg.errors.UniqueViolation):
+        db.execute(
+            "INSERT INTO raw_decision (url, decision_id, category, visa_type)"
+            " VALUES ('https://www.uscis.gov/dup.pdf', 'SEP152026_01B2203', 'c', 'EB-1A')"
+        )
+
+
+def test_failed_prong_is_dropped_unless_not_met() -> None:
+    from adjudicate.parse.verdicts import CriterionVerdict
+
+    v = CriterionVerdict.model_validate(
+        {
+            "criterion": "judging",
+            "director": "met",
+            "aao": "met",
+            "failed_prong": "irrelevant",
+            "quote": "x" * 12,
+        }
+    )
+    assert v.failed_prong is None
