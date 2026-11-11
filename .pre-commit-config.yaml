@@ -27,7 +27,7 @@ repos:
         pass_filenames: false
       - id: tsc
         name: tsc
-        entry: bash -c 'cd web && npx tsc --noEmit'
+        entry: bash -c 'cd web && npm run -s typecheck'
         language: system
         files: ^web/.*\.(ts|tsx)$
         pass_filenames: false

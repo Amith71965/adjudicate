@@ -36,7 +36,7 @@ test-py:
 lint-web:
 	cd web && npx eslint .
 type-web:
-	cd web && npx tsc --noEmit
+	cd web && npm run -s typecheck
 test-web:
 	cd web && npx vitest run
 
