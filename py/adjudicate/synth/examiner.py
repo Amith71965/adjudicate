@@ -25,6 +25,10 @@ PRONG_IDS: dict[Criterion, tuple[str, ...]] = {
     C.ORIGINAL_CONTRIBUTIONS: ("original", "significance"),
 }
 TWO_PART = list(PRONG_IDS)
+# Display (vii) and commercial success (x) only make sense for artistic work: claiming them
+# for an engineer is itself a defect, so they never appear as "fully evidenced" elsewhere.
+ARTS_ONLY = frozenset({C.DISPLAY, C.COMMERCIAL_SUCCESS})
+ARTS_FIELDS = frozenset({"jazz performance"})
 
 # Half-proven evidence. It reads like a real inventory entry: it does not announce what is
 # missing, it simply never shows it. {f}=field, {t}=topic.
@@ -102,10 +106,11 @@ class ExaminerCase:
 def _case(index: int, rng: random.Random) -> ExaminerCase:
     field, topic, org = rng.choice(FIELDS)
     forced_half = TWO_PART[index % len(TWO_PART)]  # every half kind is covered across the set
-    others = [c for c in Criterion if c is not forced_half]
+    allowed = [c for c in Criterion if field in ARTS_FIELDS or c not in ARTS_ONLY]
+    others = [c for c in allowed if c is not forced_half]
     rng.shuffle(others)
     claimed = [forced_half, *others[: rng.randint(4, 6)]]
-    unclaimed = rng.choice([c for c in Criterion if c not in claimed])
+    unclaimed = rng.choice([c for c in allowed if c not in claimed])
     halves = {forced_half}
     extra = [c for c in claimed if c.two_part and c is not forced_half]
     if extra and rng.random() < 0.3:

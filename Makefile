@@ -6,7 +6,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 PY := .venv/bin
 
-.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
+.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper eval-examiner verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
 
 help: ## list targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
@@ -65,6 +65,9 @@ synth: ## regenerate the seeded synthetic petition sets (phases 4 and 5)
 
 eval-mapper: ## phase-4 gate: blind mapper on 20 synthetic petitions (Haiku, <= $0.16, cached)
 	cd web && npx tsx scripts/eval-mapper.ts
+
+eval-examiner: ## phase-5 gate: adversarial examiner on 16 synthetic petitions (needs `make api`; Haiku, capped, cached)
+	cd web && npx tsx scripts/eval-examiner.ts
 
 lint-py:
 	$(PY)/ruff check py

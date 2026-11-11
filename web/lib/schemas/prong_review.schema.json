@@ -30,6 +30,10 @@
     }
   },
   "properties": {
+    "addressed": {
+      "title": "Addressed",
+      "type": "boolean"
+    },
     "citations": {
       "items": {
         "$ref": "#/$defs/Citation"
@@ -38,10 +42,6 @@
       "minItems": 1,
       "title": "Citations",
       "type": "array"
-    },
-    "established": {
-      "title": "Established",
-      "type": "boolean"
     },
     "objection": {
       "maxLength": 1200,
@@ -57,7 +57,7 @@
     }
   },
   "required": [
-    "established",
+    "addressed",
     "risk",
     "objection",
     "citations"

@@ -69,7 +69,7 @@ export function scoreExaminer(
     const halfCriteria = new Set(c.planted_halves.map((h) => h.criterion));
     for (const h of c.planted_halves) {
       s.mode_b.planted += 1;
-      const caught = h.missing_prongs.every((p) => review(h.criterion, p)?.review.established === false);
+      const caught = h.missing_prongs.every((p) => review(h.criterion, p)?.review.addressed === false);
       if (caught) s.mode_b.caught += 1;
       else s.mode_b.missed.push(`${c.petition_id}/${h.criterion}/${h.missing_prongs.join("+")}`);
     }
@@ -79,7 +79,7 @@ export function scoreExaminer(
     for (const r of reviews) {
       if (!fullTwoPart.has(r.criterion)) continue;
       s.full_claim_prongs.total += 1;
-      if (!r.review.established) s.full_claim_prongs.flagged += 1;
+      if (!r.review.addressed) s.full_claim_prongs.flagged += 1;
     }
 
     const unclaimed = c.waiver.filter((w) => w.kind === "unclaimed_supported");
