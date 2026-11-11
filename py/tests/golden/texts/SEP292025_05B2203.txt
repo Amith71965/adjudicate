@@ -1,0 +1,210 @@
+U.S. Citizenship Non-Precedent Decision of the
+and Immigration Administrative Appeals Office
+Services
+
+In Re: 39498206 Date: SEPT. 29, 2025
+
+Appeal of Service Center Operations (SCOPS) Decision
+
+Form 1-140, Immigrant Petition for Alien Workers (Extraordinary Ability)
+
+
+
+The Petitioner, a research scientist, seeks classification as an individual of extraordinary ability.
+See Immigration and Nationality Act (the Act) section 203(b)(1)(A), 8 U.S.C. § 1153(b)(1)(A). This
+first preference classification makes immigrant visas available to those who can demonstrate their
+extraordinary ability through sustained national or international acclaim and whose achievements have
+been recognized in their field through extensive documentation.
+
+SCOPS denied the petition, concluding that although the record established that the Petitioner met at
+least three of the ten regulatory criteria, he did not merit a favorable determination in a final merits
+analysis. The matter is now before us on appeal.
+
+The Petitioner bears the burden of proof to demonstrate eligibility by a preponderance of the evidence.
+Matter of Chawathe, 25 I&N Dec. 369, 375-76 (AAO 2010). We review the questions in this matter
+de novo. Matter of Christa's, Inc., 26 I&N Dec. 537,537 n.2 (AAO 2015). Upon de novo review,
+we will dismiss the appeal.
+
+I. LAW
+
+Section 203(b)(1)(A) of the Act makes visas available to immigrants with extraordinary ability if:
+
+(i) the alien has extraordinary ability in the sciences, arts, education, business, or athletics
+which has been demonstrated by sustained national or international acclaim and whose
+achievements have been recognized in the field through extensive documentation,
+
+(ii) the alien seeks to enter the United States to continue work in the area of extraordinary
+ability, and
+
+(iii) the alien's entry into the United States will substantially benefit prospectively the
+United States.
+
+The term "extraordinary ability" refers only to those individuals in "that small percentage who have
+risen to the very top of the field of endeavor." 8 C.F.R. § 204.5(h)(2). The implementing regulation
+
+at 8 C.F.R. § 204.5(h)(3) sets forth a multi-part analysis. First, a petitioner can demonstrate sustained
+acclaim and the recognition of achievements in the field through a one-time achievement (that is, a
+major, internationally recognized award) or qualifying documentation that meets at least three of the
+ten categories listed at 8 C.F.R. § 204.5(h)(3)(i)-(x) (including items such as awards, published
+material in certain media, and scholarly articles).
+
+Where a petitioner meets these initial evidence requirements, we then consider the totality of the
+material provided in a final merits determination and assess whether the record shows sustained
+national or international acclaim and demonstrates that the individual is among the small percentage
+at the very top of the field of endeavor. See Kazarian v. USCIS, 596 F.3d 1115 (9th Cir. 2010)
+(discussing a two-part review where the documentation is first counted and then, if fulfilling the
+required number of criteria, considered in the context of a final merits determination); see also
+Visinscaia v. Beers, 4 F. Supp. 3d 126, 131-32 (D.D.C. 2013); Rijal v. USCJS, 772 F. Supp. 2d 1339
+(W.D. Wash. 2011).
+
+II. ANALYSIS
+
+The Petitioner filed this petition in February 2025 when he was employed at t h e ~ - - - - - ~
+I Iin the Department of Computer Science as a research associate in natural language
+processing (NLP) on a full-time contract for the period of September 2022 through March 2025. In
+2022, he obtained a Ph.D. in the field from [REDACTED] Jin Australia.
+
+Because the Petitioner has not claimed or established that he has received a major, internationally
+recognized award, he must satisfy at least three of the alternate regulatory criteria found in
+8 C.F.R. § 204.5(h)(3)(i)-(x). SCOPS detem1ined that the Petitioner met three of those criteria:
+judging, scientific accomplishments of major significance, and scholarly articles under 8 C.F.R.
+§ 204.5(h)(3)(iv), (v), and (vi), respectively. Before SCOPS and on appeal the Petitioner does not
+assert, nor does the record establish that he has met other criteria.
+
+SCOPS denied the petition, however, concluding the record did not show the Petitioner warranted
+favorable consideration in a final merits detennination based on the totality of the evidence. In a final
+merits determination, we analyze a petitioner's accomplishments and weigh the totality of the evidence
+to determine if his successes are sufficient to demonstrate that he has extraordinary ability in the field
+of endeavor. See section 203(b)(1)(A)(i) of the Act; 8 C.F.R. § 204.5(h)(2), (3); Kazarian, 596 F.3d
+at 1119-20). See generally 6 USCIS Policy Manual B.2,https://www.uscis.gov/policymanual (stating
+that USCIS officers should then evaluate the evidence together when considering the petition in its
+entirety to dete1mine if the petitioner has established by a preponderance of the evidence the required
+high level of expertise of the immigrant classification). We have reviewed the Petitioner's initial
+submission, his response and additional documentation from SCOPS's request for evidence (RFE),
+SCOPS's decision, and the Petitioner's appeal brief. Upon de novo review, we adopt and affirm
+SCOPS's decision. See Matter of Burbano, 20 I&N Dec. 872, 874 (BIA 1994); see also Giday v. INS,
+113 F.3d 230, 234 (D.C. Cir. 1997) (noting that the practice of adopting and affirming the decision
+below has been "universally accepted by every other circuit that has squarely confronted the issue").
+Here, the decision reflects SCOPS thoroughly reviewed the record and correctly and sufficiently
+articulated reasons why the Petitioner's evidence and assertions of eligibility did not establish that he
+
+
+
+2
+
+meets the requirements for classification as an individual with extraordinary ability in the computer
+science field.
+
+On appeal, the Petitioner argues that SCOPS's final merits determination overlooked key components
+of the evidence pattern that demonstrates a pattern of sustained impact. First, the Petitioner asserts in
+his brief that his GAL model was "deployed across Australia's healthcare system as confirmed by a
+letter by Professor W-B-, 1 a professor in the
+'----------------------'
+However, Professor W-B-'s letter actually states that the model was applied to "a public hospital in
+I ~ not across the Australian healthcare system. Thus, there appears to be an unresolved
+inconsistency between the Petitioner's assertion in his brief and Professor W-B-' s letter. See Matterof
+Ho, 19 I&N Dec. 582, 591-92 (BIA 1988) (noting that "it is incumbent upon the petitioner to resolve
+the inconsistencies by independent objective evidence" and that "[a]ttempts to explain or reconcile the
+conflicting accounts, absent competent objective evidence pointing to where the truth, in fact, lies,
+will not suffice").
+
+Second, the Petitioner argues that SCOPS failed to consider technical alignment and industry adoption
+by leading institutions. A reference letter from Professor M-P-, a professor at I [REDACTED]
+.__ ______ ___. who leads a research lab in NLP, states that the Petitioner's work is "aligned"
+with the work of Open AI. However, Professor M-P- does not claim that Open AI is using the
+Petitioner's work, but rather he stated that Open AI employed techniques "similar to those pioneered
+by [the Petitioner] to uncover and validate infringement."
+
+Third, the Petitioner argues that SCOPS failed to consider independent recognition from unaffiliated
+expert Professor P-S-Y- of the I I who praised Petitioner's NLP
+watermarking technology for generative aiiificial intelligence intellectual (AI) prope1iy protection.
+Based on this one innovation, Professor P-S-Y- states that the Petitioner demonstrated his leadership
+in addressing global challenges and that the Petitioner "would significantly enhance the country's
+leadership in responsible AI innovation." USCIS need not accept primarily conclusory statements.
+1756, Inc. v. The US Att'y Gen., 745 F. Supp. 9, 15 (D.C. Dist. 1990). We also noted that the
+Petitioner conceded that Open AI independently developed models that share methodological
+similarities and an-ive at comparable conclusions.
+
+Fourth, the Petitioner relies on three non-precedent AAO decisions that resulted in remands due to
+inadequate analysis by SCOPS. Non-precedent decisions are not published as a precedent and
+therefore do not bind USCIS officers in future adjudications. See 8 C.F.R. § 103.3(c). Non-precedent
+decisions apply existing law and policy to the specific facts of the individual case and may be
+distinguishable based on the evidence in the record of proceedings, the issues considered, and
+applicable law and policy. Here, the Petitioner relies on non-precedent decisions with inapposite facts:
+a Petitioner with a varied history in the performing arts, a geoscientist and researcher, and a
+postdoctoral researcher in microbiome science.
+
+Finally, relating to the Petitioner's authorship of scholarly articles in the final merits determination,
+an evaluation of the citations of others to a petitioner's published work can be relevant to the final
+merits determination of whether a petitioner is at the very top of their field of endeavor. See Kazarian,
+
+1
+We use initials to protect the privacy of individuals referenced in this decision.
+
+
+3
+
+596 F. 3d at 1121-22. 2 In evaluating this evidence, SCOPS acknowledged that the record included
+citations to the Petitioner's published works in the field of computer science. However, SCOPS
+concluded that the Petitioner's citation volume includes collaborated works that do not demonstrate
+the influence of any particular author/researcher nor how that author/researcher impacted the field as
+a whole. On appeal, the Petitioner reasserts a high frequency of third-party citations on Google
+Scholar. We note that on Google Scholar, his top cited article is a 2024 article with 391 citations that
+lists the Petitioner as the 32nd author. His Google Scholar profile's second highest cited aiiicle, with
+139 citations, lists the Petitioner as the 4th author. The Petitioner's record of citation does not
+substantiate his assertion that his published works reached the level of extraordinary ability, as
+compared to others in the field. Chawathe, 25 I&N Dec. at 376.
+
+Based on our review of the evidence and the SCOPS's decision, we conclude that the SCOPS
+thoroughly examined and considered the submitted documentation, discussed various aspects of the
+evidence individually, but collectively considered the entire record to ultimately determine that the
+Petitioner is not an individual of extraordinary ability. To determine whether a petitioner has
+established eligibility for a requested benefit by a preponderance of the evidence, USCIS must
+examine each piece of evidence - both individually and within the context of the entire record - for
+relevance, probative value, and credibility. Matter of Chawathe, supra. While the Petitioner may
+disagree with aspects of SCOPS's analysis of the evidence, he has not sufficiently demonstrated that
+SCOPS neglected to collectively consider the record under the preponderance of the evidence
+standard, or that he otherwise erred as a matter of law or policy in denying the petition.
+
+III. CONCLUSION
+
+The Petitioner seeks a highly restrictive visa classification, intended for individuals already at the top
+of their respective fields, rather than those progressing toward the top. Matter of Price, 20 I&N Dec.
+953,954 (Assoc. Comm'r 1994) (concluding that even major league level athletes do not automatically
+meet the statutmy standards for classification as an individual of "extraordinary ability,"); Visinscaia,
+4 F. Supp. 3d at 131 (internal quotation marks omitted) (finding that the extraordinary ability
+designation is "extremely restrictive by design,"); Hamal v. Dep 't of Homeland Sec. (Hamal II), No.
+19-cv-2534, 2021 WL 2338316, at *5 (D.D.C. June 8, 2021), aff'd, 2023 WL 1156801 (D.C. Cir. Jan.
+31, 2023) (determining that EB-1 visas are "reserved for a very small percentage of prospective
+immigrants"). Here, the Petitioner has not shown his work is indicative of the required sustained
+national or international acclaim or is consistent with a "career of acclaimed work in the field" as
+contemplated by Congress. H.R. Rep. No. 101-723, 59 (Sept. 19, 1990); see also section 203(b)(1)(A)
+of the Act. Therefore, the Petitioner has not demonstrated his eligibility as an individual of
+extraordinary ability.
+
+ORDER: The appeal is dismissed.
+
+
+
+2
+See also 6 USCIS Policy Manual, supra, at F.2 (noting that a petitioner may provide evidence that their total rate of
+citation to their body of published work is high relative to others in the field such as the person has a high h-index for the
+field. Depending on the field and comparative data, such evidence may indicate a person's overall standing for the purpose
+of demonstrating that the person is among the small percentage at the top of the field and enjoys sustained national or
+international acclaim).
+
+
+4
+
+NOTICE: This constitutes the final decision in this matter. The filing of a motion will not postpone
+the effect of the decision. 8 C.F.R. § 103.5(a)(1)(iv). Aliens who are not lawfully present, or otherwise
+inadmissible or deportable, may be subject to the commencement of removal proceedings under
+section 240 of the Act through the issuance of a Form I-862, Notice to Appear. Those proceedings
+may result in their removal from the United States and possible ineligibility for future visas or other
+immigration benefits.
+
+
+
+
+5
+
