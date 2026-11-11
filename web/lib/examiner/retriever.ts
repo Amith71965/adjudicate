@@ -33,7 +33,12 @@ async function getJson(fetchFn: typeof fetch, url: string, timeoutMs: number): P
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
 
 /** Search returns 600-char snippets; quotes are validated against the full chunk, so fetch it. */
-export function httpRetriever(baseUrl: string, fetchFn: typeof fetch = fetch, timeoutMs = 30_000): Retriever {
+export function httpRetriever(
+  baseUrl: string,
+  fetchFn: typeof fetch = fetch,
+  timeoutMs = 30_000,
+  { before }: { before?: string } = {}, // temporal split: ISO date; only earlier decisions
+): Retriever {
   const base = baseUrl.replace(/\/$/, "");
   return {
     async search(query, { criterion, section, visa, k }) {
@@ -42,11 +47,15 @@ export function httpRetriever(baseUrl: string, fetchFn: typeof fetch = fetch, ti
       if (section !== undefined) params.set("section", section);
       params.set("visa", visa);
       params.set("k", String(k));
+      if (before !== undefined) params.set("before", before);
       const body = await getJson(fetchFn, `${base}/search?${params}`, timeoutMs);
       if (!isRecord(body) || !Array.isArray(body.results)) throw new RetrievalError("search: malformed response");
       // an API that predates the section filter ignores it silently: require the echo
       if (section !== undefined && (!isRecord(body.filters) || body.filters.section !== section)) {
         throw new RetrievalError(`search: the API did not confirm the section filter "${section}"`);
+      }
+      if (before !== undefined && (!isRecord(body.filters) || body.filters.before !== before)) {
+        throw new RetrievalError(`search: the API did not confirm the before=${before} cutoff`);
       }
       const hits: { chunk_id: number; decision_id: string }[] = [];
       for (const hit of body.results as unknown[]) {
