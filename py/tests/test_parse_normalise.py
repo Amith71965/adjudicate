@@ -163,3 +163,10 @@ class TestSectionHeadingRepair:
 
     def test_only_heading_lines_are_touched(self) -> None:
         assert n("the TI. ANALYSIS inline") == "the TI. ANALYSIS inline"
+
+
+def test_page_break_form_feed_does_not_hide_a_heading() -> None:
+    # Real case (JUL072026_03B2203): the heading starts a new page, after "\f".
+    assert n("eligibility.\n\x0c                TI. ANALYSIS\nbody") == (
+        "eligibility.\n\nII. ANALYSIS\nbody"
+    )

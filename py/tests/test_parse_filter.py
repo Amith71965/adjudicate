@@ -174,3 +174,23 @@ def test_criteria_named_only_in_the_law_section_do_not_count() -> None:
         + "\n\nORDER: The appeal is rejected.\n"
     )
     assert classify(signature_case, VisaType.EB1A).kind is DecisionKind.NO_CRITERION_ANALYSIS
+
+
+def test_motion_marked_only_in_the_caption_is_a_motion() -> None:
+    # Real caption (JUL072026_03B2203): no "before us on motion" phrase anywhere.
+    caption = (
+        "In Re: 40052479 Date: JULY 7, 2026\n"
+        "Motions on Administrative Appeals Office Decision\n"
+        "Form I-140, Immigrant Petition for Alien Workers (Extraordinary Ability)\n"
+    )
+    result = classify(
+        caption + SYNTHETIC_APPEAL.replace("now before us on appeal", "pending"), VisaType.EB1A
+    )
+    assert result.kind is DecisionKind.MOTION
+
+
+def test_motion_order_line_is_a_backstop() -> None:
+    text = SYNTHETIC_APPEAL.replace("now before us on appeal", "pending").replace(
+        "ORDER: The appeal is dismissed.", "ORDER: The motion to reopen is dismissed."
+    )
+    assert classify(text, VisaType.EB1A).kind is DecisionKind.MOTION
