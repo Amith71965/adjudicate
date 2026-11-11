@@ -136,3 +136,9 @@ def test_decision_without_analysis_section_is_refused(tmp_path: Path) -> None:
 def test_extraction_with_no_criteria_is_invalid() -> None:
     with pytest.raises(ValueError):
         DecisionVerdicts.model_validate({"criteria": [], "final_merits": "not_reached"})
+
+
+def test_extraction_leaves_room_for_hidden_reasoning(tmp_path: Path) -> None:
+    client, sent = _client(tmp_path, GOOD)
+    extract_verdicts(client, TEXT)
+    assert int(str(sent[0]["max_tokens"])) >= 8000

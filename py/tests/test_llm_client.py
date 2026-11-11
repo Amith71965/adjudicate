@@ -208,3 +208,23 @@ def test_transport_errors_become_llm_errors(tmp_path: Path) -> None:
     )
     with pytest.raises(LlmError, match="slow"):
         client.complete_json(HAIKU, system="s", user="u", schema=Answer, max_tokens=10)
+
+
+def test_truncation_at_max_tokens_is_named_not_reported_as_bad_json(tmp_path: Path) -> None:
+    # Real cause of 14 failed extractions: hidden reasoning tokens consumed max_tokens,
+    # so the visible JSON was cut off mid-string.
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"finish_reason": "length", "message": {"content": '{"verdict": "me'}}],
+                "usage": {"cost": 0.003, "completion_tokens_details": {"reasoning_tokens": 2421}},
+            },
+        )
+
+    client = LlmClient(
+        api_key="k", budget_usd=1.0, cache_dir=tmp_path, transport=httpx.MockTransport(handler)
+    )
+    with pytest.raises(LlmError, match="max_tokens"):
+        client.complete_json(HAIKU, system="s", user="u", schema=Answer, max_tokens=10)
+    assert client.spent_usd == pytest.approx(0.003)  # truncated calls still cost money
