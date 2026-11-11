@@ -237,7 +237,7 @@ def test_reparse_after_version_bump_keeps_ids_and_paid_extractions(
     assert n == 2  # extraction rows survive the re-parse ...
 
 
-def test_stale_extractions_are_redone_when_the_parser_changes(
+def test_stale_extractions_are_restamped_when_the_parser_changes(
     db: Conn, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     parse_pending(db)
@@ -246,8 +246,8 @@ def test_stale_extractions_are_redone_when_the_parser_changes(
     extract_pending(db, client)
     monkeypatch.setattr("adjudicate.parse.pipeline.PARSER_VERSION", "test-bump")
     parse_pending(db)
-    stats = extract_pending(db, client)  # ... but are re-extracted against the new text
-    assert stats.extracted == 2
+    stats = extract_pending(db, client)  # quotes still ground → re-stamped, not re-paid
+    assert stats.extracted == 0 and len(calls) == 2
     (version,) = _one(db, "SELECT DISTINCT parser_version FROM decision_extraction")
     assert version == "test-bump"
 

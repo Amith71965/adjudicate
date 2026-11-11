@@ -25,6 +25,7 @@ from adjudicate.parse.verdicts import (
     DEFAULT_MODEL,
     DecisionVerdicts,
     GroundingError,
+    _squash,
     extract_verdicts,
 )
 
@@ -223,7 +224,8 @@ def extract_pending(
     """
     require_autocommit(conn, "extract_pending")
     pending = conn.execute(
-        "SELECT d.id, d.text, d.parser_version, e.attempts, e.cost_usd FROM decision d"
+        "SELECT d.id, d.text, d.parser_version, e.attempts, e.cost_usd, e.error,"
+        " e.parser_version FROM decision d"
         " JOIN raw_decision r ON r.id = d.raw_decision_id"
         " LEFT JOIN decision_extraction e ON e.decision_id = d.id"
         " WHERE d.kind = 'merits' AND r.visa_type = 'EB-1A'"
@@ -233,7 +235,30 @@ def extract_pending(
         (retry_failed, limit),
     ).fetchall()
     stats = ExtractStats()
-    for decision_id, text, version, prior_attempts, prior_cost in pending:
+    for (
+        decision_id,
+        text,
+        version,
+        prior_attempts,
+        prior_cost,
+        prior_error,
+        prior_version,
+    ) in pending:
+        if prior_version is not None and prior_error is None and prior_version != version:
+            # Re-parsed: keep the paid extraction if every quote still grounds verbatim.
+            quotes = [
+                str(q)
+                for (q,) in conn.execute(
+                    "SELECT quote FROM criterion_verdict WHERE decision_id = %s", (decision_id,)
+                )
+            ]
+            haystack = _squash(str(text))
+            if quotes and all(_squash(q) in haystack for q in quotes):
+                conn.execute(
+                    "UPDATE decision_extraction SET parser_version = %s WHERE decision_id = %s",
+                    (version, decision_id),
+                )
+                continue
         attempts = int(str(prior_attempts)) + 1 if prior_attempts is not None else 1
         carried = float(str(prior_cost)) if prior_cost is not None else 0.0
         before = client.spent_usd
