@@ -167,3 +167,12 @@ def test_reparse_drops_stale_chunks_and_rebuild_restores_them(
     parse_pending(db)
     assert _scalar(db, "SELECT count(*) FROM chunk") == 0  # sections replaced → chunks gone
     assert build_index(db, FakeEmbedder()).chunks == first
+
+
+def test_vectors_from_another_model_are_never_mixed_in(db: Conn) -> None:
+    build_index(db, FakeEmbedder())
+
+    class Other(FakeEmbedder):
+        name = "fake-bow-384-v2"
+
+    assert search(db, Other(), "sustained acclaim", k=5, mode=SearchMode.VECTOR) == []

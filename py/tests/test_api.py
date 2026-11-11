@@ -101,3 +101,17 @@ def test_unknown_filters_are_rejected_not_silently_empty(
     client: TestClient, params: dict[str, object]
 ) -> None:
     assert client.get("/search", params=params).status_code == 422
+
+
+def test_partial_index_is_degraded_and_search_refuses(
+    client: TestClient, scratch_db_url: str
+) -> None:
+    with psycopg.connect(scratch_db_url, autocommit=True) as conn:
+        conn.execute(
+            "UPDATE chunk SET embedding = NULL, embed_model = NULL"
+            " WHERE id = (SELECT min(id) FROM chunk)"
+        )
+    h = client.get("/health")
+    assert h.status_code == 503 and h.json()["status"] == "degraded"
+    r = client.get("/search", params={"q": "acclaim"})
+    assert r.status_code == 503 and "index incomplete" in r.json()["detail"]

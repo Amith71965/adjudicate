@@ -75,3 +75,19 @@ describe("adjudicate MCP server", () => {
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 });
+
+describe("adjudicate MCP server — malformed API responses", () => {
+  it("treats a non-JSON 200 body as an error, not an empty result", async () => {
+    const client = await connect(vi.fn<FetchLike>().mockResolvedValue(new Response("<html>proxy</html>", { status: 200 })));
+    const res = await client.callTool({ name: "get_passage", arguments: { chunk_id: 1 } });
+    expect(res.isError).toBe(true);
+    expect((res.content as { text: string }[])[0].text).toMatch(/not JSON/i);
+  });
+
+  it("rejects a search body without a results array", async () => {
+    const client = await connect(vi.fn<FetchLike>().mockResolvedValue(json({ hits: [] })));
+    const res = await client.callTool({ name: "search_reasoning", arguments: { query: "x" } });
+    expect(res.isError).toBe(true);
+    expect((res.content as { text: string }[])[0].text).toMatch(/unexpected/i);
+  });
+});
