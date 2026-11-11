@@ -1,0 +1,32 @@
+# Postgres 17 + pgvector for the corpus. Memory-capped: this host has 8 GB.
+name: adjudicate
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: adjudicate-db
+    environment:
+      POSTGRES_USER: adjudicate
+      POSTGRES_PASSWORD: adjudicate   # local-only dev credential
+      POSTGRES_DB: adjudicate
+    command:
+      - postgres
+      - -c
+      - shared_buffers=128MB
+      - -c
+      - work_mem=16MB
+      - -c
+      - maintenance_work_mem=128MB
+      - -c
+      - max_connections=40
+    ports:
+      - "127.0.0.1:54329:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    mem_limit: 768m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adjudicate -d adjudicate"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  pgdata:

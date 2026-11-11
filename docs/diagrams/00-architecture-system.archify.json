@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Adjudicate — system architecture",
+    "output": ".archify/architecture-system-20261110-194959/system.html",
+    "quality_profile": "showcase",
+    "locale": "en"
+  },
+  "components": [
+    { "id": "attorney", "type": "external", "label": "Attorney", "sublabel": "human in the loop", "pos": [40, 200], "size": [130, 60] },
+    { "id": "ui", "type": "frontend", "label": "Review UI", "sublabel": "Next.js App Router", "pos": [250, 200], "size": [130, 60] },
+    { "id": "examiner", "type": "backend", "label": "Examiner agent", "sublabel": "Vercel AI SDK route", "pos": [460, 200], "size": [130, 60] },
+    { "id": "mcp", "type": "backend", "label": "MCP server", "sublabel": "corpus as tools", "pos": [670, 200], "size": [130, 60] },
+    { "id": "api", "type": "backend", "label": "Retrieval API", "sublabel": "FastAPI · Python", "pos": [880, 200], "size": [130, 60], "tag": "hybrid + RRF" },
+    { "id": "llm", "type": "cloud", "label": "OpenRouter", "sublabel": "Claude models", "pos": [460, 60], "size": [130, 60] },
+    { "id": "agents", "type": "external", "label": "Other agents", "sublabel": "any MCP client", "pos": [670, 60], "size": [130, 60] },
+    { "id": "voyage", "type": "cloud", "label": "Voyage AI", "sublabel": "voyage-law-2", "pos": [880, 60], "size": [130, 60] },
+    { "id": "eval", "type": "backend", "label": "Eval harness", "sublabel": "Python · pytest", "pos": [460, 360], "size": [130, 60] },
+    { "id": "pg", "type": "database", "label": "Postgres 17", "sublabel": "pgvector + FTS", "pos": [880, 360], "size": [130, 60] },
+    { "id": "harvest", "type": "backend", "label": "Harvest + parse", "sublabel": "Python batch", "pos": [1090, 360], "size": [130, 60] },
+    { "id": "uscis", "type": "external", "label": "USCIS AAO", "sublabel": "non-precedent PDFs", "pos": [1090, 520], "size": [130, 60] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "TypeScript · Next.js", "wraps": ["ui", "examiner", "mcp"] },
+    { "kind": "security-group", "label": "OrbStack · docker compose", "wraps": ["pg"] }
+  ],
+  "connections": [
+    { "id": "attorney-ui", "from": "attorney", "to": "ui", "label": "reviews", "variant": "emphasis" },
+    { "id": "ui-examiner", "from": "ui", "to": "examiner", "label": "review", "variant": "emphasis" },
+    { "id": "examiner-mcp", "from": "examiner", "to": "mcp", "label": "tools", "variant": "emphasis" },
+    { "id": "mcp-api", "from": "mcp", "to": "api", "label": "HTTP", "variant": "emphasis" },
+    { "id": "api-pg", "from": "api", "to": "pg", "label": "SQL + ANN" },
+    { "id": "examiner-llm", "from": "examiner", "to": "llm", "label": "structured output" },
+    { "id": "agents-mcp", "from": "agents", "to": "mcp", "label": "MCP" },
+    { "id": "api-voyage", "from": "api", "to": "voyage", "label": "embed query" },
+    { "id": "eval-examiner", "from": "eval", "to": "examiner", "label": "HTTP, outcome hidden", "variant": "dashed" },
+    { "id": "eval-pg", "from": "eval", "to": "pg", "label": "held-out 2026 set" },
+    { "id": "harvest-pg", "from": "harvest", "to": "pg", "label": "upsert" },
+    { "id": "uscis-harvest", "from": "uscis", "to": "harvest", "label": "crawl-delay 10 s", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Why two languages", "items": ["Python owns data: harvest, OCR repair, embeddings, eval", "TypeScript owns the agent, MCP and UI", "Pydantic is the schema source; Zod is generated"] },
+    { "dot": "emerald", "title": "Grounding", "items": ["Every objection cites a decision ID in Postgres", "Citations outside the retrieved set are rejected", "Lexical half is Postgres FTS, not BM25"] },
+    { "dot": "rose", "title": "Safety", "items": ["Attorney sign-off gates every export", "Synthetic petitions only; no real PII", "Pre-filing QA tool, not legal advice"] }
+  ]
+}

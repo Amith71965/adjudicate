@@ -1,0 +1,217 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "The two-stage test for extraordinary ability",
+    "output": ".archify/workflow-two-stage-test-20261110-195445/two-stage.html",
+    "quality_profile": "showcase",
+    "locale": "en",
+    "legend": {
+      "entries": {
+        "external": {
+          "label": "Petitioner"
+        },
+        "security": {
+          "label": "Legal gate"
+        },
+        "backend": {
+          "label": "Evidentiary test"
+        },
+        "frontend": {
+          "label": "Approval"
+        },
+        "messagebus": {
+          "label": "Denial"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "petition",
+      "label": "Petition"
+    },
+    {
+      "id": "quantity",
+      "label": "Stage 1 \u00b7 Quantity"
+    },
+    {
+      "id": "quality",
+      "label": "Stage 2 \u00b7 Quality"
+    },
+    {
+      "id": "denied",
+      "label": "Denial",
+      "variant": "exception"
+    }
+  ],
+  "phases": [
+    {
+      "id": "count",
+      "label": "Count the criteria",
+      "fromCol": 1,
+      "toCol": 2,
+      "variant": "emphasis"
+    },
+    {
+      "id": "weigh",
+      "label": "Weigh the whole record",
+      "fromCol": 3,
+      "toCol": 4,
+      "variant": "security"
+    }
+  ],
+  "mainPath": [
+    "file",
+    "award",
+    "criteria",
+    "merits",
+    "approve"
+  ],
+  "nodes": [
+    {
+      "id": "file",
+      "lane": "petition",
+      "col": 0,
+      "type": "external",
+      "label": "Form I-140 filed",
+      "sublabel": "evidence + letters"
+    },
+    {
+      "id": "award",
+      "lane": "quantity",
+      "col": 1,
+      "type": "security",
+      "label": "Major award?",
+      "sublabel": "one-time, international",
+      "icon": "decision"
+    },
+    {
+      "id": "criteria",
+      "lane": "quantity",
+      "col": 2,
+      "type": "backend",
+      "label": "3 of 10 criteria",
+      "sublabel": "8 CFR 204.5(h)(3)",
+      "tag": "some are two-part"
+    },
+    {
+      "id": "merits",
+      "lane": "quality",
+      "col": 3,
+      "type": "security",
+      "label": "Final merits",
+      "sublabel": "top of the field?",
+      "tag": "Kazarian \u00b7 Amin",
+      "icon": "decision"
+    },
+    {
+      "id": "approve",
+      "lane": "petition",
+      "col": 4,
+      "type": "frontend",
+      "label": "Approved",
+      "sublabel": "sustained acclaim",
+      "icon": "success"
+    },
+    {
+      "id": "deny1",
+      "lane": "denied",
+      "col": 2,
+      "type": "messagebus",
+      "label": "Denied",
+      "sublabel": "fewer than 3 met",
+      "icon": "failure"
+    },
+    {
+      "id": "deny2",
+      "lane": "denied",
+      "col": 3,
+      "type": "messagebus",
+      "label": "Denied anyway",
+      "sublabel": "3+ met, not top",
+      "icon": "failure"
+    }
+  ],
+  "edges": [
+    {
+      "id": "file-award",
+      "from": "file",
+      "to": "award",
+      "variant": "emphasis"
+    },
+    {
+      "id": "award-no",
+      "from": "award",
+      "to": "criteria",
+      "label": "no",
+      "variant": "emphasis"
+    },
+    {
+      "id": "award-yes",
+      "from": "award",
+      "to": "merits",
+      "label": "yes: skip count",
+      "variant": "default",
+      "role": "branch"
+    },
+    {
+      "id": "criteria-met",
+      "from": "criteria",
+      "to": "merits",
+      "label": "3+ fully met",
+      "variant": "emphasis"
+    },
+    {
+      "id": "merits-yes",
+      "from": "merits",
+      "to": "approve",
+      "label": "yes",
+      "variant": "emphasis"
+    },
+    {
+      "id": "criteria-fail",
+      "from": "criteria",
+      "to": "deny1",
+      "label": "under 3",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "merits-fail",
+      "from": "merits",
+      "to": "deny2",
+      "label": "not top",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Stage 1 \u00b7 quantity",
+      "items": [
+        "Ten regulatory criteria; at least three must be met",
+        "A two-part criterion fails if either half fails",
+        "e.g. (h)(3)(viii): leading role AND distinguished organization"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Stage 2 \u00b7 quality",
+      "items": [
+        "Totality of the record, Kazarian v. USCIS (9th Cir. 2010)",
+        "Upheld in Amin v. Mayorkas (5th Cir. 2022)",
+        "Passing stage 1 does not win stage 2"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Burden",
+      "items": [
+        "Preponderance of the evidence (Matter of Chawathe)",
+        "Pre-filing QA tool; not legal advice"
+      ]
+    }
+  ]
+}
