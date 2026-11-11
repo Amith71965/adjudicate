@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "ArtifactMapping": {
+      "properties": {
+        "artifact_id": {
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "best_criterion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Criterion"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rationale": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "scores": {
+          "items": {
+            "$ref": "#/$defs/CriterionScore"
+          },
+          "title": "Scores",
+          "type": "array"
+        },
+        "strength": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Strength",
+          "type": "number"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "best_criterion",
+        "strength",
+        "rationale",
+        "scores"
+      ],
+      "title": "ArtifactMapping",
+      "type": "object"
+    },
+    "Criterion": {
+      "description": "The ten EB-1A criteria at 8 C.F.R. \u00a7 204.5(h)(3)(i)-(x).",
+      "enum": [
+        "awards",
+        "membership",
+        "published_material",
+        "judging",
+        "original_contributions",
+        "scholarly_articles",
+        "display",
+        "leading_role",
+        "high_salary",
+        "commercial_success"
+      ],
+      "title": "Criterion",
+      "type": "string"
+    },
+    "CriterionScore": {
+      "properties": {
+        "criterion": {
+          "$ref": "#/$defs/Criterion"
+        },
+        "strength": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Strength",
+          "type": "number"
+        }
+      },
+      "required": [
+        "criterion",
+        "strength"
+      ],
+      "title": "CriterionScore",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "mappings": {
+      "items": {
+        "$ref": "#/$defs/ArtifactMapping"
+      },
+      "title": "Mappings",
+      "type": "array"
+    },
+    "petition_id": {
+      "title": "Petition Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "petition_id",
+    "mappings"
+  ],
+  "title": "PetitionMapping",
+  "type": "object"
+}
