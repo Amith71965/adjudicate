@@ -173,7 +173,7 @@ export interface ExaminerResult {
 }
 
 /** Bounded-concurrency map that keeps input order and starts nothing new after a failure. */
-async function inOrder<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+export async function inOrder<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
   const out = new Array<R>(items.length);
   let next = 0;
   let failed = false;
