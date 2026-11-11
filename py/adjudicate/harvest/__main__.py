@@ -16,18 +16,30 @@ import psycopg
 from adjudicate.db import database_url as default_database_url
 from adjudicate.db import describe_target
 from adjudicate.harvest.crawl import harvest
-from adjudicate.harvest.http import FetchError, PoliteClient, crawl_delay_from_robots
+from adjudicate.harvest.http import (
+    FetchError,
+    PoliteClient,
+    RobotsRules,
+    crawl_delay_from_robots,
+)
 
 ROBOTS_URL = "https://www.uscis.gov/robots.txt"
 TOPICS = {19: "EB-1A (I-140 extraordinary ability)", 18: "EB-2/NIW (I-140)", 4: "O (I-129)"}
 
 
+def _positive_int(text: str) -> int:
+    value = int(text)
+    if value <= 0:
+        raise argparse.ArgumentTypeError(f"must be a positive integer, got {value}")
+    return value
+
+
 def _parse(argv: Sequence[str]) -> argparse.Namespace:
     p = argparse.ArgumentParser(prog="python -m adjudicate.harvest", description=__doc__)
     p.add_argument("--topic", type=int, required=True, choices=sorted(TOPICS))
-    p.add_argument("--max-pages", type=int, required=True)
+    p.add_argument("--max-pages", type=_positive_int, required=True)
     p.add_argument("--min-year", type=int, default=None)
-    p.add_argument("--fetch-limit", type=int, default=None)
+    p.add_argument("--fetch-limit", type=_positive_int, default=None)
     p.add_argument("--min-interval", type=float, default=None, help="seconds; >= robots delay")
     return p.parse_args(argv)
 
@@ -47,8 +59,10 @@ def main(
 
     bootstrap = PoliteClient(transport=transport, min_interval=0.0, sleep=sleep)
     try:
-        robots_delay = crawl_delay_from_robots(bootstrap.get(ROBOTS_URL).text)
-    except FetchError as exc:
+        robots_txt = bootstrap.get(ROBOTS_URL).text
+        rules = RobotsRules.parse(robots_txt)
+        robots_delay = crawl_delay_from_robots(robots_txt)
+    except (FetchError, ValueError) as exc:
         say(f"cannot read robots.txt, refusing to crawl: {exc}")
         return 2
     finally:
@@ -77,13 +91,15 @@ def main(
                 max_pages=args.max_pages,
                 min_year=args.min_year,
                 fetch_limit=args.fetch_limit,
+                allowed=rules.allows,
                 log=say,
             )
     finally:
         client.close()
     say(
-        f"done: pages {stats.pages_walked}, new {stats.discovered_new},"
-        f" fetched {stats.fetched}, failed {stats.failed}"
+        f"done: pages {stats.pages_walked} (end reached: {stats.reached_end}),"
+        f" new {stats.discovered_new}, fetched {stats.fetched}, failed {stats.failed},"
+        f" abandoned {stats.abandoned}, warnings {stats.warnings}"
     )
     return 1 if stats.failed else 0
 

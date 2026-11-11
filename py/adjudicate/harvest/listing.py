@@ -22,6 +22,7 @@ from adjudicate.harvest.urls import canonical_url
 _FILENAME = re.compile(r"^([A-Z]{3})(\d{2})(\d{4})_(\d{2})([A-Z]\d{4,5})\.pdf$")
 _ISSUED_DIR = re.compile(r"^Decisions_Issued_in_(\d{4})$")
 _NO_RESULTS_CLASS = "block-msg--no-results"
+_TOTAL = re.compile(r"\bof\s+([\d,]+)")
 
 
 @dataclass(frozen=True, slots=True)
@@ -41,6 +42,27 @@ class ListingEntry:
     issued_year: int | None
     display_date: date | None
     decision_date: date | None
+
+
+@dataclass(frozen=True, slots=True)
+class ListingPage:
+    entries: list[ListingEntry]
+    total_rows: int | None  # "1 - 100 of 5294 total rows"
+    has_next: bool
+    drift: list[str]  # human-readable date/year inconsistencies; empty on healthy pages
+
+
+def _drift(entry: ListingEntry) -> str | None:
+    """Real pages agree on display date, filename date and folder year; flag any gap."""
+    if entry.display_date is None or entry.decision_date is None or entry.issued_year is None:
+        return f"{entry.decision_id}: unparsed date field(s)"
+    if entry.display_date != entry.decision_date:
+        return (
+            f"{entry.decision_id}: display {entry.display_date} != filename {entry.decision_date}"
+        )
+    if entry.issued_year != entry.decision_date.year:
+        return f"{entry.decision_id}: folder year {entry.issued_year} != {entry.decision_date.year}"
+    return None
 
 
 def parse_decision_filename(name: str) -> DecisionFilename | None:
@@ -90,14 +112,24 @@ def _entry_from_row(row: Tag, base: str) -> ListingEntry:
     )
 
 
-def parse_listing(html: str, base: str) -> list[ListingEntry]:
+def parse_listing_page(html: str, base: str) -> ListingPage:
     soup = BeautifulSoup(html, "html.parser")
     rows = soup.select("div.views-row")
-    if not rows:
-        if soup.select_one(f".{_NO_RESULTS_CLASS}") is not None:
-            return []
+    if not rows and soup.select_one(f".{_NO_RESULTS_CLASS}") is None:
         raise ValueError("unrecognised listing page: no views-row and no no-results marker")
-    return [_entry_from_row(row, base) for row in rows]
+    entries = [_entry_from_row(row, base) for row in rows]
+    counter = soup.select_one(".view__item-counter")
+    total_match = _TOTAL.search(counter.get_text(" ", strip=True)) if counter else None
+    return ListingPage(
+        entries=entries,
+        total_rows=int(total_match.group(1).replace(",", "")) if total_match else None,
+        has_next=soup.select_one('a[rel="next"]') is not None,
+        drift=[d for e in entries if (d := _drift(e)) is not None],
+    )
+
+
+def parse_listing(html: str, base: str) -> list[ListingEntry]:
+    return parse_listing_page(html, base).entries
 
 
 def dedupe(entries: list[ListingEntry]) -> list[ListingEntry]:
