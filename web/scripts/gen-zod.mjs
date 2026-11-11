@@ -9,6 +9,7 @@ const dir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../lib/s
 const TARGETS = [
   ["petition", "petitionSchema"],
   ["petition_mapping", "petitionMappingSchema"],
+  ["prong_review", "prongReviewSchema"],
 ];
 
 // Inline "#/$defs/X" references so the generated Zod is self-contained.

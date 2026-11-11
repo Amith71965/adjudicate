@@ -90,3 +90,9 @@ def _make_pdf(path: Path, text: str) -> None:
             ["pdftotext", str(path), "-"], capture_output=True, text=True, check=True
         ).stdout
     )
+
+
+def test_committed_eval_data_contains_no_pii() -> None:
+    # Synthetic petitions and eval results are committed; they must stay clean.
+    root = Path(__file__).resolve().parents[2] / "eval"
+    assert scan_tree([root]) == []

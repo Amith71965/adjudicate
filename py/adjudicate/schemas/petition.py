@@ -9,6 +9,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, model_validator
 
 from adjudicate.parse.structure import Criterion
+from adjudicate.schemas.examiner import ProngReview
 
 
 class EvidenceKind(StrEnum):
@@ -64,6 +65,7 @@ class PetitionMapping(BaseModel):
 SCHEMAS: dict[str, type[BaseModel]] = {
     "petition.schema.json": Petition,
     "petition_mapping.schema.json": PetitionMapping,
+    "prong_review.schema.json": ProngReview,
 }
 
 

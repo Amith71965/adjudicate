@@ -1,0 +1,67 @@
+{
+  "$defs": {
+    "Citation": {
+      "properties": {
+        "chunk_id": {
+          "minimum": 1,
+          "title": "Chunk Id",
+          "type": "integer"
+        },
+        "decision_id": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Decision Id",
+          "type": "string"
+        },
+        "quote": {
+          "maxLength": 600,
+          "minLength": 30,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "decision_id",
+        "quote"
+      ],
+      "title": "Citation",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "citations": {
+      "items": {
+        "$ref": "#/$defs/Citation"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Citations",
+      "type": "array"
+    },
+    "facially_met": {
+      "title": "Facially Met",
+      "type": "boolean"
+    },
+    "objection": {
+      "maxLength": 1200,
+      "minLength": 20,
+      "title": "Objection",
+      "type": "string"
+    },
+    "risk": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Risk",
+      "type": "number"
+    }
+  },
+  "required": [
+    "facially_met",
+    "risk",
+    "objection",
+    "citations"
+  ],
+  "title": "ProngReview",
+  "type": "object"
+}
