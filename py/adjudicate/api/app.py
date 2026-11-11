@@ -113,7 +113,18 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
                 criterion=criterion.value if criterion else None,
                 section=section.value if section else None,
             )
-        return {"query": q, "mode": mode.value, "results": [asdict(h) for h in hits]}
+        filters = {
+            "visa": visa.value if visa else None,
+            "criterion": criterion.value if criterion else None,
+            "section": section.value if section else None,
+        }
+        # echoed so a client can tell an applied filter from one an older API ignored
+        return {
+            "query": q,
+            "mode": mode.value,
+            "filters": filters,
+            "results": [asdict(h) for h in hits],
+        }
 
     @app.get("/passages/{chunk_id}")
     def passage(chunk_id: int) -> dict[str, object]:

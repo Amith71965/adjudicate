@@ -61,9 +61,11 @@ export function coverageProblems(review: LetterReview, n: number): string[] {
 
 export async function reviewLetter(
   letter: Letter,
-  { model, field, maxOutputTokens = 3000 }: { model: LanguageModel; field: string; maxOutputTokens?: number },
+  { model, field, maxOutputTokens }: { model: LanguageModel; field: string; maxOutputTokens?: number },
 ): Promise<LetterOutcome> {
   const n = letter.sentences.length;
+  // ~60 tokens per labelled sentence (index, label, short reason): a fixed cap truncates long letters
+  const budget = maxOutputTokens ?? Math.max(3000, 60 * n + 600);
   const prompt = [
     `Field: ${field}`,
     `Letter (${n} sentences, numbered from 0):`,
@@ -77,7 +79,7 @@ export async function reviewLetter(
         prompt: feedback ? `${prompt}\n\n${feedback}` : prompt,
         output: Output.object({ schema: letterReviewSchema }),
         temperature: 0,
-        maxOutputTokens,
+        maxOutputTokens: budget,
         maxRetries: 0, // hidden retries are hidden spend; the corrective retry below is explicit
       });
       return output;

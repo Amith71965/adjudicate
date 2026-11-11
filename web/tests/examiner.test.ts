@@ -171,7 +171,7 @@ describe("httpRetriever", () => {
   });
   it("filters by section and leaves out a criterion it was not given", async () => {
     const fetchFn = vi.fn(async (url: string) =>
-      url.includes("/search") ? ok({ results: [] }) : ok({}));
+      url.includes("/search") ? ok({ results: [], filters: { section: "final_merits" } }) : ok({}));
     await httpRetriever("http://api", fetchFn as unknown as typeof fetch).search("acclaim", { section: "final_merits", visa: "EB-1A", k: 6 });
     const params = Object.fromEntries(new URL(fetchFn.mock.calls[0][0]).searchParams);
     expect(params).toEqual({ q: "acclaim", section: "final_merits", visa: "EB-1A", k: "6" });

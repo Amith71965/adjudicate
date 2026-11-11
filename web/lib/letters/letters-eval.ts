@@ -71,7 +71,7 @@ export function scoreLetters(
       });
     }
 
-    const planted = new Set(cs.planted_boilerplate.map((p) => p.join("|")));
+    const planted = new Set(cs.planted_boilerplate.map((p) => [...p].sort().join("|")));
     const found = new Set(review.boilerplate.map((p) => [p.a, p.b].sort().join("|")));
     bp.planted += planted.size;
     for (const p of found) if (planted.has(p)) bp.found++; else bp.false_pairs++;

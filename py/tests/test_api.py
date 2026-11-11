@@ -70,6 +70,8 @@ def test_search_by_section_returns_only_final_merits_reasoning(client: TestClien
     hits = r.json()["results"]
     assert r.status_code == 200 and hits
     assert {h["section_kind"] for h in hits} == {"final_merits"}
+    # echoed, so a client can tell an applied filter from one an older API ignored
+    assert r.json()["filters"] == {"visa": None, "criterion": None, "section": "final_merits"}
 
 
 def test_passage_round_trip(client: TestClient) -> None:

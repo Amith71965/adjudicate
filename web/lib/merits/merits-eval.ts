@@ -22,7 +22,7 @@ export interface MeritsScore {
   pairs: number;
   ordered_pairs: number;
   min_margin: number; // smallest risk(weak) - risk(strong) over pairs with both reviewed
-  weak_caught: number; // weak petitions judged unfavorable
+  weak_caught: number; // weak petitions judged unfavorable with risk >= 0.5
   strong_favorable: number; // strong petitions judged favorable (reported, not gated)
   accuracy: number;
   confusion: { strong_favorable: number; strong_unfavorable: number; weak_favorable: number; weak_unfavorable: number };
@@ -39,9 +39,13 @@ export function scoreMerits(
   { minMargin = 0.2 }: { minMargin?: number } = {},
 ): MeritsScore {
   if (outcomes.length !== cases.length) throw new Error(`need one outcome per case: ${cases.length} cases, ${outcomes.length} outcomes`);
+  for (const p of new Set(cases.map((c) => c.pair))) {
+    const tiers = cases.filter((c) => c.pair === p).map((c) => c.tier).sort().join(",");
+    if (tiers !== "strong,weak") throw new Error(`pair ${p} needs exactly one strong and one weak case, has [${tiers}]`);
+  }
   const confusion = { strong_favorable: 0, strong_unfavorable: 0, weak_favorable: 0, weak_unfavorable: 0 };
   const risk = new Map<string, number>();
-  let dropped = 0, correct = 0, citations = 0;
+  let dropped = 0, correct = 0, citations = 0, weakCaught = 0;
   const fabricated: string[] = [];
   cases.forEach((c, i) => {
     const o = outcomes[i];
@@ -53,6 +57,8 @@ export function scoreMerits(
     const favorable = o.review.sustained_acclaim && o.review.top_of_field;
     confusion[`${c.tier}_${favorable ? "favorable" : "unfavorable"}`]++;
     if (favorable === (c.tier === "strong")) correct++;
+    // caught = judged unfavorable AND scored as likely adverse; a low risk contradicts the verdict
+    if (c.tier === "weak" && !favorable && o.review.risk >= 0.5) weakCaught++;
     risk.set(c.petition_id, o.review.risk);
     citations += o.review.citations.length;
     const fresh = o.review.citations.flatMap((x) => { const p = db.get(x.chunk_id); return p ? [p] : []; });
@@ -75,15 +81,15 @@ export function scoreMerits(
   const failures: string[] = [];
   if (cases.length === 0) failures.push("no cases");
   if (ordered < pairIds.length) failures.push(`${ordered}/${pairIds.length} pairs ordered (strong less risky than weak)`);
-  if (confusion.weak_unfavorable < weakCases) {
-    failures.push(`${weakCases - confusion.weak_unfavorable} weak petition(s) not judged unfavorable`);
+  if (weakCaught < weakCases) {
+    failures.push(`${weakCases - weakCaught} weak petition(s) not judged unfavorable with risk >= 0.5`);
   }
   if (margins.length > 0 && minMarginSeen < minMargin) failures.push(`smallest risk margin ${minMarginSeen.toFixed(3)} < ${minMargin}`);
   if (fabricated.length > 0) failures.push(`${fabricated.length} fabricated citation(s)`);
   if (dropped > 0) failures.push(`${dropped} merits review(s) dropped unreviewed`);
   return {
     cases: cases.length, dropped, pairs: pairIds.length, ordered_pairs: ordered, min_margin: minMarginSeen,
-    weak_caught: confusion.weak_unfavorable, strong_favorable: confusion.strong_favorable, accuracy, confusion,
+    weak_caught: weakCaught, strong_favorable: confusion.strong_favorable, accuracy, confusion,
     citations, fabricated_citations: fabricated.length, fabricated,
     gate: { passed: failures.length === 0, failures },
   };

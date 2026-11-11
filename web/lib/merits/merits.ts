@@ -74,6 +74,7 @@ const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one :
 
 /** Letter findings in words: raw field names get misread ("assertion_share" as "shared phrasing"). */
 export function describeLetters(l: LetterSummary): string {
+  if (l.letters === 0) return "- No recommendation letters were filed.";
   return [
     `${plural(l.letters, "letter", "letters")} filed`,
     `${plural(l.independent, "letter is", "letters are")} presented as independent with no tie to the beneficiary found`,
