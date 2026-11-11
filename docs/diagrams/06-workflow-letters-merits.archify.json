@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Letter scrutiny and the step-two merits pass",
+    "output": ".archify/workflow-letters-merits-20261111-171500/letters-merits.html",
+    "quality_profile": "showcase",
+    "locale": "en",
+    "legend": {
+      "entries": {
+        "database": { "label": "Input or stored result" },
+        "backend": { "label": "Deterministic check" },
+        "security": { "label": "Validation gate" },
+        "cloud": { "label": "LLM (Haiku 5.5)" },
+        "messagebus": { "label": "Unreviewed, never a pass" }
+      }
+    }
+  },
+  "lanes": [
+    { "id": "letters", "label": "Letter checks (no model)" },
+    { "id": "llm", "label": "Model calls, validated" },
+    { "id": "merits", "label": "Kazarian step two" },
+    { "id": "dropped", "label": "Dropped (recorded, counted against)", "variant": "exception" }
+  ],
+  "mainPath": ["packet", "labels", "coverage", "summary", "merits_llm", "grounding", "review"],
+  "nodes": [
+    { "id": "packet", "lane": "letters", "col": 0, "type": "database", "label": "Letter packet", "sublabel": "sentences, authors, CV" },
+    { "id": "boiler", "lane": "letters", "col": 1, "type": "backend", "label": "Boilerplate", "sublabel": "8-word shingles, 4+ shared" },
+    { "id": "indep", "lane": "letters", "col": 2, "type": "backend", "label": "Independence ties", "sublabel": "co-author, shared org" },
+    { "id": "summary", "lane": "letters", "col": 3, "type": "backend", "label": "Letter summary", "sublabel": "weak, pairs, violations" },
+    { "id": "labels", "lane": "llm", "col": 1, "type": "cloud", "label": "Sentence labels", "sublabel": "mechanism, assertion, context" },
+    { "id": "coverage", "lane": "llm", "col": 2, "type": "security", "label": "Coverage gate", "sublabel": "every sentence once?" },
+    { "id": "merits_llm", "lane": "llm", "col": 4, "type": "cloud", "label": "Merits review", "sublabel": "acclaim, top of field" },
+    { "id": "grounding", "lane": "llm", "col": 5, "type": "security", "label": "Citation gate", "sublabel": "retrieved, verbatim?" },
+    { "id": "step1", "lane": "merits", "col": 3, "type": "database", "label": "Step one", "sublabel": "examiner criterion risk" },
+    { "id": "retrieve", "lane": "merits", "col": 4, "type": "backend", "label": "final_merits search", "sublabel": "/search section filter" },
+    { "id": "review", "lane": "merits", "col": 5, "type": "database", "label": "Merits result", "sublabel": "grounded only" },
+    { "id": "unreviewed", "lane": "dropped", "col": 2, "type": "messagebus", "label": "Letter unreviewed", "sublabel": "counted as weak" },
+    { "id": "dropped", "lane": "dropped", "col": 5, "type": "messagebus", "label": "Merits dropped", "sublabel": "fails the gate" }
+  ],
+  "edges": [
+    { "id": "e1", "from": "packet", "to": "labels", "variant": "emphasis" },
+    { "id": "e2", "from": "labels", "to": "coverage", "variant": "emphasis" },
+    { "id": "e3", "from": "coverage", "to": "summary", "label": "all labelled", "variant": "emphasis" },
+    { "id": "e4", "from": "packet", "to": "boiler" },
+    { "id": "e5", "from": "boiler", "to": "indep" },
+    { "id": "e6", "from": "indep", "to": "summary" },
+    { "id": "e7", "from": "summary", "to": "merits_llm", "label": "findings in words", "variant": "emphasis" },
+    { "id": "e8", "from": "step1", "to": "merits_llm" },
+    { "id": "e9", "from": "retrieve", "to": "merits_llm", "label": "AAO passages" },
+    { "id": "e10", "from": "merits_llm", "to": "grounding", "variant": "emphasis" },
+    { "id": "e11", "from": "grounding", "to": "review", "label": "citations hold", "variant": "emphasis" },
+    { "id": "r1", "from": "coverage", "to": "labels", "label": "1 retry", "variant": "dashed", "role": "return" },
+    { "id": "r2", "from": "grounding", "to": "merits_llm", "label": "1 retry", "variant": "dashed", "role": "return" },
+    { "id": "x1", "from": "coverage", "to": "unreviewed", "label": "still incomplete", "variant": "security", "role": "error" },
+    { "id": "x2", "from": "grounding", "to": "dropped", "label": "none survive", "variant": "security", "role": "error" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Letters gate, dev / held-out",
+      "items": [
+        "mode C: 178/178 and 175/175, 0 false flags",
+        "lexicon baseline: precision 0.60 / 0.62, recall 0.52 / 0.47",
+        "boilerplate 10/10 and 12/12; independence 11/11 twice; 0 false"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Merits gate, dev / held-out",
+      "items": [
+        "weak petitions caught 6/6 twice; every pair ordered",
+        "smallest risk gap 0.30 / 0.25; 0 of 55 citations fabricated",
+        "strong judged favorable 4/6 and 5/6 (reported, not gated)"
+      ]
+    }
+  ]
+}
