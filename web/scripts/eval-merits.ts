@@ -19,7 +19,7 @@ const API = process.env.ADJUDICATE_API ?? "http://127.0.0.1:8000";
 const MODEL = "anthropic/claude-haiku-5.5";
 const PRICE_PER_M = { input: 0.1, output: 0.5 }; // USD, list price used for the estimate
 const MAX_CALLS = 30; // 12 petitions + corrective retries
-const CACHE_VERSION = "merits-v1"; // bump when the prompt template or schema changes
+const CACHE_VERSION = "merits-v2"; // bump when the prompt template or schema changes
 
 const env = Object.fromEntries(
   readFileSync(path.join(ROOT, ".env"), "utf8").split("\n").filter((l) => l.includes("=") && !l.startsWith("#"))

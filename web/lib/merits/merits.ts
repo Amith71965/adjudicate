@@ -70,6 +70,20 @@ export function letterSummary(review: PacketReview): LetterSummary {
   };
 }
 
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+/** Letter findings in words: raw field names get misread ("assertion_share" as "shared phrasing"). */
+export function describeLetters(l: LetterSummary): string {
+  return [
+    `${plural(l.letters, "letter", "letters")} filed`,
+    `${plural(l.independent, "letter is", "letters are")} presented as independent with no tie to the beneficiary found`,
+    `${plural(l.weak, "letter states", "letters state")} no specific mechanism at all (praise only)`,
+    `${Math.round(l.assertion_share * 100)}% of letter sentences praise without stating a mechanism`,
+    `${plural(l.boilerplate_pairs, "pair of letters shares", "pairs of letters share")} boilerplate (copied passages)`,
+    `${plural(l.independence_violations, "letter presented as independent comes", "letters presented as independent come")} from someone tied to the beneficiary`,
+  ].map((line) => `- ${line}`).join("\n");
+}
+
 export async function meritsPass(
   raw: MeritsInput,
   { model, retriever, k = 6, maxOutputTokens = 4000 }: { model: LanguageModel; retriever: Retriever; k?: number; maxOutputTokens?: number },
@@ -84,7 +98,7 @@ export async function meritsPass(
     `Field: ${input.petition.field}`,
     `Step one (criteria judged met, with the examiner's residual risk):\n${JSON.stringify(input.step_one)}`,
     `Evidence inventory:\n${JSON.stringify(evidence, null, 2)}`,
-    `Recommendation letter findings:\n${JSON.stringify(input.letters)}`,
+    `Recommendation letter findings:\n${describeLetters(input.letters)}`,
     `AAO final-merits passages (the only citable sources):\n\n${passages.map((p) => `[chunk_id ${p.chunk_id} | decision_id ${p.decision_id}]\n${p.body}`).join("\n\n")}`,
   ].join("\n\n");
   const out = await generateGrounded({ model, system: MERITS_SYSTEM, prompt, schema: meritsReviewSchema, passages, maxOutputTokens });

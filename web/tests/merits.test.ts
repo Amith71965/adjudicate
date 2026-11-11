@@ -52,10 +52,17 @@ describe("meritsPass (Kazarian step two)", () => {
     expect(out).toMatchObject({ status: "reviewed", petition_id: "P02", attempts: 1, retrieved_chunk_ids: [11] });
     if (out.status === "reviewed") expect(out.review.top_of_field).toBe(false);
     expect(r.search.mock.calls[0][1]).toEqual({ section: "final_merits", visa: "EB-1A", k: 6 });
-    for (const needle of ["Peer review confirmations", "judging", "independence_violations", "chunk_id 11"]) {
+    for (const needle of [
+      "Peer review confirmations", "judging", "chunk_id 11",
+      // letter findings in words: raw field names were misread ("assertion_share" as "shared phrasing")
+      "80% of letter sentences praise without stating a mechanism",
+      "1 letter presented as independent comes from someone tied to the beneficiary",
+      "1 pair of letters shares boilerplate",
+    ]) {
       expect(prompts[0]).toContain(needle);
     }
     expect(MERITS_SYSTEM).toMatch(/small percentage/);
+    expect(prompts[0]).not.toContain("assertion_share");
   });
 
   it("drops without calling the model when no final-merits reasoning is retrieved", async () => {
