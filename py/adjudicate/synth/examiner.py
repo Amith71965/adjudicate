@@ -96,6 +96,18 @@ HALVES_HELDOUT: dict[Criterion, tuple[EvidenceKind, str, str, tuple[str, ...]]] 
     ),
 }
 
+# Phase-5 controls must be genuinely complete. The phase-4 leading-role template rests
+# reputation on the CEO's own assertion — a deficiency in itself — so it is overridden here.
+FULL_OVERRIDES: dict[Criterion, tuple[EvidenceKind, str, str]] = {
+    C.LEADING_ROLE: (
+        EvidenceKind.LETTER,
+        "Letter from the CEO of {o}, with press coverage and an industry ranking",
+        "The CEO describes the beneficiary as head of the {t} division of {o} and the decisions "
+        "they make; attached national press coverage and an independent industry ranking place "
+        "{o} among the five leading organizations in {f}.",
+    ),
+}
+
 
 @dataclass(frozen=True, slots=True)
 class PlantedHalf:
@@ -168,7 +180,9 @@ def _case(
             kind, title, desc, missing = halves_text[crit]
             planted_halves.append(PlantedHalf(aid, crit, missing))
         else:
-            kind, title, desc = rng.choice(TEMPLATES[crit])
+            kind, title, desc = rng.choice(TEMPLATES[crit])  # draw first: keeps rng stream
+            if crit in FULL_OVERRIDES:
+                kind, title, desc = FULL_OVERRIDES[crit]
         if crit is not None and claim is None:
             planted_unclaimed.append(PlantedUnclaimed(aid, crit))
         artifacts.append(

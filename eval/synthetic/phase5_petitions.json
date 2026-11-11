@@ -136,8 +136,8 @@
         {
           "id": "A05",
           "kind": "letter",
-          "title": "Letter from the CEO of Institute for Molecular Simulation",
-          "description": "Describes the beneficiary as head of the protein-folding models division of Institute for Molecular Simulation, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Institute for Molecular Simulation, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the protein-folding models division of Institute for Molecular Simulation and the decisions they make; attached national press coverage and an independent industry ranking place Institute for Molecular Simulation among the five leading organizations in computational biology.",
           "claimed_criterion": "leading_role"
         },
         {
@@ -226,8 +226,8 @@
         {
           "id": "A06",
           "kind": "letter",
-          "title": "Letter from the CEO of Northsea Grid Consortium",
-          "description": "Describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Northsea Grid Consortium, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium and the decisions they make; attached national press coverage and an independent industry ranking place Northsea Grid Consortium among the five leading organizations in renewable energy engineering.",
           "claimed_criterion": null
         },
         {
@@ -304,8 +304,8 @@
         {
           "id": "A03",
           "kind": "letter",
-          "title": "Letter from the CEO of Institute for Molecular Simulation",
-          "description": "Describes the beneficiary as head of the protein-folding models division of Institute for Molecular Simulation, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Institute for Molecular Simulation, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the protein-folding models division of Institute for Molecular Simulation and the decisions they make; attached national press coverage and an independent industry ranking place Institute for Molecular Simulation among the five leading organizations in computational biology.",
           "claimed_criterion": "leading_role"
         },
         {
@@ -520,8 +520,8 @@
         {
           "id": "A09",
           "kind": "letter",
-          "title": "Letter from the CEO of Northsea Grid Consortium",
-          "description": "Describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Northsea Grid Consortium, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium and the decisions they make; attached national press coverage and an independent industry ranking place Northsea Grid Consortium among the five leading organizations in renewable energy engineering.",
           "claimed_criterion": "leading_role"
         }
       ]
@@ -619,8 +619,8 @@
         {
           "id": "A09",
           "kind": "letter",
-          "title": "Letter from the CEO of Northsea Grid Consortium",
-          "description": "Describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Northsea Grid Consortium, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium and the decisions they make; attached national press coverage and an independent industry ranking place Northsea Grid Consortium among the five leading organizations in renewable energy engineering.",
           "claimed_criterion": "leading_role"
         }
       ]
@@ -871,8 +871,8 @@
         {
           "id": "A04",
           "kind": "letter",
-          "title": "Letter from the CEO of Meridian Bridge Authority",
-          "description": "Describes the beneficiary as head of the seismic retrofit systems division of Meridian Bridge Authority, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Meridian Bridge Authority, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the seismic retrofit systems division of Meridian Bridge Authority and the decisions they make; attached national press coverage and an independent industry ranking place Meridian Bridge Authority among the five leading organizations in structural engineering.",
           "claimed_criterion": "leading_role"
         },
         {
@@ -969,8 +969,8 @@
         {
           "id": "A04",
           "kind": "letter",
-          "title": "Letter from the CEO of Harbor City Jazz Orchestra",
-          "description": "Describes the beneficiary as head of the modal improvisation division of Harbor City Jazz Orchestra, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Harbor City Jazz Orchestra, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the modal improvisation division of Harbor City Jazz Orchestra and the decisions they make; attached national press coverage and an independent industry ranking place Harbor City Jazz Orchestra among the five leading organizations in jazz performance.",
           "claimed_criterion": null
         },
         {
@@ -1340,8 +1340,8 @@
         {
           "id": "A03",
           "kind": "letter",
-          "title": "Letter from the CEO of Northsea Grid Consortium",
-          "description": "Describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Northsea Grid Consortium, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium and the decisions they make; attached national press coverage and an independent industry ranking place Northsea Grid Consortium among the five leading organizations in renewable energy engineering.",
           "claimed_criterion": "leading_role"
         },
         {
@@ -1480,8 +1480,8 @@
         {
           "id": "A09",
           "kind": "letter",
-          "title": "Letter from the CEO of Meridian Bridge Authority",
-          "description": "Describes the beneficiary as head of the seismic retrofit systems division of Meridian Bridge Authority, an organization with documented national reputation, and their decisions.",
+          "title": "Letter from the CEO of Meridian Bridge Authority, with press coverage and an industry ranking",
+          "description": "The CEO describes the beneficiary as head of the seismic retrofit systems division of Meridian Bridge Authority and the decisions they make; attached national press coverage and an independent industry ranking place Meridian Bridge Authority among the five leading organizations in structural engineering.",
           "claimed_criterion": null
         }
       ]
