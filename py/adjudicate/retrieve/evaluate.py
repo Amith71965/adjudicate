@@ -71,6 +71,14 @@ def main() -> int:
     scores: dict[str, dict[str, float]] = {}
     misses: dict[str, list[str]] = {}
     with psycopg.connect(database_url(), autocommit=True) as conn:
+        row = conn.execute(
+            "SELECT count(*), count(*) FILTER (WHERE embed_model = %s) FROM chunk",
+            (embedder.name,),
+        ).fetchone()
+        chunks, embedded = (int(str(row[0])), int(str(row[1]))) if row else (0, 0)
+        if chunks == 0 or embedded < chunks:
+            print(f"refusing to score a partial index: {embedded}/{chunks} chunks embedded")
+            return 2
         for mode in SearchMode:
             results = {
                 q.id: [h.decision_id for h in search(conn, embedder, q.query, k=10, mode=mode)]
@@ -86,6 +94,7 @@ def main() -> int:
     report = {
         "queries": len(queries),
         "embed_model": embedder.name,
+        "chunks": chunks,
         "scores": scores,
         "misses_at_10": misses,
     }

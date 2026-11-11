@@ -95,7 +95,7 @@ def _vector_ids(conn: Conn, qv: str, params: dict[str, object], n: int) -> list[
         " ON s.decision_id = c.decision_id AND s.ordinal = c.section_ordinal"
         " WHERE (%(visa)s::text IS NULL OR r.visa_type = %(visa)s)"
         " AND (%(criterion)s::text IS NULL OR s.criterion = %(criterion)s)"
-        " AND c.embedding IS NOT NULL"
+        " AND c.embedding IS NOT NULL AND c.embed_model = %(model)s"
         " ORDER BY c.embedding <=> %(qv)s::vector LIMIT %(n)s",
         {**params, "qv": qv, "n": n},
     ).fetchall()
@@ -136,11 +136,13 @@ def search(
         raise ValueError("query must not be empty")
     if k <= 0:
         raise ValueError(f"k must be positive, got {k}")
-    params: dict[str, object] = {"visa": visa, "criterion": criterion}
+    # Only vectors made by this embedder: same-dim models must never mix vector spaces.
+    params: dict[str, object] = {"visa": visa, "criterion": criterion, "model": embedder.name}
     rankings: list[list[int]] = []
     if mode in (SearchMode.HYBRID, SearchMode.VECTOR):
         # Filtered HNSW post-filters; iterative scan keeps rare filters from under-filling.
         conn.execute("SET hnsw.iterative_scan = 'relaxed_order'")
+        conn.execute(f"SET hnsw.ef_search = {max(40, int(candidates))}")  # default 40 caps hits
         qv = vector_literal(embedder.embed_query(query))
         rankings.append(_vector_ids(conn, qv, params, candidates))
     if mode in (SearchMode.HYBRID, SearchMode.LEXICAL):
@@ -162,7 +164,10 @@ def search(
     hits: list[SearchHit] = []
     seen: set[str] = set()
     for chunk_id in fused:
-        _, did, url, visa_type, outcome, kind, crit, body = meta[chunk_id]
+        row = meta.get(chunk_id)
+        if row is None:  # deleted by a concurrent re-parse between the two queries
+            continue
+        _, did, url, visa_type, outcome, kind, crit, body = row
         if str(did) in seen:
             continue
         seen.add(str(did))

@@ -11,8 +11,10 @@ from typing import Annotated
 
 import psycopg
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import JSONResponse
 
 from adjudicate.parse.structure import Criterion
+from adjudicate.retrieve.chunk import CHUNKABLE_KINDS
 from adjudicate.retrieve.embed import Embedder
 from adjudicate.retrieve.search import SearchMode, search
 
@@ -37,22 +39,54 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
         try:
             conn = connect()
         except psycopg.Error as exc:
-            raise HTTPException(503, f"corpus database unavailable: {exc}") from exc
+            raise HTTPException(503, "corpus database unavailable") from exc
         try:
             yield conn
-        except psycopg.Error as exc:
-            raise HTTPException(503, f"corpus database unavailable: {exc}") from exc
+        except psycopg.OperationalError as exc:
+            raise HTTPException(503, "corpus database unavailable") from exc
+        except psycopg.Error as exc:  # schema/programming errors are bugs, not outages
+            raise HTTPException(500, f"database error: {type(exc).__name__}") from exc
         finally:
             conn.close()
 
+    def index_problems(conn: Conn) -> list[str]:
+        """Anything that would make search silently answer from part of the corpus."""
+        row = conn.execute(
+            "SELECT count(*), count(*) FILTER (WHERE embed_model IS DISTINCT FROM %s),"
+            " (SELECT count(*) FROM decision_section s JOIN decision d ON d.id = s.decision_id"
+            "  WHERE d.kind = 'merits' AND s.kind = ANY(%s) AND NOT EXISTS (SELECT 1 FROM chunk c"
+            "  WHERE c.decision_id = s.decision_id AND c.section_ordinal = s.ordinal))"
+            " FROM chunk",
+            (embedder.name, sorted(CHUNKABLE_KINDS)),
+        ).fetchone()
+        chunks, stale, unchunked = (int(str(x)) for x in row) if row else (0, 0, 0)
+        problems = []
+        if chunks == 0:
+            problems.append("no chunks indexed")
+        if stale:
+            problems.append(f"{stale} chunk(s) not embedded with {embedder.name}")
+        if unchunked:
+            problems.append(f"{unchunked} merits section(s) not chunked")
+        return problems
+
     @app.get("/health")
-    def health() -> dict[str, object]:
+    def health() -> JSONResponse:
         with db() as conn:
             row = conn.execute(
-                "SELECT count(*), count(*) FILTER (WHERE embedding IS NOT NULL) FROM chunk"
+                "SELECT count(*), count(*) FILTER (WHERE embed_model = %s) FROM chunk",
+                (embedder.name,),
             ).fetchone()
+            problems = index_problems(conn)
         chunks, embedded = (int(str(row[0])), int(str(row[1]))) if row else (0, 0)
-        return {"db": "ok", "chunks": chunks, "embedded": embedded, "embed_model": embedder.name}
+        body = {
+            "db": "ok",
+            "status": "degraded" if problems else "ok",
+            "problems": problems,
+            "chunks": chunks,
+            "embedded": embedded,
+            "embed_model": embedder.name,
+        }
+        return JSONResponse(body, status_code=503 if problems else 200)
 
     @app.get("/search")
     def search_endpoint(
@@ -63,6 +97,8 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
         criterion: CriterionCode | None = None,
     ) -> dict[str, object]:
         with db() as conn:
+            if problems := index_problems(conn):
+                raise HTTPException(503, "index incomplete: " + "; ".join(problems))
             hits = search(
                 conn,
                 embedder,

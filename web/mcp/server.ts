@@ -6,7 +6,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-export type FetchLike = (url: string) => Promise<Response>;
+export type FetchLike = (url: string, init?: RequestInit) => Promise<Response>;
 
 export interface ServerOptions {
   apiBase: string;
@@ -30,7 +30,7 @@ const CRITERIA = [
   "scholarly_articles", "display", "leading_role", "high_salary", "commercial_success",
 ] as const;
 
-export function createServer({ apiBase, fetch: fetchImpl = (u) => fetch(u) }: ServerOptions): McpServer {
+export function createServer({ apiBase, fetch: fetchImpl = (u, init) => fetch(u, init) }: ServerOptions): McpServer {
   const server = new McpServer({ name: "adjudicate", version: "0.3.0" });
 
   async function get(path: string, params: Record<string, string | undefined> = {}): Promise<unknown> {
@@ -40,14 +40,23 @@ export function createServer({ apiBase, fetch: fetchImpl = (u) => fetch(u) }: Se
     }
     let res: Response;
     try {
-      res = await fetchImpl(url.toString());
+      res = await fetchImpl(url.toString(), { signal: AbortSignal.timeout(30_000) });
     } catch (err) {
       throw new ApiError(`retrieval API unreachable: ${err instanceof Error ? err.message : String(err)}`);
     }
-    const body: unknown = await res.json().catch(() => ({}));
-    const detail = (body as { detail?: unknown }).detail ?? res.statusText;
+    const raw = await res.text();
+    let body: unknown;
+    try {
+      body = JSON.parse(raw);
+    } catch {
+      body = undefined;
+    }
+    const detail = (body as { detail?: unknown } | undefined)?.detail ?? res.statusText;
     if (res.status === 404) throw new ApiError(`not found: ${String(detail)}`);
     if (!res.ok) throw new ApiError(`retrieval API error ${res.status}: ${String(detail)}`);
+    if (body === undefined || body === null || typeof body !== "object") {
+      throw new ApiError(`retrieval API response was not JSON: ${raw.slice(0, 120)}`);
+    }
     return body;
   }
 
@@ -74,13 +83,15 @@ export function createServer({ apiBase, fetch: fetchImpl = (u) => fetch(u) }: Se
     },
     async ({ query, k, mode, visa, criterion }) => {
       try {
-        const body = (await get("/search", { q: query, k: String(k), mode, visa, criterion })) as { results: Hit[] };
-        const text = body.results.length
-          ? body.results
+        const body = (await get("/search", { q: query, k: String(k), mode, visa, criterion })) as { results?: unknown };
+        if (!Array.isArray(body.results)) throw new ApiError("unexpected search response shape (no results array)");
+        const results = body.results as Hit[];
+        const text = results.length
+          ? results
               .map((h) => `${h.rank}. ${h.decision_id} [${h.section_kind}${h.criterion ? `:${h.criterion}` : ""}] ${h.url}\n   "${h.snippet.slice(0, 300)}"`)
               .join("\n")
           : "No matching AAO reasoning found.";
-        return { content: [{ type: "text" as const, text }], structuredContent: { results: body.results } };
+        return { content: [{ type: "text" as const, text }], structuredContent: { results } };
       } catch (err) {
         return fail(err);
       }
