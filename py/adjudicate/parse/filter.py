@@ -61,6 +61,7 @@ class DecisionKind(StrEnum):
     MERITS = "merits"
     MOTION = "motion"
     LEGACY_FORMAT = "legacy_format"
+    UNSTRUCTURED = "unstructured"
     OUT_OF_SCOPE = "out_of_scope"
     NO_ANALYSIS = "no_analysis"
     NO_CRITERION_ANALYSIS = "no_criterion_analysis"
@@ -84,23 +85,30 @@ class Classification:
 def classify(text: str, visa: VisaType, *, min_words: int = MIN_WORDS) -> Classification:
     words = len(text.split())
     pattern = _CRITERIA.get(visa)
-    cites = len(pattern.findall(text)) if pattern else 0
+    heading = _ANALYSIS_HEADING.search(text)
+    # Evidence counts only from the ANALYSIS section on: the LAW section's
+    # boilerplate names criteria ("awards, published material...") in every decision.
+    analysis = text[heading.end() :] if heading else ""
+    cites = len(pattern.findall(analysis)) if pattern else 0
     named = (
-        sum(1 for rx in _NAMED_CRITERIA.values() if rx.search(text)) if visa in _NAMED_FOR else 0
+        sum(1 for rx in _NAMED_CRITERIA.values() if rx.search(analysis))
+        if visa in _NAMED_FOR
+        else 0
     )
-    final_merits = bool(_FINAL_MERITS_HEADING.search(text))
+    final_merits = bool(_FINAL_MERITS_HEADING.search(analysis))
 
     def result(kind: DecisionKind, reason: str) -> Classification:
         return Classification(kind, words, cites, named, final_merits, [reason])
 
     if (m := _MOTION.search(text[:_POSTURE_WINDOW])) is not None:
         return result(DecisionKind.MOTION, f"posture is a motion: {m.group(0)!r}")
-    if not _ROMAN_HEADING.search(text):
-        why = "DISCUSSION: format" if _LEGACY_DISCUSSION.search(text) else "no section headings"
-        return result(DecisionKind.LEGACY_FORMAT, f"pre-modern decision layout ({why})")
     if pattern is None:
         return result(DecisionKind.OUT_OF_SCOPE, f"visa type {visa.value} is out of scope")
-    if not _ANALYSIS_HEADING.search(text):
+    if not _ROMAN_HEADING.search(text):
+        if _LEGACY_DISCUSSION.search(text):
+            return result(DecisionKind.LEGACY_FORMAT, "pre-2016 'DISCUSSION:' layout")
+        return result(DecisionKind.UNSTRUCTURED, "modern decision without section headings")
+    if heading is None:
         return result(DecisionKind.NO_ANALYSIS, "no 'ANALYSIS' section heading")
     evidence = [
         f"{cites} criterion citations" if cites >= MIN_CRITERION_CITATIONS else "",

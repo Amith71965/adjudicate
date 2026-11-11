@@ -42,6 +42,21 @@ _GLYPH_RUN_MID = re.compile(rf"[ \t]{{3,}}{_GLYPH}(?:[ \t]{{3,}}{_GLYPH})*[ \t]{
 _SPACES = re.compile(r"[ \t]{2,}")
 _LINE_EDGES = re.compile(r"^[ \t]+|[ \t]+$", re.MULTILINE)
 
+# Roman-numeral section headings damaged by OCR: "TI. ANALYSIS", "II. ANALYSrS".
+_HEADING = re.compile(r"^([IVXTl1]{1,4})\. ([A-Z][A-Za-z0-9 ]{1,40})$", re.MULTILINE)
+_ANALYSIS_TITLE = re.compile(r"^ANALYS[^I\s]S$")
+
+
+def _fix_heading(match: re.Match[str]) -> str:
+    numeral = match.group(1).translate(str.maketrans("Tl1", "III"))
+    title = match.group(2)
+    if _ANALYSIS_TITLE.match(title):
+        title = "ANALYSIS"
+    if not title.replace(" ", "").isupper():
+        return match.group(0)  # not a section heading (e.g. "A. The Petitioner")
+    return f"{numeral}. {title}"
+
+
 _CFR = re.compile(r"\bC\s?\.\s?F\s?\.\s?R\s?\.")
 _USC = re.compile(r"\bU\s?\.\s?S\s?\.\s?C\s?\.")
 _SECTION_SIGN = re.compile(r"(U\.S\.C\.|C\.F\.R\.) ?(?:\$|fj|§) ?(?=\d)")
@@ -108,6 +123,12 @@ def normalise(text: str) -> Normalised:
     t = _SPACES.sub(" ", t)
     t = _LINE_EDGES.sub("", t)
 
+    headed = _HEADING.sub(_fix_heading, t)
+    if headed != t:
+        repairs["section_heading"] += sum(
+            a != b for a, b in zip(t.splitlines(), headed.splitlines(), strict=True)
+        )
+    t = headed
     t = sub("cfr_spacing", _CFR, "C.F.R.", t)
     t = sub("cfr_spacing", _USC, "U.S.C.", t)
     t = sub("section_sign", _SECTION_SIGN, r"\1 § ", t)
