@@ -25,13 +25,13 @@ REDACTED = "[REDACTED]"
 _GLYPH = r"[Il|!]"
 _BAR_ONLY_LINE = re.compile(rf"^[ \t]*{_GLYPH}(?:[ \t]+{_GLYPH})*[ \t]*\n", re.MULTILINE)
 _FUNCTION_WORDS = (
-    "the|of|from|at|in|on|by|with|and|for|to|an|his|her|their|its"  # not "a": "et al"
+    "the|of|from|at|in|on|by|with|and|for|to|an|a|his|her|their|its"
     "|how|about|regarding|that|as|whether"
 )
 # "thel<gap>" / "ofl<gap>!word": a function word fused with the bar's left edge,
 # optionally followed by a glyph fused to the next word.
 _FRAGMENT = re.compile(
-    rf"\b({_FUNCTION_WORDS})l(?:[ \t]{{3,}}(?:[l|!](?=[a-z]))?|[ \t]*$)", re.MULTILINE
+    rf"(?<!\bet )\b({_FUNCTION_WORDS})l(?:[ \t]{{3,}}(?:[l|!](?=[a-z]))?|[ \t]*$)", re.MULTILINE
 )
 # "its~<gap>" / "third-party!<gap>": a bar glyph fused to the END of a real word.
 _FUSED_TAIL = re.compile(r"(\w)[~!][ \t]{3,}(?:l(?=[a-z]))?")
