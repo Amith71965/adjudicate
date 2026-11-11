@@ -76,3 +76,28 @@ class TestRecall:
     def test_queries_without_relevance_labels_are_an_error(self) -> None:
         with pytest.raises(ValueError, match="q9"):
             recall_at_k({"q9": ["d1"]}, {}, k=10)
+
+
+def test_lexical_terms_drop_domain_stopwords_and_keep_digits() -> None:
+    from adjudicate.retrieve.search import lexical_terms
+
+    terms = lexical_terms(
+        "The Petitioner's evidence of a 2024 award under criterion (viii) for USCIS"
+    )
+    assert {"2024", "award", "viii"} <= set(terms)
+    assert not {"petitioner", "evidence", "criterion", "uscis"} & set(terms)
+
+
+def test_lexical_terms_of_only_stopwords_is_empty() -> None:
+    from adjudicate.retrieve.search import lexical_terms
+
+    assert lexical_terms("the petitioner evidence") == []
+
+
+def test_bootstrap_ci_brackets_the_mean_and_is_deterministic() -> None:
+    from adjudicate.retrieve.evaluate import bootstrap_ci
+
+    hits = [1.0] * 38 + [0.0] * 6
+    lo, hi = bootstrap_ci(hits, iterations=2000, seed=7)
+    assert lo <= sum(hits) / len(hits) <= hi and hi - lo > 0.05
+    assert bootstrap_ci(hits, iterations=2000, seed=7) == (lo, hi)

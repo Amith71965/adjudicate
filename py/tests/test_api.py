@@ -94,3 +94,10 @@ def test_database_outage_is_503_not_an_empty_result() -> None:
         r = c.get("/search", params={"q": "acclaim"})
         assert r.status_code == 503 and "unavailable" in r.json()["detail"]
         assert c.get("/health").status_code == 503
+
+
+@pytest.mark.parametrize("params", [{"q": "x", "visa": "EB-1"}, {"q": "x", "criterion": "bogus"}])
+def test_unknown_filters_are_rejected_not_silently_empty(
+    client: TestClient, params: dict[str, object]
+) -> None:
+    assert client.get("/search", params=params).status_code == 422
