@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "diagram_type": "tree",
+  "meta": {
+    "title": "Four ways an extraordinary-ability petition fails",
+    "output": ".archify/tree-failure-modes-20261110-195522/failure-modes.html",
+    "quality_profile": "showcase",
+    "locale": "en"
+  },
+  "layout": { "direction": "right" },
+  "nodes": [
+    { "id": "root", "label": "Petition fails", "sublabel": "what Adjudicate must catch" },
+    { "id": "a", "parent": "root", "label": "A · Wrong criterion", "sublabel": "evidence filed against the wrong test" },
+    { "id": "a_ex", "parent": "a", "label": "Example", "sublabel": "articles offered as proof of a leading role" },
+    { "id": "a_det", "parent": "a", "label": "Detector", "sublabel": "evidence × criteria matrix (Phase 4)" },
+    { "id": "b", "parent": "root", "label": "B · Half a criterion", "sublabel": "one prong of a two-part test unproven" },
+    { "id": "b_ex", "parent": "b", "label": "Example", "sublabel": "leading role shown; distinguished org not" },
+    { "id": "b_det", "parent": "b", "label": "Detector", "sublabel": "per-prong examiner (Phase 5)" },
+    { "id": "c", "parent": "root", "label": "C · Assertion, no evidence", "sublabel": "superlatives without mechanism" },
+    { "id": "c_ex", "parent": "c", "label": "Example", "sublabel": "'world-renowned' with no how or why" },
+    { "id": "c_det", "parent": "c", "label": "Detector", "sublabel": "letter scrutiny + boilerplate (Phase 6)" },
+    { "id": "d", "parent": "root", "label": "D · Procedural waiver", "sublabel": "argument not raised in time" },
+    { "id": "d_ex", "parent": "d", "label": "Example", "sublabel": "criterion never claimed; lost on appeal" },
+    { "id": "d_det", "parent": "d", "label": "Detector", "sublabel": "missing-claim audit (Phase 5)" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Why these four", "items": ["A and B fail the quantity stage", "C fails both stages: weak evidence, weak merits", "D cannot be fixed later at all"] },
+    { "dot": "rose", "title": "Hardest to see", "items": ["C is the most common weakness", "LLM-drafted letters make it worse, not better"] }
+  ]
+}
