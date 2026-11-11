@@ -161,3 +161,15 @@ def test_case_citation_names(remand: str) -> None:
     names = {c.reporter: c.name for c in case_citations(remand)}
     assert names["25 I&N Dec. 369"] == "Matter of Chawathe"
     assert names["596 F.3d 1115"] == "Kazarian v. USCIS"
+
+
+def test_criterion_heading_wrapped_across_two_lines_is_recognised() -> None:
+    # Real layout (DEC012025_01B2203): "B. Leading or Critical\nRole" became an untyped "Role".
+    text = (
+        "I. LAW\nlaw\nII. ANALYSIS\nintro\nA. Original Contributions of Major Significance\n"
+        "body\nB. Leading or Critical\nRole\nThe regulation at 8 C.F.R. § 204.5(h)(3)(viii).\n"
+        "III. CONCLUSION\ndone\n"
+    )
+    got = [(s.kind, s.criterion) for s in split_sections(text)]
+    assert (SectionKind.CRITERION, Criterion.LEADING_ROLE) in got
+    assert (SectionKind.OTHER, None) not in got

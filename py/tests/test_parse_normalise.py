@@ -170,3 +170,25 @@ def test_page_break_form_feed_does_not_hide_a_heading() -> None:
     assert n("eligibility.\n\x0c                TI. ANALYSIS\nbody") == (
         "eligibility.\n\nII. ANALYSIS\nbody"
     )
+
+
+class TestLabellingBacklog:
+    """OCR forms found while hand-labelling the gold set."""
+
+    @pytest.mark.parametrize(
+        ("raw", "fixed"),
+        [
+            ("See Matter of O-R-E-, 28 T&N Dec. 330", "See Matter of O-R-E-, 28 I&N Dec. 330"),
+            (
+                "See, e.g., Matter ofO-R-E-, 28 I&N Dec. 330",
+                "See, e.g., Matter of O-R-E-, 28 I&N Dec. 330",
+            ),
+            ("Matter afChawathe, 25 I&N Dec. 369", "Matter of Chawathe, 25 I&N Dec. 369"),
+            (
+                "Matter a/Christa's, Inc., 26 I&N Dec. 537",
+                "Matter of Christa's, Inc., 26 I&N Dec. 537",
+            ),
+        ],
+    )
+    def test_matter_of_citation_damage(self, raw: str, fixed: str) -> None:
+        assert n(raw) == fixed
