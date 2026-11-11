@@ -5,7 +5,6 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
 PY := .venv/bin
-export DATABASE_URL ?= postgresql://adjudicate:adjudicate@localhost:54329/adjudicate
 
 .PHONY: help setup up down migrate verify verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
 
