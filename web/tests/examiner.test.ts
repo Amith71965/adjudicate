@@ -169,6 +169,13 @@ describe("httpRetriever", () => {
     expect(Object.fromEntries(searchUrl.searchParams)).toMatchObject({ q: "reputation", criterion: "leading_role", visa: "EB-1A", k: "6" });
     expect(fetchFn.mock.calls[1][0]).toBe("http://api/passages/7");
   });
+  it("filters by section and leaves out a criterion it was not given", async () => {
+    const fetchFn = vi.fn(async (url: string) =>
+      url.includes("/search") ? ok({ results: [] }) : ok({}));
+    await httpRetriever("http://api", fetchFn as unknown as typeof fetch).search("acclaim", { section: "final_merits", visa: "EB-1A", k: 6 });
+    const params = Object.fromEntries(new URL(fetchFn.mock.calls[0][0]).searchParams);
+    expect(params).toEqual({ q: "acclaim", section: "final_merits", visa: "EB-1A", k: "6" });
+  });
   it("rejects a non-JSON body and an empty passage, and fetches a repeated hit once", async () => {
     const notJson = httpRetriever("http://api", (async () => new Response("<html>", { status: 200 })) as unknown as typeof fetch);
     await expect(notJson.search("q", { criterion: "judging", visa: "EB-1A", k: 6 })).rejects.toThrow(RetrievalError);
