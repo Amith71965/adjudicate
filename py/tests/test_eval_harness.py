@@ -126,3 +126,22 @@ def test_run_stops_on_a_split_guard_violation() -> None:
             examine=lambda p, b: {"result": RESULT, "llm": {}},
             chunk_decisions=lambda ids: {i: "D1" for i in ids},  # a test decision leaked in
         )
+
+
+def test_run_fits_the_threshold_on_decisions_before_the_calibration_end() -> None:
+    awards = CriterionTruth("awards", "not_met", "not_met", Label("not_met", "aao"))
+    judging = CriterionTruth("judging", "met", "met", Label("met", "aao"))
+    june = TestDecision("J1", date(2026, 6, 10), "dismissed", None, "t", (awards, judging))
+    july = TestDecision("J2", date(2026, 7, 10), "dismissed", None, "t", (awards,))
+    split = Split(CUT, (june, july), frozenset({"OLD1"}))
+    risks = {"awards": 0.9, "judging": 0.6}
+    report = run(
+        split,
+        facts=lambda d, i: FactsOutcome(d.decision_id, "ok", 1, petition(["awards", "judging"])),
+        examine=lambda p, b: {"result": {**RESULT, "criterion_risk": risks}, "llm": {}},
+        chunk_decisions=lambda ids: {i: "OLD1" for i in ids},
+        calibration_end=date(2026, 7, 1),
+    )
+    cal = report["score"]["calibrated"]  # type: ignore[index]
+    assert cal["fit_decisions"] == 1 and cal["test_decisions"] == 1 and cal["threshold"] == 0.9
+    assert report["calibration_end"] == "2026-07-01"

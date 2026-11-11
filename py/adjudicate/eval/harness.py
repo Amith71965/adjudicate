@@ -102,7 +102,7 @@ def _r4(x: float | None) -> float | None:
 
 def run(
     split: Split, *, facts: FactsFn, examine: ExamineFn, chunk_decisions: ChunkLookup,
-    workers: int = 1, threshold: float = THRESHOLD,
+    workers: int = 1, threshold: float = THRESHOLD, calibration_end: date | None = None,
 ) -> Json:  # fmt: skip
     test_ids = frozenset(d.decision_id for d in split.test)
 
@@ -167,12 +167,18 @@ def run(
                 ],
             }
         )
+    # the threshold is fit on the earliest test decisions and scored on the rest (pre-registered
+    # after a 3-decision pilot showed every risk above the fixed 0.5)
+    calibration = frozenset(
+        d.decision_id for d in split.test if calibration_end and d.decided < calibration_end
+    )
     return {
         "cutoff": split.cutoff.isoformat(),
         "test_decisions": len(split.test),
         "facts": counts,
         "split_guard": {"checked_chunks": checked, "violations": []},
         "llm": llm,
-        "score": score(rows, threshold=threshold),
+        "calibration_end": calibration_end.isoformat() if calibration_end else None,
+        "score": score(rows, threshold=threshold, calibration_ids=calibration),
         "decisions": decisions,
     }

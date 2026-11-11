@@ -65,9 +65,48 @@ def _block(rows: Sequence[Row], threshold: float, *, seed: int, n_boot: int) -> 
     return out
 
 
-def score(
-    rows: Sequence[Row], *, threshold: float, seed: int = 20261111, n_boot: int = 1000
+def youden_threshold(rows: Sequence[Row]) -> float:
+    """The risk cut-off maximising TPR - FPR (ties: the higher cut-off, fewer flags)."""
+    pos = [r.risk or 0.0 for r in rows if r.label == "not_met" and r.risk is not None]
+    neg = [r.risk or 0.0 for r in rows if r.label == "met" and r.risk is not None]
+    if not pos or not neg:
+        raise ValueError("calibration needs both classes")
+    best_t, best_j = 0.0, -2.0
+    for t in sorted(set(pos + neg)):
+        j = sum(p >= t for p in pos) / len(pos) - sum(n >= t for n in neg) / len(neg)
+        if j >= best_j:
+            best_t, best_j = t, j
+    return best_t
+
+
+def _calibrated(
+    scored: Sequence[Row], calibration_ids: frozenset[str], *, seed: int, n_boot: int
 ) -> dict[str, object]:
+    fit = [r for r in scored if r.decision_id in calibration_ids]
+    test = [r for r in scored if r.decision_id not in calibration_ids and r.source == "aao"]
+    t = youden_threshold(fit)
+    return {
+        "threshold": t,
+        "fit_decisions": len({r.decision_id for r in fit}),
+        "test_decisions": len({r.decision_id for r in test}),
+        "examiner": _block(test, t, seed=seed, n_boot=n_boot),
+        "always_not_met": _prf_dict(prf(confusion((r.label == "not_met", True) for r in test))),
+        "copy_director": _prf_dict(
+            prf(confusion((r.label == "not_met", r.director == "not_met") for r in test))
+        ),
+    }
+
+
+def score(
+    rows: Sequence[Row],
+    *,
+    threshold: float,
+    calibration_ids: frozenset[str] = frozenset(),
+    seed: int = 20261111,
+    n_boot: int = 1000,
+) -> dict[str, object]:
+    """`calibration_ids`: decisions a threshold is fit on (Youden's J); the calibrated block
+    then scores only the other decisions' AAO-decided criteria, beside both baselines."""
     labelled = [r for r in rows if r.label is not None]
     scored = [r for r in labelled if r.risk is not None]
     aao = [r for r in scored if r.source == "aao"]
@@ -110,6 +149,11 @@ def score(
             "always_not_met": baseline((r.label == "not_met", True) for r in aao),
             "copy_director": baseline((r.label == "not_met", r.director == "not_met") for r in aao),
         },
+        "calibrated": (
+            _calibrated(scored, calibration_ids, seed=seed, n_boot=n_boot)
+            if calibration_ids
+            else None
+        ),
         "per_criterion": per_criterion,
         "outcome": {
             "decisions": n_out,
@@ -138,14 +182,26 @@ def score(
 def regression_failures(
     current: dict[str, object], baseline: dict[str, object], *, tolerance: float
 ) -> list[str]:
-    """Primary-slice F1 and AUROC may not fall more than `tolerance` below the baseline."""
+    """AUROC (threshold-free) and calibrated F1 may not fall more than `tolerance` below the
+    baseline. F1 at the fixed 0.5 threshold is not watched: on this examiner it equals the
+    always-not-met baseline (risks sit above 0.5), so it cannot regress meaningfully."""
+
+    def get(report: dict[str, object], path: tuple[str, ...]) -> float | None:
+        node: object = report
+        for key in path:
+            if not isinstance(node, dict):
+                return None
+            node = node.get(key)
+        return node if isinstance(node, (int, float)) else None
+
     failures = []
-    cur = current["examiner"]["aao_decided"]  # type: ignore[index]
-    base = baseline["examiner"]["aao_decided"]  # type: ignore[index]
-    for metric in ("f1", "auroc"):
-        value, ref = cur[metric], base[metric]
+    for name, path in (
+        ("aao_decided auroc", ("examiner", "aao_decided", "auroc")),
+        ("calibrated f1", ("calibrated", "examiner", "f1")),
+    ):
+        value, ref = get(current, path), get(baseline, path)
         if value is None:
-            failures.append(f"aao_decided {metric} is undefined")
+            failures.append(f"{name} is undefined")
         elif ref is not None and value < ref - tolerance:
-            failures.append(f"aao_decided {metric} {value:.3f} < baseline {ref:.3f} - {tolerance}")
+            failures.append(f"{name} {value:.3f} < baseline {ref:.3f} - {tolerance}")
     return failures

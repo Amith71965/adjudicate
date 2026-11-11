@@ -86,13 +86,43 @@ def test_bootstrap_ci_brackets_the_point_estimate() -> None:
     assert lo <= f1["f1"] <= hi
 
 
-def test_regression_gate_flags_a_drop_beyond_the_tolerance() -> None:
-    base = {"examiner": {"aao_decided": {"f1": 0.70, "auroc": 0.75}}}
-    ok = {"examiner": {"aao_decided": {"f1": 0.67, "auroc": 0.74}}}
-    bad = {"examiner": {"aao_decided": {"f1": 0.60, "auroc": 0.74}}}
-    assert regression_failures(ok, base, tolerance=0.05) == []
-    assert regression_failures(bad, base, tolerance=0.05) == [
-        "aao_decided f1 0.600 < baseline 0.700 - 0.05"
+def test_regression_gate_watches_auroc_and_calibrated_f1() -> None:
+    def rep(auroc: float | None, f1: float | None) -> dict[str, object]:
+        return {
+            "examiner": {"aao_decided": {"auroc": auroc}},
+            "calibrated": {"examiner": {"f1": f1}},
+        }
+
+    base = rep(0.75, 0.70)
+    assert regression_failures(rep(0.72, 0.66), base, tolerance=0.05) == []
+    assert regression_failures(rep(0.74, 0.60), base, tolerance=0.05) == [
+        "calibrated f1 0.600 < baseline 0.700 - 0.05"
     ]
-    missing = {"examiner": {"aao_decided": {"f1": None, "auroc": 0.74}}}
-    assert regression_failures(missing, base, tolerance=0.05) == ["aao_decided f1 is undefined"]
+    assert regression_failures(rep(None, 0.7), base, tolerance=0.05) == [
+        "aao_decided auroc is undefined"
+    ]
+    no_cal = {"examiner": {"aao_decided": {"auroc": 0.75}}, "calibrated": None}
+    assert regression_failures(no_cal, base, tolerance=0.05) == ["calibrated f1 is undefined"]
+
+
+def test_youden_threshold_maximises_tpr_minus_fpr() -> None:
+    from adjudicate.eval.score import youden_threshold
+
+    rows = [row("C1", "a", "not_met", 0.95), row("C1", "b", "not_met", 0.9),
+            row("C2", "a", "met", 0.85), row("C2", "b", "met", 0.6)]  # fmt: skip
+    assert youden_threshold(rows) == 0.9  # flags the two positives, neither negative
+    with pytest.raises(ValueError, match="both classes"):
+        youden_threshold([row("C1", "a", "met", 0.5)])
+
+
+def test_calibrated_threshold_is_fit_on_calibration_decisions_and_scored_on_the_rest() -> None:
+    calib = [row("C1", "a", "not_met", 0.95), row("C1", "b", "met", 0.85)]
+    test = [row("T1", "a", "not_met", 0.97), row("T1", "b", "met", 0.9),
+            row("T2", "a", "met", 0.8, director="met")]  # fmt: skip
+    s = score(calib + test, threshold=THRESHOLD, calibration_ids=frozenset({"C1"}))
+    cal = s["calibrated"]
+    assert cal["threshold"] == 0.95 and cal["fit_decisions"] == 1 and cal["test_decisions"] == 2
+    assert cal["examiner"]["confusion"] == {"tp": 1, "fp": 0, "fn": 0, "tn": 2}
+    assert cal["always_not_met"]["confusion"] == {"tp": 1, "fp": 2, "fn": 0, "tn": 0}
+    assert cal["copy_director"]["confusion"] == {"tp": 1, "fp": 1, "fn": 0, "tn": 1}
+    assert score(test, threshold=THRESHOLD)["calibrated"] is None  # no calibration set given

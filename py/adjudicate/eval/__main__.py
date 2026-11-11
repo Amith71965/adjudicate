@@ -13,6 +13,7 @@ import json
 import os
 import sys
 from dataclasses import replace
+from datetime import date
 from pathlib import Path
 
 import httpx
@@ -29,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[3]
 RESULT = ROOT / "eval" / "results" / "phase7_real.json"
 BASELINE = ROOT / "eval" / "results" / "phase7_baseline.json"
 TOLERANCE = 0.05
+CALIBRATION_END = date(2026, 7, 1)  # June 2026 decisions fit the threshold; Jul-Sep score it
 
 
 def main() -> int:
@@ -61,6 +63,7 @@ def main() -> int:
                 examine=lambda p, before: examine(http, p, before),
                 chunk_decisions=chunk_decisions,
                 workers=args.workers,
+                calibration_end=CALIBRATION_END,
             )
     report["facts_llm"] = {"spent_usd": round(client.spent_usd, 4), "note": "this run only"}
     RESULT.write_text(json.dumps(report, indent=2) + "\n")
@@ -68,7 +71,8 @@ def main() -> int:
     print(json.dumps({k: s[k] for k in ("counts", "examiner", "baselines", "outcome")}, indent=1))  # type: ignore[index]
     print(f"facts: {report['facts']} | facts spend ${client.spent_usd:.4f} | llm {report['llm']}")
     if args.set_baseline:
-        BASELINE.write_text(json.dumps({"examiner": s["examiner"]}, indent=2) + "\n")  # type: ignore[index]
+        keep = {"examiner": s["examiner"], "calibrated": s["calibrated"]}  # type: ignore[index]
+        BASELINE.write_text(json.dumps(keep, indent=2) + "\n")
         print(f"baseline written: {BASELINE.relative_to(ROOT)}")
         return 0
     if BASELINE.is_file():
