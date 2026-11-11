@@ -47,12 +47,53 @@ def test_failed_file_is_rolled_back_and_not_recorded(tmp_path: Path, scratch_db_
         assert versions == ["0001_a.sql"]
 
 
-def test_ignores_non_sql_and_unnumbered_files(tmp_path: Path, scratch_db_url: str) -> None:
+def test_ignores_non_sql_files(tmp_path: Path, scratch_db_url: str) -> None:
     _write(tmp_path, "0001_a.sql", "CREATE TABLE t (v int);")
     _write(tmp_path, "README.md", "not a migration")
-    _write(tmp_path, "scratch.sql", "DROP TABLE t;")
     with psycopg.connect(scratch_db_url) as conn:
         assert apply_migrations(conn, tmp_path) == ["0001_a.sql"]
+
+
+@pytest.mark.parametrize("bad", ["001_x.sql", "0003-x.sql", "scratch.sql", "0003_x.SQL"])
+def test_misnamed_sql_file_is_an_error_not_a_skip(
+    tmp_path: Path, scratch_db_url: str, bad: str
+) -> None:
+    # A silently skipped schema file is worse than a crash: tables never exist
+    # and `make migrate` still says OK.
+    _write(tmp_path, "0001_a.sql", "CREATE TABLE t (v int);")
+    _write(tmp_path, bad, "CREATE TABLE u (v int);")
+    with (
+        psycopg.connect(scratch_db_url) as conn,
+        pytest.raises(MigrationError, match=re.escape(bad)),
+    ):
+        apply_migrations(conn, tmp_path)
+
+
+def test_duplicate_numeric_prefix_is_an_error(tmp_path: Path, scratch_db_url: str) -> None:
+    _write(tmp_path, "0001_a.sql", "CREATE TABLE t (v int);")
+    _write(tmp_path, "0001_b.sql", "CREATE TABLE u (v int);")
+    with psycopg.connect(scratch_db_url) as conn, pytest.raises(MigrationError, match="0001"):
+        apply_migrations(conn, tmp_path)
+
+
+def test_editing_an_applied_migration_is_an_error(tmp_path: Path, scratch_db_url: str) -> None:
+    _write(tmp_path, "0001_a.sql", "CREATE TABLE t (v int);")
+    with psycopg.connect(scratch_db_url) as conn:
+        apply_migrations(conn, tmp_path)
+        _write(tmp_path, "0001_a.sql", "CREATE TABLE t (v int, w int);")
+        with pytest.raises(MigrationError, match="checksum"):
+            apply_migrations(conn, tmp_path)
+
+
+def test_applied_migration_missing_from_disk_is_an_error(
+    tmp_path: Path, scratch_db_url: str
+) -> None:
+    _write(tmp_path, "0001_a.sql", "CREATE TABLE t (v int);")
+    with psycopg.connect(scratch_db_url) as conn:
+        apply_migrations(conn, tmp_path)
+        (tmp_path / "0001_a.sql").rename(tmp_path / "0001_renamed.sql")
+        with pytest.raises(MigrationError, match=re.escape("0001_a.sql")):
+            apply_migrations(conn, tmp_path)
 
 
 def test_repo_migrations_install_pgvector(scratch_db_url: str) -> None:
