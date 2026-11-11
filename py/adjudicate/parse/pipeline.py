@@ -29,7 +29,7 @@ from adjudicate.parse.verdicts import (
     extract_verdicts,
 )
 
-PARSER_VERSION = "2026.11.10-1"
+PARSER_VERSION = "2026.11.11-1"
 
 type Conn = psycopg.Connection[tuple[object, ...]]
 
