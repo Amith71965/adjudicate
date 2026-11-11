@@ -6,6 +6,7 @@ import hashlib
 import math
 import re
 from collections.abc import Iterator
+from datetime import date, datetime
 from pathlib import Path
 
 import psycopg
@@ -27,6 +28,11 @@ FIXTURES = {
 }
 
 type Conn = psycopg.Connection[tuple[object, ...]]
+
+
+def decided_on(decision_id: str) -> date:
+    """The issue date encoded in a USCIS decision id: SEP152026_... is 2026-09-15."""
+    return datetime.strptime(decision_id[:9], "%b%d%Y").date()
 
 
 class FakeEmbedder:
@@ -57,7 +63,8 @@ def db(scratch_db_url: str) -> Iterator[Conn]:
             body = (FIX / f"{did}.pdf").read_bytes()
             conn.execute(
                 "INSERT INTO raw_decision (url, decision_id, category, visa_type, content, sha256,"
-                " byte_size, fetched_at) VALUES (%s, %s, 'c', %s, %s, %s, %s, now())",
+                " byte_size, fetched_at, decision_date)"
+                " VALUES (%s, %s, 'c', %s, %s, %s, %s, now(), %s)",
                 (
                     f"https://www.uscis.gov/{did}.pdf",
                     did,
@@ -65,6 +72,7 @@ def db(scratch_db_url: str) -> Iterator[Conn]:
                     body,
                     hashlib.sha256(body).hexdigest(),
                     len(body),
+                    decided_on(did),
                 ),
             )
         parse_pending(conn)
@@ -160,6 +168,18 @@ def test_section_filter_keeps_only_that_kind_of_reasoning(db: Conn) -> None:
     hits = search(db, FakeEmbedder(), q, k=5, section="final_merits")
     assert hits and {h.section_kind for h in hits} == {"final_merits"}
     assert search(db, FakeEmbedder(), q, k=5, section="reserved", visa="O-1") == []
+
+
+def test_before_filter_keeps_later_decisions_out_of_the_index(db: Conn) -> None:
+    build_index(db, FakeEmbedder())
+    q = "sustained national acclaim final merits determination totality"
+    dates = dict(db.execute("SELECT decision_id, decision_date FROM raw_decision").fetchall())
+    hits = search(db, FakeEmbedder(), q, k=5)
+    assert hits
+    cutoff = max(dates[h.decision_id] for h in hits)  # drop the latest hit's decision
+    kept = search(db, FakeEmbedder(), q, k=5, before=cutoff)
+    assert all(dates[h.decision_id] < cutoff for h in kept)
+    assert {h.decision_id for h in kept} < {h.decision_id for h in hits} | {"-"}
 
 
 def test_empty_query_is_rejected(db: Conn) -> None:
