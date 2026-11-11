@@ -91,7 +91,7 @@ const reviewed = (criterion: string, prong: string, facially_met: boolean, citat
   first_attempt_problems: [], pruned: [],
   review: { facially_met, risk: facially_met ? 0.2 : 0.8, objection: "An objection of sufficient length.", citations },
 });
-const result = (reviews: ReviewedProng[]): ExaminerResult => ({ petition_id: "P01", reviews, dropped: [], criterion_risk: {}, rfe_risk: 0.5 });
+const result = (reviews: ReviewedProng[]): ExaminerResult => ({ petition_id: "P01", reviews, dropped: [], complete: true, unreviewed: [], criterion_risk: {}, rfe_risk: 0.5 });
 const DB = new Map([[7, { chunk_id: 7, decision_id: "D1", body: "Here the organization has a distinguished reputation in its field." }]]);
 
 const baseCase = (reviews: ReviewedProng[], waiverCriteria: string[] = ["scholarly_articles"]): ExaminerCase => ({

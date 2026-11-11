@@ -4,8 +4,13 @@
  * a simplification, stated as such wherever the score is shown.
  */
 
-/** Risk assumed for a prong the examiner could not review with grounded citations. */
-export const UNREVIEWED_RISK = 0.5;
+/**
+ * A prong the examiner could not review with grounded citations is treated as failing: we
+ * cannot vouch for it, so it must never lower the score. Results carry `complete: false`.
+ */
+export const UNREVIEWED_RISK = 1;
+/** A prong the evidence does not facially meet will draw an RFE, whatever the model's number. */
+export const FACIAL_FAIL_RISK = 0.8;
 
 function checkProbability(p: number): void {
   if (!Number.isFinite(p) || p < 0 || p > 1) throw new RangeError(`not a probability: ${p}`);

@@ -13,7 +13,7 @@ import { validateCitations, type CitationProblem, type Passage } from "./citatio
 import type { PetitionInput } from "./mapper";
 import { prongsFor, type Prong } from "./prongs";
 import type { Retriever } from "./retriever";
-import { criterionRisk, rfeRisk, UNREVIEWED_RISK } from "./risk";
+import { criterionRisk, FACIAL_FAIL_RISK, rfeRisk, UNREVIEWED_RISK } from "./risk";
 
 export type { Retriever } from "./retriever";
 export type ProngReview = z.infer<typeof prongReviewSchema>;
@@ -166,17 +166,26 @@ export interface ExaminerResult {
   petition_id: string;
   reviews: ReviewedProng[];
   dropped: DroppedProng[];
+  complete: boolean; // false: some prongs could not be reviewed with grounded citations
+  unreviewed: string[]; // "criterion/prong" of each dropped review
   criterion_risk: Record<string, number>;
   rfe_risk: number;
 }
 
+/** Bounded-concurrency map that keeps input order and starts nothing new after a failure. */
 async function inOrder<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
   const out = new Array<R>(items.length);
   let next = 0;
+  let failed = false;
   const worker = async () => {
-    while (next < items.length) {
+    while (!failed && next < items.length) {
       const i = next++;
-      out[i] = await fn(items[i]);
+      try {
+        out[i] = await fn(items[i]);
+      } catch (err) {
+        failed = true; // other workers finish their in-flight item, then stop spending
+        throw err;
+      }
     }
   };
   await Promise.all(Array.from({ length: Math.max(1, Math.min(limit, items.length)) }, worker));
@@ -191,14 +200,19 @@ export async function examinePetition(
   const outcomes = await inOrder(reviewTasks(petition), options.concurrency ?? 1, (t) => examineProng(t, options));
   const prongRisks: Record<string, number[]> = {};
   for (const o of outcomes) {
-    // A prong we could not ground is not a pass: it carries an explicit unknown risk.
-    (prongRisks[o.criterion] ??= []).push(o.status === "reviewed" ? o.review.risk : UNREVIEWED_RISK);
+    const risk = o.status === "dropped"
+      ? UNREVIEWED_RISK // could not ground it: never a pass
+      : o.review.facially_met ? o.review.risk : Math.max(o.review.risk, FACIAL_FAIL_RISK);
+    (prongRisks[o.criterion] ??= []).push(risk);
   }
+  const dropped = outcomes.filter((o): o is DroppedProng => o.status === "dropped");
   const criterion_risk = Object.fromEntries(Object.entries(prongRisks).map(([c, r]) => [c, criterionRisk(r)]));
   return {
     petition_id: petition.id,
     reviews: outcomes.filter((o): o is ReviewedProng => o.status === "reviewed"),
-    dropped: outcomes.filter((o): o is DroppedProng => o.status === "dropped"),
+    dropped,
+    complete: dropped.length === 0,
+    unreviewed: dropped.map((d) => `${d.criterion}/${d.prong}`),
     criterion_risk,
     rfe_risk: rfeRisk(criterion_risk),
   };

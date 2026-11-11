@@ -23,6 +23,12 @@ interface ClaimedArtifact {
 }
 
 export function waiverFindings(artifacts: ClaimedArtifact[], mapping: StrengthMapping): WaiverFinding[] {
+  const mapped = new Set(mapping.mappings.map((m) => m.artifact_id));
+  const unmapped = artifacts.filter((a) => !mapped.has(a.id)).map((a) => a.id);
+  if (unmapped.length) {
+    // An unmapped artifact is unknown, not unsupported: refuse rather than mislabel it.
+    throw new Error(`mapping incomplete: no scores for ${unmapped.join(", ")}`);
+  }
   const claimed = new Map<string, string[]>();
   for (const a of artifacts) {
     if (a.claimed_criterion) claimed.set(a.claimed_criterion, [...(claimed.get(a.claimed_criterion) ?? []), a.id]);

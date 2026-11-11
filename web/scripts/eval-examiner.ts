@@ -74,10 +74,11 @@ async function main(): Promise<number> {
   const cited = [...new Set(scored.flatMap((c) => c.result.reviews.flatMap((r) => r.review.citations.map((x) => x.chunk_id))))];
   const db = new Map<number, Passage>();
   for (const id of cited) {
-    const res = await fetch(`${API}/passages/${id}`);
+    const res = await fetch(`${API}/passages/${id}`, { signal: AbortSignal.timeout(30_000) });
     if (res.status === 404) continue; // absent from the database: counted as fabricated
     if (!res.ok) throw new Error(`passage ${id}: HTTP ${res.status}`);
     const p = (await res.json()) as Passage;
+    if (p.chunk_id !== id) throw new Error(`asked for passage ${id}, API returned ${p.chunk_id}`);
     db.set(id, { chunk_id: p.chunk_id, decision_id: p.decision_id, body: p.body });
   }
 
@@ -91,7 +92,7 @@ async function main(): Promise<number> {
       // 4 dp: enough for a risk score, and long float digit runs read as SSNs to the PII guard.
       petition_id: c.petition_id, rfe_risk: round4(c.result.rfe_risk),
       criterion_risk: Object.fromEntries(Object.entries(c.result.criterion_risk).map(([k, v]) => [k, round4(v)])),
-      waiver: c.waiver, dropped: c.result.dropped,
+      complete: c.result.complete, unreviewed: c.result.unreviewed, waiver: c.waiver, dropped: c.result.dropped,
       reviews: c.result.reviews.map((r) => ({
         criterion: r.criterion, prong: r.prong, artifact_ids: r.artifact_ids, attempts: r.attempts,
         facially_met: r.review.facially_met, risk: r.review.risk, objection: r.review.objection, citations: r.review.citations,

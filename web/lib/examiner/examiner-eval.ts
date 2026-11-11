@@ -34,7 +34,7 @@ export interface ExaminerScore {
 export function scoreExaminer(
   cases: ExaminerCase[],
   db: Map<number, Passage>,
-  { minObjections = 100 }: { minObjections?: number } = {},
+  { minObjections = 100, maxDroppedRatio = 0.05 }: { minObjections?: number; maxDroppedRatio?: number } = {},
 ): ExaminerScore {
   const s: ExaminerScore = {
     petitions: cases.length, objections: 0, citations: 0, fabricated_citations: 0, fabricated: [],
@@ -69,7 +69,8 @@ export function scoreExaminer(
     const halfCriteria = new Set(c.planted_halves.map((h) => h.criterion));
     for (const h of c.planted_halves) {
       s.mode_b.planted += 1;
-      const caught = h.missing_prongs.every((p) => review(h.criterion, p)?.review.facially_met === false);
+      const caught = h.missing_prongs.length > 0 &&
+        h.missing_prongs.every((p) => review(h.criterion, p)?.review.facially_met === false);
       if (caught) s.mode_b.caught += 1;
       else s.mode_b.missed.push(`${c.petition_id}/${h.criterion}/${h.missing_prongs.join("+")}`);
     }
@@ -93,6 +94,12 @@ export function scoreExaminer(
     ).length;
   }
   const f = s.gate.failures;
+  const droppedN = Object.values(s.dropped).reduce((a, b) => a + b, 0);
+  if (s.mode_b.planted === 0) f.push("no planted mode-B halves: nothing to measure");
+  if (s.mode_d.planted === 0) f.push("no planted mode-D waivers: nothing to measure");
+  if (droppedN > maxDroppedRatio * (s.objections + droppedN)) {
+    f.push(`${droppedN} prong(s) dropped unreviewed (> ${maxDroppedRatio * 100}%)`);
+  }
   if (s.objections < minObjections) f.push(`only ${s.objections} objections (< ${minObjections})`);
   if (s.fabricated_citations > 0) f.push(`${s.fabricated_citations} fabricated citation(s)`);
   if (s.mode_b.caught < s.mode_b.planted) f.push(`mode B: ${s.mode_b.caught}/${s.mode_b.planted} planted halves caught`);
