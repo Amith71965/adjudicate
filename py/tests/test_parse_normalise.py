@@ -139,3 +139,27 @@ class TestHeavierRedactionResidue:
 
     def test_prose_exclamation_is_untouched(self) -> None:
         assert n("Approved! The record shows") == "Approved! The record shows"
+
+
+class TestSectionHeadingRepair:
+    """OCR'd roman-numeral headings, from real 2026 EB-1A decisions."""
+
+    @pytest.mark.parametrize(
+        ("raw", "fixed"),
+        [
+            ("TI. ANALYSIS", "II. ANALYSIS"),
+            ("II. ANALYSrS", "II. ANALYSIS"),
+            ("Il. ANALYSIS", "II. ANALYSIS"),
+            ("lII. CONCLUSION", "III. CONCLUSION"),
+            ("II. ANALYS1S", "II. ANALYSIS"),
+        ],
+    )
+    def test_damaged_headings_are_repaired(self, raw: str, fixed: str) -> None:
+        assert n(f"intro\n{raw}\nbody") == f"intro\n{fixed}\nbody"
+
+    @pytest.mark.parametrize("clean", ["I. LAW", "IV. CONCLUSION", "II. ANALYSIS", "III. ORDER"])
+    def test_clean_headings_are_untouched(self, clean: str) -> None:
+        assert n(f"intro\n{clean}\nbody") == f"intro\n{clean}\nbody"
+
+    def test_only_heading_lines_are_touched(self) -> None:
+        assert n("the TI. ANALYSIS inline") == "the TI. ANALYSIS inline"

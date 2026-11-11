@@ -143,3 +143,34 @@ def test_final_merits_mentioned_only_in_prose_does_not_count() -> None:
         "USCIS then considers the totality in a final merits determination.",
     )
     assert classify(prose, VisaType.EB1A).kind is DecisionKind.NO_CRITERION_ANALYSIS
+
+
+def test_modern_decision_without_headings_is_unstructured_not_legacy() -> None:
+    headless = SYNTHETIC_APPEAL.replace("I. LAW", "Law follows.").replace(
+        "II. ANALYSIS", "Analysis follows."
+    )
+    result = classify(headless, VisaType.EB1A)
+    assert result.kind is DecisionKind.UNSTRUCTURED
+
+
+def test_discussion_marker_still_means_legacy() -> None:
+    legacy = "DISCUSSION: The petition was denied.\n" + "filler " * 1200
+    assert classify(legacy, VisaType.EB1A).kind is DecisionKind.LEGACY_FORMAT
+
+
+LAW_BOILERPLATE = (
+    "at least three of the ten categories listed at 8 C.F.R. § 204.5(h)(3)(i)-(x) "
+    "(including items such as awards, published material in certain media, and "
+    "scholarly articles)."
+)
+
+
+def test_criteria_named_only_in_the_law_section_do_not_count() -> None:
+    signature_case = (
+        "The matter is now before us on appeal.\n\nI. LAW\n\n"
+        + LAW_BOILERPLATE
+        + "\n\nII. ANALYSIS\n\nThe appeal was not properly signed. "
+        + "filler " * 1200
+        + "\n\nORDER: The appeal is rejected.\n"
+    )
+    assert classify(signature_case, VisaType.EB1A).kind is DecisionKind.NO_CRITERION_ANALYSIS
