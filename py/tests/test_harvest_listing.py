@@ -9,6 +9,7 @@ from datetime import date
 from pathlib import Path
 
 import pytest
+
 from adjudicate.harvest.categories import VisaType, visa_type_for_category
 from adjudicate.harvest.listing import (
     ListingEntry,

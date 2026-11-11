@@ -9,8 +9,8 @@ from urllib.parse import parse_qs, urlsplit
 import httpx
 import psycopg
 import pytest
-from adjudicate.harvest.crawl import HarvestStats, harvest
 
+from adjudicate.harvest.crawl import HarvestStats, harvest
 from adjudicate.harvest.http import PoliteClient
 from adjudicate.migrate import apply_migrations
 
@@ -54,7 +54,7 @@ class FakeUscis:
 
 @pytest.fixture
 def db(scratch_db_url: str) -> Iterator[psycopg.Connection[tuple[object, ...]]]:
-    with psycopg.connect(scratch_db_url) as conn:
+    with psycopg.connect(scratch_db_url, autocommit=True) as conn:
         apply_migrations(conn, REPO_MIGRATIONS)
         yield conn
 
@@ -192,3 +192,32 @@ def test_schema_rejects_content_without_hash(db: psycopg.Connection[tuple[object
             "INSERT INTO raw_decision (url, decision_id, category, visa_type, content)"
             " VALUES ('https://www.uscis.gov/x.pdf', 'x', 'B2 - x', 'EB-1A', '\\x25504446')"
         )
+
+
+def test_each_fetched_pdf_is_durable_before_the_run_ends(
+    site: FakeUscis, db: psycopg.Connection[tuple[object, ...]], scratch_db_url: str
+) -> None:
+    seen_mid_run: list[int] = []
+    original = site.__call__
+
+    def spying(request: httpx.Request) -> httpx.Response:
+        if str(request.url).endswith(".pdf") and len(site.pdf_requests) == 10:
+            with psycopg.connect(scratch_db_url) as other:
+                seen_mid_run.append(
+                    _count(other, "SELECT count(*) FROM raw_decision WHERE content IS NOT NULL")
+                )
+        return original(request)
+
+    client = PoliteClient(
+        transport=httpx.MockTransport(spying), min_interval=0.0, sleep=lambda s: None
+    )
+    harvest(client, db, topic=19, max_pages=10)
+    assert seen_mid_run == [10]  # a crash here would lose nothing already fetched
+
+
+def test_harvest_requires_autocommit(
+    db: psycopg.Connection[tuple[object, ...]], scratch_db_url: str
+) -> None:
+    client = PoliteClient(transport=httpx.MockTransport(FakeUscis()), min_interval=0.0)
+    with psycopg.connect(scratch_db_url) as conn, pytest.raises(ValueError, match="autocommit"):
+        harvest(client, conn, topic=19, max_pages=1)

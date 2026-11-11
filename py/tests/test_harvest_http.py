@@ -9,6 +9,7 @@ from pathlib import Path
 
 import httpx
 import pytest
+
 from adjudicate.harvest.http import FetchError, PoliteClient, crawl_delay_from_robots
 
 ROBOTS = (Path(__file__).parent / "fixtures" / "robots.txt").read_text()

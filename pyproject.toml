@@ -48,3 +48,6 @@ python_version = "3.14"
 strict = true
 mypy_path = "py"
 packages = ["adjudicate"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["adjudicate"]

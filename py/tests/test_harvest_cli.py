@@ -8,9 +8,9 @@ from pathlib import Path
 import httpx
 import psycopg
 import pytest
+
 from adjudicate.harvest.__main__ import main
 from adjudicate.harvest.stats import corpus_stats
-
 from adjudicate.migrate import apply_migrations
 
 pytestmark = pytest.mark.db
@@ -21,7 +21,7 @@ REPO_MIGRATIONS = Path(__file__).resolve().parents[2] / "db" / "migrations"
 
 @pytest.fixture
 def db(scratch_db_url: str) -> Iterator[psycopg.Connection[tuple[object, ...]]]:
-    with psycopg.connect(scratch_db_url) as conn:
+    with psycopg.connect(scratch_db_url, autocommit=True) as conn:
         apply_migrations(conn, REPO_MIGRATIONS)
         yield conn
 
