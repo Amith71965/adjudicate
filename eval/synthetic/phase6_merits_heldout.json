@@ -1,0 +1,818 @@
+[
+  {
+    "input": {
+      "petition": {
+        "id": "P01",
+        "visa": "EB-1A",
+        "field": "computational biology",
+        "beneficiary": "Dr. Juniper Ashgrove",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "certificate",
+            "title": "Gold medal of an international computational biology society",
+            "description": "Given once a year to one person from the society's sixty member countries; the citation names the beneficiary's work on protein-folding models.",
+            "claimed_criterion": "awards"
+          },
+          {
+            "id": "A02",
+            "kind": "article",
+            "title": "Broadcast and newspaper coverage of the beneficiary",
+            "description": "A national public-radio segment and a front-page business-section article, both about the beneficiary and the adoption of their protein-folding models work.",
+            "claimed_criterion": "published_material"
+          },
+          {
+            "id": "A03",
+            "kind": "record",
+            "title": "Program committee chair of the flagship computational biology conference",
+            "description": "Served as program chair of the field's largest annual conference, overseeing the review of about three thousand submissions.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A04",
+            "kind": "record",
+            "title": "Industry standard built on the beneficiary's protein-folding models design",
+            "description": "A national standards body adopted the beneficiary's design as the reference approach to protein-folding models; six vendors ship products that implement it.",
+            "claimed_criterion": "original_contributions"
+          },
+          {
+            "id": "A05",
+            "kind": "contract",
+            "title": "Employment contract and industry pay benchmark",
+            "description": "Total pay is more than three times the median for senior computational biology professionals according to an independent industry compensation benchmark.",
+            "claimed_criterion": "high_salary"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "awards",
+          "risk": 0.08
+        },
+        {
+          "criterion": "published_material",
+          "risk": 0.15
+        },
+        {
+          "criterion": "judging",
+          "risk": 0.14
+        },
+        {
+          "criterion": "original_contributions",
+          "risk": 0.14
+        },
+        {
+          "criterion": "high_salary",
+          "risk": 0.18
+        }
+      ],
+      "letters": {
+        "letters": 5,
+        "independent": 4,
+        "weak": 0,
+        "assertion_share": 0.2,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "strong",
+    "pair": 0
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P02",
+        "visa": "EB-1A",
+        "field": "computational biology",
+        "beneficiary": "Dr. Sable Wintermere",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "record",
+            "title": "Reviewer acknowledgment letters",
+            "description": "Two letters thanking the beneficiary for reviewing four submissions to a protein-folding models workshop.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A02",
+            "kind": "publication",
+            "title": "Journal articles and preprints",
+            "description": "Three journal articles and two preprints on protein-folding models, with a combined twenty-five citations.",
+            "claimed_criterion": "scholarly_articles"
+          },
+          {
+            "id": "A03",
+            "kind": "certificate",
+            "title": "Outstanding presentation prize",
+            "description": "A prize for the best student-track presentation at an annual computational biology meeting.",
+            "claimed_criterion": "awards"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "judging",
+          "risk": 0.14
+        },
+        {
+          "criterion": "scholarly_articles",
+          "risk": 0.19
+        },
+        {
+          "criterion": "awards",
+          "risk": 0.22
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 1,
+        "weak": 3,
+        "assertion_share": 0.8,
+        "boilerplate_pairs": 1,
+        "independence_violations": 1
+      }
+    },
+    "tier": "weak",
+    "pair": 0
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P03",
+        "visa": "EB-1A",
+        "field": "renewable energy engineering",
+        "beneficiary": "Dr. Avery Quillfeather",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "certificate",
+            "title": "Gold medal of an international renewable energy engineering society",
+            "description": "Given once a year to one person from the society's sixty member countries; the citation names the beneficiary's work on offshore wind controllers.",
+            "claimed_criterion": "awards"
+          },
+          {
+            "id": "A02",
+            "kind": "article",
+            "title": "Broadcast and newspaper coverage of the beneficiary",
+            "description": "A national public-radio segment and a front-page business-section article, both about the beneficiary and the adoption of their offshore wind controllers work.",
+            "claimed_criterion": "published_material"
+          },
+          {
+            "id": "A03",
+            "kind": "record",
+            "title": "Program committee chair of the flagship renewable energy engineering conference",
+            "description": "Served as program chair of the field's largest annual conference, overseeing the review of about three thousand submissions.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A04",
+            "kind": "record",
+            "title": "Industry standard built on the beneficiary's offshore wind controllers design",
+            "description": "A national standards body adopted the beneficiary's design as the reference approach to offshore wind controllers; six vendors ship products that implement it.",
+            "claimed_criterion": "original_contributions"
+          },
+          {
+            "id": "A05",
+            "kind": "contract",
+            "title": "Employment contract and industry pay benchmark",
+            "description": "Total pay is more than three times the median for senior renewable energy engineering professionals according to an independent industry compensation benchmark.",
+            "claimed_criterion": "high_salary"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "awards",
+          "risk": 0.08
+        },
+        {
+          "criterion": "published_material",
+          "risk": 0.19
+        },
+        {
+          "criterion": "judging",
+          "risk": 0.17
+        },
+        {
+          "criterion": "original_contributions",
+          "risk": 0.17
+        },
+        {
+          "criterion": "high_salary",
+          "risk": 0.23
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 3,
+        "weak": 1,
+        "assertion_share": 0.45,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "strong",
+    "pair": 1
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P04",
+        "visa": "EB-1A",
+        "field": "renewable energy engineering",
+        "beneficiary": "Rowan Thistlewood",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "record",
+            "title": "Reviewer acknowledgment letters",
+            "description": "Two letters thanking the beneficiary for reviewing four submissions to a offshore wind controllers workshop.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A02",
+            "kind": "publication",
+            "title": "Journal articles and preprints",
+            "description": "Three journal articles and two preprints on offshore wind controllers, with a combined twenty-five citations.",
+            "claimed_criterion": "scholarly_articles"
+          },
+          {
+            "id": "A03",
+            "kind": "certificate",
+            "title": "Outstanding presentation prize",
+            "description": "A prize for the best student-track presentation at an annual renewable energy engineering meeting.",
+            "claimed_criterion": "awards"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "judging",
+          "risk": 0.24
+        },
+        {
+          "criterion": "scholarly_articles",
+          "risk": 0.2
+        },
+        {
+          "criterion": "awards",
+          "risk": 0.23
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 3,
+        "weak": 1,
+        "assertion_share": 0.45,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "weak",
+    "pair": 1
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P05",
+        "visa": "EB-1A",
+        "field": "fintech product design",
+        "beneficiary": "Dr. Juniper Ashgrove",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "certificate",
+            "title": "Gold medal of an international fintech product design society",
+            "description": "Given once a year to one person from the society's sixty member countries; the citation names the beneficiary's work on real-time fraud scoring.",
+            "claimed_criterion": "awards"
+          },
+          {
+            "id": "A02",
+            "kind": "article",
+            "title": "Broadcast and newspaper coverage of the beneficiary",
+            "description": "A national public-radio segment and a front-page business-section article, both about the beneficiary and the adoption of their real-time fraud scoring work.",
+            "claimed_criterion": "published_material"
+          },
+          {
+            "id": "A03",
+            "kind": "record",
+            "title": "Program committee chair of the flagship fintech product design conference",
+            "description": "Served as program chair of the field's largest annual conference, overseeing the review of about three thousand submissions.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A04",
+            "kind": "record",
+            "title": "Industry standard built on the beneficiary's real-time fraud scoring design",
+            "description": "A national standards body adopted the beneficiary's design as the reference approach to real-time fraud scoring; six vendors ship products that implement it.",
+            "claimed_criterion": "original_contributions"
+          },
+          {
+            "id": "A05",
+            "kind": "contract",
+            "title": "Employment contract and industry pay benchmark",
+            "description": "Total pay is more than three times the median for senior fintech product design professionals according to an independent industry compensation benchmark.",
+            "claimed_criterion": "high_salary"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "awards",
+          "risk": 0.12
+        },
+        {
+          "criterion": "published_material",
+          "risk": 0.17
+        },
+        {
+          "criterion": "judging",
+          "risk": 0.29
+        },
+        {
+          "criterion": "original_contributions",
+          "risk": 0.29
+        },
+        {
+          "criterion": "high_salary",
+          "risk": 0.25
+        }
+      ],
+      "letters": {
+        "letters": 5,
+        "independent": 4,
+        "weak": 0,
+        "assertion_share": 0.2,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "strong",
+    "pair": 2
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P06",
+        "visa": "EB-1A",
+        "field": "fintech product design",
+        "beneficiary": "Dr. Juniper Ashgrove",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "record",
+            "title": "Reviewer acknowledgment letters",
+            "description": "Two letters thanking the beneficiary for reviewing four submissions to a real-time fraud scoring workshop.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A02",
+            "kind": "publication",
+            "title": "Journal articles and preprints",
+            "description": "Three journal articles and two preprints on real-time fraud scoring, with a combined twenty-five citations.",
+            "claimed_criterion": "scholarly_articles"
+          },
+          {
+            "id": "A03",
+            "kind": "certificate",
+            "title": "Outstanding presentation prize",
+            "description": "A prize for the best student-track presentation at an annual fintech product design meeting.",
+            "claimed_criterion": "awards"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "judging",
+          "risk": 0.27
+        },
+        {
+          "criterion": "scholarly_articles",
+          "risk": 0.15
+        },
+        {
+          "criterion": "awards",
+          "risk": 0.25
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 1,
+        "weak": 3,
+        "assertion_share": 0.8,
+        "boilerplate_pairs": 1,
+        "independence_violations": 1
+      }
+    },
+    "tier": "weak",
+    "pair": 2
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P07",
+        "visa": "EB-1A",
+        "field": "structural engineering",
+        "beneficiary": "Dr. Juniper Ashgrove",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "certificate",
+            "title": "Gold medal of an international structural engineering society",
+            "description": "Given once a year to one person from the society's sixty member countries; the citation names the beneficiary's work on seismic retrofit systems.",
+            "claimed_criterion": "awards"
+          },
+          {
+            "id": "A02",
+            "kind": "article",
+            "title": "Broadcast and newspaper coverage of the beneficiary",
+            "description": "A national public-radio segment and a front-page business-section article, both about the beneficiary and the adoption of their seismic retrofit systems work.",
+            "claimed_criterion": "published_material"
+          },
+          {
+            "id": "A03",
+            "kind": "record",
+            "title": "Program committee chair of the flagship structural engineering conference",
+            "description": "Served as program chair of the field's largest annual conference, overseeing the review of about three thousand submissions.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A04",
+            "kind": "record",
+            "title": "Industry standard built on the beneficiary's seismic retrofit systems design",
+            "description": "A national standards body adopted the beneficiary's design as the reference approach to seismic retrofit systems; six vendors ship products that implement it.",
+            "claimed_criterion": "original_contributions"
+          },
+          {
+            "id": "A05",
+            "kind": "contract",
+            "title": "Employment contract and industry pay benchmark",
+            "description": "Total pay is more than three times the median for senior structural engineering professionals according to an independent industry compensation benchmark.",
+            "claimed_criterion": "high_salary"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "awards",
+          "risk": 0.26
+        },
+        {
+          "criterion": "published_material",
+          "risk": 0.27
+        },
+        {
+          "criterion": "judging",
+          "risk": 0.3
+        },
+        {
+          "criterion": "original_contributions",
+          "risk": 0.3
+        },
+        {
+          "criterion": "high_salary",
+          "risk": 0.29
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 3,
+        "weak": 1,
+        "assertion_share": 0.45,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "strong",
+    "pair": 3
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P08",
+        "visa": "EB-1A",
+        "field": "structural engineering",
+        "beneficiary": "Ellis Marrowfield",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "record",
+            "title": "Reviewer acknowledgment letters",
+            "description": "Two letters thanking the beneficiary for reviewing four submissions to a seismic retrofit systems workshop.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A02",
+            "kind": "publication",
+            "title": "Journal articles and preprints",
+            "description": "Three journal articles and two preprints on seismic retrofit systems, with a combined twenty-five citations.",
+            "claimed_criterion": "scholarly_articles"
+          },
+          {
+            "id": "A03",
+            "kind": "certificate",
+            "title": "Outstanding presentation prize",
+            "description": "A prize for the best student-track presentation at an annual structural engineering meeting.",
+            "claimed_criterion": "awards"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "judging",
+          "risk": 0.25
+        },
+        {
+          "criterion": "scholarly_articles",
+          "risk": 0.11
+        },
+        {
+          "criterion": "awards",
+          "risk": 0.12
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 3,
+        "weak": 1,
+        "assertion_share": 0.45,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "weak",
+    "pair": 3
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P09",
+        "visa": "EB-1A",
+        "field": "computational biology",
+        "beneficiary": "Rowan Thistlewood",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "certificate",
+            "title": "Gold medal of an international computational biology society",
+            "description": "Given once a year to one person from the society's sixty member countries; the citation names the beneficiary's work on protein-folding models.",
+            "claimed_criterion": "awards"
+          },
+          {
+            "id": "A02",
+            "kind": "article",
+            "title": "Broadcast and newspaper coverage of the beneficiary",
+            "description": "A national public-radio segment and a front-page business-section article, both about the beneficiary and the adoption of their protein-folding models work.",
+            "claimed_criterion": "published_material"
+          },
+          {
+            "id": "A03",
+            "kind": "record",
+            "title": "Program committee chair of the flagship computational biology conference",
+            "description": "Served as program chair of the field's largest annual conference, overseeing the review of about three thousand submissions.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A04",
+            "kind": "record",
+            "title": "Industry standard built on the beneficiary's protein-folding models design",
+            "description": "A national standards body adopted the beneficiary's design as the reference approach to protein-folding models; six vendors ship products that implement it.",
+            "claimed_criterion": "original_contributions"
+          },
+          {
+            "id": "A05",
+            "kind": "contract",
+            "title": "Employment contract and industry pay benchmark",
+            "description": "Total pay is more than three times the median for senior computational biology professionals according to an independent industry compensation benchmark.",
+            "claimed_criterion": "high_salary"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "awards",
+          "risk": 0.27
+        },
+        {
+          "criterion": "published_material",
+          "risk": 0.1
+        },
+        {
+          "criterion": "judging",
+          "risk": 0.1
+        },
+        {
+          "criterion": "original_contributions",
+          "risk": 0.11
+        },
+        {
+          "criterion": "high_salary",
+          "risk": 0.12
+        }
+      ],
+      "letters": {
+        "letters": 5,
+        "independent": 4,
+        "weak": 0,
+        "assertion_share": 0.2,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "strong",
+    "pair": 4
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P10",
+        "visa": "EB-1A",
+        "field": "computational biology",
+        "beneficiary": "Dr. Juniper Ashgrove",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "record",
+            "title": "Reviewer acknowledgment letters",
+            "description": "Two letters thanking the beneficiary for reviewing four submissions to a protein-folding models workshop.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A02",
+            "kind": "publication",
+            "title": "Journal articles and preprints",
+            "description": "Three journal articles and two preprints on protein-folding models, with a combined twenty-five citations.",
+            "claimed_criterion": "scholarly_articles"
+          },
+          {
+            "id": "A03",
+            "kind": "certificate",
+            "title": "Outstanding presentation prize",
+            "description": "A prize for the best student-track presentation at an annual computational biology meeting.",
+            "claimed_criterion": "awards"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "judging",
+          "risk": 0.11
+        },
+        {
+          "criterion": "scholarly_articles",
+          "risk": 0.26
+        },
+        {
+          "criterion": "awards",
+          "risk": 0.17
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 1,
+        "weak": 3,
+        "assertion_share": 0.8,
+        "boilerplate_pairs": 1,
+        "independence_violations": 1
+      }
+    },
+    "tier": "weak",
+    "pair": 4
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P11",
+        "visa": "EB-1A",
+        "field": "renewable energy engineering",
+        "beneficiary": "Dr. Juniper Ashgrove",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "certificate",
+            "title": "Gold medal of an international renewable energy engineering society",
+            "description": "Given once a year to one person from the society's sixty member countries; the citation names the beneficiary's work on offshore wind controllers.",
+            "claimed_criterion": "awards"
+          },
+          {
+            "id": "A02",
+            "kind": "article",
+            "title": "Broadcast and newspaper coverage of the beneficiary",
+            "description": "A national public-radio segment and a front-page business-section article, both about the beneficiary and the adoption of their offshore wind controllers work.",
+            "claimed_criterion": "published_material"
+          },
+          {
+            "id": "A03",
+            "kind": "record",
+            "title": "Program committee chair of the flagship renewable energy engineering conference",
+            "description": "Served as program chair of the field's largest annual conference, overseeing the review of about three thousand submissions.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A04",
+            "kind": "record",
+            "title": "Industry standard built on the beneficiary's offshore wind controllers design",
+            "description": "A national standards body adopted the beneficiary's design as the reference approach to offshore wind controllers; six vendors ship products that implement it.",
+            "claimed_criterion": "original_contributions"
+          },
+          {
+            "id": "A05",
+            "kind": "contract",
+            "title": "Employment contract and industry pay benchmark",
+            "description": "Total pay is more than three times the median for senior renewable energy engineering professionals according to an independent industry compensation benchmark.",
+            "claimed_criterion": "high_salary"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "awards",
+          "risk": 0.17
+        },
+        {
+          "criterion": "published_material",
+          "risk": 0.18
+        },
+        {
+          "criterion": "judging",
+          "risk": 0.1
+        },
+        {
+          "criterion": "original_contributions",
+          "risk": 0.1
+        },
+        {
+          "criterion": "high_salary",
+          "risk": 0.26
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 3,
+        "weak": 1,
+        "assertion_share": 0.45,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "strong",
+    "pair": 5
+  },
+  {
+    "input": {
+      "petition": {
+        "id": "P12",
+        "visa": "EB-1A",
+        "field": "renewable energy engineering",
+        "beneficiary": "Dr. Juniper Ashgrove",
+        "artifacts": [
+          {
+            "id": "A01",
+            "kind": "record",
+            "title": "Reviewer acknowledgment letters",
+            "description": "Two letters thanking the beneficiary for reviewing four submissions to a offshore wind controllers workshop.",
+            "claimed_criterion": "judging"
+          },
+          {
+            "id": "A02",
+            "kind": "publication",
+            "title": "Journal articles and preprints",
+            "description": "Three journal articles and two preprints on offshore wind controllers, with a combined twenty-five citations.",
+            "claimed_criterion": "scholarly_articles"
+          },
+          {
+            "id": "A03",
+            "kind": "certificate",
+            "title": "Outstanding presentation prize",
+            "description": "A prize for the best student-track presentation at an annual renewable energy engineering meeting.",
+            "claimed_criterion": "awards"
+          }
+        ]
+      },
+      "step_one": [
+        {
+          "criterion": "judging",
+          "risk": 0.19
+        },
+        {
+          "criterion": "scholarly_articles",
+          "risk": 0.28
+        },
+        {
+          "criterion": "awards",
+          "risk": 0.19
+        }
+      ],
+      "letters": {
+        "letters": 4,
+        "independent": 3,
+        "weak": 1,
+        "assertion_share": 0.45,
+        "boilerplate_pairs": 0,
+        "independence_violations": 0
+      }
+    },
+    "tier": "weak",
+    "pair": 5
+  }
+]

@@ -133,3 +133,49 @@ def test_held_out_sentences_never_appear_in_dev(
 def test_letter_sets_contain_no_pii(dev: list[LetterCase], held: list[LetterCase]) -> None:
     for case in [*dev, *held]:
         assert scan_for_pii(case.packet.model_dump_json()) == []
+
+
+# --- Kazarian step two: pairs that both pass step one, one strong and one weak by construction
+
+
+def test_merits_input_schema_is_exported_and_committed(tmp_path: Path) -> None:
+    export_json_schemas(tmp_path)
+    committed = REPO / "web" / "lib" / "schemas" / "merits_input.schema.json"
+    assert (tmp_path / "merits_input.schema.json").read_text() == committed.read_text()
+
+
+def test_merits_pairs_both_pass_step_one_and_differ_in_strength() -> None:
+    from adjudicate.synth.merits import generate_merits_set
+
+    cases = generate_merits_set(n_pairs=6, seed=20261116)
+    assert [c.tier for c in cases] == ["strong", "weak"] * 6
+    for strong, weak in zip(cases[::2], cases[1::2], strict=True):
+        assert strong.pair == weak.pair and strong.input.petition.field == weak.input.petition.field
+        for c in (strong, weak):
+            claimed = {a.claimed_criterion for a in c.input.petition.artifacts}
+            assert len(claimed) >= 3 and None not in claimed
+            assert {s.criterion for s in c.input.step_one} == claimed
+            assert all(s.risk <= 0.3 for s in c.input.step_one)  # step one passed
+        assert len(weak.input.step_one) < len(strong.input.step_one)
+    # half the pairs share identical letters: the evidence alone must separate them
+    same = [
+        s.input.letters == w.input.letters for s, w in zip(cases[::2], cases[1::2], strict=True)
+    ]
+    assert same.count(True) == 3
+
+
+def test_merits_sets_are_committed_with_disjoint_held_out_wording() -> None:
+    from adjudicate.synth.merits import generate_merits_set
+
+    dev = generate_merits_set(n_pairs=6, seed=20261116)
+    held = generate_merits_set(n_pairs=6, seed=20261117, heldout=True)
+    for name, cases in (("phase6_merits.json", dev), ("phase6_merits_heldout.json", held)):
+        committed = json.loads((REPO / "eval" / "synthetic" / name).read_text())
+        assert committed == [c.to_json() for c in cases], f"{name} drifted: run `make synth`"
+
+    def texts(cases: list) -> set[str]:  # type: ignore[type-arg]
+        return {a.description for c in cases for a in c.input.petition.artifacts}
+
+    assert texts(dev).isdisjoint(texts(held))
+    for c in [*dev, *held]:
+        assert scan_for_pii(c.input.model_dump_json()) == []

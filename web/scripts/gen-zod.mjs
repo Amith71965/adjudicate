@@ -13,6 +13,7 @@ const TARGETS = [
   ["letter_packet", "letterPacketSchema"],
   ["letter_review", "letterReviewSchema"],
   ["merits_review", "meritsReviewSchema"],
+  ["merits_input", "meritsInputSchema"],
 ];
 
 // Inline "#/$defs/X" references so the generated Zod is self-contained.
