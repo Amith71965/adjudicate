@@ -228,3 +228,40 @@ def test_truncation_at_max_tokens_is_named_not_reported_as_bad_json(tmp_path: Pa
     with pytest.raises(LlmError, match="max_tokens"):
         client.complete_json(HAIKU, system="s", user="u", schema=Answer, max_tokens=10)
     assert client.spent_usd == pytest.approx(0.003)  # truncated calls still cost money
+
+
+def test_concurrent_callers_never_share_a_send_and_the_budget_holds(tmp_path: Path) -> None:
+    # Phase-7: four harness threads on one client broke TLS ("bad record mac") because the
+    # shared connection pool was used concurrently; the budget check could also race.
+    import threading
+    import time
+
+    active, peak, lock = [0], [0], threading.Lock()
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        with lock:
+            active[0] += 1
+            peak[0] = max(peak[0], active[0])
+        time.sleep(0.02)
+        with lock:
+            active[0] -= 1
+        return _reply('{"verdict": "met", "score": 1}', cost=0.01)
+
+    client = LlmClient(
+        api_key="k", budget_usd=0.035, cache_dir=tmp_path, transport=httpx.MockTransport(handler)
+    )
+    errors: list[Exception] = []
+
+    def call(i: int) -> None:
+        try:
+            client.complete_json(HAIKU, system="s", user=f"u{i}", schema=Answer, max_tokens=10)
+        except BudgetExceededError as exc:
+            errors.append(exc)
+
+    threads = [threading.Thread(target=call, args=(i,)) for i in range(6)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert peak[0] == 1
+    assert client.spent_usd <= 0.035 + 1e-9 and errors  # the cap stopped the excess calls

@@ -17,6 +17,7 @@ import json
 import math
 import os
 import re
+import threading
 from pathlib import Path
 from typing import TypeVar
 
@@ -73,6 +74,9 @@ class LlmClient:
         self.spent_usd = 0.0
         self._max_seen_cost = 0.0
         self._cache_dir = cache_dir
+        # One send at a time: the pooled TLS connection is not safe to share across threads
+        # (seen as "bad record mac"), and budget check + spend update must be atomic.
+        self._lock = threading.Lock()
         self._http = httpx.Client(
             base_url=base_url,
             transport=transport,
@@ -112,6 +116,10 @@ class LlmClient:
 
     # -- call ---------------------------------------------------------------------------
     def _send(self, model: str, messages: list[dict[str, str]], max_tokens: int) -> str:
+        with self._lock:
+            return self._send_locked(model, messages, max_tokens)
+
+    def _send_locked(self, model: str, messages: list[dict[str, str]], max_tokens: int) -> str:
         chars = sum(len(m["content"]) for m in messages)
         estimate = self._check_budget(model, chars, max_tokens)
         try:
