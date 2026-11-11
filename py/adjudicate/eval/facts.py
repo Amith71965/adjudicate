@@ -16,6 +16,7 @@ from typing import Protocol
 from pydantic import BaseModel, Field
 
 from adjudicate.eval.realset import TestDecision
+from adjudicate.llm.client import TruncatedError
 from adjudicate.parse.structure import Criterion
 from adjudicate.schemas.petition import Artifact, EvidenceKind, Petition
 
@@ -116,9 +117,16 @@ def extract_facts(
     )
 
     def ask(feedback: str) -> tuple[ExtractedFacts, list[str], list[str]]:
-        facts = client.complete_json(
-            model, system=SYSTEM, user=user + feedback, schema=ExtractedFacts, max_tokens=6000
-        )
+        try:
+            facts = client.complete_json(
+                model, system=SYSTEM, user=user + feedback, schema=ExtractedFacts, max_tokens=6000
+            )
+        except TruncatedError:
+            # long decisions can exhaust the budget on hidden reasoning: one larger try; the
+            # default stays 6000 so already-cached extractions keep their cache keys
+            facts = client.complete_json(
+                model, system=SYSTEM, user=user + feedback, schema=ExtractedFacts, max_tokens=16000
+            )
         given = {a.criterion.value for a in facts.artifacts if a.criterion.value in claimed}
         return facts, hard_leaks(_text(facts)), [c for c in claimed if c not in given]
 

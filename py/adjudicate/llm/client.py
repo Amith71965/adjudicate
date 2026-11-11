@@ -44,6 +44,10 @@ class BudgetExceededError(LlmError):
     """Sending this request could exceed the run's spend cap; nothing was sent."""
 
 
+class TruncatedError(LlmError):
+    """The model hit max_tokens (often hidden reasoning); the answer is incomplete."""
+
+
 class UnknownModelError(LlmError):
     """Model is not in the price table; refusing to spend on an unknown rate."""
 
@@ -155,7 +159,7 @@ class LlmClient:
         choices = body.get("choices") or [{}]
         if isinstance(choices[0], dict) and choices[0].get("finish_reason") == "length":
             details = (body.get("usage") or {}).get("completion_tokens_details") or {}
-            raise LlmError(
+            raise TruncatedError(
                 f"output truncated at max_tokens={max_tokens}"
                 f" (hidden reasoning tokens: {details.get('reasoning_tokens', '?')})"
             )

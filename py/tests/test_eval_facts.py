@@ -131,3 +131,26 @@ def test_extracted_facts_schema_has_no_verdict_field() -> None:
     assert fields == {"criterion", "kind", "title", "description"}
     with pytest.raises(ValueError):
         ExtractedFacts.model_validate({"field": "f", "artifacts": []})
+
+
+def test_a_truncated_answer_is_retried_once_with_a_larger_output_budget() -> None:
+    from adjudicate.llm.client import TruncatedError
+
+    class Truncating(FakeClient):
+        def __init__(self) -> None:
+            super().__init__({"field": "f", "artifacts": [art("judging", "Reviews.")]})
+            self.budgets: list[int] = []
+
+        def complete_json[T: BaseModel](
+            self, model: str, *, system: str, user: str, schema: type[T], max_tokens: int
+        ) -> T:
+            self.budgets.append(max_tokens)
+            if len(self.budgets) == 1:
+                raise TruncatedError("output truncated at max_tokens=6000")
+            return super().complete_json(
+                model, system=system, user=user, schema=schema, max_tokens=max_tokens
+            )
+
+    client = Truncating()
+    out = extract_facts(client, _decision(["judging"]), index=1)
+    assert out.status == "ok" and client.budgets == [6000, 16000]
