@@ -1,0 +1,210 @@
+{
+  "$defs": {
+    "Artifact": {
+      "properties": {
+        "claimed_criterion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Criterion"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "description": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^A\\d{2}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "description"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Criterion": {
+      "description": "The ten EB-1A criteria at 8 C.F.R. \u00a7 204.5(h)(3)(i)-(x).",
+      "enum": [
+        "awards",
+        "membership",
+        "published_material",
+        "judging",
+        "original_contributions",
+        "scholarly_articles",
+        "display",
+        "leading_role",
+        "high_salary",
+        "commercial_success"
+      ],
+      "title": "Criterion",
+      "type": "string"
+    },
+    "EvidenceKind": {
+      "enum": [
+        "certificate",
+        "letter",
+        "article",
+        "publication",
+        "record",
+        "contract",
+        "other"
+      ],
+      "title": "EvidenceKind",
+      "type": "string"
+    },
+    "LetterSummary": {
+      "properties": {
+        "assertion_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Assertion Share",
+          "type": "number"
+        },
+        "boilerplate_pairs": {
+          "minimum": 0,
+          "title": "Boilerplate Pairs",
+          "type": "integer"
+        },
+        "independence_violations": {
+          "minimum": 0,
+          "title": "Independence Violations",
+          "type": "integer"
+        },
+        "independent": {
+          "minimum": 0,
+          "title": "Independent",
+          "type": "integer"
+        },
+        "letters": {
+          "minimum": 0,
+          "title": "Letters",
+          "type": "integer"
+        },
+        "weak": {
+          "minimum": 0,
+          "title": "Weak",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "letters",
+        "independent",
+        "weak",
+        "assertion_share",
+        "boilerplate_pairs",
+        "independence_violations"
+      ],
+      "title": "LetterSummary",
+      "type": "object"
+    },
+    "Petition": {
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/Artifact"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "beneficiary": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Beneficiary",
+          "type": "string"
+        },
+        "field": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Field",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^P\\d{2,4}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "visa": {
+          "pattern": "^EB-1A$",
+          "title": "Visa",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "visa",
+        "field",
+        "beneficiary",
+        "artifacts"
+      ],
+      "title": "Petition",
+      "type": "object"
+    },
+    "StepOneCriterion": {
+      "properties": {
+        "criterion": {
+          "$ref": "#/$defs/Criterion"
+        },
+        "risk": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Risk",
+          "type": "number"
+        }
+      },
+      "required": [
+        "criterion",
+        "risk"
+      ],
+      "title": "StepOneCriterion",
+      "type": "object"
+    }
+  },
+  "description": "What the step-two pass sees: the inventory, step-one results and the letter findings.",
+  "properties": {
+    "letters": {
+      "$ref": "#/$defs/LetterSummary"
+    },
+    "petition": {
+      "$ref": "#/$defs/Petition"
+    },
+    "step_one": {
+      "items": {
+        "$ref": "#/$defs/StepOneCriterion"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Step One",
+      "type": "array"
+    }
+  },
+  "required": [
+    "petition",
+    "step_one",
+    "letters"
+  ],
+  "title": "MeritsInput",
+  "type": "object"
+}

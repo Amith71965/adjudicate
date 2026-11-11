@@ -1,0 +1,355 @@
+{
+  "phase": 6,
+  "part": "merits",
+  "model": "anthropic/claude-haiku-5.5",
+  "cache_version": "merits-v2",
+  "set": "eval/synthetic/phase6_merits_heldout.json",
+  "llm": {
+    "calls": 16,
+    "hits": 0,
+    "inputTokens": 73141,
+    "outputTokens": 18745,
+    "unknownUsageCalls": 0,
+    "cacheWriteFailures": 0,
+    "estimated_cost_usd": 0.0167,
+    "note": "calls/tokens count this run's provider calls only; cache hits are free"
+  },
+  "score": {
+    "cases": 12,
+    "dropped": 0,
+    "pairs": 6,
+    "ordered_pairs": 6,
+    "min_margin": 0.25,
+    "weak_caught": 6,
+    "strong_favorable": 5,
+    "accuracy": 0.9167,
+    "confusion": {
+      "strong_favorable": 5,
+      "strong_unfavorable": 1,
+      "weak_favorable": 0,
+      "weak_unfavorable": 6
+    },
+    "citations": 29,
+    "fabricated_citations": 0,
+    "fabricated": [],
+    "gate": {
+      "passed": true,
+      "failures": []
+    }
+  },
+  "petitions": [
+    {
+      "petition_id": "P01",
+      "tier": "strong",
+      "pair": 0,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.2,
+      "reasoning": "Step one criteria are met, so the question is whether the totality shows sustained national or international acclaim and top-of-field standing. The record shows recognition spread over a long period: area chair every year since 2016, a citation for protein-folding work since 2014, a 2019 national standards adoption with six vendors shipping implementations since 2020, a 2020 front-page business article, a 2021 international gold medal from one person per year across sixty countries, a 2022 program chair role for the field's largest conference, a 2023 national public-radio segment, and pay above three times the senior median every year since 2021. Taken together, the awards, the standard adopted by a national body, and leadership of the flagship conference are the kind of field-wide markers that go beyond what active professionals routinely show. Five letters were filed, four independent with no tie found. Their praise is specific in about 80 percent of sentences, and none are copied or from tied parties, so they add modest weight. The 20 percent of sentences lacking a stated mechanism and the reliance on a single gold medal per year are minor concerns, not disqualifying. The media coverage is focused on the beneficiary's work, which supports acclaim. On the totality, the evidence likely meets the elevated final-merits standard, with residual risk from the limited number of independent media items and letters.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "In a final merits determination, we analyze a petitioner's accomplishments and weigh the totality of the evidence"
+        },
+        {
+          "chunk_id": 14082,
+          "decision_id": "FEB262026_03B2203",
+          "quote": "As the Petitioner has established that he meets the requisite initial evidence, we will evaluate whether"
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established through meeting at least three of the evidentiary criteria alone."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P02",
+      "tier": "weak",
+      "pair": 0,
+      "status": "reviewed",
+      "attempts": 2,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.9,
+      "reasoning": "Step one found three criteria met, but the evidence behind them is thin. Judging rests on two acknowledgment letters thanking the beneficiary for reviewing four workshop submissions, which is routine service most active professionals perform and not evidence of acclaim. Scholarly articles show three journal articles and two preprints with a combined twenty-five citations; that citation count is modest, and the record contains no citing articles that would allow a qualitative assessment of how others have commented on the work. The awards criterion rests on a student-track presentation prize, which is local and early-career recognition rather than national or international acclaim. Recommendation letters weigh little: three of four state no mechanism, about 80 percent of sentences are praise without specifics, a pair shares copied boilerplate, and one letter presented as independent comes from a person tied to the beneficiary. Taken together, the record does not show sustained national or international acclaim, nor that the beneficiary is among the small percentage at the very top of computational biology. Meeting three criteria is insufficient under Kazarian, so the petition is likely denied.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "In a final merits determination, we analyze a petitioner's accomplishments and weigh the totality of the evidence to determine if their successes are sufficient to demonstrate that they have extraordinary ability in the field of endeavor."
+        },
+        {
+          "chunk_id": 10575,
+          "decision_id": "JUL302026_01B2203",
+          "quote": "Regarding his overall citation record, the Petitioner provided evidence his published"
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "Because the record does not contain examples of articles that cite to the Beneficiary's work, we cannot conduct a"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P03",
+      "tier": "strong",
+      "pair": 1,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.28,
+      "reasoning": "Step one found all five criteria met, and the record supports them at a high level. The gold medal (A01) is an international award given once a year to one person from sixty member countries, and its citation ties the work to offshore wind controllers from 2014 onward. Press coverage (A02) includes a national public-radio segment in 2023 and a front-page business article in 2020. The beneficiary chaired the program of the field's largest annual conference in 2022 after serving as area chair since 2016 (A03). A national standards body adopted the beneficiary's design in 2019, and six vendors have shipped conforming products since 2020 (A04). Pay has exceeded three times the senior median in an independent benchmark each year since 2021 (A05). Taken together, these items span 2016 to 2023 and reach national and international audiences, which supports sustained acclaim. The weaknesses are real but do not defeat the petition. Only one of four letters is praise-only, 45% of letter sentences praise without stating a mechanism, and no letters are boilerplate or from tied parties. The letters therefore carry limited weight but are not a basis for denial. The record contains no citation analysis of the beneficiary's scholarly output, and the AAO has held that low citation counts do not establish acclaim, so the publication criterion adds little. Against that, the gold medal, the conference leadership role, and the adopted industry standard are the kind of elite recognition that most active professionals in the field do not reach. On the totality of the record, the evidence sufficiently shows sustained acclaim and placement among the small percentage at the top of the field, with residual risk from the thin scholarly and letter evidence.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "we will evaluate whether he has demonstrated, by a preponderance of the evidence, his sustained national or international acclaim and that he is one of the small percentage at the very top of the field of endeavor"
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "Because the record does not contain examples of articles that cite to the Beneficiary's work, we cannot conduct a"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P04",
+      "tier": "weak",
+      "pair": 1,
+      "status": "reviewed",
+      "attempts": 2,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.85,
+      "reasoning": "Step one found three criteria met, but meeting three criteria does not establish eligibility; the final merits inquiry requires sustained national or international acclaim and placement among the small percentage at the top of the field. The judging evidence is two reviewer acknowledgment letters for four workshop submissions, which reflects routine peer-review participation rather than recognized judging of others' work at a national or international level. The scholarly record is three journal articles and two preprints with a combined twenty-five citations; the record contains no examples of independent citing articles, so no qualitative analysis of how others have engaged with the beneficiary's research is possible, and citation volume alone does not show sustained acclaim. The awards evidence is a best student-track presentation prize at an annual meeting, which is local to a student track and does not show national or international recognition. Of the four recommendation letters, three are presented as independent with no tie found, but one states no mechanism at all and 45% of letter sentences praise without stating a mechanism, so the letters carry limited weight. Taken together, the evidence does not show sustained acclaim, and it does not show the beneficiary has risen to the very top of renewable energy engineering, where productive activity of this kind is routine for active professionals. The residual risk from step one is compounded by this weighing, and an adverse determination is likely.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "In this matter, we determine that the Petitioner has not established eligibility."
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "it cannot be established through meeting at least three of the evidentiary criteria alone"
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "Because the record does not contain examples of articles that cite to the Beneficiary's work, we cannot conduct a"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P05",
+      "tier": "strong",
+      "pair": 2,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.22,
+      "reasoning": "The step-one criteria are supported by strong, specific evidence. The 2021 gold medal is a single annual award from sixty countries and cites fraud-scoring work dating to 2014, which shows recognition beyond the field's routine level. Coverage is national: a 2023 public-radio segment and a 2020 front-page business article, both focused on adoption of the beneficiary's work. Judging is significant: program chair of the field's largest conference in 2022 after area chair service every year since 2016. The original contribution is of major significance: a national standards body adopted the design as the reference approach in 2019, and six vendors have shipped implementations since 2020. Pay exceeded three times the senior median in an independent benchmark each year since 2021. Taken together, these items span 2014 to 2023 and show sustained acclaim rather than a single peak. The standards adoption and vendor uptake show influence on the field's practice, which goes beyond participation in routine professional activity. Four of five letters are independent, none is boilerplate, and none is tied to the beneficiary, so they add modest weight. The record has no citation count or scholarly-article evidence in the inventory, so the officer cannot rely on publication metrics; the case rests on award, standard adoption, judging, and pay. On balance the totality supports sustained national or international acclaim and placement among the small percentage at the top of the field, with residual risk from the thin scholarly record and the absence of citation data.",
+      "citations": [
+        {
+          "chunk_id": 14082,
+          "decision_id": "FEB262026_03B2203",
+          "quote": "As the Petitioner has established that he meets the requisite initial evidence, we will evaluate whether"
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P06",
+      "tier": "weak",
+      "pair": 2,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.85,
+      "reasoning": "Step one found three criteria met (judging, scholarly articles, awards), but meeting three criteria is not sufficient; the final merits question is whether the totality shows sustained national or international acclaim and top-of-field status. Judging: the two reviewer acknowledgment letters thank the beneficiary for reviewing four workshop submissions, which is routine service most active professionals perform and reflects no elite selection; weight is low. Scholarly articles: three journal articles and two preprints with a combined twenty-five citations is modest, and no citing articles were shown to be analyzed for how they highlight the beneficiary's work, so the citation record does not show recognition at a level placing him among the very top. Awards: a best student-track presentation prize at an annual meeting is a local, early-career recognition and does not establish national or international acclaim. Recommendation letters: four letters, three with praise but no mechanism, 80% of sentences praising without specifics, a copied-passage pair, and one letter presented as independent that is tied to the beneficiary; these carry little weight. Taken together the record shows a competent early-career practitioner with some visibility but no sustained, extensive documentation of recognition at the national or international level and no evidence placing him in the small top percentage of fintech product design. The adverse outcome is likely.",
+      "citations": [
+        {
+          "chunk_id": 10575,
+          "decision_id": "JUL302026_01B2203",
+          "quote": "The Petitioner did not demonstrate that such low figures garnered him sustained national or international acclaim or place him among that small percentage at the very top of the field."
+        },
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "we will evaluate whether he has demonstrated, by a preponderance of the evidence, his sustained national or international acclaim and that he is one of the small percentage at the very top of the field of endeavor"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P07",
+      "tier": "strong",
+      "pair": 3,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.6,
+      "reasoning": "Step one found five criteria met, but meeting three criteria is not sufficient; the totality must show sustained acclaim and top-of-field status. The strongest evidence is the 2021 gold medal from an international society (A01), a single annual award drawn from sixty countries and tied to a citation on seismic retrofit work since 2014, and the 2019 standards adoption of the beneficiary's design with six vendors implementing it (A04). These show real impact on the field. The program chair role (A03) reflects leadership at the largest conference, and national public-radio and front-page coverage (A02) show press attention, though the coverage centers on adoption of the work rather than the beneficiary's standing among peers. The salary evidence (A05) is strong against an independent benchmark but is a financial indicator rather than acclaim. Weaknesses: the record is thin on independent citations of the scholarly work, the coverage is about one project, and 45% of letter sentences praise without stating a mechanism, with one letter offering praise only. Three letters are independent, with no ties found and no shared boilerplate, which is favorable but does not offset the generic content. Taken together, the record shows strong recognition concentrated in one area of seismic retrofit. It does not clearly show sustained acclaim over a long period across the field, nor a position among the small percentage at the very top of structural engineering. The officer would likely find the record close but insufficient at the final merits stage.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "we will evaluate whether he has demonstrated, by a preponderance of the evidence, his sustained national or international acclaim and that he is one of the small percentage at the very top of the field of endeavor"
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established through meeting at least three of the evidentiary criteria alone."
+        },
+        {
+          "chunk_id": 10575,
+          "decision_id": "JUL302026_01B2203",
+          "quote": "The statute demands \"extensive documentation\" of recognition, and the Petitioner has not shown that he garnered attention at a level placing him among that small percentage at the very of the field"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P08",
+      "tier": "weak",
+      "pair": 3,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.85,
+      "reasoning": "Step one met judging, scholarly articles, and awards, each with low residual risk. At the final merits stage the record does not show sustained national or international acclaim or top-of-field standing. Judging: two reviewer acknowledgment letters for four submissions to a seismic retrofit workshop reflect routine peer service that most active professionals perform; the record does not show invitation to judge at an elite venue. Scholarly articles: three journal articles and two preprints with a combined twenty-five citations is modest for a sustained career, and the citation count alone does not show that others in the field have singled out the beneficiary's work. No articles citing the beneficiary's work were submitted for qualitative review. Awards: a best student-track presentation prize at an annual meeting is a local, early-career recognition, not a national or international award, and does not support sustained acclaim. Recommendation letters: four letters, three presented as independent with no tie found, but one states no mechanism and 45% of sentences praise without specifics. Letters that praise without mechanism carry limited weight and do not establish that the beneficiary's contributions have been recognized at a level placing them among the small percentage at the top. Considering the totality of the evidence, the record shows a competent early-career engineer with routine professional activity rather than sustained acclaim or elite standing. The petitioner has not shown the achievements have been recognized through extensive documentation. Risk of an adverse determination is high.",
+      "citations": [
+        {
+          "chunk_id": 10575,
+          "decision_id": "JUL302026_01B2203",
+          "quote": "The Petitioner did not demonstrate that such low figures garnered him sustained national or international acclaim or place him among that small percentage at the very top of the field."
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "Because the record does not contain examples of articles that cite to the Beneficiary's work, we cannot conduct a qualitative analysis to determine whether others have highlighted or commented upon her research"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P09",
+      "tier": "strong",
+      "pair": 4,
+      "status": "reviewed",
+      "attempts": 2,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.15,
+      "reasoning": "Step one found five criteria met. Weighing the totality of the record, the evidence shows sustained acclaim over roughly a decade. The protein-folding models work is cited from 2014 onward (A01), a national standards body adopted the design as the reference approach in 2019 (A04), and six vendors have shipped implementing products since 2020 (A04). National public-radio coverage in 2023 and a front-page business-section article in 2020 are both about this work (A02), which is independent media attention beyond the field's own circles. The gold medal is given once a year to one person from sixty member countries and was awarded in 2021 with a citation naming the work (A01). The beneficiary has served as area chair since 2016 and chaired the field's largest conference in 2022, overseeing about three thousand submissions (A03). Pay exceeded three times the senior median in an independent benchmark every year since 2021 (A05). Four of five letters are presented as independent with no tie found, none is praise-only, and none shares boilerplate. The 20 percent of sentences lacking a stated mechanism is a modest weakness and does not outweigh the specific documentary record. Taken together, this is not routine activity shared by most active professionals; it reflects recognition by a small top tier of the field, so both sustained acclaim and top-of-field standing are found. The residual risk is low, given that the record was not shown to be formulaic and the independent corroboration is strong.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "In a final merits determination, we analyze a petitioner's accomplishments and weigh the totality of the evidence to determine if their successes are sufficient to demonstrate that they have extraordinary ability in the field of endeavor."
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established through meeting at least three of the evidentiary criteria alone."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P10",
+      "tier": "weak",
+      "pair": 4,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.85,
+      "reasoning": "Step one found judging, scholarly articles, and awards met, but meeting three criteria is not sufficient under the final merits analysis. Judging: the two reviewer acknowledgment letters cover four workshop submissions, a routine service activity that most active protein-folding researchers also perform, so it does little to show top-of-field standing. Scholarly articles: three journal articles and two preprints with a combined twenty-five citations is modest for this field, and absent articles that discuss or cite the beneficiary's work qualitatively, the record cannot show that peers have highlighted the research in a way reflecting sustained acclaim. Awards: a best student-track presentation prize at an annual meeting is a local, early-career recognition that does not reflect national or international acclaim. Recommendation letters: three of four letters state no specific mechanism and 80% of sentences are praise without content; one pair shares copied passages; and the letter presented as independent comes from a person tied to the beneficiary, so it carries little independent weight. Taken together, the record does not show sustained national or international acclaim or that the beneficiary is among the small percentage at the very top of computational biology. Adverse determination is likely.",
+      "citations": [
+        {
+          "chunk_id": 10575,
+          "decision_id": "JUL302026_01B2203",
+          "quote": "material received 11 citations as at the time of filing. The Petitioner did not demonstrate that such low figures garnered him sustained national or international acclaim or place him among that small percentage"
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "Because the record does not contain examples of articles that cite to the Beneficiary's work, we cannot conduct a qualitative analysis to determine whether others have highlighted or commented upon her research"
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "it cannot be established through meeting at least three of the evidentiary criteria alone. See Amin, 24 F. 4th at 394-95."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P11",
+      "tier": "strong",
+      "pair": 5,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.3,
+      "reasoning": "Step one criteria are judged met, so the question is the totality of the record. Sustained acclaim: the evidence spans several years and is not a single event. The offshore wind controller work dates from 2014, the international gold medal (one recipient per year from sixty member countries) was awarded in 2021, national press coverage appeared in 2020 and 2023, area chair service ran every year from 2016, program chair of the field's largest conference was held in 2022, a national standards body adopted the design in 2019, and six vendors have implemented it since 2020. Salary above three times the senior median has held each year since 2021. Together these show recognition that persists over time rather than a one-off honor, so sustained acclaim is found. Top of field: a gold medal of this kind, adoption of the beneficiary's design as the reference national standard, and leadership of the field's largest conference go well beyond routine activity for active professionals, so the beneficiary is found to be among the small percentage at the top. The recommendation letters are weaker: one letter states no mechanism at all and 45 percent of letter sentences praise without stating a mechanism, so they add little independent weight and do not undercut the documentary evidence. Residual risk remains because the record leans on awards, service, and pay, and the adverse outcome risk is moderate but not high.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "we will evaluate whether he has demonstrated, by a preponderance of the evidence, his sustained national or international acclaim and that he is one of the small percentage at the very top of the field of endeavor"
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established through meeting at least three of the evidentiary criteria alone."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P12",
+      "tier": "weak",
+      "pair": 5,
+      "status": "reviewed",
+      "attempts": 2,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.85,
+      "reasoning": "Step one found three criteria met, but meeting three criteria does not establish extraordinary ability. The judging criterion rests on two reviewer acknowledgment letters for reviewing four submissions to an offshore wind controllers workshop. Reviewing for a workshop is routine service that many active professionals perform, so it does not show acclaim at a national or international level. The scholarly record is three journal articles and two preprints with a combined twenty-five citations. That volume is modest, and the record contains no citing articles that discuss the beneficiary's work, so no qualitative analysis of recognition is possible. The awards criterion rests on a prize for best student-track presentation at an annual meeting. That is a student-level honor and does not show sustained recognition beyond the immediate event. Of the four recommendation letters, three are presented as independent with no tie to the beneficiary found, which is favorable, but one states no specific mechanism at all and 45 percent of letter sentences praise without stating a mechanism. Taken together, the totality of the evidence does not show sustained national or international acclaim or that the beneficiary is among the small percentage at the very top of renewable energy engineering. The petition does not meet the final merits standard.",
+      "citations": [
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "it cannot be established through meeting at least three of the evidentiary criteria alone. See Amin, 24 F. 4th at 394-95."
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "Because the record does not contain examples of articles that cite to the Beneficiary's work, we cannot conduct a qualitative analysis"
+        }
+      ],
+      "pruned": []
+    }
+  ]
+}

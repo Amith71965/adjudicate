@@ -1,0 +1,2078 @@
+{
+  "phase": 6,
+  "part": "letters",
+  "model": "anthropic/claude-haiku-5.5",
+  "cache_version": "letters-v1",
+  "set": "eval/synthetic/phase6_letters_heldout.json",
+  "llm": {
+    "calls": 69,
+    "hits": 0,
+    "inputTokens": 63914,
+    "outputTokens": 22813,
+    "unknownUsageCalls": 0,
+    "cacheWriteFailures": 0,
+    "estimated_cost_usd": 0.0178,
+    "note": "calls/tokens count this run's provider calls only; cache hits are free"
+  },
+  "score": {
+    "letters": 69,
+    "sentences": 349,
+    "dropped": 0,
+    "mode_c": {
+      "tp": 175,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1,
+      "by_kind": {
+        "context": {
+          "n": 69,
+          "flagged": 0
+        },
+        "mechanism_plain": {
+          "n": 54,
+          "flagged": 0
+        },
+        "assertion_superlative": {
+          "n": 83,
+          "flagged": 83
+        },
+        "mechanism_superlative": {
+          "n": 51,
+          "flagged": 0
+        },
+        "assertion_plain": {
+          "n": 92,
+          "flagged": 92
+        }
+      }
+    },
+    "lexicon": {
+      "tp": 83,
+      "fp": 51,
+      "fn": 92,
+      "precision": 0.6194,
+      "recall": 0.4743
+    },
+    "boilerplate": {
+      "planted": 12,
+      "found": 12,
+      "false_pairs": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "independence": {
+      "planted": 11,
+      "found": 11,
+      "false_violations": 0,
+      "near_misses_flagged": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "gate": {
+      "passed": true,
+      "failures": []
+    }
+  },
+  "mode_c_errors": [],
+  "petitions": [
+    {
+      "petition_id": "P01",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L03",
+          "shared": 42,
+          "passage": "the record i can confirm that dr avery quillfeather is internationally recognized for original work in fintech product design their publications are relied upon by scholars and practitioners in many countries dr avery quillfeather clearly belongs to the small group of experts at the very top of the field"
+        },
+        {
+          "a": "L01",
+          "b": "L04",
+          "shared": 44,
+          "passage": "having reviewed the record i can confirm that dr avery quillfeather is internationally recognized for original work in fintech product design their publications are relied upon by scholars and practitioners in many countries dr avery quillfeather clearly belongs to the small group of experts at the very top of the field"
+        },
+        {
+          "a": "L03",
+          "b": "L04",
+          "shared": 42,
+          "passage": "the record i can confirm that dr avery quillfeather is internationally recognized for original work in fintech product design their publications are relied upon by scholars and practitioners in many countries dr avery quillfeather clearly belongs to the small group of experts at the very top of the field"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying real-time fraud scoring"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust real-time fraud scoring under shift"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Greywater Research Council"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3,
+            5,
+            6,
+            7
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3,
+            4,
+            5,
+            7
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P02",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Pellucid Robotics"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Pellucid Robotics"
+            }
+          ],
+          "violation": true
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            4
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3,
+            4
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P03",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L05",
+          "shared": 28,
+          "passage": "that dr avery quillfeather is among the most accomplished people working on protein-folding models today the impact of these contributions is felt throughout computational biology their acclaim is sustained national and international and well deserved"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for protein-folding models"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Halden Research Foundation"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P04",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Marrowgate Institute"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Corvid Analytics"
+            }
+          ],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P05",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L04",
+          "shared": 41,
+          "passage": "the record i can confirm that dr avery quillfeather is internationally recognized for original work in structural engineering their publications are relied upon by scholars and practitioners in many countries dr avery quillfeather clearly belongs to the small group of experts at the very top of the field"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying seismic retrofit systems"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Pellucid Robotics"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust seismic retrofit systems under shift"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P06",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying real-time fraud scoring"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Quarry Hill Institute"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P07",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L03",
+          "b": "L04",
+          "shared": 29,
+          "passage": "that oakley starling is among the most accomplished people working on offshore wind controllers today the impact of these contributions is felt throughout renewable energy engineering their acclaim is sustained national and international and well deserved"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Greywater Research Council"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Scalable methods for offshore wind controllers"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3,
+            4,
+            6
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P08",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for seismic retrofit systems"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Fallowmere University"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Fallowmere University"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            4
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P09",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L03",
+          "shared": 39,
+          "passage": "the record i can confirm that rowan thistlewood is internationally recognized for original work in computational biology their publications are relied upon by scholars and practitioners in many countries rowan thistlewood clearly belongs to the small group of experts at the very top of the field"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying protein-folding models"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Kestrel Systems Laboratory"
+            }
+          ],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P10",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for seismic retrofit systems"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Pellucid Robotics"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Ambergate Polytechnic"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P11",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L04",
+          "shared": 30,
+          "passage": "that dr avery quillfeather is among the most accomplished people working on real-time fraud scoring today the impact of these contributions is felt throughout fintech product design their acclaim is sustained national and international and well deserved"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for real-time fraud scoring"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust real-time fraud scoring under shift"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Corvid Analytics"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P12",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust protein-folding models under shift"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Pellucid Robotics"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P13",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L02",
+          "b": "L04",
+          "shared": 39,
+          "passage": "the record i can confirm that indigo brackenridge is internationally recognized for original work in computational biology their publications are relied upon by scholars and practitioners in many countries indigo brackenridge clearly belongs to the small group of experts at the very top of the field"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for protein-folding models"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Pellucid Robotics"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying protein-folding models"
+            }
+          ],
+          "violation": true
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            4
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P14",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Greywater Research Council"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Scalable methods for real-time fraud scoring"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Greywater Research Council"
+            }
+          ],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3,
+            4
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P15",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L02",
+          "shared": 29,
+          "passage": "that rowan thistlewood is among the most accomplished people working on offshore wind controllers today the impact of these contributions is felt throughout renewable energy engineering their acclaim is sustained national and international and well deserved"
+        },
+        {
+          "a": "L01",
+          "b": "L03",
+          "shared": 34,
+          "passage": "it is my firm belief that rowan thistlewood is among the most accomplished people working on offshore wind controllers today the impact of these contributions is felt throughout renewable energy engineering their acclaim is sustained national and international and well deserved"
+        },
+        {
+          "a": "L02",
+          "b": "L03",
+          "shared": 29,
+          "passage": "that rowan thistlewood is among the most accomplished people working on offshore wind controllers today the impact of these contributions is felt throughout renewable energy engineering their acclaim is sustained national and international and well deserved"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Scalable methods for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Pellucid Robotics"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3,
+            4,
+            5,
+            7
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P16",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for seismic retrofit systems"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Wrenfield Polytechnic"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Wrenfield Polytechnic"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism"
+          ]
+        }
+      ]
+    }
+  ]
+}

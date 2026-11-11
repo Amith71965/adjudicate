@@ -154,6 +154,14 @@ def test_visa_filter(db: Conn) -> None:
     assert search(db, FakeEmbedder(), "acclaim", k=5, visa="O-1") == []
 
 
+def test_section_filter_keeps_only_that_kind_of_reasoning(db: Conn) -> None:
+    build_index(db, FakeEmbedder())
+    q = "sustained national acclaim final merits determination totality"
+    hits = search(db, FakeEmbedder(), q, k=5, section="final_merits")
+    assert hits and {h.section_kind for h in hits} == {"final_merits"}
+    assert search(db, FakeEmbedder(), q, k=5, section="reserved", visa="O-1") == []
+
+
 def test_empty_query_is_rejected(db: Conn) -> None:
     with pytest.raises(ValueError, match="query"):
         search(db, FakeEmbedder(), "   ", k=5)

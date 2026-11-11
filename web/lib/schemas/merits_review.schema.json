@@ -1,0 +1,72 @@
+{
+  "$defs": {
+    "Citation": {
+      "properties": {
+        "chunk_id": {
+          "minimum": 1,
+          "title": "Chunk Id",
+          "type": "integer"
+        },
+        "decision_id": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Decision Id",
+          "type": "string"
+        },
+        "quote": {
+          "maxLength": 600,
+          "minLength": 30,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "decision_id",
+        "quote"
+      ],
+      "title": "Citation",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "citations": {
+      "items": {
+        "$ref": "#/$defs/Citation"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Citations",
+      "type": "array"
+    },
+    "reasoning": {
+      "maxLength": 2000,
+      "minLength": 40,
+      "title": "Reasoning",
+      "type": "string"
+    },
+    "risk": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Risk",
+      "type": "number"
+    },
+    "sustained_acclaim": {
+      "title": "Sustained Acclaim",
+      "type": "boolean"
+    },
+    "top_of_field": {
+      "title": "Top Of Field",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "sustained_acclaim",
+    "top_of_field",
+    "risk",
+    "reasoning",
+    "citations"
+  ],
+  "title": "MeritsReview",
+  "type": "object"
+}

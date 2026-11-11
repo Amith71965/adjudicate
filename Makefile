@@ -6,7 +6,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 PY := .venv/bin
 
-.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper eval-examiner verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
+.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper eval-examiner eval-letters eval-merits verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
 
 help: ## list targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
@@ -60,7 +60,7 @@ schemas: ## export JSON Schema from Pydantic and generate Zod (single source of 
 	$(PY)/python -c "from pathlib import Path; from adjudicate.schemas.petition import export_json_schemas as e; e(Path('web/lib/schemas'))"
 	cd web && npm run -s gen:zod
 
-synth: ## regenerate the seeded synthetic petition sets (phases 4 and 5)
+synth: ## regenerate the seeded synthetic sets (phases 4, 5 and 6)
 	$(PY)/python scripts/gen-synth.py
 
 eval-mapper: ## phase-4 gate: blind mapper on 20 synthetic petitions (Haiku, <= $0.16, cached)
@@ -68,6 +68,12 @@ eval-mapper: ## phase-4 gate: blind mapper on 20 synthetic petitions (Haiku, <= 
 
 eval-examiner: ## phase-5 gate: adversarial examiner on 16 synthetic petitions (needs `make api`; Haiku, capped, cached)
 	cd web && npx tsx scripts/eval-examiner.ts
+
+eval-letters: ## phase-6 gate: mode C, boilerplate, independence on 16 synthetic packets (Haiku, capped, cached)
+	cd web && npx tsx scripts/eval-letters.ts
+
+eval-merits: ## phase-6 gate: kazarian step two on 6 strong/weak pairs (needs `make api`; Haiku, capped, cached)
+	cd web && npx tsx scripts/eval-merits.ts
 
 lint-py:
 	$(PY)/ruff check py

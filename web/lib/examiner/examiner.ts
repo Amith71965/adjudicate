@@ -5,11 +5,12 @@
  * retrieved, decision matches, quote verbatim); one corrective retry, then invalid citations
  * are pruned, and a review with none left is dropped and recorded — never shown ungrounded.
  */
-import { generateText, NoObjectGeneratedError, Output, type LanguageModel } from "ai";
+import type { LanguageModel } from "ai";
 import type { z } from "zod";
 import { petitionSchema } from "@/lib/schemas/petition.zod";
 import { prongReviewSchema } from "@/lib/schemas/prong_review.zod";
-import { validateCitations, type CitationProblem, type Passage } from "./citations";
+import type { CitationProblem, Passage } from "./citations";
+import { generateGrounded } from "./grounded";
 import type { PetitionInput } from "./mapper";
 import { prongsFor, type Prong } from "./prongs";
 import type { Retriever } from "./retriever";
@@ -93,12 +94,6 @@ function taskPrompt(task: ReviewTask, passages: Passage[]): string {
   ].join("\n\n");
 }
 
-function describeProblems(problems: CitationProblem[]): string {
-  return problems
-    .map((p) => `- chunk ${p.citation.chunk_id} / ${p.citation.decision_id}: ${p.reason}`)
-    .join("\n");
-}
-
 export async function examineProng(
   task: ReviewTask,
   { model, retriever, k = 6, maxOutputTokens = 6000 }: { model: LanguageModel; retriever: Retriever; k?: number; maxOutputTokens?: number },
@@ -113,52 +108,20 @@ export async function examineProng(
   };
   if (passages.length === 0) return { ...base, status: "dropped", reason: "no_passages", problems: [], attempts: 0 };
 
-  const prompt = taskPrompt(task, passages);
-  const attempt = async (feedback?: string): Promise<ProngReview | Error> => {
-    try {
-      const { output } = await generateText({
-        model,
-        system: EXAMINER_SYSTEM,
-        prompt: feedback ? `${prompt}\n\n${feedback}` : prompt,
-        output: Output.object({ schema: prongReviewSchema }),
-        temperature: 0,
-        maxOutputTokens,
-        maxRetries: 0, // retries are hidden spend; the one corrective retry below is explicit
-      });
-      return output;
-    } catch (err) {
-      if (NoObjectGeneratedError.isInstance(err)) return err; // schema miss: worth one retry
-      throw err; // transport/auth/budget: the caller must see it
-    }
-  };
-
-  const first = await attempt();
-  const firstProblems = first instanceof Error ? [] : validateCitations(first.citations, passages);
-  if (!(first instanceof Error) && firstProblems.length === 0) {
-    return { ...base, status: "reviewed", review: first, attempts: 1, first_attempt_problems: [], pruned: [] };
-  }
-  const feedback = first instanceof Error
-    ? "Your previous answer did not match the required JSON schema. Answer again, exactly in the schema."
-    : `Your previous answer had invalid citations:\n${describeProblems(firstProblems)}\n` +
-      "Answer again. Cite only the passages listed above, with their exact chunk_id and decision_id, " +
-      "and copy each quote character for character from that passage.";
-  const second = await attempt(feedback);
-  if (second instanceof Error) {
-    return { ...base, status: "dropped", reason: "invalid_output", problems: firstProblems, attempts: 2, detail: second.message.slice(0, 300) };
-  }
-  const problems = validateCitations(second.citations, passages);
-  const bad = new Set(problems.map((p) => p.citation));
-  const kept = second.citations.filter((c) => !bad.has(c));
-  if (kept.length === 0) {
-    return { ...base, status: "dropped", reason: "invalid_citations", problems, attempts: 2 };
+  const out = await generateGrounded({
+    model, system: EXAMINER_SYSTEM, prompt: taskPrompt(task, passages), schema: prongReviewSchema, passages, maxOutputTokens,
+  });
+  if (out.status === "dropped") {
+    const { status, reason, attempts, problems, detail } = out;
+    return { ...base, status, reason, attempts, problems, ...(detail === undefined ? {} : { detail }) };
   }
   return {
     ...base,
     status: "reviewed",
-    review: { ...second, citations: kept },
-    attempts: 2,
-    first_attempt_problems: firstProblems,
-    pruned: problems,
+    review: out.value,
+    attempts: out.attempts,
+    first_attempt_problems: out.first_attempt_problems,
+    pruned: out.pruned,
   };
 }
 
@@ -173,7 +136,7 @@ export interface ExaminerResult {
 }
 
 /** Bounded-concurrency map that keeps input order and starts nothing new after a failure. */
-async function inOrder<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+export async function inOrder<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
   const out = new Array<R>(items.length);
   let next = 0;
   let failed = false;

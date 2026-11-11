@@ -1,0 +1,2149 @@
+{
+  "phase": 6,
+  "part": "letters",
+  "model": "anthropic/claude-haiku-5.5",
+  "cache_version": "letters-v1",
+  "set": "eval/synthetic/phase6_letters.json",
+  "llm": {
+    "calls": 73,
+    "hits": 0,
+    "inputTokens": 68540,
+    "outputTokens": 21985,
+    "unknownUsageCalls": 0,
+    "cacheWriteFailures": 0,
+    "estimated_cost_usd": 0.0178,
+    "note": "calls/tokens count this run's provider calls only; cache hits are free"
+  },
+  "score": {
+    "letters": 73,
+    "sentences": 369,
+    "dropped": 0,
+    "mode_c": {
+      "tp": 178,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1,
+      "by_kind": {
+        "context": {
+          "n": 73,
+          "flagged": 0
+        },
+        "mechanism_superlative": {
+          "n": 62,
+          "flagged": 0
+        },
+        "assertion_superlative": {
+          "n": 93,
+          "flagged": 93
+        },
+        "assertion_plain": {
+          "n": 85,
+          "flagged": 85
+        },
+        "mechanism_plain": {
+          "n": 56,
+          "flagged": 0
+        }
+      }
+    },
+    "lexicon": {
+      "tp": 93,
+      "fp": 62,
+      "fn": 85,
+      "precision": 0.6,
+      "recall": 0.5225
+    },
+    "boilerplate": {
+      "planted": 10,
+      "found": 10,
+      "false_pairs": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "independence": {
+      "planted": 11,
+      "found": 11,
+      "false_violations": 0,
+      "near_misses_flagged": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "gate": {
+      "passed": true,
+      "failures": []
+    }
+  },
+  "mode_c_errors": [],
+  "petitions": [
+    {
+      "petition_id": "P01",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L02",
+          "b": "L04",
+          "shared": 50,
+          "passage": "in computational biology i can state that ellis marrowfield has made original contributions of major significance to the field the research of ellis marrowfield has been widely cited and relied upon by researchers across the world in my opinion ellis marrowfield has risen to the very top of the field and enjoys sustained national and international acclaim"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for protein-folding models"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Tidewater Applied Physics Lab"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying protein-folding models"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P02",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Ambergate Polytechnic"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for protein-folding models"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Quarry Hill Institute"
+            }
+          ],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            4
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            4
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P03",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L05",
+          "shared": 48,
+          "passage": "of oakley starling on offshore wind controllers is recognized by leading experts as among the most important in recent years these findings have been adopted by industry and academia alike i have no doubt that oakley starling is one of the small percentage who have risen to the very top of renewable energy engineering the"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Fallowmere University"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            4,
+            5
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P04",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Kestrel Systems Laboratory"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust real-time fraud scoring under shift"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Larchmont College"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P05",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L02",
+          "b": "L03",
+          "shared": 54,
+          "passage": "in fintech product design i can state that dr juniper ashgrove has made original contributions of major significance to the field the research of dr juniper ashgrove has been widely cited and relied upon by researchers across the world in my opinion dr juniper ashgrove has risen to the very top of the field and enjoys sustained national and international acclaim"
+        },
+        {
+          "a": "L02",
+          "b": "L05",
+          "shared": 57,
+          "passage": "as an expert in fintech product design i can state that dr juniper ashgrove has made original contributions of major significance to the field the research of dr juniper ashgrove has been widely cited and relied upon by researchers across the world in my opinion dr juniper ashgrove has risen to the very top of the field and enjoys sustained national and international acclaim"
+        },
+        {
+          "a": "L03",
+          "b": "L05",
+          "shared": 54,
+          "passage": "in fintech product design i can state that dr juniper ashgrove has made original contributions of major significance to the field the research of dr juniper ashgrove has been widely cited and relied upon by researchers across the world in my opinion dr juniper ashgrove has risen to the very top of the field and enjoys sustained national and international acclaim"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying real-time fraud scoring"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Halden Research Foundation"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust real-time fraud scoring under shift"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P06",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Larchmont College"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P07",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L02",
+          "b": "L04",
+          "shared": 47,
+          "passage": "of rowan thistlewood on real-time fraud scoring is recognized by leading experts as among the most important in recent years these findings have been adopted by industry and academia alike i have no doubt that rowan thistlewood is one of the small percentage who have risen to the very top of fintech product design"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust real-time fraud scoring under shift"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Scalable methods for real-time fraud scoring"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Ambergate Polytechnic"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P08",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Marrowgate Institute"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust seismic retrofit systems under shift"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Marrowgate Institute"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            4
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P09",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L02",
+          "b": "L03",
+          "shared": 51,
+          "passage": "in renewable energy engineering i can state that oakley starling has made original contributions of major significance to the field the research of oakley starling has been widely cited and relied upon by researchers across the world in my opinion oakley starling has risen to the very top of the field and enjoys sustained national and international acclaim"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Quarry Hill Institute"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3,
+            4,
+            5,
+            6,
+            8
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P10",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying seismic retrofit systems"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Marrowgate Institute"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Marrowgate Institute"
+            }
+          ],
+          "violation": true
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3,
+            5
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P11",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L02",
+          "shared": 47,
+          "passage": "of dr sable wintermere on protein-folding models is recognized by leading experts as among the most important in recent years these findings have been adopted by industry and academia alike i have no doubt that dr sable wintermere is one of the small percentage who have risen to the very top of computational biology"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for protein-folding models"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying protein-folding models"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Halden Research Foundation"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P12",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Halden Research Foundation"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P13",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L02",
+          "b": "L03",
+          "shared": 54,
+          "passage": "in renewable energy engineering i can state that dr lark fennimore has made original contributions of major significance to the field the research of dr lark fennimore has been widely cited and relied upon by researchers across the world in my opinion dr lark fennimore has risen to the very top of the field and enjoys sustained national and international acclaim"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Lessons from deploying offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Corvid Analytics"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust offshore wind controllers under shift"
+            }
+          ],
+          "violation": true
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P14",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Scalable methods for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Larchmont College"
+            }
+          ],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L05",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Saltmarsh University"
+            }
+          ],
+          "violation": true
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            4
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L05",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P15",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [
+        {
+          "a": "L01",
+          "b": "L04",
+          "shared": 46,
+          "passage": "of rowan thistlewood on seismic retrofit systems is recognized by leading experts as among the most important in recent years these findings have been adopted by industry and academia alike i have no doubt that rowan thistlewood is one of the small percentage who have risen to the very top of structural engineering"
+        }
+      ],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "Robust seismic retrofit systems under shift"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Pellucid Robotics"
+            }
+          ],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    },
+    {
+      "petition_id": "P16",
+      "complete": true,
+      "unreviewed": [],
+      "boilerplate": [],
+      "independence": [
+        {
+          "letter_id": "L01",
+          "claimed_independent": true,
+          "ties": [
+            {
+              "kind": "affiliation",
+              "via": "Tidewater Applied Physics Lab"
+            }
+          ],
+          "violation": true
+        },
+        {
+          "letter_id": "L02",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L03",
+          "claimed_independent": true,
+          "ties": [],
+          "violation": false
+        },
+        {
+          "letter_id": "L04",
+          "claimed_independent": false,
+          "ties": [
+            {
+              "kind": "coauthor",
+              "via": "A benchmark for offshore wind controllers"
+            },
+            {
+              "kind": "affiliation",
+              "via": "Tidewater Applied Physics Lab"
+            }
+          ],
+          "violation": false
+        }
+      ],
+      "letters": [
+        {
+          "letter_id": "L01",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            1
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L02",
+          "attempts": 1,
+          "weak": true,
+          "assertions": [
+            1,
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "assertion",
+            "assertion",
+            "assertion"
+          ]
+        },
+        {
+          "letter_id": "L03",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2,
+            3
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        },
+        {
+          "letter_id": "L04",
+          "attempts": 1,
+          "weak": false,
+          "assertions": [
+            2
+          ],
+          "labels": [
+            "context",
+            "mechanism",
+            "assertion",
+            "mechanism",
+            "mechanism"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,8 @@ import type { Passage } from "./citations";
 export class RetrievalError extends Error {}
 
 export interface SearchOptions {
-  criterion: string;
+  criterion?: string; // reasoning on one criterion
+  section?: "final_merits" | "criterion" | "analysis"; // reasoning of one kind (step two: final_merits)
   visa: "EB-1A";
   k: number;
 }
@@ -35,10 +36,18 @@ const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "obj
 export function httpRetriever(baseUrl: string, fetchFn: typeof fetch = fetch, timeoutMs = 30_000): Retriever {
   const base = baseUrl.replace(/\/$/, "");
   return {
-    async search(query, { criterion, visa, k }) {
-      const params = new URLSearchParams({ q: query, criterion, visa, k: String(k) });
+    async search(query, { criterion, section, visa, k }) {
+      const params = new URLSearchParams({ q: query });
+      if (criterion !== undefined) params.set("criterion", criterion);
+      if (section !== undefined) params.set("section", section);
+      params.set("visa", visa);
+      params.set("k", String(k));
       const body = await getJson(fetchFn, `${base}/search?${params}`, timeoutMs);
       if (!isRecord(body) || !Array.isArray(body.results)) throw new RetrievalError("search: malformed response");
+      // an API that predates the section filter ignores it silently: require the echo
+      if (section !== undefined && (!isRecord(body.filters) || body.filters.section !== section)) {
+        throw new RetrievalError(`search: the API did not confirm the section filter "${section}"`);
+      }
       const hits: { chunk_id: number; decision_id: string }[] = [];
       for (const hit of body.results as unknown[]) {
         if (!isRecord(hit) || typeof hit.chunk_id !== "number" || typeof hit.decision_id !== "string") {

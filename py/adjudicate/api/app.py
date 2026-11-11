@@ -13,7 +13,7 @@ import psycopg
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import JSONResponse
 
-from adjudicate.parse.structure import Criterion
+from adjudicate.parse.structure import Criterion, SectionKind
 from adjudicate.retrieve.chunk import CHUNKABLE_KINDS
 from adjudicate.retrieve.embed import Embedder
 from adjudicate.retrieve.search import SearchMode, search
@@ -95,7 +95,11 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
         mode: SearchMode = SearchMode.HYBRID,
         visa: Visa | None = None,
         criterion: CriterionCode | None = None,
+        section: SectionKind | None = None,
     ) -> dict[str, object]:
+        if section is not None and section.value not in CHUNKABLE_KINDS:
+            # never indexed: an empty answer would look like "no precedent", so refuse instead
+            raise HTTPException(422, f"section {section.value!r} is not searchable")
         with db() as conn:
             if problems := index_problems(conn):
                 raise HTTPException(503, "index incomplete: " + "; ".join(problems))
@@ -107,8 +111,20 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
                 mode=mode,
                 visa=visa.value if visa else None,
                 criterion=criterion.value if criterion else None,
+                section=section.value if section else None,
             )
-        return {"query": q, "mode": mode.value, "results": [asdict(h) for h in hits]}
+        filters = {
+            "visa": visa.value if visa else None,
+            "criterion": criterion.value if criterion else None,
+            "section": section.value if section else None,
+        }
+        # echoed so a client can tell an applied filter from one an older API ignored
+        return {
+            "query": q,
+            "mode": mode.value,
+            "filters": filters,
+            "results": [asdict(h) for h in hits],
+        }
 
     @app.get("/passages/{chunk_id}")
     def passage(chunk_id: int) -> dict[str, object]:

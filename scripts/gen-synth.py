@@ -1,9 +1,11 @@
-"""Regenerate the seeded synthetic petition sets (phase 4: mode A; phase 5: modes B and D)."""
+"""Regenerate the seeded synthetic sets (phase 4: mode A; 5: modes B and D; 6: letters)."""
 
 import json
 from pathlib import Path
 
 from adjudicate.synth.examiner import generate_examiner_set
+from adjudicate.synth.letters import generate_letter_set
+from adjudicate.synth.merits import generate_merits_set
 from adjudicate.synth.petitions import generate_set
 
 OUT = Path(__file__).resolve().parents[1] / "eval" / "synthetic"
@@ -12,6 +14,14 @@ SETS = {
     "phase5_petitions.json": [c.to_json() for c in generate_examiner_set(n=16, seed=20261112)],
     "phase5_heldout_petitions.json": [
         c.to_json() for c in generate_examiner_set(n=16, seed=20261113, heldout=True)
+    ],
+    "phase6_letters.json": [c.to_json() for c in generate_letter_set(n=16, seed=20261114)],
+    "phase6_letters_heldout.json": [
+        c.to_json() for c in generate_letter_set(n=16, seed=20261115, heldout=True)
+    ],
+    "phase6_merits.json": [c.to_json() for c in generate_merits_set(n_pairs=6, seed=20261116)],
+    "phase6_merits_heldout.json": [
+        c.to_json() for c in generate_merits_set(n_pairs=6, seed=20261117, heldout=True)
     ],
 }
 for name, cases in SETS.items():

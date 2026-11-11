@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field, model_validator
 
 from adjudicate.parse.structure import Criterion
 from adjudicate.schemas.examiner import ProngReview
+from adjudicate.schemas.letters import LetterPacket, LetterReview, MeritsReview
 
 
 class EvidenceKind(StrEnum):
@@ -36,6 +37,28 @@ class Petition(BaseModel):
     field: str = Field(min_length=1, max_length=120)
     beneficiary: str = Field(min_length=1, max_length=80)  # synthetic only
     artifacts: list[Artifact] = Field(min_length=1, max_length=200)
+
+
+class StepOneCriterion(BaseModel):
+    criterion: Criterion
+    risk: float = Field(ge=0, le=1)  # the examiner's criterion risk (step one)
+
+
+class LetterSummary(BaseModel):
+    letters: int = Field(ge=0)
+    independent: int = Field(ge=0)  # presented as independent and with no tie found
+    weak: int = Field(ge=0)  # no sentence states a mechanism
+    assertion_share: float = Field(ge=0, le=1)  # share of sentences that assert without mechanism
+    boilerplate_pairs: int = Field(ge=0)
+    independence_violations: int = Field(ge=0)
+
+
+class MeritsInput(BaseModel):
+    """What the step-two pass sees: the inventory, step-one results and the letter findings."""
+
+    petition: Petition
+    step_one: list[StepOneCriterion] = Field(min_length=1, max_length=10)
+    letters: LetterSummary
 
 
 class CriterionScore(BaseModel):
@@ -66,6 +89,10 @@ SCHEMAS: dict[str, type[BaseModel]] = {
     "petition.schema.json": Petition,
     "petition_mapping.schema.json": PetitionMapping,
     "prong_review.schema.json": ProngReview,
+    "letter_packet.schema.json": LetterPacket,
+    "letter_review.schema.json": LetterReview,
+    "merits_review.schema.json": MeritsReview,
+    "merits_input.schema.json": MeritsInput,
 }
 
 

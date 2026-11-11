@@ -25,7 +25,7 @@ describe("Zod schemas generated from the Pydantic source of truth", () => {
 
   it("are exactly what the generator produces from the committed JSON Schema (no drift)", () => {
     const out = execFileSync(process.execPath, [path.join(root, "scripts/gen-zod.mjs"), "--stdout"], { encoding: "utf8" });
-    const committed = ["petition", "petition_mapping", "prong_review"]
+    const committed = ["petition", "petition_mapping", "prong_review", "letter_packet", "letter_review", "merits_review", "merits_input"]
       .map((n) => readFileSync(path.join(root, `lib/schemas/${n}.zod.ts`), "utf8"))
       .join("\n// ---\n");
     expect(out).toBe(committed);
