@@ -4,11 +4,11 @@
   "cache_version": "examiner-v3",
   "set": "eval/synthetic/phase5_petitions.json",
   "llm": {
-    "calls": 19,
-    "hits": 150,
-    "inputTokens": 60324,
-    "outputTokens": 38464,
-    "estimated_cost_usd": 0.0253,
+    "calls": 0,
+    "hits": 169,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "estimated_cost_usd": 0,
     "note": "calls/tokens count this run's provider calls only; cache hits are free"
   },
   "score": {
@@ -43,7 +43,7 @@
   "petitions": [
     {
       "petition_id": "P01",
-      "rfe_risk": 0.519350727,
+      "rfe_risk": 0.5194,
       "criterion_risk": {
         "judging": 0.35,
         "leading_role": 0.956,
@@ -51,7 +51,7 @@
         "scholarly_articles": 0.35,
         "awards": 0.6,
         "original_contributions": 0.8,
-        "published_material": 0.5774999999999999
+        "published_material": 0.5775
       },
       "waiver": [
         {
@@ -347,12 +347,12 @@
     },
     {
       "petition_id": "P02",
-      "rfe_risk": 0.827811225,
+      "rfe_risk": 0.8278,
       "criterion_risk": {
         "original_contributions": 0.76,
         "published_material": 0.99,
-        "high_salary": 0.44999999999999996,
-        "awards": 0.44999999999999996,
+        "high_salary": 0.45,
+        "awards": 0.45,
         "leading_role": 0.725
       },
       "waiver": [
@@ -578,11 +578,11 @@
     },
     {
       "petition_id": "P03",
-      "rfe_risk": 0.2822700490000001,
+      "rfe_risk": 0.2823,
       "criterion_risk": {
         "awards": 0.4,
         "original_contributions": 0.76,
-        "judging": 0.30000000000000004,
+        "judging": 0.3,
         "scholarly_articles": 0.4,
         "published_material": 0.6425,
         "high_salary": 0.35,
@@ -857,13 +857,13 @@
     },
     {
       "petition_id": "P04",
-      "rfe_risk": 0.5733505225,
+      "rfe_risk": 0.5734,
       "criterion_risk": {
         "membership": 0.725,
         "leading_role": 0.7525,
         "high_salary": 0.4,
-        "published_material": 0.5800000000000001,
-        "judging": 0.30000000000000004,
+        "published_material": 0.58,
+        "judging": 0.3,
         "original_contributions": 0.9175
       },
       "waiver": [
@@ -1122,7 +1122,7 @@
     },
     {
       "petition_id": "P05",
-      "rfe_risk": 0.880427808,
+      "rfe_risk": 0.8804,
       "criterion_risk": {
         "original_contributions": 0.76,
         "published_material": 0.72,
@@ -1368,15 +1368,15 @@
     },
     {
       "petition_id": "P06",
-      "rfe_risk": 0.32273274906249994,
+      "rfe_risk": 0.3227,
       "criterion_risk": {
         "awards": 0.4,
         "membership": 0.9625,
         "published_material": 0.99,
-        "judging": 0.30000000000000004,
+        "judging": 0.3,
         "high_salary": 0.35,
         "scholarly_articles": 0.35,
-        "leading_role": 0.6699999999999999
+        "leading_role": 0.67
       },
       "waiver": [
         {
@@ -1652,7 +1652,7 @@
     },
     {
       "petition_id": "P07",
-      "rfe_risk": 0.5777695162799998,
+      "rfe_risk": 0.5778,
       "criterion_risk": {
         "scholarly_articles": 0.35,
         "judging": 0.35,
@@ -1660,7 +1660,7 @@
         "published_material": 0.985,
         "membership": 0.976,
         "awards": 0.6,
-        "leading_role": 0.6699999999999999
+        "leading_role": 0.67
       },
       "waiver": [
         {
@@ -1967,7 +1967,7 @@
     },
     {
       "petition_id": "P08",
-      "rfe_risk": 0.7603812499999999,
+      "rfe_risk": 0.7604,
       "criterion_risk": {
         "scholarly_articles": 0.35,
         "judging": 0.35,
@@ -2175,7 +2175,7 @@
     },
     {
       "petition_id": "P09",
-      "rfe_risk": 0.56205977,
+      "rfe_risk": 0.5621,
       "criterion_risk": {
         "published_material": 0.6425,
         "awards": 0.6,
@@ -2394,13 +2394,13 @@
     },
     {
       "petition_id": "P10",
-      "rfe_risk": 0.849190236,
+      "rfe_risk": 0.8492,
       "criterion_risk": {
         "membership": 0.8,
         "leading_role": 0.6975,
         "high_salary": 0.6,
-        "scholarly_articles": 0.44999999999999996,
-        "original_contributions": 0.9400000000000001,
+        "scholarly_articles": 0.45,
+        "original_contributions": 0.94,
         "published_material": 0.992
       },
       "waiver": [
@@ -2672,9 +2672,9 @@
     },
     {
       "petition_id": "P11",
-      "rfe_risk": 0.602463,
+      "rfe_risk": 0.6025,
       "criterion_risk": {
-        "judging": 0.30000000000000004,
+        "judging": 0.3,
         "scholarly_articles": 0.4,
         "membership": 0.975,
         "published_material": 0.78,
@@ -2899,11 +2899,11 @@
     },
     {
       "petition_id": "P12",
-      "rfe_risk": 0.43220857050000006,
+      "rfe_risk": 0.4322,
       "criterion_risk": {
         "awards": 0.55,
         "scholarly_articles": 0.4,
-        "judging": 0.30000000000000004,
+        "judging": 0.3,
         "leading_role": 0.968,
         "high_salary": 0.35,
         "original_contributions": 0.9025,
@@ -3160,9 +3160,9 @@
     },
     {
       "petition_id": "P13",
-      "rfe_risk": 0.8160125,
+      "rfe_risk": 0.816,
       "criterion_risk": {
-        "high_salary": 0.44999999999999996,
+        "high_salary": 0.45,
         "scholarly_articles": 0.5,
         "leading_role": 0.96,
         "original_contributions": 0.8,
@@ -3388,14 +3388,14 @@
     },
     {
       "petition_id": "P14",
-      "rfe_risk": 0.7724009730000001,
+      "rfe_risk": 0.7724,
       "criterion_risk": {
         "published_material": 0.99,
         "scholarly_articles": 0.35,
-        "original_contributions": 0.8200000000000001,
-        "judging": 0.30000000000000004,
+        "original_contributions": 0.82,
+        "judging": 0.3,
         "membership": 0.74,
-        "leading_role": 0.9450000000000001
+        "leading_role": 0.945
       },
       "waiver": [
         {
@@ -3666,10 +3666,10 @@
     },
     {
       "petition_id": "P15",
-      "rfe_risk": 0.73400572535,
+      "rfe_risk": 0.734,
       "criterion_risk": {
         "judging": 0.35,
-        "leading_role": 0.6699999999999999,
+        "leading_role": 0.67,
         "original_contributions": 0.9025,
         "published_material": 0.615,
         "membership": 0.976,
@@ -3944,12 +3944,12 @@
     },
     {
       "petition_id": "P16",
-      "rfe_risk": 0.3815499175,
+      "rfe_risk": 0.3815,
       "criterion_risk": {
         "judging": 0.35,
         "membership": 0.8,
         "published_material": 0.61,
-        "awards": 0.44999999999999996,
+        "awards": 0.45,
         "high_salary": 0.6,
         "scholarly_articles": 0.4,
         "original_contributions": 0.9175

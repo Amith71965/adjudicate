@@ -44,6 +44,8 @@ const SET = HELDOUT ? "eval/synthetic/phase5_heldout_petitions.json" : "eval/syn
 const RESULT = HELDOUT ? "eval/results/phase5_examiner_heldout.json" : "eval/results/phase5_examiner.json";
 const cases = JSON.parse(readFileSync(path.join(ROOT, SET), "utf8")) as SetCase[];
 
+const round4 = (x: number) => Math.round(x * 1e4) / 1e4;
+
 async function main(): Promise<number> {
   const health = await fetch(`${API}/health`).catch(() => null);
   if (!health?.ok) {
@@ -86,7 +88,9 @@ async function main(): Promise<number> {
     llm: { ...stats, estimated_cost_usd: Number(cost.toFixed(4)), note: "calls/tokens count this run's provider calls only; cache hits are free" },
     score,
     petitions: scored.map((c) => ({
-      petition_id: c.petition_id, rfe_risk: c.result.rfe_risk, criterion_risk: c.result.criterion_risk,
+      // 4 dp: enough for a risk score, and long float digit runs read as SSNs to the PII guard.
+      petition_id: c.petition_id, rfe_risk: round4(c.result.rfe_risk),
+      criterion_risk: Object.fromEntries(Object.entries(c.result.criterion_risk).map(([k, v]) => [k, round4(v)])),
       waiver: c.waiver, dropped: c.result.dropped,
       reviews: c.result.reviews.map((r) => ({
         criterion: r.criterion, prong: r.prong, artifact_ids: r.artifact_ids, attempts: r.attempts,
