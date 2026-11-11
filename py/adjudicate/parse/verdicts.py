@@ -39,6 +39,12 @@ class CriterionVerdict(BaseModel):
     failed_prong: str | None = Field(default=None, max_length=120)
     quote: str = Field(min_length=10, max_length=700)
 
+    @model_validator(mode="after")
+    def _prong_only_when_not_met(self) -> CriterionVerdict:
+        if self.aao is not Verdict.NOT_MET:
+            self.failed_prong = None
+        return self
+
 
 class DecisionVerdicts(BaseModel):
     criteria: list[CriterionVerdict]
