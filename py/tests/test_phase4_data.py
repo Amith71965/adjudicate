@@ -76,3 +76,28 @@ def test_committed_synthetic_set_matches_the_generator() -> None:
     committed = json.loads((REPO / "eval" / "synthetic" / "phase4_petitions.json").read_text())
     fresh = [c.to_json() for c in generate_set(n=20, seed=20261111)]
     assert committed == fresh, "synthetic set drifted: run `make synth`"
+
+
+def test_planted_mismatches_are_not_always_the_first_artifacts() -> None:
+    cases = generate_set(n=20, seed=20261111)
+    late = [
+        c
+        for c in cases
+        if max(int(a[1:]) for a in c.planted_mismatches) > len(c.planted_mismatches)
+    ]
+    assert len(late) >= 10  # positions are random, not A01..A0k
+
+
+def test_some_decoys_are_filed_under_a_criterion() -> None:
+    cases = generate_set(n=20, seed=20261111)
+    decoy_claims = [
+        a
+        for c in cases
+        for a in c.petition.artifacts
+        if c.truth[a.id] is None and a.claimed_criterion is not None
+    ]
+    assert decoy_claims, "weak evidence filed under a criterion must be tested too"
+    for c in cases:
+        for a in c.petition.artifacts:
+            if c.truth[a.id] is None and a.claimed_criterion is not None:
+                assert a.id in c.planted_mismatches

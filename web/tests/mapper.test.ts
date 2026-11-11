@@ -78,3 +78,17 @@ describe("findMismatches (failure mode A)", () => {
     expect(findMismatches(petition, GOOD).map((f) => f.artifact_id)).not.toContain("A03");
   });
 });
+
+describe("validateMapping (applied to fresh and cached outputs)", () => {
+  it("rejects a mapping for a different petition", async () => {
+    const { validateMapping } = await import("@/lib/examiner/mapper");
+    expect(() => validateMapping(petition, { ...GOOD, petition_id: "P99" })).toThrow(/P99/);
+  });
+
+  it("rejects a best_criterion that contradicts the scores", async () => {
+    const { validateMapping } = await import("@/lib/examiner/mapper");
+    const bad = structuredClone(GOOD);
+    bad.mappings[1].best_criterion = "awards";
+    expect(() => validateMapping(petition, bad)).toThrow(/best_criterion/);
+  });
+});
