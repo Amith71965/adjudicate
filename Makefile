@@ -6,7 +6,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 PY := .venv/bin
 
-.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper eval-examiner eval-letters verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
+.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper eval-examiner eval-letters eval-merits verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
 
 help: ## list targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
@@ -71,6 +71,9 @@ eval-examiner: ## phase-5 gate: adversarial examiner on 16 synthetic petitions (
 
 eval-letters: ## phase-6 gate: mode C, boilerplate, independence on 16 synthetic packets (Haiku, capped, cached)
 	cd web && npx tsx scripts/eval-letters.ts
+
+eval-merits: ## phase-6 gate: kazarian step two on 6 strong/weak pairs (needs `make api`; Haiku, capped, cached)
+	cd web && npx tsx scripts/eval-merits.ts
 
 lint-py:
 	$(PY)/ruff check py
