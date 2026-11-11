@@ -1,0 +1,313 @@
+{
+  "description": "Known-item retrieval set: each query paraphrases a specific issue in one hand-labelled gold decision (written from reading the decision, not copied). Relevant = that decision.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "business analyst on a state HIV surveillance team claims a critical role",
+      "relevant": [
+        "DEC012025_01B2203"
+      ]
+    },
+    {
+      "id": "q02",
+      "query": "farming automation app used on fifty small farms and a campus safety app were not contributions of major significance",
+      "relevant": [
+        "DEC012025_01B2203"
+      ]
+    },
+    {
+      "id": "q03",
+      "query": "electric vehicle country manager whose press coverage all came in a single year, so acclaim is not sustained",
+      "relevant": [
+        "DEC012025_02B2203"
+      ]
+    },
+    {
+      "id": "q04",
+      "query": "judging a classic and antique car show does not place him at the top of the EV business",
+      "relevant": [
+        "DEC012025_02B2203"
+      ]
+    },
+    {
+      "id": "q05",
+      "query": "awards were issued to the companies he managed rather than to him personally",
+      "relevant": [
+        "DEC012025_02B2203"
+      ]
+    },
+    {
+      "id": "q06",
+      "query": "manuscript peer review the service center failed to discuss meets the judging criterion",
+      "relevant": [
+        "DEC042025_01B2203"
+      ]
+    },
+    {
+      "id": "q07",
+      "query": "vibration monitoring for energy plant equipment adopted by oil majors, but an internal company award is not national acclaim",
+      "relevant": [
+        "DEC042025_01B2203"
+      ]
+    },
+    {
+      "id": "q08",
+      "query": "jiu-jitsu competitor and coach whose online articles lack circulation figures for major media",
+      "relevant": [
+        "DEC042025_02B2203"
+      ]
+    },
+    {
+      "id": "q09",
+      "query": "martial arts academy claimed to be among the most respected institutions without corroborating evidence",
+      "relevant": [
+        "DEC042025_02B2203"
+      ]
+    },
+    {
+      "id": "q10",
+      "query": "bakery owner relies on a cooking contest and judging high school students while her field is business administration",
+      "relevant": [
+        "DEC082025_01B2203"
+      ]
+    },
+    {
+      "id": "q11",
+      "query": "joint tax return filed with a spouse cannot show the petitioner's own remuneration and the foreign income is unexplained",
+      "relevant": [
+        "DEC082025_01B2203"
+      ]
+    },
+    {
+      "id": "q12",
+      "query": "honor society membership earned by committing to attend leadership training is not an outstanding achievement",
+      "relevant": [
+        "DEC082025_01B2203"
+      ]
+    },
+    {
+      "id": "q13",
+      "query": "advertising professor whose Super Bowl campaign work ended years ago lacks continuing acclaim",
+      "relevant": [
+        "DEC092025_01B2203"
+      ]
+    },
+    {
+      "id": "q14",
+      "query": "invitations to review conference papers over one year do not show sustained acclaim",
+      "relevant": [
+        "DEC092025_01B2203"
+      ]
+    },
+    {
+      "id": "q15",
+      "query": "autism support organization founder whose adaptive ski and snowboard program funding is not a major contribution",
+      "relevant": [
+        "DEC092025_02B2203"
+      ]
+    },
+    {
+      "id": "q16",
+      "query": "appeal brief quotes letters saying she transformed the field without explaining how, so the arguments are forfeited",
+      "relevant": [
+        "DEC092025_02B2203"
+      ]
+    },
+    {
+      "id": "q17",
+      "query": "radiochemist won first place from a nuclear medicine society but national recognition of the award is not shown",
+      "relevant": [
+        "DEC102025_02B2203"
+      ]
+    },
+    {
+      "id": "q18",
+      "query": "papers that cite the beneficiary's research are not published material about him",
+      "relevant": [
+        "DEC102025_02B2203"
+      ]
+    },
+    {
+      "id": "q19",
+      "query": "documentary archival researcher; festival awards went to the directors and producers, not her",
+      "relevant": [
+        "DEC102025_03B2203"
+      ]
+    },
+    {
+      "id": "q20",
+      "query": "archival producer meets judging and display but documentaries are not performing arts box office sales",
+      "relevant": [
+        "DEC102025_03B2203"
+      ]
+    },
+    {
+      "id": "q21",
+      "query": "optional technical architect certification and three online articles do not put him at the top of the field",
+      "relevant": [
+        "DEC162025_01B2203"
+      ]
+    },
+    {
+      "id": "q22",
+      "query": "a broadcasting union commendation for a radio program is not a major internationally recognized award",
+      "relevant": [
+        "DEC162025_04B2203"
+      ]
+    },
+    {
+      "id": "q23",
+      "query": "contract worth one million yuan to produce an event, with no comparative pay data for producers",
+      "relevant": [
+        "DEC162025_04B2203"
+      ]
+    },
+    {
+      "id": "q24",
+      "query": "paid council membership open to executives of companies with a million dollars in revenue",
+      "relevant": [
+        "DEC182025_02B2203"
+      ]
+    },
+    {
+      "id": "q25",
+      "query": "contributor pieces on a business magazine website giving financial advice are not scholarly articles",
+      "relevant": [
+        "DEC182025_02B2203"
+      ]
+    },
+    {
+      "id": "q26",
+      "query": "AI operations observability researcher; reviewer invitations may be form emails and citations are modest",
+      "relevant": [
+        "DEC292025_02B2203"
+      ]
+    },
+    {
+      "id": "q27",
+      "query": "service center weighed accomplishments one by one instead of together; appeal sustained on the totality of the record",
+      "relevant": [
+        "DEC302025_01B2203"
+      ]
+    },
+    {
+      "id": "q28",
+      "query": "principal investigator leads a research project, and a project is not an organization or establishment",
+      "relevant": [
+        "NOV042025_01B2203"
+      ]
+    },
+    {
+      "id": "q29",
+      "query": "a state level certificate of commendation is not national recognition",
+      "relevant": [
+        "NOV042025_01B2203"
+      ]
+    },
+    {
+      "id": "q30",
+      "query": "civil engineering researcher claims top ten percent citation rankings but the metrics are not shown reliable",
+      "relevant": [
+        "NOV062025_01B2203"
+      ]
+    },
+    {
+      "id": "q31",
+      "query": "seventeen manuscript reviews over five years without context on how common peer review is",
+      "relevant": [
+        "NOV062025_01B2203"
+      ]
+    },
+    {
+      "id": "q32",
+      "query": "personal wealth management methodology not shown to be proprietary or widely adopted",
+      "relevant": [
+        "NOV072025_01B2203"
+      ]
+    },
+    {
+      "id": "q33",
+      "query": "complying with banking regulations does not show her former banks had distinguished reputations",
+      "relevant": [
+        "NOV072025_01B2203"
+      ]
+    },
+    {
+      "id": "q34",
+      "query": "car restoration specialist; a custom car show is not an artistic exhibition of his own work",
+      "relevant": [
+        "NOV192025_01B2203"
+      ]
+    },
+    {
+      "id": "q35",
+      "query": "auto body technician hourly wage compared to the average rather than to top earners",
+      "relevant": [
+        "NOV192025_01B2203"
+      ]
+    },
+    {
+      "id": "q36",
+      "query": "research grants and fellowships fund proposed work and are not prizes for excellence",
+      "relevant": [
+        "NOV212025_01B2203"
+      ]
+    },
+    {
+      "id": "q37",
+      "query": "hundreds of references to her dissertation in one doctoral thesis do not show major significance",
+      "relevant": [
+        "NOV212025_01B2203"
+      ]
+    },
+    {
+      "id": "q38",
+      "query": "manufacturing CEO with contradictory documents about which award he actually received",
+      "relevant": [
+        "NOV242025_01B2203"
+      ]
+    },
+    {
+      "id": "q39",
+      "query": "home builders association membership is open to any business in the industry",
+      "relevant": [
+        "NOV242025_01B2203"
+      ]
+    },
+    {
+      "id": "q40",
+      "query": "lawyer's bar association memberships and an article on a legal technology platform",
+      "relevant": [
+        "NOV242025_02B2203"
+      ]
+    },
+    {
+      "id": "q41",
+      "query": "founder and chief executive of his own startup venture claims a leading role",
+      "relevant": [
+        "NOV252025_01B2203"
+      ]
+    },
+    {
+      "id": "q42",
+      "query": "mentoring others in an information technology program is not a leading or critical organizational role",
+      "relevant": [
+        "OCT012025_01B2203"
+      ]
+    },
+    {
+      "id": "q43",
+      "query": "new evidence about training programs offered for the first time on appeal after a request for evidence is not considered",
+      "relevant": [
+        "OCT072025_01B2203"
+      ]
+    },
+    {
+      "id": "q44",
+      "query": "expert says a major AI lab used techniques similar to his rather than his own work",
+      "relevant": [
+        "SEP292025_05B2203"
+      ]
+    }
+  ]
+}
