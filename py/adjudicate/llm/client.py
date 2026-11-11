@@ -144,6 +144,13 @@ class LlmClient:
         cost = self._cost(model, body.get("usage") or {}, estimate)
         self.spent_usd += cost
         self._max_seen_cost = max(self._max_seen_cost, cost)
+        choices = body.get("choices") or [{}]
+        if isinstance(choices[0], dict) and choices[0].get("finish_reason") == "length":
+            details = (body.get("usage") or {}).get("completion_tokens_details") or {}
+            raise LlmError(
+                f"output truncated at max_tokens={max_tokens}"
+                f" (hidden reasoning tokens: {details.get('reasoning_tokens', '?')})"
+            )
         try:
             return str(body["choices"][0]["message"]["content"])
         except (KeyError, IndexError, TypeError) as exc:

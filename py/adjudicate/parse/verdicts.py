@@ -115,7 +115,7 @@ def ungrounded_quotes(result: DecisionVerdicts, text: str) -> list[str]:
 
 
 def extract_verdicts(
-    client: LlmClient, text: str, *, model: str = DEFAULT_MODEL, max_tokens: int = 3000
+    client: LlmClient, text: str, *, model: str = DEFAULT_MODEL, max_tokens: int = 8000
 ) -> DecisionVerdicts:
     analysis = analysis_text(text)
     user = f"DECISION TEXT (analysis onward):\n\n{analysis}"
