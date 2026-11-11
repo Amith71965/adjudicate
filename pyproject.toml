@@ -1,0 +1,48 @@
+[project]
+name = "adjudicate"
+version = "0.1.0"
+description = "Adversarial pre-filing reviewer for extraordinary-ability immigration petitions (data + eval layer)"
+requires-python = ">=3.14"
+dependencies = [
+  "psycopg[binary]>=3.2",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "pytest-cov>=6",
+  "ruff>=0.8",
+  "mypy>=1.13",
+  "pre-commit>=4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["py/adjudicate"]
+
+[tool.pytest.ini_options]
+testpaths = ["py/tests"]
+pythonpath = ["py"]
+addopts = "-ra --strict-markers"
+markers = ["db: requires the Postgres container (make up)"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+src = ["py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF", "S", "BLE", "TRY"]
+ignore = ["TRY003"]
+
+[tool.ruff.lint.per-file-ignores]
+"py/tests/**" = ["S101", "S603", "S607"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+mypy_path = "py"
+packages = ["adjudicate"]

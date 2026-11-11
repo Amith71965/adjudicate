@@ -1,0 +1,32 @@
+# local-only reference + media (never commit)
+_local/
+_media/
+.archify/
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+data/raw/
+
+# node
+node_modules/
+web/.next/
+web/out/
+web/coverage/
+web/playwright-report/
+web/test-results/
+*.tsbuildinfo
+
+# os
+.DS_Store
