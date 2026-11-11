@@ -140,3 +140,13 @@ def test_held_out_set_uses_unseen_half_wordings_and_is_committed() -> None:
     assert {h.criterion for c in held for h in c.planted_halves} == set(PRONG_IDS)
     committed = REPO / "eval" / "synthetic" / "phase5_heldout_petitions.json"
     assert json.loads(committed.read_text()) == [c.to_json() for c in held]
+
+
+def test_full_leading_role_controls_carry_independent_reputation_evidence() -> None:
+    # A CEO's own say-so about "documented national reputation" is itself a deficiency
+    # (the examiner rightly objected); a fully evidenced control must document reputation.
+    for case in generate_examiner_set(n=N, seed=SEED):
+        planted = {h.artifact_id for h in case.planted_halves}
+        for a in case.petition.artifacts:
+            if a.claimed_criterion == Criterion.LEADING_ROLE and a.id not in planted:
+                assert "ranking" in a.description and "press" in a.description, case.petition.id
