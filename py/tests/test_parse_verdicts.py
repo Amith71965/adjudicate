@@ -131,3 +131,8 @@ def test_decision_without_analysis_section_is_refused(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="ANALYSIS"):
         extract_verdicts(client, "no structure here")
     assert sent == []
+
+
+def test_extraction_with_no_criteria_is_invalid() -> None:
+    with pytest.raises(ValueError):
+        DecisionVerdicts.model_validate({"criteria": [], "final_merits": "not_reached"})

@@ -337,3 +337,27 @@ def test_failed_prong_is_dropped_unless_not_met() -> None:
         }
     )
     assert v.failed_prong is None
+
+
+def test_budget_stop_records_the_spend_before_stopping(db: Conn, tmp_path: Path) -> None:
+    from adjudicate.llm.client import BudgetExceededError
+
+    parse_pending(db)
+    client = _fake_llm(tmp_path, [])
+    client.budget_usd = 0.00025  # first call fits, the second cannot
+    with pytest.raises(BudgetExceededError):
+        extract_pending(db, client)
+    (total,) = _one(db, "SELECT coalesce(sum(cost_usd), 0) FROM decision_extraction")
+    assert float(str(total)) == pytest.approx(client.spent_usd)
+
+
+def test_merits_decision_with_a_motion_order_is_reclassified(db: Conn) -> None:
+    parse_pending(db)
+    # Corrupt one stored merits text's ORDER line, bump the version, re-parse from raw: the
+    # raw PDF still says "appeal is dismissed", so instead test the pure helper.
+    from adjudicate.parse.pipeline import reconcile_kind
+
+    kind, reason = reconcile_kind("merits", "ok", "motion_dismissed")
+    assert kind == "motion" and "ORDER" in reason
+    kind, reason = reconcile_kind("merits", "ok", "unknown")
+    assert kind == "merits" and "WARNING" in reason

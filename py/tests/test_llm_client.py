@@ -154,3 +154,57 @@ def test_price_table_covers_the_models_we_use() -> None:
 def test_missing_key_is_a_clear_error(tmp_path: Path) -> None:
     with pytest.raises(LlmError, match="OPENROUTER_API_KEY"):
         LlmClient(api_key="", budget_usd=1.0, cache_dir=tmp_path)
+
+
+# --- silent-failure review (phase 2) -------------------------------------------------------
+
+
+def test_missing_cost_and_tokens_charges_the_worst_case_estimate(tmp_path: Path) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200, json={"choices": [{"message": {"content": '{"verdict": "met", "score": 1}'}}]}
+        )
+
+    client = LlmClient(
+        api_key="k", budget_usd=1.0, cache_dir=tmp_path, transport=httpx.MockTransport(handler)
+    )
+    client.complete_json(HAIKU, system="s", user="u" * 3000, schema=Answer, max_tokens=500)
+    assert client.spent_usd > 0  # a silent $0 would disable the budget cap
+
+
+@pytest.mark.parametrize("budget", [float("nan"), float("inf"), 0.0, -1.0])
+def test_invalid_budget_is_refused(tmp_path: Path, budget: float) -> None:
+    with pytest.raises(LlmError, match="budget"):
+        LlmClient(api_key="k", budget_usd=budget, cache_dir=tmp_path)
+
+
+def test_corrupt_cache_entry_is_discarded_and_refetched(tmp_path: Path) -> None:
+    rec = Recorder(
+        _reply('{"verdict": "met", "score": 1}'), _reply('{"verdict": "met", "score": 2}')
+    )
+    _client(rec, tmp_path).complete_json(HAIKU, system="s", user="u", schema=Answer, max_tokens=50)
+    for f in tmp_path.rglob("*.json"):
+        f.write_text('{"model": "x"')  # truncated write
+    out = _client(rec, tmp_path).complete_json(
+        HAIKU, system="s", user="u", schema=Answer, max_tokens=50
+    )
+    assert out.score == 2 and len(rec.requests) == 2
+
+
+def test_non_json_200_body_is_an_llm_error(tmp_path: Path) -> None:
+    rec = Recorder(httpx.Response(200, text="<html>gateway</html>"))
+    with pytest.raises(LlmError, match="gateway"):
+        _client(rec, tmp_path).complete_json(
+            HAIKU, system="s", user="u", schema=Answer, max_tokens=10
+        )
+
+
+def test_transport_errors_become_llm_errors(tmp_path: Path) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        raise httpx.ReadTimeout("slow", request=request)
+
+    client = LlmClient(
+        api_key="k", budget_usd=1.0, cache_dir=tmp_path, transport=httpx.MockTransport(handler)
+    )
+    with pytest.raises(LlmError, match="slow"):
+        client.complete_json(HAIKU, system="s", user="u", schema=Answer, max_tokens=10)

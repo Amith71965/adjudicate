@@ -192,3 +192,20 @@ class TestLabellingBacklog:
     )
     def test_matter_of_citation_damage(self, raw: str, fixed: str) -> None:
         assert n(raw) == fixed
+
+
+class TestSilentFailureReview:
+    @pytest.mark.parametrize(
+        "prose", ["twelve 12 (twelve) items", "In 2019 (the first year)", "page 5 (see above)"]
+    )
+    def test_prose_parentheticals_are_not_citation_chains(self, prose: str) -> None:
+        assert n(prose) == prose
+
+    def test_single_group_citation_with_anchor_is_still_repaired(self) -> None:
+        assert n("8 C.F.R. § 214.2(1)") == "8 C.F.R. § 214.2(l)"
+
+    def test_et_al_at_line_end_is_not_a_redaction(self) -> None:
+        assert n("Smith et al\nnext line") == "Smith et al\nnext line"
+
+    def test_numbered_list_item_is_not_promoted_to_a_roman_heading(self) -> None:
+        assert n("intro\n1. SUMMARY\nbody") == "intro\n1. SUMMARY\nbody"
