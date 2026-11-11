@@ -60,18 +60,22 @@ awards (i), membership (ii), published_material (iii), judging (iv),
 original_contributions (v), scholarly_articles (vi), display (vii),
 leading_role (viii), high_salary (ix), commercial_success (x).
 
-Report one entry for EVERY criterion the petitioner claimed or the decision discusses.
+Report one entry for EVERY criterion the petitioner claimed (initially, in an RFE
+response, or on appeal). Do not include a criterion the decision says was NOT claimed.
 For each entry:
 - director: what the USCIS Director (the service center, sometimes called "SCOPS")
-  concluded about that criterion: "met", "not_met", or "not_addressed" if the decision
-  does not say.
+  concluded about that criterion: "met", "not_met", or "not_addressed" if the Director
+  never ruled on it. If the decision says the Director found only certain criteria met,
+  every other claimed criterion is "not_met" for the Director.
 - aao: the AAO's OWN conclusion: "met"; "not_met"; "not_reached" if the AAO expressly
   reserved the issue, said it need not decide it, or said it will not disturb or discuss
-  the individual criteria; "waived" if the AAO says the petitioner did not raise,
+  the individual criteria; "waived" only if the AAO SAYS the petitioner did not raise,
   contest or develop it on appeal (waived/abandoned/forfeited); "not_addressed" if the
-  AAO is silent. If the AAO agrees with, adopts or affirms the Director's finding, copy
-  the Director's verdict; if it withdraws a favourable finding, use "not_met". If it
-  says an argument is waived but ALSO concludes the criterion is not met, use "not_met".
+  AAO is silent about it. Never assume the AAO agrees with the Director on a criterion
+  the AAO does not discuss — that is "not_addressed". If the AAO agrees with, adopts
+  or affirms the Director's finding, copy the Director's verdict; if it withdraws a
+  favourable finding, use "not_met". If it says an argument is waived but ALSO
+  concludes the criterion is not met, use "not_met".
 - failed_prong: when aao is "not_met", the specific element that failed, in at most
   ten words (e.g. "organization's distinguished reputation"); otherwise null.
 - quote: ONE sentence copied EXACTLY, character for character, from the decision text,
