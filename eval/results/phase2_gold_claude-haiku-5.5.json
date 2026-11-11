@@ -1,28 +1,26 @@
 {
   "model": "anthropic/claude-haiku-5.5",
-  "decisions_scored": 24,
-  "extraction_failures": {
-    "DEC012025_02B2203": "LlmError: invalid output after retry: 1 validation error for DecisionVerdicts\n  Invalid JSON: EOF while parsing a string at line 1 column 1154 [type=json_invalid, input_value='{\"criteria\":[{\"criterion...tiary criteria:\"},{\"cri', input_type=str]\n    For further information visit https://errors.pydant"
-  },
-  "accuracy": 0.945859872611465,
-  "correct": 297,
-  "total": 314,
+  "decisions_scored": 25,
+  "extraction_failures": {},
+  "accuracy": 0.9424242424242424,
+  "correct": 311,
+  "total": 330,
   "by_field": {
     "outcome": [
-      24,
-      24
+      25,
+      25
     ],
     "final_merits": [
-      24,
-      24
+      25,
+      25
     ],
     "director": [
-      131,
-      133
+      136,
+      140
     ],
     "aao": [
-      118,
-      133
+      125,
+      140
     ]
   },
   "errors": [
@@ -34,10 +32,52 @@
       "predicted": "not_addressed"
     },
     {
+      "decision_id": "DEC012025_02B2203",
+      "field": "aao",
+      "criterion": "awards",
+      "gold": "not_reached",
+      "predicted": "not_met"
+    },
+    {
+      "decision_id": "DEC012025_02B2203",
+      "field": "director",
+      "criterion": "membership",
+      "gold": null,
+      "predicted": "not_met"
+    },
+    {
+      "decision_id": "DEC012025_02B2203",
+      "field": "aao",
+      "criterion": "membership",
+      "gold": null,
+      "predicted": "not_reached"
+    },
+    {
       "decision_id": "DEC092025_01B2203",
       "field": "aao",
       "criterion": "original_contributions",
       "gold": "not_reached",
+      "predicted": "not_met"
+    },
+    {
+      "decision_id": "DEC092025_02B2203",
+      "field": "aao",
+      "criterion": "scholarly_articles",
+      "gold": "not_addressed",
+      "predicted": "waived"
+    },
+    {
+      "decision_id": "DEC092025_02B2203",
+      "field": "aao",
+      "criterion": "leading_role",
+      "gold": "not_addressed",
+      "predicted": "waived"
+    },
+    {
+      "decision_id": "DEC162025_04B2203",
+      "field": "director",
+      "criterion": "leading_role",
+      "gold": "not_addressed",
       "predicted": "not_met"
     },
     {
@@ -64,42 +104,7 @@
     {
       "decision_id": "DEC302025_01B2203",
       "field": "aao",
-      "criterion": "awards",
-      "gold": "not_addressed",
-      "predicted": "not_met"
-    },
-    {
-      "decision_id": "DEC302025_01B2203",
-      "field": "aao",
-      "criterion": "published_material",
-      "gold": "not_addressed",
-      "predicted": "met"
-    },
-    {
-      "decision_id": "DEC302025_01B2203",
-      "field": "aao",
-      "criterion": "high_salary",
-      "gold": "not_addressed",
-      "predicted": "met"
-    },
-    {
-      "decision_id": "DEC302025_01B2203",
-      "field": "aao",
       "criterion": "original_contributions",
-      "gold": "not_addressed",
-      "predicted": "met"
-    },
-    {
-      "decision_id": "DEC302025_01B2203",
-      "field": "aao",
-      "criterion": "scholarly_articles",
-      "gold": "not_addressed",
-      "predicted": "met"
-    },
-    {
-      "decision_id": "DEC302025_01B2203",
-      "field": "aao",
-      "criterion": "leading_role",
       "gold": "not_addressed",
       "predicted": "met"
     },
@@ -137,6 +142,13 @@
       "criterion": "scholarly_articles",
       "gold": "waived",
       "predicted": null
+    },
+    {
+      "decision_id": "NOV252025_01B2203",
+      "field": "aao",
+      "criterion": "judging",
+      "gold": "not_addressed",
+      "predicted": "met"
     },
     {
       "decision_id": "OCT012025_01B2203",
