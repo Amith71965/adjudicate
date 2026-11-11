@@ -1,0 +1,337 @@
+{
+  "phase": 6,
+  "part": "merits",
+  "model": "anthropic/claude-haiku-5.5",
+  "cache_version": "merits-v1",
+  "set": "eval/synthetic/phase6_merits.json",
+  "llm": {
+    "calls": 15,
+    "hits": 0,
+    "inputTokens": 66877,
+    "outputTokens": 22095,
+    "unknownUsageCalls": 0,
+    "cacheWriteFailures": 0,
+    "estimated_cost_usd": 0.0177,
+    "note": "calls/tokens count this run's provider calls only; cache hits are free"
+  },
+  "score": {
+    "cases": 12,
+    "dropped": 0,
+    "pairs": 6,
+    "ordered_pairs": 6,
+    "accuracy": 1,
+    "confusion": {
+      "strong_favorable": 6,
+      "strong_unfavorable": 0,
+      "weak_favorable": 0,
+      "weak_unfavorable": 6
+    },
+    "citations": 26,
+    "fabricated_citations": 0,
+    "fabricated": [],
+    "gate": {
+      "passed": true,
+      "failures": []
+    }
+  },
+  "petitions": [
+    {
+      "petition_id": "P01",
+      "tier": "strong",
+      "pair": 0,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.2,
+      "reasoning": "Step one found five criteria met, so the final merits question is whether the totality of the record shows sustained national or international acclaim and placement among the small percentage at the top of computational biology. The national young investigator medal is given to one researcher nationwide each year, and two national newspapers reported it. The four-page feature in a national magazine with 400,000 circulation is a substantive profile of the beneficiary's protein-folding work, not a passing mention. The beneficiary chaired the national science agency's protein-folding grant panel for two cycles and sits on the editorial board of the field's leading journal. The founding paper of the method has over 2,000 citations, and the method runs in production at the Institute for Molecular Simulation and four other organizations. That adoption is evidence of original contributions of major significance rather than routine publication activity. Base salary above the 99th percentile for the region supports the high-salary criterion. Four of five recommendation letters are independent, with no boilerplate pairs or independence violations, and only a small share of assertions are unspecific. Taken together, the awards, national media coverage, leadership roles, and independently adopted method show recognition beyond what most active professionals in the field receive, and the record documents this across several channels. The main weakness is that the record does not clearly establish the duration of recognition, so sustained acclaim rests on the spread of achievements over time rather than on a long documented track record. That gap keeps the risk above minimal but does not outweigh the overall showing.",
+      "citations": [
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established through meeting at least three of the evidentiary criteria alone."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P02",
+      "tier": "weak",
+      "pair": 0,
+      "status": "reviewed",
+      "attempts": 2,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.9,
+      "reasoning": "Step one found three criteria met (judging, scholarly articles, awards), but the totality of the record does not show sustained national or international acclaim or top-of-field standing. Judging rests on six manuscript review confirmations for two journals. Such reviewing is routine for active computational biology researchers and is not a mark of acclaim. Scholarly output is five regional conference papers on protein-folding models, cited 38 times in total. Regional conference papers and modest citation counts do not show recognition at a level placing the beneficiary among the small percentage at the top of the field, and the record contains no independent articles discussing the work. The best paper award at a national conference, selected from about 400 submissions, is a genuine distinction, but a single award over a limited period does not establish sustained acclaim. The recommendation letters are weak: three of four are weak, roughly 80 percent of assertions are unsupported, one letter is from a non-independent source, and one pair is boilerplate. These letters add little specific support. Taken together, the evidence reflects a promising early career rather than a sustained, elite record, so the beneficiary does not meet the Kazarian final merits standard.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "we will evaluate whether he has demonstrated, by a preponderance of the evidence, his sustained national or international acclaim and that he is one of the small percentage at the very top of the field of endeavor"
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "Because the record does not contain examples of articles that cite to the Beneficiary's work, we cannot conduct a qualitative analysis"
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "it cannot be established through meeting at least three of the evidentiary criteria alone"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P03",
+      "tier": "strong",
+      "pair": 1,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.25,
+      "reasoning": "Step one found three or more criteria met, so the final merits question is whether the record as a whole shows sustained national or international acclaim and placement among the small percentage at the top of renewable energy engineering. The record is strongest in a narrow niche, offshore wind controllers. The national academy young investigator medal is given to one researcher nationwide each year and was reported by two national newspapers, which is a national-level recognition rather than routine activity. The four-page profile in a national magazine with a circulation of 400,000 is independent press attention on the beneficiary's work. Chairing the national science agency's offshore wind controllers grant panel for two cycles and sitting on the editorial board of the field's leading journal show recognition by peers in a judging role. The adoption record is substantial: the method runs in production at Northsea Grid Consortium and four other organizations, and the founding paper has over two thousand citations, a level that far exceeds the modest citation figures the AAO has found insufficient in other matters. The salary above the 99th percentile for the region supports standing in the field. The recommendation letters are mostly favorable: three of four are independent, with no independence violations or boilerplate pairs, though one is weak and about 45 percent of assertions are shared, which slightly reduces their weight. Taken together, the evidence shows recognition extending beyond the beneficiary's own institution, is not limited to one event, and reflects ongoing adoption of the work, so I find sustained national acclaim and placement among the small percentage at the top of the field are more likely than not established. Residual risk comes from the single-niche concentration of the evidence, the undated award and profile, and the weaker letter.",
+      "citations": [
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established through meeting at least three of the evidentiary criteria alone."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P04",
+      "tier": "weak",
+      "pair": 1,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.82,
+      "reasoning": "Step one found three criteria met: judging (six peer reviews for two journals, confirmed by emails), scholarly articles (five regional conference papers cited thirty-eight times in total), and awards (a best paper award at a national conference drawn from about four hundred submissions). Under Kazarian step two, the question is whether the totality of the record shows sustained national or international acclaim and placement among the small percentage at the top of renewable energy engineering. The record is thin for that standard. Six manuscript reviews for two journals is routine service that many active professionals in the field also perform, so it adds little toward top-of-field status. The five papers appear only in regional proceedings, and thirty-eight total citations is modest; the record contains no evidence of independent articles discussing the beneficiary's work or of its influence beyond citation counts. The national best paper award is a genuine recognition, and selection from about four hundred submissions is a meaningful indicator, but a single award at a national venue, without evidence of international recognition or sustained recognition over time, does not on its own establish acclaim at the national or international level. Letters: four letters, three independent and one weak, with about 45% of assertions reflecting shared or generic phrasing; they carry limited weight without specifics. No salary, leadership-role, or original-contribution-of-major-significance evidence appears in the inventory to offset the gaps. Taken together, the evidence shows competent, recognized participation in the field but does not show sustained acclaim or top-of-field standing. The petition is likely to be denied at the final merits stage.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "we will evaluate whether he has demonstrated, by a preponderance of the evidence, his sustained national or international acclaim and that he is one of the small percentage at the very top of the field of endeavor"
+        },
+        {
+          "chunk_id": 10575,
+          "decision_id": "JUL302026_01B2203",
+          "quote": "The Petitioner did not demonstrate that such low figures garnered him sustained national or international acclaim or place him among that small percentage at the very top of the field."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P05",
+      "tier": "strong",
+      "pair": 2,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.35,
+      "reasoning": "Step one found five criteria met. The record is stronger than a bare three-criteria showing. The national academy young investigator medal is given to one researcher nationwide each year and was reported by two national newspapers, which is recognition beyond the petitioner's immediate circle. The four-page profile in a national magazine with 400,000 circulation shows third-party attention to the work itself. The national grant panel chair role for two cycles and the editorial board seat on the field's leading journal show peer judgment at a national level. The production adoption of the method at Ledgerline Payments and four other organizations, with the founding paper cited over 2,000 times, supports original contributions of major significance and sustained use over time. Base salary above the 99th percentile for the region supports the high salary criterion. Of the five recommendation letters, four are independent, none are boilerplate, and none show independence violations, so they add modest weight. Concerns remain. The record does not date the awards, press, or citations clearly enough to fully establish sustained acclaim across a long period. The evidence concerns real-time fraud scoring, while the claimed field is fintech product design; the petitioner must show that this work falls within that field. Given the nationally limited award, the citation volume, and production adoption, the totality supports sustained national acclaim and placement among the small percentage at the top, with residual risk from the field-of-endeavor fit and the undated timeline.",
+      "citations": [
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "others in the field have noticed the Beneficiary's work, but it does not confirm that she has sustained national or international acclaim or that she is among that small percentage at the very top of the field"
+        },
+        {
+          "chunk_id": 11667,
+          "decision_id": "JUN042026_06B2203",
+          "quote": "that the Petitioner has sustained national or international acclaim and that his achievements have been"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P06",
+      "tier": "weak",
+      "pair": 2,
+      "status": "reviewed",
+      "attempts": 2,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.88,
+      "reasoning": "Step one found three criteria met, but meeting three criteria does not establish extraordinary ability. The judging evidence (six peer review confirmations for two journals) is routine service that most active professionals in fintech product design also perform, so it adds little weight toward acclaim. The scholarly record is five regional conference papers on fraud scoring with 38 total citations. Without evidence that others have written about or commented on the work, the citation count alone does not show sustained national or international acclaim. The best paper award at a national conference, selected from about 400 submissions, is a genuine distinction, but it is a single recognition and does not by itself show sustained acclaim or a position at the very top of the field. The recommendation letters are weak: three of four are weak, roughly 80% of assertions are unsupported, one letter is from a non-independent source, and one pair is boilerplate. Taken together, the record does not show sustained national or international acclaim or that the beneficiary is among the small percentage at the top of the field. The petition is likely to be denied.",
+      "citations": [
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established"
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "Because the record does not contain examples of articles that cite to the Beneficiary's work, we cannot conduct a qualitative analysis"
+        },
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "In this matter, we determine that the Petitioner has not established eligibility."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P07",
+      "tier": "strong",
+      "pair": 3,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.25,
+      "reasoning": "Step one found five criteria met. The final merits question is whether the totality shows sustained national or international acclaim and placement among the small percentage at the top of structural engineering. The strongest evidence is the national young investigator medal, which is given to one researcher nationwide each year and was reported by two national newspapers. The adoption record also carries weight: the seismic retrofit method runs in production at Meridian Bridge Authority and four other organizations, and the founding paper has over 2,000 citations. That citation count is a meaningful qualitative indicator that others in the field rely on the work, unlike the low counts discussed in comparable AAO decisions. The national magazine profile (four pages, 400,000 circulation) shows press attention to the same line of work over time, which supports sustained recognition. The grant panel chair role for two cycles and the editorial board seat reflect peer trust at the national level, beyond routine reviewing. The salary above the 99th percentile is supportive but is a financial measure and adds little on its own. The recommendation letters are mostly independent (three of four, no independence violations), though one is weak and about 45% of the content is assertion, so they add limited weight without specifics. Taken together, the award, production adoption, sustained citation impact, and national-level service show recognition that is specific, continuing, and well above what most active professionals in the field achieve. The officer should confirm the citation trajectory and the scope of production adoption, but on this record the sustained acclaim and top-of-field standards are likely met, with residual risk from the weaker letter and the thin press coverage.",
+      "citations": [
+        {
+          "chunk_id": 14082,
+          "decision_id": "FEB262026_03B2203",
+          "quote": "As the Petitioner has established that he meets the requisite initial evidence, we will evaluate whether"
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established"
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "high citation number might show that others in the field have noticed the Beneficiary's work, but it does not confirm that she has sustained"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P08",
+      "tier": "weak",
+      "pair": 3,
+      "status": "reviewed",
+      "attempts": 2,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.9,
+      "reasoning": "Step one found three criteria met: judging, scholarly articles, and awards. Meeting three criteria does not establish eligibility, so the final merits question is whether the totality of the record shows sustained national or international acclaim and placement among the small percentage at the top of structural engineering. The judging evidence is six manuscript review confirmations for two journals. Peer review is routine for active researchers in the field, so it adds little weight toward top-of-field status. The scholarly record is five regional conference papers on seismic retrofit, cited thirty-eight times in total. Regional conference output and modest citation counts do not show that the work drew attention at a national or international level. The best paper award at a national conference, selected from about four hundred submissions, is a genuine distinction and is the strongest item. It is a single recognition, however, and the record does not show it was sustained or part of a wider pattern of recognition. The recommendation letters are mixed: four letters, three independent, one weak, and a 0.45 share of assertion-based language. Letters that praise without specifics carry limited weight. Taken together, the evidence shows competent, active professional work with one notable award. It does not show sustained acclaim over time, nor a level of recognition that separates the beneficiary from others in the field. Both prongs of the final merits test are unmet, so the petition is likely to be denied.",
+      "citations": [
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "Because the Petitioner submitted the required evidence to satisfy three of the initial criteria, we will"
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established"
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "others in the field have noticed the Beneficiary's work, but it does not confirm that she has sustained"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P09",
+      "tier": "strong",
+      "pair": 4,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.25,
+      "reasoning": "Step one found five criteria met, so the final merits inquiry asks whether the totality of the record shows sustained national or international acclaim and placement among the small percentage at the top of computational biology. The record is strong on several points. The national young investigator medal is limited to one researcher nationwide per year and was reported by two national newspapers, which is recognition beyond the field's routine honors. The four-page national magazine profile (circulation 400,000) is published media coverage focused on the beneficiary's protein-folding work, not a passing mention. The beneficiary chaired the national science agency's protein-folding grant panel for two cycles and sits on the editorial board of the field's leading journal, which reflects trust from national institutions and peers. The method is in production at the Institute for Molecular Simulation and four other organizations, and its founding paper has over two thousand citations, which is a qualitative indicator that others in the field rely on and recognize the work. The compensation statement places base salary above the 99th percentile for the region. The recommendation letters are favorable: four of five are independent, with no boilerplate pairs or independence violations and a low assertion share (0.2), so they carry real weight. The principal weakness is temporal. The record does not date the award, profile, panel service, or adoption, so it is not established that acclaim has been maintained over a long period as opposed to clustering around one period. Even so, the combination of a nationally scarce award, national media coverage, national panel leadership, a highly cited method adopted by multiple organizations, and independent letters supports both sustained acclaim and top-of-field standing. The residual risk comes from the undated record and the reliance on a single award.",
+      "citations": [
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established"
+        },
+        {
+          "chunk_id": 15507,
+          "decision_id": "MAR112026_01B2203",
+          "quote": "we will evaluate whether he has demonstrated, by a preponderance of the evidence, his sustained national or international acclaim and that he is one of the small percentage at the very top of the field"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P10",
+      "tier": "weak",
+      "pair": 4,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.85,
+      "reasoning": "Step one found three criteria met, but meeting three criteria does not establish extraordinary ability; the totality of the record must show sustained national or international acclaim and placement among the small percentage at the top of computational biology. The judging evidence (A01) is six manuscript review confirmations for two journals. Peer review is routine for active researchers and carries little weight toward top-of-field status. The scholarly record (A02) is five papers in regional conference proceedings with 38 citations in total. Regional venues and modest citation counts do not show national or international recognition, and the record contains no independent citing articles or qualitative evidence of others commenting on the work. The awards criterion (A03) is the strongest item: a best paper award at a national conference selected from about 400 submissions. It is a genuine recognition, but it is a single award at a conference, and the record does not show sustained acclaim across years or a sustained pattern of distinction. The recommendation letters are weak: three of four are weak, 80% of assertions are unsupported, one boilerplate pair appears, and one letter has an independence violation, so they add little. Taken together, the evidence shows an active, competent researcher with one notable award but not sustained acclaim or top-of-field standing.",
+      "citations": [
+        {
+          "chunk_id": 10575,
+          "decision_id": "JUL302026_01B2203",
+          "quote": "The Petitioner did not demonstrate that such low figures garnered him sustained national or international acclaim or place him among that small percentage at the very top of the field."
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "we cannot conduct a qualitative analysis to determine whether others have highlighted or commented upon her research in a way that demonstrates sustained national or international acclaim in the field."
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P11",
+      "tier": "strong",
+      "pair": 5,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": true,
+      "top_of_field": true,
+      "risk": 0.3,
+      "reasoning": "Step one found five criteria met, and the record is stronger than a bare three-criteria showing. The national academy medal is given to one researcher nationwide each year for offshore wind controllers and was reported by two national newspapers. The four-page national magazine profile (400,000 circulation) reflects national-level attention. The beneficiary chaired a national agency grant panel for two cycles and sits on the leading journal's editorial board. The method is in production at Northsea Grid Consortium and four other organizations, and the founding paper has over 2,000 citations. Base salary is above the 99th percentile for the region. Of four recommendation letters, three are independent and one is weak, with no boilerplate or independence violations, though 45% of assertions are shared, which lowers their weight. Sustained acclaim is the weaker point: nearly all evidence centers on one line of work, the record does not show a multi-year trajectory of recognition, and the citation count alone does not establish acclaim beyond the immediate subfield. Still, a nationwide annual medal, national press coverage, national agency panel service, and production adoption by a major grid consortium together indicate national-level recognition that is distinguishable from routine professional activity. On balance, sustained acclaim is supported, and the top-of-field question is closer but favors the beneficiary given the medal's exclusivity and the production adoption. Residual risk remains from the narrow focus of the evidence and the limited time-span documentation.",
+      "citations": [
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established through meeting at least three of the evidentiary criteria alone."
+        },
+        {
+          "chunk_id": 11199,
+          "decision_id": "JUL012026_01B2203",
+          "quote": "others in the field have noticed the Beneficiary's work, but it does not confirm that she has sustained"
+        }
+      ],
+      "pruned": []
+    },
+    {
+      "petition_id": "P12",
+      "tier": "weak",
+      "pair": 5,
+      "status": "reviewed",
+      "attempts": 1,
+      "sustained_acclaim": false,
+      "top_of_field": false,
+      "risk": 0.85,
+      "reasoning": "Step one found three criteria met: judging, scholarly articles, and awards. Under Kazarian step two, meeting three criteria is not sufficient on its own, so the totality of the record must show sustained national or international acclaim and placement among the small percentage at the top of renewable energy engineering. Judging (A01): six manuscript reviews for two journals is a routine service activity that many active professionals in the field also perform, and the record shows no editorial role or invitation based on standing, so it adds little weight toward top-of-field status. Scholarly articles (A02): five regional conference papers on offshore wind controllers with 38 total citations show a modest, local footprint. The record does not show that the work has been discussed in independent analyses, adopted in industry, or cited at a level distinguishing the beneficiary from peers, and the citation count is not qualitatively analyzed. Awards (A03): the best paper award at a national conference chosen from about four hundred submissions is a genuine recognition, but it is a single, conference-level honor, and the record does not show comparable awards, sustained recognition over time, or national or international prizes. Recommendation letters: three of four are independent and one is weak. Assertion share is 0.45 and the letters praise the beneficiary in general terms, so they do not add specific, verifiable evidence of acclaim beyond the documented achievements. Considering the record as a whole, the evidence shows an accomplished early-career or mid-career engineer with solid local and national recognition, but not sustained acclaim at a national or international level, nor placement among the small percentage at the very top of the field. The petition is likely to be denied at the final merits stage.",
+      "citations": [
+        {
+          "chunk_id": 10575,
+          "decision_id": "JUL302026_01B2203",
+          "quote": "The Petitioner did not demonstrate that such low figures garnered him sustained national or international acclaim or place him among that small percentage at the very top of the field."
+        },
+        {
+          "chunk_id": 14452,
+          "decision_id": "FEB102026_04B2203",
+          "quote": "Because extraordinary ability is an elite level of accomplishment whose recognition necessarily entails a judgement call, it cannot be established through meeting at least three of the evidentiary criteria alone."
+        }
+      ],
+      "pruned": []
+    }
+  ]
+}
