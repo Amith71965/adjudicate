@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import psycopg
@@ -35,13 +36,11 @@ def test_second_run_applies_nothing(tmp_path: Path, scratch_db_url: str) -> None
         assert apply_migrations(conn, tmp_path) == []
 
 
-def test_failed_file_is_rolled_back_and_not_recorded(
-    tmp_path: Path, scratch_db_url: str
-) -> None:
+def test_failed_file_is_rolled_back_and_not_recorded(tmp_path: Path, scratch_db_url: str) -> None:
     _write(tmp_path, "0001_a.sql", "CREATE TABLE t (v int);")
     _write(tmp_path, "0002_bad.sql", "CREATE TABLE u (v int); SELECT nonsense_fn();")
     with psycopg.connect(scratch_db_url) as conn:
-        with pytest.raises(MigrationError, match="0002_bad.sql"):
+        with pytest.raises(MigrationError, match=re.escape("0002_bad.sql")):
             apply_migrations(conn, tmp_path)
         assert conn.execute("SELECT to_regclass('u')").fetchone() == (None,)
         versions = [r[0] for r in conn.execute("SELECT version FROM schema_migrations")]

@@ -1,0 +1,37 @@
+# Lint/type/secret checks only. Tests run in `make verify` so a RED test
+# can be committed before its implementation (see DECISIONS ADR-006).
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: .venv/bin/ruff check
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff format
+        entry: .venv/bin/ruff format --check
+        language: system
+        types: [python]
+      - id: mypy
+        name: mypy
+        entry: .venv/bin/mypy
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: eslint
+        name: eslint
+        entry: bash -c 'cd web && npx eslint .'
+        language: system
+        files: ^web/.*\.(ts|tsx|mjs)$
+        pass_filenames: false
+      - id: tsc
+        name: tsc
+        entry: bash -c 'cd web && npx tsc --noEmit'
+        language: system
+        files: ^web/.*\.(ts|tsx)$
+        pass_filenames: false
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks

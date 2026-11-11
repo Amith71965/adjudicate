@@ -20,9 +20,7 @@ REPO = Path(__file__).resolve().parents[2]
 def test_local_only_paths_are_git_ignored(probe: str) -> None:
     # Probe a nested path: a bare directory name is not matched by `dir/` patterns
     # when the directory does not exist (see _local/INCIDENTS.md).
-    result = subprocess.run(
-        ["git", "check-ignore", "-q", probe], cwd=REPO, check=False
-    )
+    result = subprocess.run(["git", "check-ignore", "-q", probe], cwd=REPO, check=False)
     assert result.returncode == 0, f"{probe} is not git-ignored"
 
 
