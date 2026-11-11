@@ -10,7 +10,12 @@ from pathlib import Path
 import httpx
 import pytest
 
-from adjudicate.harvest.http import FetchError, PoliteClient, crawl_delay_from_robots
+from adjudicate.harvest.http import (
+    FetchError,
+    PoliteClient,
+    RobotsRules,
+    crawl_delay_from_robots,
+)
 
 ROBOTS = (Path(__file__).parent / "fixtures" / "robots.txt").read_text()
 URL = "https://www.uscis.gov/sites/default/files/err/x.pdf"
@@ -132,3 +137,54 @@ def test_requests_identify_the_project_without_personal_contact() -> None:
 def test_min_interval_below_robots_delay_is_refused() -> None:
     with pytest.raises(ValueError, match="crawl-delay"):
         PoliteClient(min_interval=1.0, robots_delay=10.0)
+
+
+def test_robots_cannot_lower_the_floor_delay() -> None:
+    assert crawl_delay_from_robots("User-agent: *\nCrawl-delay: 0.5\n") == 10.0
+
+
+def test_non_transport_httpx_errors_become_fetch_errors() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        raise httpx.DecodingError("bad gzip", request=request)
+
+    with pytest.raises(FetchError, match="bad gzip"):
+        _client(httpx.MockTransport(handler), FakeClock(), retries=1).get(URL)
+
+
+def test_redirect_off_site_is_refused() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.host == "www.uscis.gov":
+            return httpx.Response(302, headers={"Location": "https://elsewhere.example/x.pdf"})
+        return httpx.Response(200, content=b"%PDF-")
+
+    with pytest.raises(FetchError, match="off-site"):
+        _client(httpx.MockTransport(handler), FakeClock()).get(URL)
+
+
+def test_zero_interval_client_still_backs_off() -> None:
+    clock = FakeClock()
+    statuses = iter([503, 200])
+    client = _client(
+        httpx.MockTransport(lambda r: httpx.Response(next(statuses))), clock, delay=0.0
+    )
+    client.get(URL)
+    assert clock.sleeps and clock.sleeps[0] >= 5.0
+
+
+def test_robots_rules_enforce_disallow() -> None:
+    rules = RobotsRules.parse("User-agent: *\nDisallow: /sites/default/files/archive/\n")
+    assert rules.allows("https://www.uscis.gov/sites/default/files/err/x.pdf")
+    assert not rules.allows("https://www.uscis.gov/sites/default/files/archive/x.pdf")
+
+
+def test_real_robots_allows_decisions_and_index() -> None:
+    rules = RobotsRules.parse(ROBOTS)
+    assert rules.allows(URL)
+    assert rules.allows(
+        "https://www.uscis.gov/administrative-appeals/aao-decisions/aao-non-precedent-decisions?page=1"
+    )
+
+
+def test_robots_body_without_user_agent_is_rejected() -> None:
+    with pytest.raises(ValueError, match="robots"):
+        RobotsRules.parse("<html><body>Service unavailable</body></html>")

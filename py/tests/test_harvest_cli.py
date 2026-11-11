@@ -107,3 +107,30 @@ def test_stats_report_counts_and_duplicates(db: psycopg.Connection[tuple[object,
     assert s.duplicate_content_groups == 1
     assert s.fetched_by_visa == {"EB-1A": 2, "O-1": 1}
     assert s.fetched_modern_by_visa == {"EB-1A": 1, "O-1": 1}
+
+
+@pytest.mark.parametrize(
+    "flag", [["--max-pages", "0"], ["--max-pages", "-1"], ["--fetch-limit", "0"]]
+)
+def test_cli_rejects_non_positive_limits(
+    flag: list[str], scratch_db_url: str, db: psycopg.Connection[tuple[object, ...]]
+) -> None:
+    argv = ["--topic", "19", "--max-pages", "1", *flag]
+    with pytest.raises(SystemExit) as exc:
+        main(argv, transport=_site(), database_url=scratch_db_url, sleep=lambda s: None)
+    assert exc.value.code == 2
+
+
+def test_cli_refuses_to_crawl_on_html_robots(
+    scratch_db_url: str, db: psycopg.Connection[tuple[object, ...]]
+) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, text="<html>maintenance</html>")
+
+    code = main(
+        ["--topic", "19", "--max-pages", "1"],
+        transport=httpx.MockTransport(handler),
+        database_url=scratch_db_url,
+        sleep=lambda s: None,
+    )
+    assert code == 2

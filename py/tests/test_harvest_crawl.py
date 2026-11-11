@@ -10,7 +10,7 @@ import httpx
 import psycopg
 import pytest
 
-from adjudicate.harvest.crawl import HarvestStats, harvest
+from adjudicate.harvest.crawl import HarvestError, HarvestStats, harvest
 from adjudicate.harvest.http import PoliteClient
 from adjudicate.migrate import apply_migrations
 
@@ -33,11 +33,18 @@ class FakeUscis:
         self.listing_requests: list[dict[str, list[str]]] = []
         self.pdf_requests: list[str] = []
         self.broken: set[str] = set()
+        self.truncated: set[str] = set()
+        self.listing_override: str | None = None
+        self.interrupt_after: int | None = None
 
     def __call__(self, request: httpx.Request) -> httpx.Response:
         url = str(request.url)
         if url.endswith(".pdf"):
             self.pdf_requests.append(url)
+            if self.interrupt_after is not None and len(self.pdf_requests) > self.interrupt_after:
+                raise KeyboardInterrupt
+            if url in self.truncated:
+                return httpx.Response(200, content=fake_pdf(url)[:-8])
             if url in self.broken:
                 # A soft-error page with HTTP 200: must not be stored as a decision.
                 return httpx.Response(
@@ -49,6 +56,8 @@ class FakeUscis:
         query = parse_qs(urlsplit(url).query)
         self.listing_requests.append(query)
         page = int(query.get("page", ["0"])[0])
+        if self.listing_override is not None:
+            return httpx.Response(200, text=self.listing_override if page == 0 else PAST_END)
         return httpx.Response(200, text=PAGE0 if page == 0 else PAST_END)
 
 
@@ -221,3 +230,128 @@ def test_harvest_requires_autocommit(
     client = PoliteClient(transport=httpx.MockTransport(FakeUscis()), min_interval=0.0)
     with psycopg.connect(scratch_db_url) as conn, pytest.raises(ValueError, match="autocommit"):
         harvest(client, conn, topic=19, max_pages=1)
+
+
+# --- hardening (silent-failure review, phase 1) -------------------------------------------
+
+
+def _harvest(
+    site: FakeUscis, db: psycopg.Connection[tuple[object, ...]], **kw: object
+) -> HarvestStats:
+    client = PoliteClient(
+        transport=httpx.MockTransport(site), min_interval=0.0, sleep=lambda s: None
+    )
+    try:
+        return harvest(client, db, topic=19, **kw)  # type: ignore[arg-type]
+    finally:
+        client.close()
+
+
+def test_empty_first_page_is_an_error_not_end_of_results(
+    db: psycopg.Connection[tuple[object, ...]],
+) -> None:
+    site = FakeUscis()
+    site.listing_override = PAST_END  # page 0 already "empty"
+    with pytest.raises(HarvestError, match="page 0"):
+        _harvest(site, db, max_pages=3)
+    row = db.execute("SELECT error FROM harvest_run").fetchone()
+    assert row is not None and "page 0" in str(row[0])
+
+
+def test_page_cap_is_reported_as_truncation(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    logs: list[str] = []
+    stats = _harvest(site, db, max_pages=1, log=logs.append)
+    assert stats.reached_end is False
+    assert any("truncated" in m for m in logs)
+    row = db.execute("SELECT reached_end, total_listed FROM harvest_run").fetchone()
+    assert row == (False, 5294)
+
+
+def test_full_walk_reports_reached_end(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    assert _harvest(site, db, max_pages=5).reached_end is True
+
+
+def test_rows_with_unknown_year_are_still_fetched_under_min_year(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    _harvest(site, db, max_pages=5, fetch_limit=0)
+    db.execute("UPDATE raw_decision SET issued_year = NULL WHERE decision_id = 'SEP172026_01B2203'")
+    _harvest(site, db, max_pages=5, min_year=2026)
+    row = db.execute(
+        "SELECT content IS NOT NULL FROM raw_decision WHERE decision_id = 'SEP172026_01B2203'"
+    ).fetchone()
+    assert row == (True,)
+
+
+BAD = (
+    "https://www.uscis.gov/sites/default/files/err/"
+    "B2%20-%20Aliens%20with%20Extraordinary%20Ability/"
+    "Decisions_Issued_in_2026/SEP172026_01B2203.pdf"
+)
+
+
+def test_failures_are_counted_retried_last_and_abandoned_after_cap(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    site.broken.add(BAD)
+    for _ in range(3):
+        _harvest(site, db, max_pages=5)
+    attempts, status = db.execute(
+        "SELECT fetch_attempts, http_status FROM raw_decision WHERE url = %s", (BAD,)
+    ).fetchone() or (None, None)
+    assert (attempts, status) == (3, 200)
+    requests_before = site.pdf_requests.count(BAD)
+    stats = _harvest(site, db, max_pages=5)
+    assert site.pdf_requests.count(BAD) == requests_before  # abandoned: not re-requested
+    assert stats.abandoned == 1
+
+
+def test_previously_failed_rows_do_not_starve_the_fetch_limit(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    site.broken.add(BAD)
+    _harvest(site, db, max_pages=5, fetch_limit=1)  # BAD is newest, fails first
+    stats = _harvest(site, db, max_pages=5, fetch_limit=1)
+    assert stats.fetched == 1  # a healthy row was chosen ahead of the failed one
+
+
+def test_truncated_pdf_is_rejected(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    site.truncated.add(BAD)
+    stats = _harvest(site, db, max_pages=5)
+    assert stats.failed == 1
+    row = db.execute("SELECT fetch_error FROM raw_decision WHERE url = %s", (BAD,)).fetchone()
+    assert row is not None and "truncated" in str(row[0])
+
+
+def test_robots_disallowed_urls_are_never_requested(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    stats = _harvest(site, db, max_pages=5, allowed=lambda url: url != BAD)
+    assert BAD not in site.pdf_requests
+    assert stats.failed == 1
+
+
+def test_interrupt_is_audited_as_an_error(
+    db: psycopg.Connection[tuple[object, ...]], site: FakeUscis
+) -> None:
+    site.interrupt_after = 3
+    with pytest.raises(KeyboardInterrupt):
+        _harvest(site, db, max_pages=5)
+    row = db.execute("SELECT error, finished_at IS NOT NULL FROM harvest_run").fetchone()
+    assert row == ("KeyboardInterrupt", True)
+
+
+def test_unexpected_categories_for_the_topic_are_warned(
+    db: psycopg.Connection[tuple[object, ...]],
+) -> None:
+    site = FakeUscis()
+    site.listing_override = (FIX / "unfiltered_page1.html").read_text()
+    logs: list[str] = []
+    _harvest(site, db, max_pages=1, fetch_limit=0, log=logs.append)
+    assert any("unexpected" in m and "other" in m for m in logs)

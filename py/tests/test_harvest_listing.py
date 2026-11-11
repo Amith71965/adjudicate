@@ -16,6 +16,7 @@ from adjudicate.harvest.listing import (
     dedupe,
     parse_decision_filename,
     parse_listing,
+    parse_listing_page,
 )
 from adjudicate.harvest.urls import canonical_url
 
@@ -134,3 +135,25 @@ def test_dedupe_keeps_first_seen_order() -> None:
     entries = _entries("eb1a_page0.html")
     doubled = entries + entries[:10]
     assert dedupe(doubled) == entries
+
+
+class TestListingPage:
+    def test_reports_total_rows_and_next_link(self) -> None:
+        page = parse_listing_page((FIX / "eb1a_page0.html").read_text(), BASE)
+        assert (len(page.entries), page.total_rows, page.has_next) == (100, 5294, True)
+
+    def test_past_end_page_has_no_next(self) -> None:
+        page = parse_listing_page((FIX / "eb1a_page_past_end.html").read_text(), BASE)
+        assert (page.entries, page.has_next) == ([], False)
+
+    def test_real_rows_have_no_date_drift(self) -> None:
+        assert parse_listing_page((FIX / "eb1a_page0.html").read_text(), BASE).drift == []
+
+    def test_drift_between_display_date_and_filename_is_reported(self) -> None:
+        html = (
+            (FIX / "eb1a_page0.html")
+            .read_text()
+            .replace("September 17, 2026", "September 18, 2026", 1)
+        )
+        drift = parse_listing_page(html, BASE).drift
+        assert len(drift) == 1 and "SEP172026_01B2203" in drift[0]
