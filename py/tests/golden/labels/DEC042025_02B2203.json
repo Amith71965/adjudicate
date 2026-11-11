@@ -1,0 +1,14 @@
+{
+  "decision_id": "DEC042025_02B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "membership": {"director": "not_met", "aao": "waived"},
+    "published_material": {"director": "not_met", "aao": "not_met"},
+    "judging": {"director": "not_met", "aao": "waived"},
+    "leading_role": {"director": "not_met", "aao": "not_met"},
+    "high_salary": {"director": "not_met", "aao": "not_reached"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Failure mode D: (ii) and (iv) not raised on appeal -> waived (Matter of O-R-E-). (viii) fails BOTH prongs (role unproven; reputation uncorroborated). (ix) expressly reserved."
+}

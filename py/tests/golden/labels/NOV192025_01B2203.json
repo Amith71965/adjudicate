@@ -1,0 +1,14 @@
+{
+  "decision_id": "NOV192025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "membership": {"director": "not_met", "aao": "not_met"},
+    "published_material": {"director": "not_met", "aao": "not_met"},
+    "judging": {"director": "met", "aao": "not_met"},
+    "display": {"director": "not_met", "aao": "not_met"},
+    "high_salary": {"director": "not_met", "aao": "not_met"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Auto restoration specialist. AAO withdraws the one criterion SCOPS granted (judging). Published articles near-identical across outlets at the same time (boilerplate signal); salary compared to average, not to the top of the field."
+}

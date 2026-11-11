@@ -1,0 +1,13 @@
+{
+  "decision_id": "DEC012025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "published_material": {"director": "not_met", "aao": "not_reached"},
+    "judging": {"director": "not_met", "aao": "not_addressed"},
+    "original_contributions": {"director": "not_met", "aao": "not_met"},
+    "scholarly_articles": {"director": "not_met", "aao": "not_addressed"},
+    "leading_role": {"director": "not_met", "aao": "not_met"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Five claimed; appeal pressed only (iii),(v),(viii). AAO decides (v) and (viii) against, never analyses (iii) because 3 is unreachable. (iv),(vi) abandoned on appeal, AAO silent. (viii): role prong failed; reputation prong expressly reserved."
+}

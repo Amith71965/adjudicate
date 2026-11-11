@@ -1,0 +1,14 @@
+{
+  "decision_id": "DEC102025_02B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "published_material": {"director": "not_met", "aao": "not_met"},
+    "judging": {"director": "met", "aao": "met"},
+    "original_contributions": {"director": "not_met", "aao": "not_met"},
+    "scholarly_articles": {"director": "met", "aao": "met"},
+    "leading_role": {"director": "not_met", "aao": "not_met"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Employer-filed (Petitioner/Beneficiary). Published material fails the 'about the beneficiary' prong: citing articles are not about him (mode A-adjacent). Prior O-1A approval does not bind."
+}

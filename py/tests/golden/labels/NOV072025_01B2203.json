@@ -1,0 +1,16 @@
+{
+  "decision_id": "NOV072025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "membership": {"director": "not_met", "aao": "not_met"},
+    "published_material": {"director": "met", "aao": "not_met"},
+    "judging": {"director": "met", "aao": "not_met"},
+    "original_contributions": {"director": "not_met", "aao": "not_reached"},
+    "scholarly_articles": {"director": "not_met", "aao": "waived"},
+    "leading_role": {"director": "not_met", "aao": "not_met"},
+    "high_salary": {"director": "met", "aao": "not_met"}
+  },
+  "final_merits": "not_met",
+  "notes": "AAO withdraws all three of SCOPS' favourable findings (published material: website not shown to be major media; judging: a ranking is not judging; salary) yet still conducts final merits and denies. Scholarly articles waived (footnote; decision mis-cites it as 204.5(k)(3)(vi)). Leading role fails the distinguished-reputation prong."
+}

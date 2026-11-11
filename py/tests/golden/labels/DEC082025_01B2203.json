@@ -1,0 +1,14 @@
+{
+  "decision_id": "DEC082025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "membership": {"director": "not_met", "aao": "not_met"},
+    "judging": {"director": "not_met", "aao": "not_met"},
+    "original_contributions": {"director": "not_met", "aao": "not_reached"},
+    "leading_role": {"director": "not_met", "aao": "not_reached"},
+    "high_salary": {"director": "not_met", "aao": "not_met"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Four criteria decided against -> three unreachable; (v),(viii) reserved. Awards and judging fail because evidence is culinary while the claimed field is business administration (field mismatch). AAO adds an advisory aggregate remark but formally declines the final merits."
+}

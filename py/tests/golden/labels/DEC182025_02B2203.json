@@ -1,0 +1,14 @@
+{
+  "decision_id": "DEC182025_02B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "membership": {"director": "not_met", "aao": "not_met"},
+    "published_material": {"director": "met", "aao": "not_met"},
+    "judging": {"director": "met", "aao": "met"},
+    "original_contributions": {"director": "not_met", "aao": "not_met"},
+    "scholarly_articles": {"director": "not_met", "aao": "not_met"},
+    "leading_role": {"director": "not_met", "aao": "not_reached"}
+  },
+  "final_merits": "not_reached",
+  "notes": "AAO WITHDRAWS SCOPS' favourable published-material finding (material not about the petitioner) - the AAO can turn a met criterion into not_met de novo. Forbes.com contributor pieces are not 'scholarly'. Role reserved."
+}

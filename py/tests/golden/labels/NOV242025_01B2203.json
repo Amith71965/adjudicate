@@ -1,0 +1,15 @@
+{
+  "decision_id": "NOV242025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "met", "aao": "not_met"},
+    "membership": {"director": "met", "aao": "not_met"},
+    "published_material": {"director": "met", "aao": "met"},
+    "judging": {"director": "met", "aao": "not_met"},
+    "display": {"director": "not_addressed", "aao": "not_met"},
+    "leading_role": {"director": "met", "aao": "not_met"},
+    "high_salary": {"director": "met", "aao": "not_met"}
+  },
+  "final_merits": "not_met",
+  "notes": "Striking de novo reversal: SCOPS granted six criteria; AAO withdraws five (award evidence internally inconsistent; trade-association membership open to any business; salary not compared to other CEOs). Display via comparable evidence: criterion inapplicable to a CEO but the evidence is not 'truly comparable'. Final merits affirmed."
+}

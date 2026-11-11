@@ -1,0 +1,15 @@
+{
+  "decision_id": "NOV212025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "membership": {"director": "not_met", "aao": "not_met"},
+    "published_material": {"director": "not_met", "aao": "waived"},
+    "judging": {"director": "met", "aao": "not_addressed"},
+    "original_contributions": {"director": "not_met", "aao": "not_met"},
+    "scholarly_articles": {"director": "met", "aao": "not_addressed"},
+    "leading_role": {"director": "not_met", "aao": "not_met"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Published material not contested -> waived (Matter of Garcia; Matter of O-R-E-). Research grants are funding, not prizes. Leading role fails the distinguished-reputation prong even assuming the role (mode B)."
+}

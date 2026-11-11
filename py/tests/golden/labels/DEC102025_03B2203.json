@@ -1,0 +1,14 @@
+{
+  "decision_id": "DEC102025_03B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "judging": {"director": "not_met", "aao": "met"},
+    "original_contributions": {"director": "not_met", "aao": "not_met"},
+    "display": {"director": "not_met", "aao": "met"},
+    "leading_role": {"director": "not_met", "aao": "not_met"},
+    "commercial_success": {"director": "not_met", "aao": "not_met"}
+  },
+  "final_merits": "not_reached",
+  "notes": "AAO reverses SCOPS on judging and display (2 met) but 3 not reached. Awards went to directors/producers, not the petitioner (mode A). Commercial success: not performing arts, comparable-evidence predicate not shown."
+}
