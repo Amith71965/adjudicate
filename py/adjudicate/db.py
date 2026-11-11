@@ -45,10 +45,21 @@ def assert_disposable(url: str, env: Mapping[str, str] | None = None) -> None:
     )
 
 
-def connect() -> psycopg.Connection[tuple[object, ...]]:
+def connect(*, autocommit: bool = False) -> psycopg.Connection[tuple[object, ...]]:
     """Open a connection to the corpus database.
+
+    Writers that commit unit-by-unit (migrations, harvests) need
+    ``autocommit=True``: in psycopg, ``conn.transaction()`` inside an implicit
+    transaction is only a SAVEPOINT and commits nothing.
 
     Raises psycopg.OperationalError if the server is unreachable; callers
     must not swallow it — a missing corpus is never a silent empty result.
     """
-    return psycopg.connect(database_url(), connect_timeout=5)
+    return psycopg.connect(database_url(), connect_timeout=5, autocommit=autocommit)
+
+
+def require_autocommit(conn: psycopg.Connection[tuple[object, ...]], purpose: str) -> None:
+    if not conn.autocommit:
+        raise ValueError(
+            f"{purpose} needs an autocommit connection so each unit of work really commits"
+        )

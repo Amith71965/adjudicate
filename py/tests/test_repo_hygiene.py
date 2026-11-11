@@ -61,3 +61,14 @@ FIXTURE_ROOTS = [REPO / "py" / "tests" / "fixtures", REPO / "web" / "tests" / "f
 def test_committed_fixtures_contain_no_pii() -> None:
     # Roots must exist (scan_tree raises otherwise), so this can never pass vacuously.
     assert scan_tree(FIXTURE_ROOTS) == []
+
+
+@pytest.mark.parametrize("text", ["icon-dot-gov@2x.png", "logo@3x.webp"])
+def test_retina_asset_names_are_not_emails(text: str) -> None:
+    assert scan_for_pii(text) == []
+
+
+def test_public_agency_role_mailbox_is_allowlisted_exactly() -> None:
+    assert scan_for_pii("Contact USCIS.Webmaster@dhs.gov") == []
+    # Exact-address allowlist, not a domain wildcard: a person at dhs.gov is still PII.
+    assert {f.kind for f in scan_for_pii("j.smith@dhs.gov")} == {"email"}

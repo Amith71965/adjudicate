@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "Adversarial pre-filing reviewer for extraordinary-ability immigration petitions (data + eval layer)"
 requires-python = ">=3.14"
 dependencies = [
+  "beautifulsoup4>=4.12",
+  "httpx>=0.28",
   "psycopg[binary]>=3.2",
 ]
 
@@ -46,3 +48,6 @@ python_version = "3.14"
 strict = true
 mypy_path = "py"
 packages = ["adjudicate"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["adjudicate"]

@@ -18,7 +18,7 @@ from pathlib import Path
 
 import psycopg
 
-from adjudicate.db import connect, describe_target
+from adjudicate.db import connect, describe_target, require_autocommit
 
 _MIGRATION_NAME = re.compile(r"^(\d{4})_[a-z0-9_]+\.sql$")
 _ADVISORY_LOCK_KEY = 0x4144_4A55  # "ADJU": serialises concurrent runners
@@ -87,6 +87,7 @@ def _verify_recorded(conn: Conn, files: list[Path]) -> set[str]:
 
 def apply_migrations(conn: Conn, directory: Path) -> list[str]:
     """Validate the migration set, apply pending files; return the names applied."""
+    require_autocommit(conn, "apply_migrations")
     files = _discover(directory)
     _ensure_table(conn)
     conn.execute("SELECT pg_advisory_lock(%s)", (_ADVISORY_LOCK_KEY,))
@@ -115,7 +116,7 @@ def main() -> int:
     directory = Path(__file__).resolve().parents[2] / "db" / "migrations"
     print(f"migrating {describe_target()}")
     try:
-        with connect() as conn:
+        with connect(autocommit=True) as conn:
             applied = apply_migrations(conn, directory)
     except (MigrationError, psycopg.OperationalError) as exc:
         print(f"migration failed: {exc}", file=sys.stderr)
