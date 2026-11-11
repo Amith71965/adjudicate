@@ -58,6 +58,24 @@ describe("citation validation", () => {
     expect(problems.map((p) => p.reason)).toEqual(["chunk_not_retrieved", "decision_mismatch", "quote_not_verbatim"]);
   });
   it("matches quotes ignoring whitespace and line breaks", () => {
-    expect(validateCitations([{ chunk_id: 7, decision_id: "NOV212025_01B2203", quote: "otherwise\n  establish the" }], passages)).toEqual([]);
+    expect(validateCitations([{ chunk_id: 7, decision_id: "NOV212025_01B2203", quote: "discuss or otherwise\n  establish the distinguished" }], passages)).toEqual([]);
+  });
+  it("rejects quotes too short to be evidence once whitespace is collapsed", () => {
+    const padded = { chunk_id: 7, decision_id: "NOV212025_01B2203", quote: "the" + " ".repeat(27) };
+    expect(validateCitations([padded], passages).map((p) => p.reason)).toEqual(["quote_too_short"]);
+  });
+  it("treats a change of case as not verbatim", () => {
+    const shouted = { chunk_id: 7, decision_id: "NOV212025_01B2203", quote: "DO NOT SUFFICIENTLY DISCUSS OR OTHERWISE ESTABLISH" };
+    expect(validateCitations([shouted], passages).map((p) => p.reason)).toEqual(["quote_not_verbatim"]);
+  });
+  it("rejects a repeated citation", () => {
+    const c = { chunk_id: 7, decision_id: "NOV212025_01B2203", quote: "do not sufficiently discuss or otherwise establish" };
+    expect(validateCitations([c, { ...c, quote: c.quote + " " }], passages).map((p) => p.reason)).toEqual(["duplicate"]);
+  });
+});
+
+describe("waiver input completeness", () => {
+  it("refuses a mapping that omits a claimed artifact instead of calling it unsupported", () => {
+    expect(() => waiverFindings([{ id: "A01", claimed_criterion: "judging" }], { mappings: [] })).toThrow(/A01/);
   });
 });

@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import { MockLanguageModelV4 } from "ai/test";
 import { examinePetition, examineProng, reviewTasks, type Retriever } from "@/lib/examiner/examiner";
 import { httpRetriever, RetrievalError } from "@/lib/examiner/retriever";
-import { criterionRisk, probAtLeast, rfeRisk } from "@/lib/examiner/risk";
+import { criterionRisk, FACIAL_FAIL_RISK, probAtLeast, rfeRisk } from "@/lib/examiner/risk";
 import { prongsFor } from "@/lib/examiner/prongs";
 import type { PetitionInput } from "@/lib/examiner/mapper";
 
@@ -123,6 +123,37 @@ describe("examinePetition", () => {
   });
 });
 
+describe("examinePetition: incomplete or failing reviews", () => {
+  it("marks the result incomplete and treats an unreviewed prong as failing, not as a coin flip", async () => {
+    const { model } = scripted(review([GOOD]));
+    const empty: Retriever = { search: async (_q, o) => (o.criterion === "judging" ? [] : passages) };
+    const out = await examinePetition(petition, { model, retriever: empty });
+    expect(out.complete).toBe(false);
+    expect(out.unreviewed).toEqual(["judging/whole"]);
+    expect(out.criterion_risk.judging).toBe(1);
+  });
+  it("floors the risk of a prong the evidence does not facially meet", async () => {
+    const lowball = { ...review([GOOD], false), risk: 0.05 };
+    const { model } = scripted(lowball);
+    const out = await examinePetition(petition, { model, retriever: retriever() });
+    expect(out.criterion_risk.judging).toBeCloseTo(FACIAL_FAIL_RISK);
+  });
+  it("stops starting new prongs once one has failed", async () => {
+    let calls = 0;
+    const flaky: Retriever = {
+      search: async () => {
+        calls += 1;
+        if (calls === 1) throw new RetrievalError("search failed: 503");
+        await new Promise((r) => setTimeout(r, 5));
+        return passages;
+      },
+    };
+    const { model } = scripted(review([GOOD]));
+    await expect(examinePetition(petition, { model, retriever: flaky, concurrency: 2 })).rejects.toThrow(/503/);
+    expect(calls).toBe(2);
+  });
+});
+
 describe("httpRetriever", () => {
   const ok = (body: unknown) => new Response(JSON.stringify(body), { status: 200 });
   it("searches with the filters and fetches each hit's full passage", async () => {
@@ -136,6 +167,18 @@ describe("httpRetriever", () => {
     const searchUrl = new URL(fetchFn.mock.calls[0][0]);
     expect(Object.fromEntries(searchUrl.searchParams)).toMatchObject({ q: "reputation", criterion: "leading_role", visa: "EB-1A", k: "6" });
     expect(fetchFn.mock.calls[1][0]).toBe("http://api/passages/7");
+  });
+  it("rejects a non-JSON body and an empty passage, and fetches a repeated hit once", async () => {
+    const notJson = httpRetriever("http://api", (async () => new Response("<html>", { status: 200 })) as unknown as typeof fetch);
+    await expect(notJson.search("q", { criterion: "judging", visa: "EB-1A", k: 6 })).rejects.toThrow(RetrievalError);
+    const hit = { chunk_id: 7, decision_id: "SEP152026_01B2203" };
+    const emptyBody = httpRetriever("http://api", (async (url: string) =>
+      ok(url.includes("/search") ? { results: [hit] } : { ...hit, body: "  " })) as unknown as typeof fetch);
+    await expect(emptyBody.search("q", { criterion: "judging", visa: "EB-1A", k: 6 })).rejects.toThrow(RetrievalError);
+    const fetchFn = vi.fn(async (url: string) => ok(url.includes("/search") ? { results: [hit, hit] } : { ...hit, body: BODY_7 }));
+    const dedup = await httpRetriever("http://api", fetchFn as unknown as typeof fetch).search("q", { criterion: "judging", visa: "EB-1A", k: 6 });
+    expect(dedup).toHaveLength(1);
+    expect(fetchFn).toHaveBeenCalledTimes(2);
   });
   it("fails loudly on a non-OK response", async () => {
     const r = httpRetriever("http://api", (async () => new Response("index incomplete", { status: 503 })) as unknown as typeof fetch);

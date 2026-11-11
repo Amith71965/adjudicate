@@ -1,4 +1,4 @@
-import { mkdtempSync, readdirSync } from "node:fs";
+import { mkdtempSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -54,6 +54,28 @@ describe("cachedModel", () => {
     await generateText({ model: m.model, prompt: "one" });
     await expect(generateText({ model: m.model, prompt: "two", maxRetries: 0 })).rejects.toThrow(CallCapError);
     expect(inner.calls()).toBe(1);
+  });
+
+  it("refetches when a cache entry is corrupt instead of failing every run", async () => {
+    const inner = counting();
+    const d = dir();
+    await generateText({ model: cachedModel(inner.model, { dir: d, version: "v1", maxCalls: 5 }).model, prompt: "p" });
+    for (const f of readdirSync(d)) writeFileSync(path.join(d, f), "{\"content\": [");
+    const again = await generateText({ model: cachedModel(inner.model, { dir: d, version: "v1", maxCalls: 5 }).model, prompt: "p" });
+    expect(again.text).toBe("answer 2");
+    expect(inner.calls()).toBe(2);
+  });
+
+  it("counts calls whose provider reported no usage", async () => {
+    const model = new MockLanguageModelV4({
+      doGenerate: async () => ({
+        content: [{ type: "text", text: "x" }], finishReason: { unified: "stop", raw: undefined }, warnings: [],
+        usage: { inputTokens: { total: undefined, noCache: undefined, cacheRead: undefined, cacheWrite: undefined }, outputTokens: { total: undefined, text: undefined, reasoning: undefined } },
+      }),
+    });
+    const m = cachedModel(model, { dir: dir(), version: "v1", maxCalls: 5 });
+    await generateText({ model: m.model, prompt: "p" });
+    expect(m.stats.unknownUsageCalls).toBe(1);
   });
 
   it("does not cache a truncated response", async () => {
@@ -128,5 +150,21 @@ describe("scoreExaminer", () => {
 
   it("fails the gate below the objection floor", () => {
     expect(scoreExaminer([baseCase(goodReviews())], DB, { minObjections: 100 }).gate.passed).toBe(false);
+  });
+  it("never passes vacuously: no planted cases, or a planted half naming no prong", () => {
+    const none = { ...baseCase(goodReviews()), planted_halves: [], planted_unclaimed: [] };
+    const s1 = scoreExaminer([none], DB, { minObjections: 4 });
+    expect(s1.gate.failures.join(" ")).toMatch(/no planted mode-B/);
+    const blank = baseCase(goodReviews());
+    blank.planted_halves = [{ artifact_id: "A01", criterion: "leading_role", missing_prongs: [] }];
+    expect(scoreExaminer([blank], DB, { minObjections: 4 }).mode_b.caught).toBe(0);
+  });
+
+  it("fails the gate when too many prongs were dropped unreviewed", () => {
+    const c = baseCase(goodReviews());
+    c.result.dropped = [{ status: "dropped", criterion: "judging", prong: "whole", artifact_ids: ["A02"], attempts: 2,
+      retrieved_chunk_ids: [7], reason: "invalid_citations", problems: [] }];
+    const s = scoreExaminer([c], DB, { minObjections: 4, maxDroppedRatio: 0.05 });
+    expect(s.gate.failures.join(" ")).toMatch(/dropped/);
   });
 });
