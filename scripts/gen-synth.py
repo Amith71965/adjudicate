@@ -10,6 +10,9 @@ OUT = Path(__file__).resolve().parents[1] / "eval" / "synthetic"
 SETS = {
     "phase4_petitions.json": [c.to_json() for c in generate_set(n=20, seed=20261111)],
     "phase5_petitions.json": [c.to_json() for c in generate_examiner_set(n=16, seed=20261112)],
+    "phase5_heldout_petitions.json": [
+        c.to_json() for c in generate_examiner_set(n=16, seed=20261113, heldout=True)
+    ],
 }
 for name, cases in SETS.items():
     (OUT / name).write_text(json.dumps(cases, indent=2) + "\n")

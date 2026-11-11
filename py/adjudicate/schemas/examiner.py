@@ -17,9 +17,10 @@ class Citation(BaseModel):
 
 
 class ProngReview(BaseModel):
-    # Does the filed evidence, taken at face value, speak to this prong at all? (a gap is
-    # mode B). Weight, corroboration and sufficiency belong in risk and the objection.
-    addressed: bool
+    # Taking the inventory at face value, does the evidence meet this prong? False when it is
+    # silent on the prong or what it shows fails it (mode B). Doubts about genuineness,
+    # corroboration or weight belong in risk and the objection.
+    facially_met: bool
     risk: float = Field(ge=0, le=1)  # likelihood an officer raises it in an RFE
     objection: str = Field(min_length=20, max_length=1200)  # strongest RFE-style objection
     citations: list[Citation] = Field(min_length=1, max_length=3)

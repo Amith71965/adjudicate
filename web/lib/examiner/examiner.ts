@@ -33,13 +33,14 @@ const CRITERION_TEXT: Record<string, string> = {
 
 export const EXAMINER_SYSTEM = `You are a skeptical USCIS officer adjudicating an EB-1A petition under
 8 C.F.R. § 204.5(h)(3). You examine ONE prong of ONE criterion at a time.
-1. addressed: taking each evidence description at face value (assume the documents say what the
-   inventory says they say), is any filed evidence directed at THIS prong? If the evidence is
-   silent on the prong, addressed is false. Doubts about weight, corroboration or sufficiency do
-   not make it false: they go into risk and the objection.
+1. facially_met: taking each evidence description at face value (assume the documents are genuine
+   and say what the inventory says), does the evidence meet THIS prong? It is false when the
+   evidence is silent on the prong, or when what it shows fails the prong (for example, a
+   passing mention is not material about the beneficiary). Doubts about genuineness,
+   corroboration or weight do not make it false: they go into risk and the objection.
 2. Write the strongest objection an officer could raise on this prong in a Request for Evidence
-   (if addressed, the weaknesses in weight or corroboration), addressed to the specific evidence
-   and grounded in the AAO reasoning provided.
+   (if facially met, the weaknesses in weight or corroboration), addressed to the specific
+   evidence and grounded in the AAO reasoning provided.
 3. risk: the likelihood (0-1) that this prong draws an RFE or a denial.
 4. Cite 1-3 of the AAO passages provided: chunk_id and decision_id exactly as given, and a quote
    of 30-300 characters copied character for character from that passage. Cite nothing else.`;

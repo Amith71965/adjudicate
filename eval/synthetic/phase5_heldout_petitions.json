@@ -1,0 +1,1546 @@
+[
+  {
+    "petition": {
+      "id": "P01",
+      "visa": "EB-1A",
+      "field": "renewable energy engineering",
+      "beneficiary": "Dr. Sable Wintermere",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on offshore wind controllers in peer-reviewed renewable energy engineering journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A02",
+          "kind": "letter",
+          "title": "Fellowship of the Academy of renewable energy engineering",
+          "description": "Bylaws require outstanding achievement judged by recognized national experts; letter confirms the beneficiary's election as a fellow.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A03",
+          "kind": "certificate",
+          "title": "National renewable energy engineering Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on offshore wind controllers.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A04",
+          "kind": "record",
+          "title": "Conference press release listing speakers on offshore wind controllers",
+          "description": "A trade conference press release, carried by a major industry news wire, naming the beneficiary among twenty speakers.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A05",
+          "kind": "certificate",
+          "title": "Online course completion certificate",
+          "description": "Certificate of completion of a self-paced introductory course.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A06",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on offshore wind controllers for a journal in renewable energy engineering, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A07",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for renewable energy engineering.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A08",
+          "kind": "letter",
+          "title": "Independent expert letter on offshore wind controllers",
+          "description": "An unaffiliated expert explains how the beneficiary's method for offshore wind controllers was adopted across the field and changed practice.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A09",
+          "kind": "contract",
+          "title": "Offer letter and organization chart from a newly incorporated consultancy",
+          "description": "Shows the beneficiary as director of the consultancy's offshore wind controllers practice, reporting to the managing partner, with a budget they control.",
+          "claimed_criterion": "leading_role"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "scholarly_articles",
+      "A02": "membership",
+      "A03": "awards",
+      "A04": "published_material",
+      "A05": null,
+      "A06": "judging",
+      "A07": "high_salary",
+      "A08": "original_contributions",
+      "A09": "leading_role"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A04",
+        "criterion": "published_material",
+        "missing_prongs": [
+          "about"
+        ]
+      },
+      {
+        "artifact_id": "A09",
+        "criterion": "leading_role",
+        "missing_prongs": [
+          "reputation"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A03",
+        "criterion": "awards"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P02",
+      "visa": "EB-1A",
+      "field": "renewable energy engineering",
+      "beneficiary": "Dr. Juniper Ashgrove",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "certificate",
+          "title": "Online course completion certificate",
+          "description": "Certificate of completion of a self-paced introductory course.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A02",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on offshore wind controllers in peer-reviewed renewable energy engineering journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A03",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for renewable energy engineering.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A04",
+          "kind": "letter",
+          "title": "Independent expert letter on offshore wind controllers",
+          "description": "An unaffiliated expert explains how the beneficiary's method for offshore wind controllers was adopted across the field and changed practice.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A05",
+          "kind": "certificate",
+          "title": "National renewable energy engineering Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on offshore wind controllers.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A06",
+          "kind": "letter",
+          "title": "Letter from the CEO of Northsea Grid Consortium",
+          "description": "Describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A07",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on offshore wind controllers for a journal in renewable energy engineering, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A08",
+          "kind": "record",
+          "title": "Conference press release listing speakers on offshore wind controllers",
+          "description": "A trade conference press release, carried by a major industry news wire, naming the beneficiary among twenty speakers.",
+          "claimed_criterion": "published_material"
+        }
+      ]
+    },
+    "truth": {
+      "A01": null,
+      "A02": "scholarly_articles",
+      "A03": "high_salary",
+      "A04": "original_contributions",
+      "A05": "awards",
+      "A06": "leading_role",
+      "A07": "judging",
+      "A08": "published_material"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A08",
+        "criterion": "published_material",
+        "missing_prongs": [
+          "about"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A03",
+        "criterion": "high_salary"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P03",
+      "visa": "EB-1A",
+      "field": "computational biology",
+      "beneficiary": "Ellis Marrowfield",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "letter",
+          "title": "Letter of admission to the computational biology Guild",
+          "description": "Admission requires a doctorate and five years of distinguished practice; the guild's membership coordinator confirms the beneficiary met these requirements.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A02",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for computational biology.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A03",
+          "kind": "letter",
+          "title": "Letter from the CEO of Institute for Molecular Simulation",
+          "description": "Describes the beneficiary as head of the protein-folding models division of Institute for Molecular Simulation, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A04",
+          "kind": "record",
+          "title": "Conference press release listing speakers on protein-folding models",
+          "description": "A trade conference press release, carried by a major industry news wire, naming the beneficiary among twenty speakers.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A05",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on protein-folding models for a journal in computational biology, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A06",
+          "kind": "letter",
+          "title": "Independent expert letter on protein-folding models",
+          "description": "An unaffiliated expert explains how the beneficiary's method for protein-folding models was adopted across the field and changed practice.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A07",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on protein-folding models in peer-reviewed computational biology journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A08",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A09",
+          "kind": "certificate",
+          "title": "National computational biology Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on protein-folding models.",
+          "claimed_criterion": "awards"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "membership",
+      "A02": "high_salary",
+      "A03": "leading_role",
+      "A04": "published_material",
+      "A05": "judging",
+      "A06": "original_contributions",
+      "A07": "scholarly_articles",
+      "A08": null,
+      "A09": "awards"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A01",
+        "criterion": "membership",
+        "missing_prongs": [
+          "judged"
+        ]
+      },
+      {
+        "artifact_id": "A04",
+        "criterion": "published_material",
+        "missing_prongs": [
+          "about"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A06",
+        "criterion": "original_contributions"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P04",
+      "visa": "EB-1A",
+      "field": "fintech product design",
+      "beneficiary": "Ellis Marrowfield",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "article",
+          "title": "Profile in a national trade magazine",
+          "description": "A feature article written by a staff journalist about the beneficiary and their work on real-time fraud scoring, with circulation data.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A02",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on real-time fraud scoring in peer-reviewed fintech product design journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A03",
+          "kind": "letter",
+          "title": "Fellowship of the Academy of fintech product design",
+          "description": "Bylaws require outstanding achievement judged by recognized national experts; letter confirms the beneficiary's election as a fellow.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A04",
+          "kind": "letter",
+          "title": "Letter from the CEO of Ledgerline Payments",
+          "description": "Describes the beneficiary as head of the real-time fraud scoring division of Ledgerline Payments, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A05",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on real-time fraud scoring for a journal in fintech product design, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A06",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for fintech product design.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A07",
+          "kind": "record",
+          "title": "Employer recognition memo for a real-time fraud scoring technique",
+          "description": "A memo from the beneficiary's employer recognizing them for devising a new real-time fraud scoring technique now used by the employer's own engineering team.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A08",
+          "kind": "certificate",
+          "title": "National fintech product design Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on real-time fraud scoring.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A09",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        }
+      ]
+    },
+    "truth": {
+      "A01": "published_material",
+      "A02": "scholarly_articles",
+      "A03": "membership",
+      "A04": "leading_role",
+      "A05": "judging",
+      "A06": "high_salary",
+      "A07": "original_contributions",
+      "A08": "awards",
+      "A09": null
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A07",
+        "criterion": "original_contributions",
+        "missing_prongs": [
+          "significance"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A01",
+        "criterion": "published_material"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P05",
+      "visa": "EB-1A",
+      "field": "structural engineering",
+      "beneficiary": "Indigo Brackenridge",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on seismic retrofit systems for a journal in structural engineering, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A02",
+          "kind": "letter",
+          "title": "Independent expert letter on seismic retrofit systems",
+          "description": "An unaffiliated expert explains how the beneficiary's method for seismic retrofit systems was adopted across the field and changed practice.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A03",
+          "kind": "certificate",
+          "title": "National structural engineering Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on seismic retrofit systems.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A04",
+          "kind": "article",
+          "title": "Profile in a national trade magazine",
+          "description": "A feature article written by a staff journalist about the beneficiary and their work on seismic retrofit systems, with circulation data.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A05",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A06",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on seismic retrofit systems in peer-reviewed structural engineering journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A07",
+          "kind": "contract",
+          "title": "Offer letter and organization chart from a newly incorporated consultancy",
+          "description": "Shows the beneficiary as director of the consultancy's seismic retrofit systems practice, reporting to the managing partner, with a budget they control.",
+          "claimed_criterion": "leading_role"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "judging",
+      "A02": "original_contributions",
+      "A03": "awards",
+      "A04": "published_material",
+      "A05": null,
+      "A06": "scholarly_articles",
+      "A07": "leading_role"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A07",
+        "criterion": "leading_role",
+        "missing_prongs": [
+          "reputation"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A02",
+        "criterion": "original_contributions"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P06",
+      "visa": "EB-1A",
+      "field": "fintech product design",
+      "beneficiary": "Dr. Lark Fennimore",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on real-time fraud scoring for a journal in fintech product design, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A02",
+          "kind": "certificate",
+          "title": "Online course completion certificate",
+          "description": "Certificate of completion of a self-paced introductory course.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A03",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on real-time fraud scoring in peer-reviewed fintech product design journals.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A04",
+          "kind": "letter",
+          "title": "Fellowship of the Academy of fintech product design",
+          "description": "Bylaws require outstanding achievement judged by recognized national experts; letter confirms the beneficiary's election as a fellow.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A05",
+          "kind": "letter",
+          "title": "Independent expert letter on real-time fraud scoring",
+          "description": "An unaffiliated expert explains how the beneficiary's method for real-time fraud scoring was adopted across the field and changed practice.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A06",
+          "kind": "record",
+          "title": "Conference press release listing speakers on real-time fraud scoring",
+          "description": "A trade conference press release, carried by a major industry news wire, naming the beneficiary among twenty speakers.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A07",
+          "kind": "certificate",
+          "title": "National fintech product design Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on real-time fraud scoring.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A08",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for fintech product design.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A09",
+          "kind": "letter",
+          "title": "Letter from the CEO of Ledgerline Payments",
+          "description": "Describes the beneficiary as head of the real-time fraud scoring division of Ledgerline Payments, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "judging",
+      "A02": null,
+      "A03": "scholarly_articles",
+      "A04": "membership",
+      "A05": "original_contributions",
+      "A06": "published_material",
+      "A07": "awards",
+      "A08": "high_salary",
+      "A09": "leading_role"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A06",
+        "criterion": "published_material",
+        "missing_prongs": [
+          "about"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A03",
+        "criterion": "scholarly_articles"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P07",
+      "visa": "EB-1A",
+      "field": "computational biology",
+      "beneficiary": "Rowan Thistlewood",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for computational biology.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A02",
+          "kind": "letter",
+          "title": "Letter of admission to the computational biology Guild",
+          "description": "Admission requires a doctorate and five years of distinguished practice; the guild's membership coordinator confirms the beneficiary met these requirements.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A03",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on protein-folding models in peer-reviewed computational biology journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A04",
+          "kind": "article",
+          "title": "Profile in a national trade magazine",
+          "description": "A feature article written by a staff journalist about the beneficiary and their work on protein-folding models, with circulation data.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A05",
+          "kind": "letter",
+          "title": "Independent expert letter on protein-folding models",
+          "description": "An unaffiliated expert explains how the beneficiary's method for protein-folding models was adopted across the field and changed practice.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A06",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A07",
+          "kind": "certificate",
+          "title": "National computational biology Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on protein-folding models.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A08",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on protein-folding models for a journal in computational biology, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A09",
+          "kind": "contract",
+          "title": "Offer letter and organization chart from a newly incorporated consultancy",
+          "description": "Shows the beneficiary as director of the consultancy's protein-folding models practice, reporting to the managing partner, with a budget they control.",
+          "claimed_criterion": "leading_role"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "high_salary",
+      "A02": "membership",
+      "A03": "scholarly_articles",
+      "A04": "published_material",
+      "A05": "original_contributions",
+      "A06": null,
+      "A07": "awards",
+      "A08": "judging",
+      "A09": "leading_role"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A02",
+        "criterion": "membership",
+        "missing_prongs": [
+          "judged"
+        ]
+      },
+      {
+        "artifact_id": "A09",
+        "criterion": "leading_role",
+        "missing_prongs": [
+          "reputation"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A05",
+        "criterion": "original_contributions"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P08",
+      "visa": "EB-1A",
+      "field": "fintech product design",
+      "beneficiary": "Indigo Brackenridge",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on real-time fraud scoring in peer-reviewed fintech product design journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A02",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A03",
+          "kind": "letter",
+          "title": "Fellowship of the Academy of fintech product design",
+          "description": "Bylaws require outstanding achievement judged by recognized national experts; letter confirms the beneficiary's election as a fellow.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A04",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on real-time fraud scoring for a journal in fintech product design, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A05",
+          "kind": "record",
+          "title": "Employer recognition memo for a real-time fraud scoring technique",
+          "description": "A memo from the beneficiary's employer recognizing them for devising a new real-time fraud scoring technique now used by the employer's own engineering team.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A06",
+          "kind": "certificate",
+          "title": "National fintech product design Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on real-time fraud scoring.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A07",
+          "kind": "letter",
+          "title": "Letter from the CEO of Ledgerline Payments",
+          "description": "Describes the beneficiary as head of the real-time fraud scoring division of Ledgerline Payments, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A08",
+          "kind": "article",
+          "title": "Profile in a national trade magazine",
+          "description": "A feature article written by a staff journalist about the beneficiary and their work on real-time fraud scoring, with circulation data.",
+          "claimed_criterion": "published_material"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "scholarly_articles",
+      "A02": null,
+      "A03": "membership",
+      "A04": "judging",
+      "A05": "original_contributions",
+      "A06": "awards",
+      "A07": "leading_role",
+      "A08": "published_material"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A05",
+        "criterion": "original_contributions",
+        "missing_prongs": [
+          "significance"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A03",
+        "criterion": "membership"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P09",
+      "visa": "EB-1A",
+      "field": "renewable energy engineering",
+      "beneficiary": "Indigo Brackenridge",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for renewable energy engineering.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A02",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on offshore wind controllers for a journal in renewable energy engineering, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A03",
+          "kind": "letter",
+          "title": "Independent expert letter on offshore wind controllers",
+          "description": "An unaffiliated expert explains how the beneficiary's method for offshore wind controllers was adopted across the field and changed practice.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A04",
+          "kind": "certificate",
+          "title": "Online course completion certificate",
+          "description": "Certificate of completion of a self-paced introductory course.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A05",
+          "kind": "letter",
+          "title": "Letter of admission to the renewable energy engineering Guild",
+          "description": "Admission requires a doctorate and five years of distinguished practice; the guild's membership coordinator confirms the beneficiary met these requirements.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A06",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on offshore wind controllers in peer-reviewed renewable energy engineering journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A07",
+          "kind": "contract",
+          "title": "Offer letter and organization chart from a newly incorporated consultancy",
+          "description": "Shows the beneficiary as director of the consultancy's offshore wind controllers practice, reporting to the managing partner, with a budget they control.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A08",
+          "kind": "article",
+          "title": "Profile in a national trade magazine",
+          "description": "A feature article written by a staff journalist about the beneficiary and their work on offshore wind controllers, with circulation data.",
+          "claimed_criterion": null
+        }
+      ]
+    },
+    "truth": {
+      "A01": "high_salary",
+      "A02": "judging",
+      "A03": "original_contributions",
+      "A04": null,
+      "A05": "membership",
+      "A06": "scholarly_articles",
+      "A07": "leading_role",
+      "A08": "published_material"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A05",
+        "criterion": "membership",
+        "missing_prongs": [
+          "judged"
+        ]
+      },
+      {
+        "artifact_id": "A07",
+        "criterion": "leading_role",
+        "missing_prongs": [
+          "reputation"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A08",
+        "criterion": "published_material"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P10",
+      "visa": "EB-1A",
+      "field": "fintech product design",
+      "beneficiary": "Dr. Sable Wintermere",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A02",
+          "kind": "letter",
+          "title": "Independent expert letter on real-time fraud scoring",
+          "description": "An unaffiliated expert explains how the beneficiary's method for real-time fraud scoring was adopted across the field and changed practice.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A03",
+          "kind": "certificate",
+          "title": "National fintech product design Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on real-time fraud scoring.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A04",
+          "kind": "record",
+          "title": "Conference press release listing speakers on real-time fraud scoring",
+          "description": "A trade conference press release, carried by a major industry news wire, naming the beneficiary among twenty speakers.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A05",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on real-time fraud scoring in peer-reviewed fintech product design journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A06",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for fintech product design.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A07",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on real-time fraud scoring for a journal in fintech product design, with confirmations that the reviews were completed.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A08",
+          "kind": "letter",
+          "title": "Letter from the CEO of Ledgerline Payments",
+          "description": "Describes the beneficiary as head of the real-time fraud scoring division of Ledgerline Payments, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        }
+      ]
+    },
+    "truth": {
+      "A01": null,
+      "A02": "original_contributions",
+      "A03": "awards",
+      "A04": "published_material",
+      "A05": "scholarly_articles",
+      "A06": "high_salary",
+      "A07": "judging",
+      "A08": "leading_role"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A04",
+        "criterion": "published_material",
+        "missing_prongs": [
+          "about"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A07",
+        "criterion": "judging"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P11",
+      "visa": "EB-1A",
+      "field": "renewable energy engineering",
+      "beneficiary": "Indigo Brackenridge",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on offshore wind controllers in peer-reviewed renewable energy engineering journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A02",
+          "kind": "letter",
+          "title": "Independent expert letter on offshore wind controllers",
+          "description": "An unaffiliated expert explains how the beneficiary's method for offshore wind controllers was adopted across the field and changed practice.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A03",
+          "kind": "letter",
+          "title": "Letter from the CEO of Northsea Grid Consortium",
+          "description": "Describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A04",
+          "kind": "record",
+          "title": "Conference press release listing speakers on offshore wind controllers",
+          "description": "A trade conference press release, carried by a major industry news wire, naming the beneficiary among twenty speakers.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A05",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for renewable energy engineering.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A06",
+          "kind": "certificate",
+          "title": "National renewable energy engineering Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on offshore wind controllers.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A07",
+          "kind": "letter",
+          "title": "Letter of admission to the renewable energy engineering Guild",
+          "description": "Admission requires a doctorate and five years of distinguished practice; the guild's membership coordinator confirms the beneficiary met these requirements.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A08",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        }
+      ]
+    },
+    "truth": {
+      "A01": "scholarly_articles",
+      "A02": "original_contributions",
+      "A03": "leading_role",
+      "A04": "published_material",
+      "A05": "high_salary",
+      "A06": "awards",
+      "A07": "membership",
+      "A08": null
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A04",
+        "criterion": "published_material",
+        "missing_prongs": [
+          "about"
+        ]
+      },
+      {
+        "artifact_id": "A07",
+        "criterion": "membership",
+        "missing_prongs": [
+          "judged"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A05",
+        "criterion": "high_salary"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P12",
+      "visa": "EB-1A",
+      "field": "structural engineering",
+      "beneficiary": "Dr. Juniper Ashgrove",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "certificate",
+          "title": "National structural engineering Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on seismic retrofit systems.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A02",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on seismic retrofit systems for a journal in structural engineering, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A03",
+          "kind": "letter",
+          "title": "Letter from the CEO of Meridian Bridge Authority",
+          "description": "Describes the beneficiary as head of the seismic retrofit systems division of Meridian Bridge Authority, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A04",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A05",
+          "kind": "record",
+          "title": "Employer recognition memo for a seismic retrofit systems technique",
+          "description": "A memo from the beneficiary's employer recognizing them for devising a new seismic retrofit systems technique now used by the employer's own engineering team.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A06",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for structural engineering.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A07",
+          "kind": "article",
+          "title": "Profile in a national trade magazine",
+          "description": "A feature article written by a staff journalist about the beneficiary and their work on seismic retrofit systems, with circulation data.",
+          "claimed_criterion": null
+        }
+      ]
+    },
+    "truth": {
+      "A01": "awards",
+      "A02": "judging",
+      "A03": "leading_role",
+      "A04": null,
+      "A05": "original_contributions",
+      "A06": "high_salary",
+      "A07": "published_material"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A05",
+        "criterion": "original_contributions",
+        "missing_prongs": [
+          "significance"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A07",
+        "criterion": "published_material"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P13",
+      "visa": "EB-1A",
+      "field": "fintech product design",
+      "beneficiary": "Dr. Avery Quillfeather",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "contract",
+          "title": "Offer letter and organization chart from a newly incorporated consultancy",
+          "description": "Shows the beneficiary as director of the consultancy's real-time fraud scoring practice, reporting to the managing partner, with a budget they control.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A02",
+          "kind": "article",
+          "title": "Profile in a national trade magazine",
+          "description": "A feature article written by a staff journalist about the beneficiary and their work on real-time fraud scoring, with circulation data.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A03",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on real-time fraud scoring for a journal in fintech product design, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A04",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on real-time fraud scoring in peer-reviewed fintech product design journals.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A05",
+          "kind": "letter",
+          "title": "Fellowship of the Academy of fintech product design",
+          "description": "Bylaws require outstanding achievement judged by recognized national experts; letter confirms the beneficiary's election as a fellow.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A06",
+          "kind": "record",
+          "title": "Employer recognition memo for a real-time fraud scoring technique",
+          "description": "A memo from the beneficiary's employer recognizing them for devising a new real-time fraud scoring technique now used by the employer's own engineering team.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A07",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for fintech product design.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A08",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A09",
+          "kind": "certificate",
+          "title": "National fintech product design Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on real-time fraud scoring.",
+          "claimed_criterion": "awards"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "leading_role",
+      "A02": "published_material",
+      "A03": "judging",
+      "A04": "scholarly_articles",
+      "A05": "membership",
+      "A06": "original_contributions",
+      "A07": "high_salary",
+      "A08": null,
+      "A09": "awards"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A01",
+        "criterion": "leading_role",
+        "missing_prongs": [
+          "reputation"
+        ]
+      },
+      {
+        "artifact_id": "A06",
+        "criterion": "original_contributions",
+        "missing_prongs": [
+          "significance"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A04",
+        "criterion": "scholarly_articles"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P14",
+      "visa": "EB-1A",
+      "field": "renewable energy engineering",
+      "beneficiary": "Dr. Sable Wintermere",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "letter",
+          "title": "Employment verification letter",
+          "description": "HR letter confirming job title and dates of employment, nothing more.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A02",
+          "kind": "certificate",
+          "title": "National renewable energy engineering Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on offshore wind controllers.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A03",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for renewable energy engineering.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A04",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on offshore wind controllers in peer-reviewed renewable energy engineering journals.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A05",
+          "kind": "record",
+          "title": "Conference press release listing speakers on offshore wind controllers",
+          "description": "A trade conference press release, carried by a major industry news wire, naming the beneficiary among twenty speakers.",
+          "claimed_criterion": "published_material"
+        },
+        {
+          "id": "A06",
+          "kind": "letter",
+          "title": "Fellowship of the Academy of renewable energy engineering",
+          "description": "Bylaws require outstanding achievement judged by recognized national experts; letter confirms the beneficiary's election as a fellow.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A07",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on offshore wind controllers for a journal in renewable energy engineering, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A08",
+          "kind": "letter",
+          "title": "Letter from the CEO of Northsea Grid Consortium",
+          "description": "Describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A09",
+          "kind": "letter",
+          "title": "Independent expert letter on offshore wind controllers",
+          "description": "An unaffiliated expert explains how the beneficiary's method for offshore wind controllers was adopted across the field and changed practice.",
+          "claimed_criterion": "original_contributions"
+        }
+      ]
+    },
+    "truth": {
+      "A01": null,
+      "A02": "awards",
+      "A03": "high_salary",
+      "A04": "scholarly_articles",
+      "A05": "published_material",
+      "A06": "membership",
+      "A07": "judging",
+      "A08": "leading_role",
+      "A09": "original_contributions"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A05",
+        "criterion": "published_material",
+        "missing_prongs": [
+          "about"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A04",
+        "criterion": "scholarly_articles"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P15",
+      "visa": "EB-1A",
+      "field": "renewable energy engineering",
+      "beneficiary": "Rowan Thistlewood",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "record",
+          "title": "Employer recognition memo for a offshore wind controllers technique",
+          "description": "A memo from the beneficiary's employer recognizing them for devising a new offshore wind controllers technique now used by the employer's own engineering team.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A02",
+          "kind": "record",
+          "title": "Peer-review invitations and completion records",
+          "description": "Editor emails inviting the beneficiary to review manuscripts on offshore wind controllers for a journal in renewable energy engineering, with confirmations that the reviews were completed.",
+          "claimed_criterion": "judging"
+        },
+        {
+          "id": "A03",
+          "kind": "letter",
+          "title": "Letter from the CEO of Northsea Grid Consortium",
+          "description": "Describes the beneficiary as head of the offshore wind controllers division of Northsea Grid Consortium, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A04",
+          "kind": "letter",
+          "title": "Letter of admission to the renewable energy engineering Guild",
+          "description": "Admission requires a doctorate and five years of distinguished practice; the guild's membership coordinator confirms the beneficiary met these requirements.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A05",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for renewable energy engineering.",
+          "claimed_criterion": "high_salary"
+        },
+        {
+          "id": "A06",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on offshore wind controllers in peer-reviewed renewable energy engineering journals.",
+          "claimed_criterion": "scholarly_articles"
+        },
+        {
+          "id": "A07",
+          "kind": "certificate",
+          "title": "Online course completion certificate",
+          "description": "Certificate of completion of a self-paced introductory course.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A08",
+          "kind": "certificate",
+          "title": "National renewable energy engineering Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on offshore wind controllers.",
+          "claimed_criterion": "awards"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "original_contributions",
+      "A02": "judging",
+      "A03": "leading_role",
+      "A04": "membership",
+      "A05": "high_salary",
+      "A06": "scholarly_articles",
+      "A07": null,
+      "A08": "awards"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A01",
+        "criterion": "original_contributions",
+        "missing_prongs": [
+          "significance"
+        ]
+      },
+      {
+        "artifact_id": "A04",
+        "criterion": "membership",
+        "missing_prongs": [
+          "judged"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A03",
+        "criterion": "leading_role"
+      }
+    ]
+  },
+  {
+    "petition": {
+      "id": "P16",
+      "visa": "EB-1A",
+      "field": "fintech product design",
+      "beneficiary": "Dr. Avery Quillfeather",
+      "artifacts": [
+        {
+          "id": "A01",
+          "kind": "letter",
+          "title": "Letter from the CEO of Ledgerline Payments",
+          "description": "Describes the beneficiary as head of the real-time fraud scoring division of Ledgerline Payments, an organization with documented national reputation, and their decisions.",
+          "claimed_criterion": "leading_role"
+        },
+        {
+          "id": "A02",
+          "kind": "certificate",
+          "title": "National fintech product design Excellence Prize",
+          "description": "Certificate and press release: the beneficiary received a national prize, selected by an independent jury from open nominations, for work on real-time fraud scoring.",
+          "claimed_criterion": "awards"
+        },
+        {
+          "id": "A03",
+          "kind": "certificate",
+          "title": "Online course completion certificate",
+          "description": "Certificate of completion of a self-paced introductory course.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A04",
+          "kind": "publication",
+          "title": "Peer-reviewed journal articles",
+          "description": "Three articles authored by the beneficiary on real-time fraud scoring in peer-reviewed fintech product design journals.",
+          "claimed_criterion": null
+        },
+        {
+          "id": "A05",
+          "kind": "record",
+          "title": "Employer recognition memo for a real-time fraud scoring technique",
+          "description": "A memo from the beneficiary's employer recognizing them for devising a new real-time fraud scoring technique now used by the employer's own engineering team.",
+          "claimed_criterion": "original_contributions"
+        },
+        {
+          "id": "A06",
+          "kind": "letter",
+          "title": "Letter of admission to the fintech product design Guild",
+          "description": "Admission requires a doctorate and five years of distinguished practice; the guild's membership coordinator confirms the beneficiary met these requirements.",
+          "claimed_criterion": "membership"
+        },
+        {
+          "id": "A07",
+          "kind": "contract",
+          "title": "Compensation statement with survey data",
+          "description": "Pay statement for the beneficiary alongside an industry salary survey placing it above the 95th percentile for fintech product design.",
+          "claimed_criterion": "high_salary"
+        }
+      ]
+    },
+    "truth": {
+      "A01": "leading_role",
+      "A02": "awards",
+      "A03": null,
+      "A04": "scholarly_articles",
+      "A05": "original_contributions",
+      "A06": "membership",
+      "A07": "high_salary"
+    },
+    "planted_halves": [
+      {
+        "artifact_id": "A05",
+        "criterion": "original_contributions",
+        "missing_prongs": [
+          "significance"
+        ]
+      },
+      {
+        "artifact_id": "A06",
+        "criterion": "membership",
+        "missing_prongs": [
+          "judged"
+        ]
+      }
+    ],
+    "planted_unclaimed": [
+      {
+        "artifact_id": "A04",
+        "criterion": "scholarly_articles"
+      }
+    ]
+  }
+]

@@ -30,10 +30,6 @@
     }
   },
   "properties": {
-    "addressed": {
-      "title": "Addressed",
-      "type": "boolean"
-    },
     "citations": {
       "items": {
         "$ref": "#/$defs/Citation"
@@ -42,6 +38,10 @@
       "minItems": 1,
       "title": "Citations",
       "type": "array"
+    },
+    "facially_met": {
+      "title": "Facially Met",
+      "type": "boolean"
     },
     "objection": {
       "maxLength": 1200,
@@ -57,7 +57,7 @@
     }
   },
   "required": [
-    "addressed",
+    "facially_met",
     "risk",
     "objection",
     "citations"

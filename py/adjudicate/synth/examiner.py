@@ -63,6 +63,39 @@ HALVES: dict[Criterion, tuple[EvidenceKind, str, str, tuple[str, ...]]] = {
     ),
 }
 
+# Held-out wordings: same missing prongs, phrasing the dev set never uses. Scored once, after
+# the examiner prompt is frozen on the dev set, to check the prompt was not tuned to phrasing.
+HALVES_HELDOUT: dict[Criterion, tuple[EvidenceKind, str, str, tuple[str, ...]]] = {
+    C.LEADING_ROLE: (
+        EvidenceKind.CONTRACT,
+        "Offer letter and organization chart from a newly incorporated consultancy",
+        "Shows the beneficiary as director of the consultancy's {t} practice, reporting to the "
+        "managing partner, with a budget they control.",
+        ("reputation",),
+    ),
+    C.MEMBERSHIP: (
+        EvidenceKind.LETTER,
+        "Letter of admission to the {f} Guild",
+        "Admission requires a doctorate and five years of distinguished practice; the guild's "
+        "membership coordinator confirms the beneficiary met these requirements.",
+        ("judged",),
+    ),
+    C.PUBLISHED_MATERIAL: (
+        EvidenceKind.RECORD,
+        "Conference press release listing speakers on {t}",
+        "A trade conference press release, carried by a major industry news wire, naming the "
+        "beneficiary among twenty speakers.",
+        ("about",),
+    ),
+    C.ORIGINAL_CONTRIBUTIONS: (
+        EvidenceKind.RECORD,
+        "Employer recognition memo for a {t} technique",
+        "A memo from the beneficiary's employer recognizing them for devising a new {t} "
+        "technique now used by the employer's own engineering team.",
+        ("significance",),
+    ),
+}
+
 
 @dataclass(frozen=True, slots=True)
 class PlantedHalf:
@@ -103,7 +136,11 @@ class ExaminerCase:
         }
 
 
-def _case(index: int, rng: random.Random) -> ExaminerCase:
+def _case(
+    index: int,
+    rng: random.Random,
+    halves_text: dict[Criterion, tuple[EvidenceKind, str, str, tuple[str, ...]]],
+) -> ExaminerCase:
     field, topic, org = rng.choice(FIELDS)
     forced_half = TWO_PART[index % len(TWO_PART)]  # every half kind is covered across the set
     allowed = [c for c in Criterion if field in ARTS_FIELDS or c not in ARTS_ONLY]
@@ -128,7 +165,7 @@ def _case(index: int, rng: random.Random) -> ExaminerCase:
     for i, (crit, claim, half) in enumerate(plan):
         aid = f"A{i + 1:02d}"
         if half and crit is not None:
-            kind, title, desc, missing = HALVES[crit]
+            kind, title, desc, missing = halves_text[crit]
             planted_halves.append(PlantedHalf(aid, crit, missing))
         else:
             kind, title, desc = rng.choice(TEMPLATES[crit])
@@ -154,6 +191,7 @@ def _case(index: int, rng: random.Random) -> ExaminerCase:
     return ExaminerCase(petition, truth, tuple(planted_halves), tuple(planted_unclaimed))
 
 
-def generate_examiner_set(*, n: int, seed: int) -> list[ExaminerCase]:
+def generate_examiner_set(*, n: int, seed: int, heldout: bool = False) -> list[ExaminerCase]:
     rng = random.Random(seed)  # noqa: S311 — reproducible synthetic data, not security
-    return [_case(i, rng) for i in range(n)]
+    text = HALVES_HELDOUT if heldout else HALVES
+    return [_case(i, rng, text) for i in range(n)]

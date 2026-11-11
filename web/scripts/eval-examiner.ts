@@ -1,7 +1,8 @@
 /**
  * Phase-5 exit gate: the adversarial examiner over the 16 seeded synthetic petitions.
- * usage: make api (other terminal), then npx tsx scripts/eval-examiner.ts
- *   → eval/results/phase5_examiner.json
+ * usage: make api (other terminal), then npx tsx scripts/eval-examiner.ts [--heldout]
+ *   → eval/results/phase5_examiner.json (dev set) or phase5_examiner_heldout.json
+ * The held-out set (unseen half-evidence wordings) is run once, after the prompt is frozen.
  * Gate: >= 100 objections, 0 fabricated citations (re-verified against freshly fetched
  * passages), every planted mode-B half caught, every planted mode-D waiver caught.
  * Spend bound: <= MAX_CALLS calls on Haiku 5.5, all cached on disk (re-runs are free).
@@ -22,7 +23,7 @@ const API = process.env.ADJUDICATE_API ?? "http://127.0.0.1:8000";
 const MODEL = "anthropic/claude-haiku-5.5";
 const PRICE_PER_M = { input: 0.1, output: 0.5 }; // USD, list price used for the estimate
 const MAX_CALLS = 240; // 16 mapper + 140 prong reviews + corrective retries
-const CACHE_VERSION = "examiner-v2"; // bump when a prompt template or schema changes
+const CACHE_VERSION = "examiner-v3"; // bump when a prompt template or schema changes
 
 const env = Object.fromEntries(
   readFileSync(path.join(ROOT, ".env"), "utf8").split("\n").filter((l) => l.includes("=") && !l.startsWith("#"))
@@ -38,7 +39,10 @@ interface SetCase {
   planted_halves: ExaminerCase["planted_halves"];
   planted_unclaimed: ExaminerCase["planted_unclaimed"];
 }
-const cases = JSON.parse(readFileSync(path.join(ROOT, "eval/synthetic/phase5_petitions.json"), "utf8")) as SetCase[];
+const HELDOUT = process.argv.includes("--heldout");
+const SET = HELDOUT ? "eval/synthetic/phase5_heldout_petitions.json" : "eval/synthetic/phase5_petitions.json";
+const RESULT = HELDOUT ? "eval/results/phase5_examiner_heldout.json" : "eval/results/phase5_examiner.json";
+const cases = JSON.parse(readFileSync(path.join(ROOT, SET), "utf8")) as SetCase[];
 
 async function main(): Promise<number> {
   const health = await fetch(`${API}/health`).catch(() => null);
@@ -60,8 +64,8 @@ async function main(): Promise<number> {
       result,
       waiver,
     });
-    const notEst = result.reviews.filter((r) => !r.review.addressed).map((r) => `${r.criterion}/${r.prong}`);
-    console.log(`${c.petition.id}: ${result.reviews.length} reviewed, ${result.dropped.length} dropped, rfe_risk ${result.rfe_risk.toFixed(2)} | not addressed: ${notEst.join(", ") || "-"}`);
+    const notEst = result.reviews.filter((r) => !r.review.facially_met).map((r) => `${r.criterion}/${r.prong}`);
+    console.log(`${c.petition.id}: ${result.reviews.length} reviewed, ${result.dropped.length} dropped, rfe_risk ${result.rfe_risk.toFixed(2)} | not facially met: ${notEst.join(", ") || "-"}`);
   }
 
   // Re-verify every cited passage against a fresh read of the database (via /passages).
@@ -78,7 +82,7 @@ async function main(): Promise<number> {
   const score = scoreExaminer(scored, db);
   const cost = (stats.inputTokens * PRICE_PER_M.input + stats.outputTokens * PRICE_PER_M.output) / 1e6;
   const out = {
-    phase: 5, model: MODEL, cache_version: CACHE_VERSION, set: "eval/synthetic/phase5_petitions.json",
+    phase: 5, model: MODEL, cache_version: CACHE_VERSION, set: SET,
     llm: { ...stats, estimated_cost_usd: Number(cost.toFixed(4)), note: "calls/tokens count this run's provider calls only; cache hits are free" },
     score,
     petitions: scored.map((c) => ({
@@ -86,11 +90,11 @@ async function main(): Promise<number> {
       waiver: c.waiver, dropped: c.result.dropped,
       reviews: c.result.reviews.map((r) => ({
         criterion: r.criterion, prong: r.prong, artifact_ids: r.artifact_ids, attempts: r.attempts,
-        addressed: r.review.addressed, risk: r.review.risk, objection: r.review.objection, citations: r.review.citations,
+        facially_met: r.review.facially_met, risk: r.review.risk, objection: r.review.objection, citations: r.review.citations,
       })),
     })),
   };
-  writeFileSync(path.join(ROOT, "eval/results/phase5_examiner.json"), JSON.stringify(out, null, 2) + "\n");
+  writeFileSync(path.join(ROOT, RESULT), JSON.stringify(out, null, 2) + "\n");
   console.log(JSON.stringify({ ...score, fabricated: score.fabricated.slice(0, 5) }, null, 2));
   console.log(`llm: ${stats.calls} calls, ${stats.hits} cache hits, ~$${cost.toFixed(4)}`);
   return score.gate.passed ? 0 : 1;
