@@ -378,3 +378,17 @@ def test_target_fetched_counts_only_rows_matching_min_year(
     )
     assert fetched_2026 == 10
     assert stats.fetched == 10 - (fetched_2026 - stats.fetched)
+
+
+def test_drift_warnings_are_aggregated_per_page(
+    db: psycopg.Connection[tuple[object, ...]],
+) -> None:
+    site = FakeUscis()
+    # Every row on the page gets a display date that disagrees with its filename.
+    site.listing_override = PAGE0.replace("2026\n", "2020\n")
+    logs: list[str] = []
+    stats = _harvest(site, db, max_pages=1, fetch_limit=1, log=logs.append)
+    drift_lines = [m for m in logs if "drift" in m]
+    assert len(drift_lines) == 1
+    assert "100 row(s)" in drift_lines[0]
+    assert stats.warnings == 1

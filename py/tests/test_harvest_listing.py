@@ -91,6 +91,8 @@ def test_category_mapping(category: str, expected: VisaType) -> None:
         ("SEP152026_01B2203.pdf", ("SEP152026_01B2203", date(2026, 9, 15), 1, "B2203")),
         ("JAN312005_06B2203.pdf", ("JAN312005_06B2203", date(2005, 1, 31), 6, "B2203")),
         ("AUG282024_01D8101.pdf", ("AUG282024_01D8101", date(2024, 8, 28), 1, "D8101")),
+        # pre-2013 O-1 filenames use title-case months (found by the live drift check)
+        ("Dec132006_01D8101.pdf", ("Dec132006_01D8101", date(2006, 12, 13), 1, "D8101")),
     ],
 )
 def test_decision_filename_parsing(name: str, expected: tuple[str, date, int, str]) -> None:
