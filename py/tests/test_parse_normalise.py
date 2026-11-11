@@ -209,3 +209,14 @@ class TestSilentFailureReview:
 
     def test_numbered_list_item_is_not_promoted_to_a_roman_heading(self) -> None:
         assert n("intro\n1. SUMMARY\nbody") == "intro\n1. SUMMARY\nbody"
+
+
+def test_article_fused_to_a_redaction_bar_is_still_repaired() -> None:
+    # Real residue seen on re-parse: removing "a" outright regressed "and a [REDACTED]".
+    assert n("and 2015) and al                   I") == f"and 2015) and a {REDACTED}"
+
+
+def test_pin_cite_year_keeps_its_space() -> None:
+    assert n("INS v. Bagamasbad, 429 U.S. 24, 25 (1976) (per curiam)") == (
+        "INS v. Bagamasbad, 429 U.S. 24, 25 (1976) (per curiam)"
+    )
