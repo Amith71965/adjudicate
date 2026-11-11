@@ -22,20 +22,28 @@ from adjudicate.schemas.petition import Artifact, EvidenceKind, Petition
 MODEL = "anthropic/claude-haiku-5.5"
 PLACEHOLDER = "Not described in the decision."
 
+# Whole words unless they end in "*" (stems). USCIS's Director is "the director", not a job title
+# ("Director of Engineering") or a "Directory" printout — both seen in pilot extractions.
 HARD = (
-    "director", "aao", "appeal", "appellate", "rfe", "request for evidence", "we find",
+    "the director", "aao", "appeal", "appellate", "rfe", "request for evidence", "we find",
     "we agree", "we conclude", "we note", "not established", "did not establish",
     "does not establish", "has not established", "did not demonstrate", "does not demonstrate",
-    "has not demonstrated", "insufficient", "sufficient", "deficien", "persuasive", "probative",
+    "has not demonstrated", "insufficient", "sufficient", "deficien*", "persuasive", "probative",
     "fails to", "failed to", "fail to", "does not meet", "did not meet", "not met", "meets the",
-    "satisfies", "satisfied", "denied", "denial", "remand", "the record does not",
+    "satisfies", "satisfied", "denied", "denial", "remand*", "the record does not",
     "the record lacks", "lacks", "lacking", "credibility", "weight",
 )  # fmt: skip
 SOFT = ("only", "merely", "solely", "minimal", "limited", "little", "few", "generic", "routine")
 
 
 def _hits(terms: tuple[str, ...], text: str) -> list[str]:
-    pattern = re.compile(r"(?<![a-z])(" + "|".join(re.escape(t) for t in terms) + r")", re.I)
+    def term(t: str) -> str:
+        if t.endswith("*"):
+            return re.escape(t[:-1])
+        tail = r"(?![a-z])(?! of\b)" if t == "the director" else r"(?![a-z])"
+        return re.escape(t) + tail
+
+    pattern = re.compile(r"(?<![a-z])(" + "|".join(term(t) for t in terms) + r")", re.I)
     out: list[str] = []
     for m in pattern.finditer(text):
         word = m.group(1).lower()
@@ -50,7 +58,7 @@ def hard_leaks(text: str) -> list[str]:
 
 
 def soft_hits(text: str) -> list[str]:
-    return [w for w in _hits(SOFT, text) if re.search(rf"\b{w}\b", text, re.I)]
+    return _hits(SOFT, text)
 
 
 class ExtractedArtifact(BaseModel):

@@ -26,10 +26,18 @@ def test_hard_leaks_catch_verdicts_and_procedure_on_word_boundaries() -> None:
         "did not establish the reputation and fails to meet the criterion."
     )
     assert hard_leaks(text) == [
-        "director", "insufficient", "appeal", "we agree", "did not establish", "fails to",
+        "the director", "insufficient", "appeal", "we agree", "did not establish", "fails to",
     ]  # fmt: skip
     assert hard_leaks("A certificate of membership issued by the society in 2019.") == []
     assert hard_leaks("Sufficiently cited? Self-sufficient grids.") == ["sufficient"]
+
+
+def test_job_titles_and_ordinary_words_are_not_leaks() -> None:
+    # pilot false positive: "Founder Directory" matched the stem "director"
+    assert hard_leaks("A Founder Directory printout listing the beneficiary.") == []
+    assert hard_leaks("Offer letter naming the beneficiary the Director of Engineering.") == []
+    assert hard_leaks("Weighted citation index; an appealing design.") == []
+    assert hard_leaks("Deficiencies were remanded.") == ["deficien", "remand"]  # stems
 
 
 def test_soft_hits_count_weight_words_without_failing() -> None:
@@ -87,7 +95,7 @@ def test_a_leak_is_retried_once_naming_the_words_then_the_decision_is_dropped() 
     client = FakeClient(leaky, leaky)
     out = extract_facts(client, _decision(["judging"]), index=1)
     assert out.status == "leaky" and out.petition is None and out.attempts == 2
-    assert out.leaks == ["director", "insufficient"]
+    assert out.leaks == ["the director", "insufficient"]
     assert "director" in client.users[1] and "insufficient" in client.users[1]
 
     fixed = FakeClient(leaky, {"field": "f", "artifacts": [art("judging", "Review invitations.")]})
