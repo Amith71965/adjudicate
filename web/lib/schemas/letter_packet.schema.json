@@ -1,0 +1,161 @@
+{
+  "$defs": {
+    "BeneficiaryProfile": {
+      "properties": {
+        "affiliations": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Affiliations",
+          "type": "array"
+        },
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "publications": {
+          "items": {
+            "$ref": "#/$defs/Publication"
+          },
+          "maxItems": 100,
+          "title": "Publications",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "affiliations",
+        "publications"
+      ],
+      "title": "BeneficiaryProfile",
+      "type": "object"
+    },
+    "Letter": {
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/LetterAuthor"
+        },
+        "id": {
+          "pattern": "^L\\d{2}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "sentences": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 80,
+          "minItems": 1,
+          "title": "Sentences",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "author",
+        "sentences"
+      ],
+      "title": "Letter",
+      "type": "object"
+    },
+    "LetterAuthor": {
+      "properties": {
+        "affiliations": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 6,
+          "minItems": 1,
+          "title": "Affiliations",
+          "type": "array"
+        },
+        "claimed_independent": {
+          "title": "Claimed Independent",
+          "type": "boolean"
+        },
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "title",
+        "affiliations",
+        "claimed_independent"
+      ],
+      "title": "LetterAuthor",
+      "type": "object"
+    },
+    "Publication": {
+      "properties": {
+        "authors": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 30,
+          "minItems": 1,
+          "title": "Authors",
+          "type": "array"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "authors"
+      ],
+      "title": "Publication",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "beneficiary": {
+      "$ref": "#/$defs/BeneficiaryProfile"
+    },
+    "field": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Field",
+      "type": "string"
+    },
+    "letters": {
+      "items": {
+        "$ref": "#/$defs/Letter"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Letters",
+      "type": "array"
+    },
+    "petition_id": {
+      "pattern": "^P\\d{2,4}$",
+      "title": "Petition Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "petition_id",
+    "field",
+    "beneficiary",
+    "letters"
+  ],
+  "title": "LetterPacket",
+  "type": "object"
+}

@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field, model_validator
 
 from adjudicate.parse.structure import Criterion
 from adjudicate.schemas.examiner import ProngReview
+from adjudicate.schemas.letters import LetterPacket, LetterReview, MeritsReview
 
 
 class EvidenceKind(StrEnum):
@@ -66,6 +67,9 @@ SCHEMAS: dict[str, type[BaseModel]] = {
     "petition.schema.json": Petition,
     "petition_mapping.schema.json": PetitionMapping,
     "prong_review.schema.json": ProngReview,
+    "letter_packet.schema.json": LetterPacket,
+    "letter_review.schema.json": LetterReview,
+    "merits_review.schema.json": MeritsReview,
 }
 
 

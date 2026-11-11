@@ -1,0 +1,54 @@
+{
+  "$defs": {
+    "SentenceLabel": {
+      "enum": [
+        "mechanism",
+        "assertion",
+        "context"
+      ],
+      "title": "SentenceLabel",
+      "type": "string"
+    },
+    "SentenceVerdict": {
+      "properties": {
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "label": {
+          "$ref": "#/$defs/SentenceLabel"
+        },
+        "reason": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "index",
+        "label",
+        "reason"
+      ],
+      "title": "SentenceVerdict",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "sentences": {
+      "items": {
+        "$ref": "#/$defs/SentenceVerdict"
+      },
+      "maxItems": 80,
+      "minItems": 1,
+      "title": "Sentences",
+      "type": "array"
+    }
+  },
+  "required": [
+    "sentences"
+  ],
+  "title": "LetterReview",
+  "type": "object"
+}

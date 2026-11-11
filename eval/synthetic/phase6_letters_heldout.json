@@ -1,0 +1,2979 @@
+[
+  {
+    "packet": {
+      "petition_id": "P01",
+      "field": "fintech product design",
+      "beneficiary": {
+        "name": "Dr. Avery Quillfeather",
+        "affiliations": [
+          "Ledgerline Payments",
+          "Greywater Research Council",
+          "Saltmarsh University"
+        ],
+        "publications": [
+          {
+            "title": "Robust real-time fraud scoring under shift",
+            "authors": [
+              "A. Quillfeather",
+              "I. Oyelaran",
+              "Larkspur, J."
+            ]
+          },
+          {
+            "title": "Lessons from deploying real-time fraud scoring",
+            "authors": [
+              "I. Oyelaran",
+              "Achterberg, H.",
+              "Quillfeather, A."
+            ]
+          },
+          {
+            "title": "A benchmark for real-time fraud scoring",
+            "authors": [
+              "A. Quillfeather",
+              "Delacroix-Ude, Y."
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Halvard Achterberg",
+            "title": "Professor of fintech product design",
+            "affiliations": [
+              "Marrowgate Institute"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I am familiar with the record of Dr. Avery Quillfeather through conference talks and published papers.",
+            "Using the scheduling algorithm Dr. Avery Quillfeather wrote, the operations team at Ledgerline Payments serves 15 percent more requests on the same hardware.",
+            "Our lab reproduced the results of Dr. Avery Quillfeather on 4 new datasets and saw the same gains in every one.",
+            "Simply put, Dr. Avery Quillfeather is the finest fintech product design specialist I have encountered.",
+            "Measured by the standard test in the field, the model Dr. Avery Quillfeather built is the strongest available, scoring 2.6 against the previous record of 3.5.",
+            "Having reviewed the record, I can confirm that Dr. Avery Quillfeather is internationally recognized for original work in fintech product design.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Dr. Avery Quillfeather clearly belongs to the small group of experts at the very top of the field."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Teodor Vashenko",
+            "title": "Director of Research",
+            "affiliations": [
+              "Corvid Analytics"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in fintech product design.",
+            "Three hospitals now follow the real-time fraud scoring protocol Dr. Avery Quillfeather wrote, which lowered their repeat-test rate from 31 percent to under half that.",
+            "The sensor layout Dr. Avery Quillfeather proposed let Ledgerline Payments retire 11 of its 51 monitoring stations without losing coverage.",
+            "Dr. Avery Quillfeather has made the kind of contribution that people in fintech product design talk about."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Desmond Okafor-Lind",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Quarry Hill Institute"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Dr. Avery Quillfeather.",
+            "It is outstanding in a specific sense: no other published method handles real-time fraud scoring at noise levels 9 times higher than in earlier studies, as the paper by Dr. Avery Quillfeather showed.",
+            "Having studied the record, I can confirm that Dr. Avery Quillfeather is internationally recognized for original work in fintech product design.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Dr. Avery Quillfeather clearly belongs to the small group of experts at the very top of the field.",
+            "Dr. Avery Quillfeather has an exceptional and rare talent that sets them apart from their peers.",
+            "Dr. Avery Quillfeather found a flaw in the standard real-time fraud scoring benchmark, and the maintainers corrected it in their next release, crediting Dr. Avery Quillfeather in the changelog.",
+            "The accomplishments of Dr. Avery Quillfeather are nothing short of phenomenal."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Prof. Joaquin Larkspur",
+            "title": "Director of Research",
+            "affiliations": [
+              "Greywater Research Council"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "I serve on the editorial board of a fintech product design journal and review work on real-time fraud scoring regularly.",
+            "The field owes a great deal to Dr. Avery Quillfeather.",
+            "I recommend Dr. Avery Quillfeather in the strongest possible terms as an outstanding scientist.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "Having reviewed the record, I can confirm that Dr. Avery Quillfeather is internationally recognized for original work in fintech product design.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Dr. Avery Quillfeather clearly belongs to the small group of experts at the very top of the field."
+          ]
+        },
+        {
+          "id": "L05",
+          "author": {
+            "name": "Dr. Caspian Thistlebrook",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Ambergate Polytechnic"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the real-time fraud scoring group at Ambergate Polytechnic.",
+            "Its greatest strength is cost: the approach Dr. Avery Quillfeather designed runs on hardware costing 25 dollars, where rival systems need a dedicated server.",
+            "Regulators in two countries cite the real-time fraud scoring test procedure Dr. Avery Quillfeather published as an accepted way to demonstrate compliance.",
+            "Few people in fintech product design have achieved anything comparable to the brilliant record of Dr. Avery Quillfeather."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "mechanism_plain",
+        "mechanism_plain",
+        "assertion_superlative",
+        "mechanism_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative"
+      ],
+      "L02": [
+        "context",
+        "mechanism_plain",
+        "mechanism_plain",
+        "assertion_plain"
+      ],
+      "L03": [
+        "context",
+        "mechanism_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_superlative",
+        "mechanism_plain",
+        "assertion_superlative"
+      ],
+      "L04": [
+        "context",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative"
+      ],
+      "L05": [
+        "context",
+        "mechanism_superlative",
+        "mechanism_plain",
+        "assertion_superlative"
+      ]
+    },
+    "planted_boilerplate": [
+      [
+        "L01",
+        "L03"
+      ],
+      [
+        "L01",
+        "L04"
+      ],
+      [
+        "L03",
+        "L04"
+      ]
+    ],
+    "planted_violations": [
+      {
+        "letter_id": "L01",
+        "kind": "coauthor"
+      }
+    ],
+    "near_misses": [],
+    "templates_used": [
+      "By way of background, I lead the {t} group at {a}.",
+      "Few people in {f} have achieved anything comparable to the brilliant record of {n}.",
+      "Having reviewed the record, I can confirm that {n} is internationally recognized for original work in {f}.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The accomplishments of {n} are nothing short of phenomenal.",
+      "The field owes a great deal to {n}.",
+      "The sensor layout {n} proposed let {o} retire {y} of its {x} monitoring stations without losing coverage.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Their publications are relied upon by scholars and practitioners in many countries.",
+      "Three hospitals now follow the {t} protocol {n} wrote, which lowered their repeat-test rate from {p} percent to under half that.",
+      "Using the scheduling algorithm {n} wrote, the operations team at {o} serves {p} percent more requests on the same hardware.",
+      "{n} clearly belongs to the small group of experts at the very top of the field.",
+      "{n} found a flaw in the standard {t} benchmark, and the maintainers corrected it in their next release, crediting {n} in the changelog.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P02",
+      "field": "renewable energy engineering",
+      "beneficiary": {
+        "name": "Rowan Thistlewood",
+        "affiliations": [
+          "Northsea Grid Consortium",
+          "Pellucid Robotics",
+          "Quarry Hill Institute"
+        ],
+        "publications": [
+          {
+            "title": "A benchmark for offshore wind controllers",
+            "authors": [
+              "R. Thistlewood",
+              "K. Quintavalle",
+              "Morrowind, N."
+            ]
+          },
+          {
+            "title": "Robust offshore wind controllers under shift",
+            "authors": [
+              "Morrowind, N.",
+              "L. Castellane",
+              "R. Thistlewood"
+            ]
+          },
+          {
+            "title": "Lessons from deploying offshore wind controllers",
+            "authors": [
+              "R. Thistlewood",
+              "M. Achterberg"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Halvard Larkspur",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Halden Research Foundation"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in renewable energy engineering.",
+            "I recommend Rowan Thistlewood in the strongest possible terms as an outstanding scientist.",
+            "Simply put, Rowan Thistlewood is the finest renewable energy engineering specialist I have encountered.",
+            "It is clear that the work of Rowan Thistlewood has had a lasting influence on offshore wind controllers."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Tamsin Achterberg",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Saltmarsh University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I am familiar with the record of Rowan Thistlewood through conference talks and published papers.",
+            "By a wide margin the best result of its kind, the controller Rowan Thistlewood tuned kept Northsea Grid Consortium within tolerance for 29 consecutive months.",
+            "Regulators in two countries cite the offshore wind controllers test procedure Rowan Thistlewood published as an accepted way to demonstrate compliance.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "Our lab reproduced the results of Rowan Thistlewood on 7 new datasets and saw the same gains in every one."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Prof. Kofi Quintavalle",
+            "title": "Professor of renewable energy engineering",
+            "affiliations": [
+              "Pellucid Robotics"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Rowan Thistlewood.",
+            "It is outstanding in a specific sense: no other published method handles offshore wind controllers at noise levels 5 times higher than in earlier studies, as the paper by Rowan Thistlewood showed.",
+            "Rowan Thistlewood has an exceptional and rare talent that sets them apart from their peers.",
+            "An extraordinary result with a simple proof: 5 independent teams ran the code Rowan Thistlewood released and matched every reported figure.",
+            "The field owes a great deal to Rowan Thistlewood."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Ingrid Rookwood",
+            "title": "Professor of renewable energy engineering",
+            "affiliations": [
+              "Ambergate Polytechnic",
+              "Pellucid Robotics (visiting appointment)"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I first read the work of Rowan Thistlewood in 2020 while surveying the literature on offshore wind controllers.",
+            "Three hospitals now follow the offshore wind controllers protocol Rowan Thistlewood wrote, which lowered their repeat-test rate from 33 percent to under half that.",
+            "Measured by the standard test in the field, the model Rowan Thistlewood built is the strongest available, scoring 2.1 against the previous record of 3.5.",
+            "Few people in renewable energy engineering have achieved anything comparable to the brilliant record of Rowan Thistlewood.",
+            "The accomplishments of Rowan Thistlewood are nothing short of phenomenal."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_plain"
+      ],
+      "L02": [
+        "context",
+        "mechanism_superlative",
+        "mechanism_plain",
+        "assertion_superlative",
+        "mechanism_plain"
+      ],
+      "L03": [
+        "context",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "mechanism_superlative",
+        "assertion_plain"
+      ],
+      "L04": [
+        "context",
+        "mechanism_plain",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "assertion_superlative"
+      ]
+    },
+    "planted_boilerplate": [],
+    "planted_violations": [
+      {
+        "letter_id": "L04",
+        "kind": "affiliation"
+      }
+    ],
+    "near_misses": [
+      {
+        "letter_id": "L02",
+        "kind": "surname"
+      }
+    ],
+    "templates_used": [
+      "An extraordinary result with a simple proof: {y} independent teams ran the code {n} released and matched every reported figure.",
+      "By a wide margin the best result of its kind, the controller {n} tuned kept {o} within tolerance for {x} consecutive months.",
+      "Few people in {f} have achieved anything comparable to the brilliant record of {n}.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "It is clear that the work of {n} has had a lasting influence on {t}.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The accomplishments of {n} are nothing short of phenomenal.",
+      "The field owes a great deal to {n}.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Three hospitals now follow the {t} protocol {n} wrote, which lowered their repeat-test rate from {p} percent to under half that.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P03",
+      "field": "computational biology",
+      "beneficiary": {
+        "name": "Dr. Avery Quillfeather",
+        "affiliations": [
+          "Institute for Molecular Simulation",
+          "Halden Research Foundation",
+          "Kestrel Systems Laboratory"
+        ],
+        "publications": [
+          {
+            "title": "A benchmark for protein-folding models",
+            "authors": [
+              "Quillfeather, A.",
+              "Solvang, L.",
+              "P. Henmarsh"
+            ]
+          },
+          {
+            "title": "Robust protein-folding models under shift",
+            "authors": [
+              "B. Castellane",
+              "P. Henmarsh",
+              "A. Quillfeather"
+            ]
+          },
+          {
+            "title": "Scalable methods for protein-folding models",
+            "authors": [
+              "A. Quillfeather",
+              "Kittredge, T."
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Halvard Pelletrine",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Tidewater Applied Physics Lab"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I serve on the editorial board of a computational biology journal and review work on protein-folding models regularly.",
+            "It is clear that the work of Dr. Avery Quillfeather has had a lasting influence on protein-folding models.",
+            "Dr. Avery Quillfeather has made the kind of contribution that people in computational biology talk about.",
+            "The field owes a great deal to Dr. Avery Quillfeather.",
+            "It is my firm belief that Dr. Avery Quillfeather is among the most accomplished people working on protein-folding models today.",
+            "The impact of these contributions is felt throughout computational biology.",
+            "Their acclaim is sustained, national and international, and well deserved."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Kofi Thistlebrook",
+            "title": "Professor of computational biology",
+            "affiliations": [
+              "Saltmarsh University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in computational biology.",
+            "It is outstanding in a specific sense: no other published method handles protein-folding models at noise levels 3 times higher than in earlier studies, as the paper by Dr. Avery Quillfeather showed.",
+            "Dr. Avery Quillfeather has an exceptional and rare talent that sets them apart from their peers.",
+            "I recommend Dr. Avery Quillfeather in the strongest possible terms as an outstanding scientist.",
+            "Three hospitals now follow the protein-folding models protocol Dr. Avery Quillfeather wrote, which lowered their repeat-test rate from 34 percent to under half that."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Mireille Brennick",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Greywater Research Council"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the protein-folding models group at Greywater Research Council.",
+            "Its greatest strength is cost: the approach Dr. Avery Quillfeather designed runs on hardware costing 88 dollars, where rival systems need a dedicated server.",
+            "Simply put, Dr. Avery Quillfeather is the finest computational biology specialist I have encountered.",
+            "Measured by the standard test in the field, the model Dr. Avery Quillfeather built is the strongest available, scoring 2.5 against the previous record of 3.7."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Prof. Leocadia Solvang",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Halden Research Foundation"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "I am familiar with the record of Dr. Avery Quillfeather through conference talks and published papers.",
+            "By a wide margin the best result of its kind, the controller Dr. Avery Quillfeather tuned kept Institute for Molecular Simulation within tolerance for 63 consecutive months.",
+            "Colleagues across computational biology regard these results as essential reading.",
+            "Regulators in two countries cite the protein-folding models test procedure Dr. Avery Quillfeather published as an accepted way to demonstrate compliance."
+          ]
+        },
+        {
+          "id": "L05",
+          "author": {
+            "name": "Dr. Rafferty Feldspar",
+            "title": "Director of Research",
+            "affiliations": [
+              "Fallowmere University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Dr. Avery Quillfeather.",
+            "The research program Dr. Avery Quillfeather leads has moved the whole area of protein-folding models forward.",
+            "It is my view that Dr. Avery Quillfeather is among the most accomplished people working on protein-folding models today.",
+            "The impact of these contributions is felt throughout computational biology.",
+            "Their acclaim is sustained, national and international, and well deserved.",
+            "Their research is widely relied upon by others.",
+            "Dr. Avery Quillfeather found a flaw in the standard protein-folding models benchmark, and the maintainers corrected it in their next release, crediting Dr. Avery Quillfeather in the changelog.",
+            "Using the scheduling algorithm Dr. Avery Quillfeather wrote, the operations team at Institute for Molecular Simulation serves 39 percent more requests on the same hardware."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain"
+      ],
+      "L02": [
+        "context",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "assertion_superlative",
+        "mechanism_plain"
+      ],
+      "L03": [
+        "context",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "mechanism_superlative"
+      ],
+      "L04": [
+        "context",
+        "mechanism_superlative",
+        "assertion_plain",
+        "mechanism_plain"
+      ],
+      "L05": [
+        "context",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_plain",
+        "mechanism_plain",
+        "mechanism_plain"
+      ]
+    },
+    "planted_boilerplate": [
+      [
+        "L01",
+        "L05"
+      ]
+    ],
+    "planted_violations": [],
+    "near_misses": [],
+    "templates_used": [
+      "By a wide margin the best result of its kind, the controller {n} tuned kept {o} within tolerance for {x} consecutive months.",
+      "By way of background, I lead the {t} group at {a}.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is clear that the work of {n} has had a lasting influence on {t}.",
+      "It is my firm belief that {n} is among the most accomplished people working on {t} today.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The field owes a great deal to {n}.",
+      "The impact of these contributions is felt throughout {f}.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "Their acclaim is sustained, national and international, and well deserved.",
+      "Their research is widely relied upon by others.",
+      "Three hospitals now follow the {t} protocol {n} wrote, which lowered their repeat-test rate from {p} percent to under half that.",
+      "Using the scheduling algorithm {n} wrote, the operations team at {o} serves {p} percent more requests on the same hardware.",
+      "{n} found a flaw in the standard {t} benchmark, and the maintainers corrected it in their next release, crediting {n} in the changelog.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P04",
+      "field": "renewable energy engineering",
+      "beneficiary": {
+        "name": "Indigo Brackenridge",
+        "affiliations": [
+          "Northsea Grid Consortium",
+          "Corvid Analytics",
+          "Marrowgate Institute"
+        ],
+        "publications": [
+          {
+            "title": "A benchmark for offshore wind controllers",
+            "authors": [
+              "Brackenridge, I.",
+              "H. Mbekwe",
+              "Y. Rookwood"
+            ]
+          },
+          {
+            "title": "Robust offshore wind controllers under shift",
+            "authors": [
+              "Rookwood, Y.",
+              "J. Varanasi-Holt",
+              "Brackenridge, I."
+            ]
+          },
+          {
+            "title": "Scalable methods for offshore wind controllers",
+            "authors": [
+              "I. Brackenridge",
+              "Morrowind, T."
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Kofi Ashcombe",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Tidewater Applied Physics Lab",
+              "The Marrowgate Institute"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I am familiar with the record of Indigo Brackenridge through conference talks and published papers.",
+            "Their research is widely relied upon by others.",
+            "Indigo Brackenridge has an exceptional and rare talent that sets them apart from their peers.",
+            "Their output places them in the elite tier of researchers internationally."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Mireille Oyelaran",
+            "title": "Director of Research",
+            "affiliations": [
+              "Larchmont College"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the offshore wind controllers group at Larchmont College.",
+            "Three hospitals now follow the offshore wind controllers protocol Indigo Brackenridge wrote, which lowered their repeat-test rate from 29 percent to under half that.",
+            "I recommend Indigo Brackenridge in the strongest possible terms as an outstanding scientist.",
+            "Our lab reproduced the results of Indigo Brackenridge on 12 new datasets and saw the same gains in every one."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Priya Vashenko",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Northsea Heritage Society"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I serve on the editorial board of a renewable energy engineering journal and review work on offshore wind controllers regularly.",
+            "Colleagues across renewable energy engineering regard these results as essential reading.",
+            "An extraordinary result with a simple proof: 3 independent teams ran the code Indigo Brackenridge released and matched every reported figure.",
+            "Indigo Brackenridge has made the kind of contribution that people in renewable energy engineering talk about.",
+            "Indigo Brackenridge found a flaw in the standard offshore wind controllers benchmark, and the maintainers corrected it in their next release, crediting Indigo Brackenridge in the changelog."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Prof. Halvard Mbekwe",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Corvid Analytics"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Indigo Brackenridge.",
+            "Simply put, Indigo Brackenridge is the finest renewable energy engineering specialist I have encountered.",
+            "The research program Indigo Brackenridge leads has moved the whole area of offshore wind controllers forward.",
+            "Regulators in two countries cite the offshore wind controllers test procedure Indigo Brackenridge published as an accepted way to demonstrate compliance.",
+            "The sensor layout Indigo Brackenridge proposed let Northsea Grid Consortium retire 7 of its 82 monitoring stations without losing coverage.",
+            "Measured by the standard test in the field, the model Indigo Brackenridge built is the strongest available, scoring 2.8 against the previous record of 3.4."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_superlative"
+      ],
+      "L02": [
+        "context",
+        "mechanism_plain",
+        "assertion_superlative",
+        "mechanism_plain"
+      ],
+      "L03": [
+        "context",
+        "assertion_plain",
+        "mechanism_superlative",
+        "assertion_plain",
+        "mechanism_plain"
+      ],
+      "L04": [
+        "context",
+        "assertion_superlative",
+        "assertion_plain",
+        "mechanism_plain",
+        "mechanism_plain",
+        "mechanism_superlative"
+      ]
+    },
+    "planted_boilerplate": [],
+    "planted_violations": [
+      {
+        "letter_id": "L01",
+        "kind": "affiliation"
+      }
+    ],
+    "near_misses": [
+      {
+        "letter_id": "L03",
+        "kind": "organization"
+      }
+    ],
+    "templates_used": [
+      "An extraordinary result with a simple proof: {y} independent teams ran the code {n} released and matched every reported figure.",
+      "By way of background, I lead the {t} group at {a}.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "The sensor layout {n} proposed let {o} retire {y} of its {x} monitoring stations without losing coverage.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Their research is widely relied upon by others.",
+      "Three hospitals now follow the {t} protocol {n} wrote, which lowered their repeat-test rate from {p} percent to under half that.",
+      "{n} found a flaw in the standard {t} benchmark, and the maintainers corrected it in their next release, crediting {n} in the changelog.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P05",
+      "field": "structural engineering",
+      "beneficiary": {
+        "name": "Dr. Avery Quillfeather",
+        "affiliations": [
+          "Meridian Bridge Authority",
+          "Pellucid Robotics",
+          "Greywater Research Council"
+        ],
+        "publications": [
+          {
+            "title": "Lessons from deploying seismic retrofit systems",
+            "authors": [
+              "A. Quillfeather",
+              "Kittredge, R.",
+              "Solvang, B."
+            ]
+          },
+          {
+            "title": "Robust seismic retrofit systems under shift",
+            "authors": [
+              "A. Quillfeather",
+              "Okafor-Lind, H.",
+              "B. Solvang"
+            ]
+          },
+          {
+            "title": "A benchmark for seismic retrofit systems",
+            "authors": [
+              "Quillfeather, A.",
+              "Rookwood, P."
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Prof. Rafferty Kittredge",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Pellucid Robotics"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "I am familiar with the record of Dr. Avery Quillfeather through conference talks and published papers.",
+            "Having reviewed the record, I can confirm that Dr. Avery Quillfeather is internationally recognized for original work in structural engineering.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Dr. Avery Quillfeather clearly belongs to the small group of experts at the very top of the field.",
+            "An extraordinary result with a simple proof: 9 independent teams ran the code Dr. Avery Quillfeather released and matched every reported figure.",
+            "Simply put, Dr. Avery Quillfeather is the finest structural engineering specialist I have encountered."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Tamsin Pelletrine",
+            "title": "Director of Research",
+            "affiliations": [
+              "Larchmont College"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I serve on the editorial board of a structural engineering journal and review work on seismic retrofit systems regularly.",
+            "The most impressive thing is that it works at scale: Meridian Bridge Authority processes 47 million records a day with it.",
+            "It is clear that the work of Dr. Avery Quillfeather has had a lasting influence on seismic retrofit systems."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Halvard Okafor-Lind",
+            "title": "Director of Research",
+            "affiliations": [
+              "Tidewater Applied Physics Lab"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I first read the work of Dr. Avery Quillfeather in 2020 while surveying the literature on seismic retrofit systems.",
+            "By a wide margin the best result of its kind, the controller Dr. Avery Quillfeather tuned kept Meridian Bridge Authority within tolerance for 90 consecutive months.",
+            "Regulators in two countries cite the seismic retrofit systems test procedure Dr. Avery Quillfeather published as an accepted way to demonstrate compliance.",
+            "The research program Dr. Avery Quillfeather leads has moved the whole area of seismic retrofit systems forward."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Dr. Teodor Castellane",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Corvid Analytics"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in structural engineering.",
+            "Their research is widely relied upon by others.",
+            "Dr. Avery Quillfeather has made the kind of contribution that people in structural engineering talk about.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "Having studied the record, I can confirm that Dr. Avery Quillfeather is internationally recognized for original work in structural engineering.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Dr. Avery Quillfeather clearly belongs to the small group of experts at the very top of the field."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "mechanism_superlative",
+        "assertion_superlative"
+      ],
+      "L02": [
+        "context",
+        "mechanism_superlative",
+        "assertion_plain"
+      ],
+      "L03": [
+        "context",
+        "mechanism_superlative",
+        "mechanism_plain",
+        "assertion_plain"
+      ],
+      "L04": [
+        "context",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative"
+      ]
+    },
+    "planted_boilerplate": [
+      [
+        "L01",
+        "L04"
+      ]
+    ],
+    "planted_violations": [
+      {
+        "letter_id": "L03",
+        "kind": "coauthor"
+      }
+    ],
+    "near_misses": [],
+    "templates_used": [
+      "An extraordinary result with a simple proof: {y} independent teams ran the code {n} released and matched every reported figure.",
+      "By a wide margin the best result of its kind, the controller {n} tuned kept {o} within tolerance for {x} consecutive months.",
+      "Having reviewed the record, I can confirm that {n} is internationally recognized for original work in {f}.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is clear that the work of {n} has had a lasting influence on {t}.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The most impressive thing is that it works at scale: {o} processes {x} million records a day with it.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Their publications are relied upon by scholars and practitioners in many countries.",
+      "Their research is widely relied upon by others.",
+      "{n} clearly belongs to the small group of experts at the very top of the field.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P06",
+      "field": "fintech product design",
+      "beneficiary": {
+        "name": "Ellis Marrowfield",
+        "affiliations": [
+          "Ledgerline Payments",
+          "Quarry Hill Institute",
+          "Larchmont College"
+        ],
+        "publications": [
+          {
+            "title": "Lessons from deploying real-time fraud scoring",
+            "authors": [
+              "K. Okafor-Lind",
+              "E. Marrowfield",
+              "Pelletrine, Y."
+            ]
+          },
+          {
+            "title": "Scalable methods for real-time fraud scoring",
+            "authors": [
+              "R. Mbekwe",
+              "Y. Pelletrine",
+              "E. Marrowfield"
+            ]
+          },
+          {
+            "title": "A benchmark for real-time fraud scoring",
+            "authors": [
+              "E. Marrowfield",
+              "Achterberg, A."
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Prof. Kofi Okafor-Lind",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Quarry Hill Institute"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "I first read the work of Ellis Marrowfield in 2020 while surveying the literature on real-time fraud scoring.",
+            "Three hospitals now follow the real-time fraud scoring protocol Ellis Marrowfield wrote, which lowered their repeat-test rate from 21 percent to under half that.",
+            "The most impressive thing is that it works at scale: Ledgerline Payments processes 88 million records a day with it.",
+            "Their research is widely relied upon by others.",
+            "Using the scheduling algorithm Ellis Marrowfield wrote, the operations team at Ledgerline Payments serves 36 percent more requests on the same hardware."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Desmond Feldspar",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Kestrel Systems Laboratory"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I serve on the editorial board of a fintech product design journal and review work on real-time fraud scoring regularly.",
+            "It is outstanding in a specific sense: no other published method handles real-time fraud scoring at noise levels 6 times higher than in earlier studies, as the paper by Ellis Marrowfield showed.",
+            "The field owes a great deal to Ellis Marrowfield.",
+            "Our lab reproduced the results of Ellis Marrowfield on 5 new datasets and saw the same gains in every one.",
+            "The sensor layout Ellis Marrowfield proposed let Ledgerline Payments retire 6 of its 20 monitoring stations without losing coverage."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Tamsin Achterberg",
+            "title": "Professor of fintech product design",
+            "affiliations": [
+              "Fallowmere University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in fintech product design.",
+            "The research program Ellis Marrowfield leads has moved the whole area of real-time fraud scoring forward.",
+            "Regulators in two countries cite the real-time fraud scoring test procedure Ellis Marrowfield published as an accepted way to demonstrate compliance.",
+            "Few people in fintech product design have achieved anything comparable to the brilliant record of Ellis Marrowfield.",
+            "Measured by the standard test in the field, the model Ellis Marrowfield built is the strongest available, scoring 3.5 against the previous record of 4.4."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Dr. Joaquin Henmarsh",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Corvid Analytics"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Ellis Marrowfield.",
+            "Colleagues across fintech product design regard these results as essential reading.",
+            "Ellis Marrowfield found a flaw in the standard real-time fraud scoring benchmark, and the maintainers corrected it in their next release, crediting Ellis Marrowfield in the changelog.",
+            "Its greatest strength is cost: the approach Ellis Marrowfield designed runs on hardware costing 43 dollars, where rival systems need a dedicated server."
+          ]
+        },
+        {
+          "id": "L05",
+          "author": {
+            "name": "Dr. Mireille Morrowind",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Wrenfield Polytechnic"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the real-time fraud scoring group at Wrenfield Polytechnic.",
+            "Ellis Marrowfield has made the kind of contribution that people in fintech product design talk about.",
+            "I recommend Ellis Marrowfield in the strongest possible terms as an outstanding scientist.",
+            "Ellis Marrowfield has an exceptional and rare talent that sets them apart from their peers."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "mechanism_plain",
+        "mechanism_superlative",
+        "assertion_plain",
+        "mechanism_plain"
+      ],
+      "L02": [
+        "context",
+        "mechanism_superlative",
+        "assertion_plain",
+        "mechanism_plain",
+        "mechanism_plain"
+      ],
+      "L03": [
+        "context",
+        "assertion_plain",
+        "mechanism_plain",
+        "assertion_superlative",
+        "mechanism_superlative"
+      ],
+      "L04": [
+        "context",
+        "assertion_plain",
+        "mechanism_plain",
+        "mechanism_superlative"
+      ],
+      "L05": [
+        "context",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_superlative"
+      ]
+    },
+    "planted_boilerplate": [],
+    "planted_violations": [],
+    "near_misses": [
+      {
+        "letter_id": "L03",
+        "kind": "surname"
+      }
+    ],
+    "templates_used": [
+      "By way of background, I lead the {t} group at {a}.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "Few people in {f} have achieved anything comparable to the brilliant record of {n}.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "The field owes a great deal to {n}.",
+      "The most impressive thing is that it works at scale: {o} processes {x} million records a day with it.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "The sensor layout {n} proposed let {o} retire {y} of its {x} monitoring stations without losing coverage.",
+      "Their research is widely relied upon by others.",
+      "Three hospitals now follow the {t} protocol {n} wrote, which lowered their repeat-test rate from {p} percent to under half that.",
+      "Using the scheduling algorithm {n} wrote, the operations team at {o} serves {p} percent more requests on the same hardware.",
+      "{n} found a flaw in the standard {t} benchmark, and the maintainers corrected it in their next release, crediting {n} in the changelog.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P07",
+      "field": "renewable energy engineering",
+      "beneficiary": {
+        "name": "Oakley Starling",
+        "affiliations": [
+          "Northsea Grid Consortium",
+          "Greywater Research Council",
+          "Saltmarsh University"
+        ],
+        "publications": [
+          {
+            "title": "A benchmark for offshore wind controllers",
+            "authors": [
+              "O. Starling",
+              "A. Kittredge",
+              "Achterberg, D."
+            ]
+          },
+          {
+            "title": "Scalable methods for offshore wind controllers",
+            "authors": [
+              "Starling, O.",
+              "D. Achterberg",
+              "Okafor-Lind, B."
+            ]
+          },
+          {
+            "title": "Lessons from deploying offshore wind controllers",
+            "authors": [
+              "J. Pelletrine",
+              "O. Starling"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Yusra Castellane",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Larchmont College"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I first read the work of Oakley Starling in 2020 while surveying the literature on offshore wind controllers.",
+            "Few people in renewable energy engineering have achieved anything comparable to the brilliant record of Oakley Starling.",
+            "It is outstanding in a specific sense: no other published method handles offshore wind controllers at noise levels 9 times higher than in earlier studies, as the paper by Oakley Starling showed."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Prof. Annika Kittredge",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Greywater Research Council"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Oakley Starling.",
+            "Their research is widely relied upon by others.",
+            "Oakley Starling has made the kind of contribution that people in renewable energy engineering talk about.",
+            "Simply put, Oakley Starling is the finest renewable energy engineering specialist I have encountered."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Bram Okafor-Lind",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Kestrel Systems Laboratory"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in renewable energy engineering.",
+            "It is my firm belief that Oakley Starling is among the most accomplished people working on offshore wind controllers today.",
+            "The impact of these contributions is felt throughout renewable energy engineering.",
+            "Their acclaim is sustained, national and international, and well deserved.",
+            "An extraordinary result with a simple proof: 10 independent teams ran the code Oakley Starling released and matched every reported figure.",
+            "The field owes a great deal to Oakley Starling."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Dr. Halvard Varanasi-Holt",
+            "title": "Director of Research",
+            "affiliations": [
+              "Pellucid Robotics"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the offshore wind controllers group at Pellucid Robotics.",
+            "Its greatest strength is cost: the approach Oakley Starling designed runs on hardware costing 32 dollars, where rival systems need a dedicated server.",
+            "It is my view that Oakley Starling is among the most accomplished people working on offshore wind controllers today.",
+            "The impact of these contributions is felt throughout renewable energy engineering.",
+            "Their acclaim is sustained, national and international, and well deserved.",
+            "Regulators in two countries cite the offshore wind controllers test procedure Oakley Starling published as an accepted way to demonstrate compliance.",
+            "Oakley Starling has an exceptional and rare talent that sets them apart from their peers."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "assertion_superlative",
+        "mechanism_superlative"
+      ],
+      "L02": [
+        "context",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative"
+      ],
+      "L03": [
+        "context",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "mechanism_superlative",
+        "assertion_plain"
+      ],
+      "L04": [
+        "context",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "mechanism_plain",
+        "assertion_superlative"
+      ]
+    },
+    "planted_boilerplate": [
+      [
+        "L03",
+        "L04"
+      ]
+    ],
+    "planted_violations": [
+      {
+        "letter_id": "L03",
+        "kind": "coauthor"
+      }
+    ],
+    "near_misses": [],
+    "templates_used": [
+      "An extraordinary result with a simple proof: {y} independent teams ran the code {n} released and matched every reported figure.",
+      "By way of background, I lead the {t} group at {a}.",
+      "Few people in {f} have achieved anything comparable to the brilliant record of {n}.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "It is my firm belief that {n} is among the most accomplished people working on {t} today.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The field owes a great deal to {n}.",
+      "The impact of these contributions is felt throughout {f}.",
+      "Their acclaim is sustained, national and international, and well deserved.",
+      "Their research is widely relied upon by others.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P08",
+      "field": "structural engineering",
+      "beneficiary": {
+        "name": "Rowan Thistlewood",
+        "affiliations": [
+          "Meridian Bridge Authority",
+          "Fallowmere University",
+          "Kestrel Systems Laboratory"
+        ],
+        "publications": [
+          {
+            "title": "A benchmark for seismic retrofit systems",
+            "authors": [
+              "Thistlewood, R.",
+              "Pelletrine, P.",
+              "Varanasi-Holt, B."
+            ]
+          },
+          {
+            "title": "Scalable methods for seismic retrofit systems",
+            "authors": [
+              "Thistlewood, R.",
+              "Pelletrine, P.",
+              "I. Vashenko"
+            ]
+          },
+          {
+            "title": "Robust seismic retrofit systems under shift",
+            "authors": [
+              "Delacroix-Ude, T.",
+              "Thistlewood, R."
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Noor Feldspar",
+            "title": "Director of Research",
+            "affiliations": [
+              "Meridian Heritage Society"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Rowan Thistlewood.",
+            "Their research is widely relied upon by others.",
+            "Its greatest strength is cost: the approach Rowan Thistlewood designed runs on hardware costing 89 dollars, where rival systems need a dedicated server."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Prof. Bram Varanasi-Holt",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Fallowmere University"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "I serve on the editorial board of a structural engineering journal and review work on seismic retrofit systems regularly.",
+            "Simply put, Rowan Thistlewood is the finest structural engineering specialist I have encountered.",
+            "Measured by the standard test in the field, the model Rowan Thistlewood built is the strongest available, scoring 2.2 against the previous record of 3.7."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Mireille Castellane",
+            "title": "Director of Research",
+            "affiliations": [
+              "Quarry Hill Institute",
+              "Fallowmere University, main campus"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I am familiar with the record of Rowan Thistlewood through conference talks and published papers.",
+            "Colleagues across structural engineering regard these results as essential reading.",
+            "By a wide margin the best result of its kind, the controller Rowan Thistlewood tuned kept Meridian Bridge Authority within tolerance for 43 consecutive months.",
+            "The most impressive thing is that it works at scale: Meridian Bridge Authority processes 36 million records a day with it.",
+            "Rowan Thistlewood has made the kind of contribution that people in structural engineering talk about."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Dr. Halvard Kittredge",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Marrowgate Institute"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in structural engineering.",
+            "The research program Rowan Thistlewood leads has moved the whole area of seismic retrofit systems forward.",
+            "I recommend Rowan Thistlewood in the strongest possible terms as an outstanding scientist.",
+            "The field owes a great deal to Rowan Thistlewood."
+          ]
+        },
+        {
+          "id": "L05",
+          "author": {
+            "name": "Dr. Desmond Morrowind",
+            "title": "Director of Research",
+            "affiliations": [
+              "Saltmarsh University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I first read the work of Rowan Thistlewood in 2020 while surveying the literature on seismic retrofit systems.",
+            "It is clear that the work of Rowan Thistlewood has had a lasting influence on seismic retrofit systems.",
+            "Our lab reproduced the results of Rowan Thistlewood on 7 new datasets and saw the same gains in every one.",
+            "An extraordinary result with a simple proof: 6 independent teams ran the code Rowan Thistlewood released and matched every reported figure."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "assertion_plain",
+        "mechanism_superlative"
+      ],
+      "L02": [
+        "context",
+        "assertion_superlative",
+        "mechanism_superlative"
+      ],
+      "L03": [
+        "context",
+        "assertion_plain",
+        "mechanism_superlative",
+        "mechanism_superlative",
+        "assertion_plain"
+      ],
+      "L04": [
+        "context",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_plain"
+      ],
+      "L05": [
+        "context",
+        "assertion_plain",
+        "mechanism_plain",
+        "mechanism_superlative"
+      ]
+    },
+    "planted_boilerplate": [],
+    "planted_violations": [
+      {
+        "letter_id": "L03",
+        "kind": "affiliation"
+      }
+    ],
+    "near_misses": [
+      {
+        "letter_id": "L01",
+        "kind": "organization"
+      }
+    ],
+    "templates_used": [
+      "An extraordinary result with a simple proof: {y} independent teams ran the code {n} released and matched every reported figure.",
+      "By a wide margin the best result of its kind, the controller {n} tuned kept {o} within tolerance for {x} consecutive months.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is clear that the work of {n} has had a lasting influence on {t}.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The field owes a great deal to {n}.",
+      "The most impressive thing is that it works at scale: {o} processes {x} million records a day with it.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "Their research is widely relied upon by others.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P09",
+      "field": "computational biology",
+      "beneficiary": {
+        "name": "Rowan Thistlewood",
+        "affiliations": [
+          "Institute for Molecular Simulation",
+          "Kestrel Systems Laboratory",
+          "Quarry Hill Institute"
+        ],
+        "publications": [
+          {
+            "title": "Lessons from deploying protein-folding models",
+            "authors": [
+              "Castellane, B.",
+              "R. Thistlewood",
+              "Quintavalle, N."
+            ]
+          },
+          {
+            "title": "Scalable methods for protein-folding models",
+            "authors": [
+              "B. Castellane",
+              "Thistlewood, R.",
+              "L. Achterberg"
+            ]
+          },
+          {
+            "title": "Robust protein-folding models under shift",
+            "authors": [
+              "R. Thistlewood",
+              "M. Solvang"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Kofi Pelletrine",
+            "title": "Professor of computational biology",
+            "affiliations": [
+              "Ambergate Polytechnic"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in computational biology.",
+            "Rowan Thistlewood found a flaw in the standard protein-folding models benchmark, and the maintainers corrected it in their next release, crediting Rowan Thistlewood in the changelog.",
+            "An extraordinary result with a simple proof: 9 independent teams ran the code Rowan Thistlewood released and matched every reported figure.",
+            "I recommend Rowan Thistlewood in the strongest possible terms as an outstanding scientist.",
+            "Having reviewed the record, I can confirm that Rowan Thistlewood is internationally recognized for original work in computational biology.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Rowan Thistlewood clearly belongs to the small group of experts at the very top of the field.",
+            "It is outstanding in a specific sense: no other published method handles protein-folding models at noise levels 5 times higher than in earlier studies, as the paper by Rowan Thistlewood showed."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Teodor Feldspar",
+            "title": "Professor of computational biology",
+            "affiliations": [
+              "Saltmarsh University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I first read the work of Rowan Thistlewood in 2020 while surveying the literature on protein-folding models.",
+            "Its greatest strength is cost: the approach Rowan Thistlewood designed runs on hardware costing 87 dollars, where rival systems need a dedicated server.",
+            "Using the scheduling algorithm Rowan Thistlewood wrote, the operations team at Institute for Molecular Simulation serves 12 percent more requests on the same hardware.",
+            "Rowan Thistlewood has an exceptional and rare talent that sets them apart from their peers."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Caspian Delacroix-Ude",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Pellucid Robotics"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I am familiar with the record of Rowan Thistlewood through conference talks and published papers.",
+            "Having studied the record, I can confirm that Rowan Thistlewood is internationally recognized for original work in computational biology.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Rowan Thistlewood clearly belongs to the small group of experts at the very top of the field.",
+            "Few people in computational biology have achieved anything comparable to the brilliant record of Rowan Thistlewood.",
+            "Simply put, Rowan Thistlewood is the finest computational biology specialist I have encountered.",
+            "The sensor layout Rowan Thistlewood proposed let Institute for Molecular Simulation retire 7 of its 65 monitoring stations without losing coverage.",
+            "Regulators in two countries cite the protein-folding models test procedure Rowan Thistlewood published as an accepted way to demonstrate compliance.",
+            "Three hospitals now follow the protein-folding models protocol Rowan Thistlewood wrote, which lowered their repeat-test rate from 42 percent to under half that."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Prof. Noor Quintavalle",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Kestrel Systems Laboratory"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Rowan Thistlewood.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "The field owes a great deal to Rowan Thistlewood.",
+            "Colleagues across computational biology regard these results as essential reading."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "mechanism_plain",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "mechanism_superlative"
+      ],
+      "L02": [
+        "context",
+        "mechanism_superlative",
+        "mechanism_plain",
+        "assertion_superlative"
+      ],
+      "L03": [
+        "context",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_superlative",
+        "mechanism_plain",
+        "mechanism_plain",
+        "mechanism_plain"
+      ],
+      "L04": [
+        "context",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain"
+      ]
+    },
+    "planted_boilerplate": [
+      [
+        "L01",
+        "L03"
+      ]
+    ],
+    "planted_violations": [],
+    "near_misses": [],
+    "templates_used": [
+      "An extraordinary result with a simple proof: {y} independent teams ran the code {n} released and matched every reported figure.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "Few people in {f} have achieved anything comparable to the brilliant record of {n}.",
+      "Having reviewed the record, I can confirm that {n} is internationally recognized for original work in {f}.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The field owes a great deal to {n}.",
+      "The sensor layout {n} proposed let {o} retire {y} of its {x} monitoring stations without losing coverage.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Their publications are relied upon by scholars and practitioners in many countries.",
+      "Three hospitals now follow the {t} protocol {n} wrote, which lowered their repeat-test rate from {p} percent to under half that.",
+      "Using the scheduling algorithm {n} wrote, the operations team at {o} serves {p} percent more requests on the same hardware.",
+      "{n} clearly belongs to the small group of experts at the very top of the field.",
+      "{n} found a flaw in the standard {t} benchmark, and the maintainers corrected it in their next release, crediting {n} in the changelog.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P10",
+      "field": "structural engineering",
+      "beneficiary": {
+        "name": "Dr. Sable Wintermere",
+        "affiliations": [
+          "Meridian Bridge Authority",
+          "Pellucid Robotics",
+          "Ambergate Polytechnic"
+        ],
+        "publications": [
+          {
+            "title": "A benchmark for seismic retrofit systems",
+            "authors": [
+              "Ashcombe, L.",
+              "T. Feldspar",
+              "Wintermere, S."
+            ]
+          },
+          {
+            "title": "Lessons from deploying seismic retrofit systems",
+            "authors": [
+              "T. Feldspar",
+              "S. Wintermere",
+              "Varanasi-Holt, M."
+            ]
+          },
+          {
+            "title": "Robust seismic retrofit systems under shift",
+            "authors": [
+              "Achterberg, R.",
+              "S. Wintermere"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Prof. Leocadia Ashcombe",
+            "title": "Director of Research",
+            "affiliations": [
+              "Pellucid Robotics"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "I am familiar with the record of Dr. Sable Wintermere through conference talks and published papers.",
+            "Colleagues across structural engineering regard these results as essential reading.",
+            "The accomplishments of Dr. Sable Wintermere are nothing short of phenomenal.",
+            "Our lab reproduced the results of Dr. Sable Wintermere on 8 new datasets and saw the same gains in every one."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Annika Rookwood",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Corvid Analytics",
+              "Ambergate Polytechnic, main campus"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the seismic retrofit systems group at Corvid Analytics.",
+            "The research program Dr. Sable Wintermere leads has moved the whole area of seismic retrofit systems forward.",
+            "Their research is widely relied upon by others.",
+            "The field owes a great deal to Dr. Sable Wintermere."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Tamsin Achterberg",
+            "title": "Professor of structural engineering",
+            "affiliations": [
+              "Halden Research Foundation"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Dr. Sable Wintermere.",
+            "Dr. Sable Wintermere has made the kind of contribution that people in structural engineering talk about.",
+            "Dr. Sable Wintermere found a flaw in the standard seismic retrofit systems benchmark, and the maintainers corrected it in their next release, crediting Dr. Sable Wintermere in the changelog.",
+            "Simply put, Dr. Sable Wintermere is the finest structural engineering specialist I have encountered.",
+            "Measured by the standard test in the field, the model Dr. Sable Wintermere built is the strongest available, scoring 3.2 against the previous record of 4.2."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Dr. Yusra Kittredge",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Quarry Hill Institute"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I first read the work of Dr. Sable Wintermere in 2020 while surveying the literature on seismic retrofit systems.",
+            "Its greatest strength is cost: the approach Dr. Sable Wintermere designed runs on hardware costing 31 dollars, where rival systems need a dedicated server.",
+            "It is clear that the work of Dr. Sable Wintermere has had a lasting influence on seismic retrofit systems.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "Using the scheduling algorithm Dr. Sable Wintermere wrote, the operations team at Meridian Bridge Authority serves 41 percent more requests on the same hardware."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "assertion_plain",
+        "assertion_superlative",
+        "mechanism_plain"
+      ],
+      "L02": [
+        "context",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_plain"
+      ],
+      "L03": [
+        "context",
+        "assertion_plain",
+        "mechanism_plain",
+        "assertion_superlative",
+        "mechanism_superlative"
+      ],
+      "L04": [
+        "context",
+        "mechanism_superlative",
+        "assertion_plain",
+        "assertion_superlative",
+        "mechanism_plain"
+      ]
+    },
+    "planted_boilerplate": [],
+    "planted_violations": [
+      {
+        "letter_id": "L02",
+        "kind": "affiliation"
+      }
+    ],
+    "near_misses": [
+      {
+        "letter_id": "L03",
+        "kind": "surname"
+      }
+    ],
+    "templates_used": [
+      "By way of background, I lead the {t} group at {a}.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "It is clear that the work of {n} has had a lasting influence on {t}.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The accomplishments of {n} are nothing short of phenomenal.",
+      "The field owes a great deal to {n}.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Their research is widely relied upon by others.",
+      "Using the scheduling algorithm {n} wrote, the operations team at {o} serves {p} percent more requests on the same hardware.",
+      "{n} found a flaw in the standard {t} benchmark, and the maintainers corrected it in their next release, crediting {n} in the changelog.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P11",
+      "field": "fintech product design",
+      "beneficiary": {
+        "name": "Dr. Avery Quillfeather",
+        "affiliations": [
+          "Ledgerline Payments",
+          "Corvid Analytics",
+          "Larchmont College"
+        ],
+        "publications": [
+          {
+            "title": "Robust real-time fraud scoring under shift",
+            "authors": [
+              "Vashenko, C.",
+              "Okafor-Lind, H.",
+              "Quillfeather, A."
+            ]
+          },
+          {
+            "title": "A benchmark for real-time fraud scoring",
+            "authors": [
+              "Vashenko, C.",
+              "Rookwood, T.",
+              "A. Quillfeather"
+            ]
+          },
+          {
+            "title": "Lessons from deploying real-time fraud scoring",
+            "authors": [
+              "Quillfeather, A.",
+              "Henmarsh, M."
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Yusra Quintavalle",
+            "title": "Professor of fintech product design",
+            "affiliations": [
+              "Greywater Research Council"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the real-time fraud scoring group at Greywater Research Council.",
+            "The research program Dr. Avery Quillfeather leads has moved the whole area of real-time fraud scoring forward.",
+            "It is my firm belief that Dr. Avery Quillfeather is among the most accomplished people working on real-time fraud scoring today.",
+            "The impact of these contributions is felt throughout fintech product design.",
+            "Their acclaim is sustained, national and international, and well deserved.",
+            "Three hospitals now follow the real-time fraud scoring protocol Dr. Avery Quillfeather wrote, which lowered their repeat-test rate from 26 percent to under half that.",
+            "Our lab reproduced the results of Dr. Avery Quillfeather on 6 new datasets and saw the same gains in every one."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Tamsin Rookwood",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Saltmarsh University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I serve on the editorial board of a fintech product design journal and review work on real-time fraud scoring regularly.",
+            "By a wide margin the best result of its kind, the controller Dr. Avery Quillfeather tuned kept Ledgerline Payments within tolerance for 65 consecutive months.",
+            "Colleagues across fintech product design regard these results as essential reading.",
+            "Simply put, Dr. Avery Quillfeather is the finest fintech product design specialist I have encountered."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Prof. Halvard Okafor-Lind",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Corvid Analytics"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Dr. Avery Quillfeather.",
+            "The accomplishments of Dr. Avery Quillfeather are nothing short of phenomenal.",
+            "The sensor layout Dr. Avery Quillfeather proposed let Ledgerline Payments retire 3 of its 64 monitoring stations without losing coverage."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Dr. Noor Achterberg",
+            "title": "Director of Research",
+            "affiliations": [
+              "Halden Research Foundation"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in fintech product design.",
+            "Their research is widely relied upon by others.",
+            "Dr. Avery Quillfeather has made the kind of contribution that people in fintech product design talk about.",
+            "I recommend Dr. Avery Quillfeather in the strongest possible terms as an outstanding scientist.",
+            "It is my view that Dr. Avery Quillfeather is among the most accomplished people working on real-time fraud scoring today.",
+            "The impact of these contributions is felt throughout fintech product design.",
+            "Their acclaim is sustained, national and international, and well deserved."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "mechanism_plain",
+        "mechanism_plain"
+      ],
+      "L02": [
+        "context",
+        "mechanism_superlative",
+        "assertion_plain",
+        "assertion_superlative"
+      ],
+      "L03": [
+        "context",
+        "assertion_superlative",
+        "mechanism_plain"
+      ],
+      "L04": [
+        "context",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain"
+      ]
+    },
+    "planted_boilerplate": [
+      [
+        "L01",
+        "L04"
+      ]
+    ],
+    "planted_violations": [
+      {
+        "letter_id": "L02",
+        "kind": "coauthor"
+      }
+    ],
+    "near_misses": [],
+    "templates_used": [
+      "By a wide margin the best result of its kind, the controller {n} tuned kept {o} within tolerance for {x} consecutive months.",
+      "By way of background, I lead the {t} group at {a}.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is my firm belief that {n} is among the most accomplished people working on {t} today.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The accomplishments of {n} are nothing short of phenomenal.",
+      "The impact of these contributions is felt throughout {f}.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "The sensor layout {n} proposed let {o} retire {y} of its {x} monitoring stations without losing coverage.",
+      "Their acclaim is sustained, national and international, and well deserved.",
+      "Their research is widely relied upon by others.",
+      "Three hospitals now follow the {t} protocol {n} wrote, which lowered their repeat-test rate from {p} percent to under half that.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P12",
+      "field": "computational biology",
+      "beneficiary": {
+        "name": "Rowan Thistlewood",
+        "affiliations": [
+          "Institute for Molecular Simulation",
+          "Pellucid Robotics",
+          "Ambergate Polytechnic"
+        ],
+        "publications": [
+          {
+            "title": "Robust protein-folding models under shift",
+            "authors": [
+              "M. Henmarsh",
+              "Pelletrine, N.",
+              "R. Thistlewood"
+            ]
+          },
+          {
+            "title": "Lessons from deploying protein-folding models",
+            "authors": [
+              "Thistlewood, R.",
+              "Delacroix-Ude, T.",
+              "Henmarsh, M."
+            ]
+          },
+          {
+            "title": "A benchmark for protein-folding models",
+            "authors": [
+              "Thistlewood, R.",
+              "A. Brennick"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Desmond Thistlebrook",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Greywater Research Council"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I first read the work of Rowan Thistlewood in 2020 while surveying the literature on protein-folding models.",
+            "Using the scheduling algorithm Rowan Thistlewood wrote, the operations team at Institute for Molecular Simulation serves 44 percent more requests on the same hardware.",
+            "Regulators in two countries cite the protein-folding models test procedure Rowan Thistlewood published as an accepted way to demonstrate compliance.",
+            "I recommend Rowan Thistlewood in the strongest possible terms as an outstanding scientist."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Prof. Noor Pelletrine",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Pellucid Robotics"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "By way of background, I lead the protein-folding models group at Pellucid Robotics.",
+            "Measured by the standard test in the field, the model Rowan Thistlewood built is the strongest available, scoring 4.0 against the previous record of 4.8.",
+            "Three hospitals now follow the protein-folding models protocol Rowan Thistlewood wrote, which lowered their repeat-test rate from 22 percent to under half that.",
+            "Rowan Thistlewood has made the kind of contribution that people in computational biology talk about.",
+            "Our lab reproduced the results of Rowan Thistlewood on 6 new datasets and saw the same gains in every one."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Kofi Larkspur",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Kestrel Systems Laboratory"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in computational biology.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "Rowan Thistlewood found a flaw in the standard protein-folding models benchmark, and the maintainers corrected it in their next release, crediting Rowan Thistlewood in the changelog."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Teodor Mbekwe",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Institute Heritage Society"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I am familiar with the record of Rowan Thistlewood through conference talks and published papers.",
+            "Rowan Thistlewood has an exceptional and rare talent that sets them apart from their peers.",
+            "Simply put, Rowan Thistlewood is the finest computational biology specialist I have encountered.",
+            "The research program Rowan Thistlewood leads has moved the whole area of protein-folding models forward."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "mechanism_plain",
+        "mechanism_plain",
+        "assertion_superlative"
+      ],
+      "L02": [
+        "context",
+        "mechanism_superlative",
+        "mechanism_plain",
+        "assertion_plain",
+        "mechanism_plain"
+      ],
+      "L03": [
+        "context",
+        "assertion_superlative",
+        "mechanism_plain"
+      ],
+      "L04": [
+        "context",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_plain"
+      ]
+    },
+    "planted_boilerplate": [],
+    "planted_violations": [],
+    "near_misses": [
+      {
+        "letter_id": "L04",
+        "kind": "organization"
+      }
+    ],
+    "templates_used": [
+      "By way of background, I lead the {t} group at {a}.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Three hospitals now follow the {t} protocol {n} wrote, which lowered their repeat-test rate from {p} percent to under half that.",
+      "Using the scheduling algorithm {n} wrote, the operations team at {o} serves {p} percent more requests on the same hardware.",
+      "{n} found a flaw in the standard {t} benchmark, and the maintainers corrected it in their next release, crediting {n} in the changelog.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P13",
+      "field": "computational biology",
+      "beneficiary": {
+        "name": "Indigo Brackenridge",
+        "affiliations": [
+          "Institute for Molecular Simulation",
+          "Pellucid Robotics",
+          "Corvid Analytics"
+        ],
+        "publications": [
+          {
+            "title": "A benchmark for protein-folding models",
+            "authors": [
+              "Y. Castellane",
+              "D. Thistlebrook",
+              "I. Brackenridge"
+            ]
+          },
+          {
+            "title": "Lessons from deploying protein-folding models",
+            "authors": [
+              "Castellane, Y.",
+              "Achterberg, N.",
+              "Brackenridge, I."
+            ]
+          },
+          {
+            "title": "Robust protein-folding models under shift",
+            "authors": [
+              "I. Brackenridge",
+              "T. Mbekwe"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Caspian Larkspur",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Saltmarsh University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I serve on the editorial board of a computational biology journal and review work on protein-folding models regularly.",
+            "Indigo Brackenridge found a flaw in the standard protein-folding models benchmark, and the maintainers corrected it in their next release, crediting Indigo Brackenridge in the changelog.",
+            "The most impressive thing is that it works at scale: Institute for Molecular Simulation processes 24 million records a day with it.",
+            "Few people in computational biology have achieved anything comparable to the brilliant record of Indigo Brackenridge."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Prof. Desmond Thistlebrook",
+            "title": "Director of Research",
+            "affiliations": [
+              "Pellucid Robotics"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "I first read the work of Indigo Brackenridge in 2020 while surveying the literature on protein-folding models.",
+            "Having reviewed the record, I can confirm that Indigo Brackenridge is internationally recognized for original work in computational biology.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Indigo Brackenridge clearly belongs to the small group of experts at the very top of the field.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "Simply put, Indigo Brackenridge is the finest computational biology specialist I have encountered.",
+            "Indigo Brackenridge has an exceptional and rare talent that sets them apart from their peers."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Annika Vashenko",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Kestrel Systems Laboratory"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Indigo Brackenridge.",
+            "Its greatest strength is cost: the approach Indigo Brackenridge designed runs on hardware costing 38 dollars, where rival systems need a dedicated server.",
+            "The accomplishments of Indigo Brackenridge are nothing short of phenomenal.",
+            "Our lab reproduced the results of Indigo Brackenridge on 9 new datasets and saw the same gains in every one.",
+            "Colleagues across computational biology regard these results as essential reading."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Dr. Noor Achterberg",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Marrowgate Institute"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in computational biology.",
+            "It is outstanding in a specific sense: no other published method handles protein-folding models at noise levels 11 times higher than in earlier studies, as the paper by Indigo Brackenridge showed.",
+            "The sensor layout Indigo Brackenridge proposed let Institute for Molecular Simulation retire 6 of its 40 monitoring stations without losing coverage.",
+            "I recommend Indigo Brackenridge in the strongest possible terms as an outstanding scientist.",
+            "Having studied the record, I can confirm that Indigo Brackenridge is internationally recognized for original work in computational biology.",
+            "Their publications are relied upon by scholars and practitioners in many countries.",
+            "Indigo Brackenridge clearly belongs to the small group of experts at the very top of the field.",
+            "By a wide margin the best result of its kind, the controller Indigo Brackenridge tuned kept Institute for Molecular Simulation within tolerance for 90 consecutive months."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "mechanism_plain",
+        "mechanism_superlative",
+        "assertion_superlative"
+      ],
+      "L02": [
+        "context",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_superlative"
+      ],
+      "L03": [
+        "context",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "mechanism_plain",
+        "assertion_plain"
+      ],
+      "L04": [
+        "context",
+        "mechanism_superlative",
+        "mechanism_plain",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "mechanism_superlative"
+      ]
+    },
+    "planted_boilerplate": [
+      [
+        "L02",
+        "L04"
+      ]
+    ],
+    "planted_violations": [
+      {
+        "letter_id": "L04",
+        "kind": "coauthor"
+      }
+    ],
+    "near_misses": [],
+    "templates_used": [
+      "By a wide margin the best result of its kind, the controller {n} tuned kept {o} within tolerance for {x} consecutive months.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "Few people in {f} have achieved anything comparable to the brilliant record of {n}.",
+      "Having reviewed the record, I can confirm that {n} is internationally recognized for original work in {f}.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The accomplishments of {n} are nothing short of phenomenal.",
+      "The most impressive thing is that it works at scale: {o} processes {x} million records a day with it.",
+      "The sensor layout {n} proposed let {o} retire {y} of its {x} monitoring stations without losing coverage.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Their publications are relied upon by scholars and practitioners in many countries.",
+      "{n} clearly belongs to the small group of experts at the very top of the field.",
+      "{n} found a flaw in the standard {t} benchmark, and the maintainers corrected it in their next release, crediting {n} in the changelog.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P14",
+      "field": "fintech product design",
+      "beneficiary": {
+        "name": "Rowan Thistlewood",
+        "affiliations": [
+          "Ledgerline Payments",
+          "Greywater Research Council",
+          "Kestrel Systems Laboratory"
+        ],
+        "publications": [
+          {
+            "title": "Scalable methods for real-time fraud scoring",
+            "authors": [
+              "L. Ashcombe",
+              "Thistlewood, R.",
+              "H. Thistlebrook"
+            ]
+          },
+          {
+            "title": "Lessons from deploying real-time fraud scoring",
+            "authors": [
+              "R. Thistlewood",
+              "H. Thistlebrook",
+              "Okafor-Lind, J."
+            ]
+          },
+          {
+            "title": "Robust real-time fraud scoring under shift",
+            "authors": [
+              "A. Castellane",
+              "R. Thistlewood"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Tamsin Castellane",
+            "title": "Principal Scientist",
+            "affiliations": [
+              "Fallowmere University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the real-time fraud scoring group at Fallowmere University.",
+            "An extraordinary result with a simple proof: 6 independent teams ran the code Rowan Thistlewood released and matched every reported figure.",
+            "Colleagues across fintech product design regard these results as essential reading.",
+            "Regulators in two countries cite the real-time fraud scoring test procedure Rowan Thistlewood published as an accepted way to demonstrate compliance."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Bram Brennick",
+            "title": "Director of Research",
+            "affiliations": [
+              "Larchmont College"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in fintech product design.",
+            "Few people in fintech product design have achieved anything comparable to the brilliant record of Rowan Thistlewood.",
+            "Rowan Thistlewood has made the kind of contribution that people in fintech product design talk about.",
+            "Simply put, Rowan Thistlewood is the finest fintech product design specialist I have encountered."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Mireille Delacroix-Ude",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Halden Research Foundation",
+              "The Greywater Research Council"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I serve on the editorial board of a fintech product design journal and review work on real-time fraud scoring regularly.",
+            "Rowan Thistlewood has an exceptional and rare talent that sets them apart from their peers.",
+            "It is outstanding in a specific sense: no other published method handles real-time fraud scoring at noise levels 5 times higher than in earlier studies, as the paper by Rowan Thistlewood showed.",
+            "Their research is widely relied upon by others."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Prof. Leocadia Ashcombe",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Greywater Research Council"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Rowan Thistlewood.",
+            "The most impressive thing is that it works at scale: Ledgerline Payments processes 62 million records a day with it.",
+            "Its greatest strength is cost: the approach Rowan Thistlewood designed runs on hardware costing 28 dollars, where rival systems need a dedicated server.",
+            "It is clear that the work of Rowan Thistlewood has had a lasting influence on real-time fraud scoring.",
+            "The accomplishments of Rowan Thistlewood are nothing short of phenomenal.",
+            "Measured by the standard test in the field, the model Rowan Thistlewood built is the strongest available, scoring 1.9 against the previous record of 3.4."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "mechanism_superlative",
+        "assertion_plain",
+        "mechanism_plain"
+      ],
+      "L02": [
+        "context",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_superlative"
+      ],
+      "L03": [
+        "context",
+        "assertion_superlative",
+        "mechanism_superlative",
+        "assertion_plain"
+      ],
+      "L04": [
+        "context",
+        "mechanism_superlative",
+        "mechanism_superlative",
+        "assertion_plain",
+        "assertion_superlative",
+        "mechanism_superlative"
+      ]
+    },
+    "planted_boilerplate": [],
+    "planted_violations": [
+      {
+        "letter_id": "L03",
+        "kind": "affiliation"
+      }
+    ],
+    "near_misses": [
+      {
+        "letter_id": "L01",
+        "kind": "surname"
+      }
+    ],
+    "templates_used": [
+      "An extraordinary result with a simple proof: {y} independent teams ran the code {n} released and matched every reported figure.",
+      "By way of background, I lead the {t} group at {a}.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "Few people in {f} have achieved anything comparable to the brilliant record of {n}.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is clear that the work of {n} has had a lasting influence on {t}.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "Measured by the standard test in the field, the model {n} built is the strongest available, scoring {e2} against the previous record of {e1}.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The accomplishments of {n} are nothing short of phenomenal.",
+      "The most impressive thing is that it works at scale: {o} processes {x} million records a day with it.",
+      "Their research is widely relied upon by others.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P15",
+      "field": "renewable energy engineering",
+      "beneficiary": {
+        "name": "Rowan Thistlewood",
+        "affiliations": [
+          "Northsea Grid Consortium",
+          "Pellucid Robotics",
+          "Saltmarsh University"
+        ],
+        "publications": [
+          {
+            "title": "Scalable methods for offshore wind controllers",
+            "authors": [
+              "B. Thistlebrook",
+              "Pelletrine, T.",
+              "Thistlewood, R."
+            ]
+          },
+          {
+            "title": "Lessons from deploying offshore wind controllers",
+            "authors": [
+              "Thistlewood, R.",
+              "L. Feldspar",
+              "T. Pelletrine"
+            ]
+          },
+          {
+            "title": "A benchmark for offshore wind controllers",
+            "authors": [
+              "Larkspur, J.",
+              "R. Thistlewood"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Dr. Annika Oyelaran",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Halden Research Foundation"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "By way of background, I lead the offshore wind controllers group at Halden Research Foundation.",
+            "It is outstanding in a specific sense: no other published method handles offshore wind controllers at noise levels 4 times higher than in earlier studies, as the paper by Rowan Thistlewood showed.",
+            "It is my firm belief that Rowan Thistlewood is among the most accomplished people working on offshore wind controllers today.",
+            "The impact of these contributions is felt throughout renewable energy engineering.",
+            "Their acclaim is sustained, national and international, and well deserved.",
+            "The accomplishments of Rowan Thistlewood are nothing short of phenomenal.",
+            "The sensor layout Rowan Thistlewood proposed let Northsea Grid Consortium retire 6 of its 64 monitoring stations without losing coverage.",
+            "The research program Rowan Thistlewood leads has moved the whole area of offshore wind controllers forward."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Ingrid Solvang",
+            "title": "Director of Research",
+            "affiliations": [
+              "Ambergate Polytechnic"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I first read the work of Rowan Thistlewood in 2020 while surveying the literature on offshore wind controllers.",
+            "An extraordinary result with a simple proof: 11 independent teams ran the code Rowan Thistlewood released and matched every reported figure.",
+            "It is my view that Rowan Thistlewood is among the most accomplished people working on offshore wind controllers today.",
+            "The impact of these contributions is felt throughout renewable energy engineering.",
+            "Their acclaim is sustained, national and international, and well deserved.",
+            "Simply put, Rowan Thistlewood is the finest renewable energy engineering specialist I have encountered.",
+            "Its greatest strength is cost: the approach Rowan Thistlewood designed runs on hardware costing 74 dollars, where rival systems need a dedicated server.",
+            "Regulators in two countries cite the offshore wind controllers test procedure Rowan Thistlewood published as an accepted way to demonstrate compliance."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Prof. Bram Thistlebrook",
+            "title": "Director of Research",
+            "affiliations": [
+              "Pellucid Robotics"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "I serve on the editorial board of a renewable energy engineering journal and review work on offshore wind controllers regularly.",
+            "It is my firm belief that Rowan Thistlewood is among the most accomplished people working on offshore wind controllers today.",
+            "The impact of these contributions is felt throughout renewable energy engineering.",
+            "Their acclaim is sustained, national and international, and well deserved.",
+            "By a wide margin the best result of its kind, the controller Rowan Thistlewood tuned kept Northsea Grid Consortium within tolerance for 29 consecutive months.",
+            "I recommend Rowan Thistlewood in the strongest possible terms as an outstanding scientist.",
+            "The field owes a great deal to Rowan Thistlewood.",
+            "Our lab reproduced the results of Rowan Thistlewood on 10 new datasets and saw the same gains in every one."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Dr. Tamsin Achterberg",
+            "title": "Professor of renewable energy engineering",
+            "affiliations": [
+              "Corvid Analytics"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in renewable energy engineering.",
+            "Rowan Thistlewood has an exceptional and rare talent that sets them apart from their peers.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "Rowan Thistlewood has made the kind of contribution that people in renewable energy engineering talk about."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "mechanism_plain",
+        "assertion_plain"
+      ],
+      "L02": [
+        "context",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "assertion_superlative",
+        "mechanism_superlative",
+        "mechanism_plain"
+      ],
+      "L03": [
+        "context",
+        "assertion_superlative",
+        "assertion_plain",
+        "assertion_plain",
+        "mechanism_superlative",
+        "assertion_superlative",
+        "assertion_plain",
+        "mechanism_plain"
+      ],
+      "L04": [
+        "context",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_plain"
+      ]
+    },
+    "planted_boilerplate": [
+      [
+        "L01",
+        "L02"
+      ],
+      [
+        "L01",
+        "L03"
+      ],
+      [
+        "L02",
+        "L03"
+      ]
+    ],
+    "planted_violations": [],
+    "near_misses": [],
+    "templates_used": [
+      "An extraordinary result with a simple proof: {y} independent teams ran the code {n} released and matched every reported figure.",
+      "By a wide margin the best result of its kind, the controller {n} tuned kept {o} within tolerance for {x} consecutive months.",
+      "By way of background, I lead the {t} group at {a}.",
+      "I first read the work of {n} in 2020 while surveying the literature on {t}.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is my firm belief that {n} is among the most accomplished people working on {t} today.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The accomplishments of {n} are nothing short of phenomenal.",
+      "The field owes a great deal to {n}.",
+      "The impact of these contributions is felt throughout {f}.",
+      "The research program {n} leads has moved the whole area of {t} forward.",
+      "The sensor layout {n} proposed let {o} retire {y} of its {x} monitoring stations without losing coverage.",
+      "Their acclaim is sustained, national and international, and well deserved.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  },
+  {
+    "packet": {
+      "petition_id": "P16",
+      "field": "structural engineering",
+      "beneficiary": {
+        "name": "Dr. Juniper Ashgrove",
+        "affiliations": [
+          "Meridian Bridge Authority",
+          "Wrenfield Polytechnic",
+          "Larchmont College"
+        ],
+        "publications": [
+          {
+            "title": "A benchmark for seismic retrofit systems",
+            "authors": [
+              "M. Larkspur",
+              "Ashgrove, J.",
+              "Thistlebrook, I."
+            ]
+          },
+          {
+            "title": "Robust seismic retrofit systems under shift",
+            "authors": [
+              "T. Solvang",
+              "Ashgrove, J.",
+              "Larkspur, M."
+            ]
+          },
+          {
+            "title": "Lessons from deploying seismic retrofit systems",
+            "authors": [
+              "Achterberg, P.",
+              "J. Ashgrove"
+            ]
+          }
+        ]
+      },
+      "letters": [
+        {
+          "id": "L01",
+          "author": {
+            "name": "Prof. Ingrid Thistlebrook",
+            "title": "Associate Professor",
+            "affiliations": [
+              "Wrenfield Polytechnic"
+            ],
+            "claimed_independent": false
+          },
+          "sentences": [
+            "By way of background, I lead the seismic retrofit systems group at Wrenfield Polytechnic.",
+            "Our lab reproduced the results of Dr. Juniper Ashgrove on 12 new datasets and saw the same gains in every one.",
+            "I recommend Dr. Juniper Ashgrove in the strongest possible terms as an outstanding scientist.",
+            "Its greatest strength is cost: the approach Dr. Juniper Ashgrove designed runs on hardware costing 23 dollars, where rival systems need a dedicated server.",
+            "Using the scheduling algorithm Dr. Juniper Ashgrove wrote, the operations team at Meridian Bridge Authority serves 30 percent more requests on the same hardware."
+          ]
+        },
+        {
+          "id": "L02",
+          "author": {
+            "name": "Dr. Yusra Morrowind",
+            "title": "Chief Engineer",
+            "affiliations": [
+              "Fallowmere University"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I serve on the editorial board of a structural engineering journal and review work on seismic retrofit systems regularly.",
+            "Dr. Juniper Ashgrove has an exceptional and rare talent that sets them apart from their peers.",
+            "The most impressive thing is that it works at scale: Meridian Bridge Authority processes 32 million records a day with it.",
+            "Few people in structural engineering have achieved anything comparable to the brilliant record of Dr. Juniper Ashgrove."
+          ]
+        },
+        {
+          "id": "L03",
+          "author": {
+            "name": "Dr. Leocadia Varanasi-Holt",
+            "title": "Director of Research",
+            "affiliations": [
+              "Quarry Hill Institute"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "My comments below draw on twenty years of practice in structural engineering.",
+            "The accomplishments of Dr. Juniper Ashgrove are nothing short of phenomenal.",
+            "Their output places them in the elite tier of researchers internationally.",
+            "Dr. Juniper Ashgrove has made the kind of contribution that people in structural engineering talk about."
+          ]
+        },
+        {
+          "id": "L04",
+          "author": {
+            "name": "Noor Oyelaran",
+            "title": "Director of Research",
+            "affiliations": [
+              "Halden Research Foundation",
+              "The Wrenfield Polytechnic"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "I am familiar with the record of Dr. Juniper Ashgrove through conference talks and published papers.",
+            "It is outstanding in a specific sense: no other published method handles seismic retrofit systems at noise levels 10 times higher than in earlier studies, as the paper by Dr. Juniper Ashgrove showed.",
+            "The sensor layout Dr. Juniper Ashgrove proposed let Meridian Bridge Authority retire 7 of its 44 monitoring stations without losing coverage.",
+            "Simply put, Dr. Juniper Ashgrove is the finest structural engineering specialist I have encountered."
+          ]
+        },
+        {
+          "id": "L05",
+          "author": {
+            "name": "Halvard Rookwood",
+            "title": "Professor of structural engineering",
+            "affiliations": [
+              "Meridian Coastal Trust"
+            ],
+            "claimed_independent": true
+          },
+          "sentences": [
+            "Please accept this letter as my recommendation for Dr. Juniper Ashgrove.",
+            "Colleagues across structural engineering regard these results as essential reading.",
+            "Regulators in two countries cite the seismic retrofit systems test procedure Dr. Juniper Ashgrove published as an accepted way to demonstrate compliance."
+          ]
+        }
+      ]
+    },
+    "kinds": {
+      "L01": [
+        "context",
+        "mechanism_plain",
+        "assertion_superlative",
+        "mechanism_superlative",
+        "mechanism_plain"
+      ],
+      "L02": [
+        "context",
+        "assertion_superlative",
+        "mechanism_superlative",
+        "assertion_superlative"
+      ],
+      "L03": [
+        "context",
+        "assertion_superlative",
+        "assertion_superlative",
+        "assertion_plain"
+      ],
+      "L04": [
+        "context",
+        "mechanism_superlative",
+        "mechanism_plain",
+        "assertion_superlative"
+      ],
+      "L05": [
+        "context",
+        "assertion_plain",
+        "mechanism_plain"
+      ]
+    },
+    "planted_boilerplate": [],
+    "planted_violations": [
+      {
+        "letter_id": "L04",
+        "kind": "affiliation"
+      }
+    ],
+    "near_misses": [
+      {
+        "letter_id": "L05",
+        "kind": "organization"
+      }
+    ],
+    "templates_used": [
+      "By way of background, I lead the {t} group at {a}.",
+      "Colleagues across {f} regard these results as essential reading.",
+      "Few people in {f} have achieved anything comparable to the brilliant record of {n}.",
+      "I am familiar with the record of {n} through conference talks and published papers.",
+      "I recommend {n} in the strongest possible terms as an outstanding scientist.",
+      "I serve on the editorial board of a {f} journal and review work on {t} regularly.",
+      "It is outstanding in a specific sense: no other published method handles {t} at noise levels {y} times higher than in earlier studies, as the paper by {n} showed.",
+      "Its greatest strength is cost: the approach {n} designed runs on hardware costing {x} dollars, where rival systems need a dedicated server.",
+      "My comments below draw on twenty years of practice in {f}.",
+      "Our lab reproduced the results of {n} on {y} new datasets and saw the same gains in every one.",
+      "Please accept this letter as my recommendation for {n}.",
+      "Regulators in two countries cite the {t} test procedure {n} published as an accepted way to demonstrate compliance.",
+      "Simply put, {n} is the finest {f} specialist I have encountered.",
+      "The accomplishments of {n} are nothing short of phenomenal.",
+      "The most impressive thing is that it works at scale: {o} processes {x} million records a day with it.",
+      "The sensor layout {n} proposed let {o} retire {y} of its {x} monitoring stations without losing coverage.",
+      "Their output places them in the elite tier of researchers internationally.",
+      "Using the scheduling algorithm {n} wrote, the operations team at {o} serves {p} percent more requests on the same hardware.",
+      "{n} has an exceptional and rare talent that sets them apart from their peers.",
+      "{n} has made the kind of contribution that people in {f} talk about."
+    ]
+  }
+]
