@@ -47,7 +47,7 @@ class CriterionVerdict(BaseModel):
 
 
 class DecisionVerdicts(BaseModel):
-    criteria: list[CriterionVerdict]
+    criteria: list[CriterionVerdict] = Field(min_length=1)
     final_merits: Verdict
 
     @model_validator(mode="after")

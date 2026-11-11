@@ -25,7 +25,7 @@ REDACTED = "[REDACTED]"
 _GLYPH = r"[Il|!]"
 _BAR_ONLY_LINE = re.compile(rf"^[ \t]*{_GLYPH}(?:[ \t]+{_GLYPH})*[ \t]*\n", re.MULTILINE)
 _FUNCTION_WORDS = (
-    "the|of|from|at|in|on|by|with|and|for|to|an|a|his|her|their|its"
+    "the|of|from|at|in|on|by|with|and|for|to|an|his|her|their|its"  # not "a": "et al"
     "|how|about|regarding|that|as|whether"
 )
 # "thel<gap>" / "ofl<gap>!word": a function word fused with the bar's left edge,
@@ -48,6 +48,8 @@ _ANALYSIS_TITLE = re.compile(r"^ANALYS[^I\s]S$")
 
 
 def _fix_heading(match: re.Match[str]) -> str:
+    if set(match.group(1)) <= {"1"}:
+        return match.group(0)  # "1. SUMMARY" is a numbered item, not a roman heading
     numeral = match.group(1).translate(str.maketrans("Tl1", "III"))
     title = match.group(2)
     if _ANALYSIS_TITLE.match(title):
@@ -81,10 +83,16 @@ class Normalised:
     repairs: Counter[str] = field(default_factory=Counter)
 
 
+_CITE_ANCHOR = re.compile(r"(?:§|[Ss]ection|C\.F\.R\.|U\.S\.C\.|INA)\s*$")
+
+
 def _fix_chain(match: re.Match[str]) -> str:
     chain = match.group(0)
     head = chain[: chain.index("(")].rstrip(" -")
     parts = _PAREN.findall(chain)
+    prefix = match.string[max(0, match.start() - 12) : match.start()]
+    if len(parts) < 2 and not _CITE_ANCHOR.search(prefix):
+        return chain  # "12 (twelve)" is prose, not a citation chain
     separators = re.findall(r"\)\s?(-?)\s?\(", chain)
     fixed: list[str] = []
     for i, part in enumerate(parts):

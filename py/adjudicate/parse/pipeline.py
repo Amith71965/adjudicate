@@ -60,6 +60,15 @@ _CLEAR_DERIVED = (
 )
 
 
+def reconcile_kind(kind: str, reason: str, outcome: str) -> tuple[str, str]:
+    """Cross-check the filter against the ORDER line, so disagreements are visible."""
+    if kind == "merits" and outcome.startswith("motion_"):
+        return "motion", f"{reason}; ORDER line disposes of a motion"
+    if kind == "merits" and outcome == "unknown":
+        return kind, f"{reason}; WARNING: no ORDER line found"
+    return kind, reason
+
+
 def _upsert(conn: Conn, values: tuple[object, ...]) -> int:
     row = conn.execute(_UPSERT_DECISION, values).fetchone()
     if row is None:  # pragma: no cover
@@ -90,22 +99,24 @@ def _parse_one(conn: Conn, raw_id: int, visa: str) -> bool:
             return False
         text = normalised.text
         verdict = classify(text, VisaType(visa))
+        outcome = extract_outcome(text).value
+        kind, reason = reconcile_kind(verdict.kind.value, "; ".join(verdict.reasons), outcome)
         decision_id = _upsert(
             conn,
             (
                 raw_id,
                 PARSER_VERSION,
-                verdict.kind.value,
-                "; ".join(verdict.reasons),
+                kind,
+                reason,
                 verdict.words,
-                extract_outcome(text).value,
+                outcome,
                 text,
                 json.dumps(dict(normalised.repairs)),
             ),
         )
         for sql in _CLEAR_DERIVED:
             conn.execute(sql, (decision_id,))
-        if verdict.kind is DecisionKind.MERITS:
+        if kind == DecisionKind.MERITS.value:
             for ordinal, s in enumerate(split_sections(text)):
                 conn.execute(
                     "INSERT INTO decision_section (decision_id, ordinal, kind, title, criterion,"
@@ -155,6 +166,46 @@ def parse_pending(conn: Conn, *, log: Callable[[str], None] = lambda _m: None) -
     return stats
 
 
+def _record_attempt(
+    conn: Conn,
+    decision_id: object,
+    model: str,
+    result: DecisionVerdicts | None,
+    error: str | None,
+    cost: float,
+    attempts: int,
+    version: object,
+) -> None:
+    with conn.transaction():
+        conn.execute("DELETE FROM decision_extraction WHERE decision_id = %s", (decision_id,))
+        conn.execute(
+            "INSERT INTO decision_extraction (decision_id, model, final_merits, cost_usd,"
+            " error, attempts, parser_version) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            (
+                decision_id,
+                model,
+                result.final_merits.value if result else None,
+                cost,
+                error,
+                attempts,
+                version,
+            ),
+        )
+        for c in result.criteria if result else []:
+            conn.execute(
+                "INSERT INTO criterion_verdict (decision_id, criterion, director, aao,"
+                " failed_prong, quote) VALUES (%s, %s, %s, %s, %s, %s)",
+                (
+                    decision_id,
+                    c.criterion.value,
+                    c.director.value,
+                    c.aao.value,
+                    c.failed_prong,
+                    c.quote,
+                ),
+            )
+
+
 def extract_pending(
     conn: Conn,
     client: LlmClient,
@@ -190,40 +241,25 @@ def extract_pending(
         error: str | None = None
         try:
             result = extract_verdicts(client, str(text), model=model)
-        except BudgetExceededError:
+        except BudgetExceededError as exc:
+            spent = client.spent_usd - before
+            if spent > 0:  # e.g. the grounding retry hit the cap: keep the spend on record
+                _record_attempt(
+                    conn,
+                    decision_id,
+                    model,
+                    None,
+                    f"BudgetExceededError: {exc}",
+                    carried + spent,
+                    attempts,
+                    version,
+                )
             log(f"budget reached after {stats.extracted} extraction(s); stopping")
             raise
         except (LlmError, GroundingError, ValueError) as exc:
             error = f"{type(exc).__name__}: {exc}"[:2000]
         cost = client.spent_usd - before
-        with conn.transaction():
-            conn.execute("DELETE FROM decision_extraction WHERE decision_id = %s", (decision_id,))
-            conn.execute(
-                "INSERT INTO decision_extraction (decision_id, model, final_merits, cost_usd,"
-                " error, attempts, parser_version) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                (
-                    decision_id,
-                    model,
-                    result.final_merits.value if result else None,
-                    carried + cost,
-                    error,
-                    attempts,
-                    version,
-                ),
-            )
-            for c in result.criteria if result else []:
-                conn.execute(
-                    "INSERT INTO criterion_verdict (decision_id, criterion, director, aao,"
-                    " failed_prong, quote) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (
-                        decision_id,
-                        c.criterion.value,
-                        c.director.value,
-                        c.aao.value,
-                        c.failed_prong,
-                        c.quote,
-                    ),
-                )
+        _record_attempt(conn, decision_id, model, result, error, carried + cost, attempts, version)
         stats.cost_usd += cost
         if result is None:
             stats.failed += 1

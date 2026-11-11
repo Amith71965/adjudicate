@@ -12,7 +12,7 @@ import json
 import sys
 from pathlib import Path
 
-from adjudicate.llm.client import LlmClient, LlmError
+from adjudicate.llm.client import BudgetExceededError, LlmClient, LlmError
 from adjudicate.parse.gold_eval import accuracy_report, load_gold, score
 from adjudicate.parse.structure import extract_outcome
 from adjudicate.parse.verdicts import DEFAULT_MODEL, GroundingError, extract_verdicts
@@ -33,6 +33,8 @@ def main(argv: list[str] | None = None) -> int:
         text = (GOLD / "texts" / f"{label.decision_id}.txt").read_text()
         try:
             verdicts = extract_verdicts(client, text, model=args.model)
+        except BudgetExceededError:
+            raise  # a partial run must not report accuracy as if it were complete
         except (LlmError, GroundingError, ValueError) as exc:
             failures[label.decision_id] = f"{type(exc).__name__}: {exc}"[:300]
             print(f"FAILED {label.decision_id}: {failures[label.decision_id]}", flush=True)

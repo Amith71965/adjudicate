@@ -21,6 +21,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("step", choices=["parse", "extract"])
     p.add_argument("--limit", type=int, default=None)
     p.add_argument("--model", default=DEFAULT_MODEL)
+    p.add_argument("--retry-failed", action="store_true", help="re-attempt failed extractions")
     args = p.parse_args(argv)
     print(f"{args.step} @ {describe_target()}", flush=True)
     with psycopg.connect(database_url(), autocommit=True) as conn:
@@ -31,10 +32,15 @@ def main(argv: list[str] | None = None) -> int:
         client = LlmClient.from_env(cache_dir=REPO / ".cache" / "llm")
         try:
             es = extract_pending(
-                conn, client, model=args.model, limit=args.limit, log=lambda m: print(m, flush=True)
+                conn,
+                client,
+                model=args.model,
+                limit=args.limit,
+                retry_failed=args.retry_failed,
+                log=lambda m: print(m, flush=True),
             )
         except BudgetExceededError as exc:
-            print(f"stopped: {exc}")
+            print(f"stopped: {exc} (spent this run ${client.spent_usd:.4f})")
             return 3
         print(f"extracted {es.extracted}, failed {es.failed}, cost ${es.cost_usd:.4f}")
         return 0 if es.failed == 0 else 1

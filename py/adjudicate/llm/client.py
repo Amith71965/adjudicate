@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import re
 from pathlib import Path
@@ -66,6 +67,8 @@ class LlmClient:
     ) -> None:
         if not api_key:
             raise LlmError("OPENROUTER_API_KEY is not set (put it in .env)")
+        if not (math.isfinite(budget_usd) and budget_usd > 0):
+            raise LlmError(f"budget must be a positive finite number of USD, got {budget_usd}")
         self.budget_usd = budget_usd
         self.spent_usd = 0.0
         self._max_seen_cost = 0.0
@@ -94,13 +97,14 @@ class LlmClient:
         worst = (tokens_in * price_in + max_tokens * price_out) / 1e6
         return max(worst, self._max_seen_cost)
 
-    def _check_budget(self, model: str, prompt_chars: int, max_tokens: int) -> None:
+    def _check_budget(self, model: str, prompt_chars: int, max_tokens: int) -> float:
         estimate = self._estimate(model, prompt_chars, max_tokens)
         if self.spent_usd + estimate > self.budget_usd:
             raise BudgetExceededError(
                 f"budget ${self.budget_usd:.4f}: spent ${self.spent_usd:.4f}"
                 f" + estimated ${estimate:.4f} would exceed it; request not sent"
             )
+        return estimate
 
     # -- cache --------------------------------------------------------------------------
     def _cache_path(self, key: str) -> Path:
@@ -109,38 +113,56 @@ class LlmClient:
     # -- call ---------------------------------------------------------------------------
     def _send(self, model: str, messages: list[dict[str, str]], max_tokens: int) -> str:
         chars = sum(len(m["content"]) for m in messages)
-        self._check_budget(model, chars, max_tokens)
-        response = self._http.post(
-            "/chat/completions",
-            json={
-                "model": model,
-                "messages": messages,
-                "max_tokens": max_tokens,
-                "temperature": 0,
-                "usage": {"include": True},
-            },
-        )
+        estimate = self._check_budget(model, chars, max_tokens)
+        try:
+            response = self._http.post(
+                "/chat/completions",
+                json={
+                    "model": model,
+                    "messages": messages,
+                    "max_tokens": max_tokens,
+                    "temperature": 0,
+                    "usage": {"include": True},
+                },
+            )
+        except httpx.HTTPError as exc:
+            # A timed-out request may still have been billed: charge the estimate.
+            self.spent_usd += estimate
+            raise LlmError(f"transport error: {type(exc).__name__}: {exc}") from exc
         if response.status_code != 200:
             try:
                 detail = response.json().get("error", {}).get("message", response.text)
             except ValueError:
                 detail = response.text
             raise LlmError(f"HTTP {response.status_code}: {detail}")
-        body = response.json()
-        usage = body.get("usage") or {}
-        cost = usage.get("cost")
-        if cost is None:  # fall back to list price if the provider omits cost
-            price_in, price_out = PRICES[model]
-            cost = (
-                usage.get("prompt_tokens", 0) * price_in
-                + usage.get("completion_tokens", 0) * price_out
-            ) / 1e6
-        self.spent_usd += float(cost)
-        self._max_seen_cost = max(self._max_seen_cost, float(cost))
+        try:
+            body = response.json()
+        except ValueError as exc:
+            raise LlmError(f"non-JSON response body: {response.text[:200]}") from exc
+        if not isinstance(body, dict):
+            raise LlmError(f"unexpected response body: {str(body)[:200]}")
+        cost = self._cost(model, body.get("usage") or {}, estimate)
+        self.spent_usd += cost
+        self._max_seen_cost = max(self._max_seen_cost, cost)
         try:
             return str(body["choices"][0]["message"]["content"])
         except (KeyError, IndexError, TypeError) as exc:
             raise LlmError(f"malformed response: {str(body)[:200]}") from exc
+
+    @staticmethod
+    def _cost(model: str, usage: dict[str, object], estimate: float) -> float:
+        """Reported cost, else list price from tokens, else the pre-send worst case.
+
+        Never 0 for a call we cannot price: a silent $0 would disable the budget cap.
+        """
+        reported = usage.get("cost")
+        if isinstance(reported, int | float) and math.isfinite(reported) and reported >= 0:
+            return float(reported)
+        tokens_in, tokens_out = usage.get("prompt_tokens"), usage.get("completion_tokens")
+        if isinstance(tokens_in, int) and isinstance(tokens_out, int):
+            price_in, price_out = PRICES[model]
+            return (tokens_in * price_in + tokens_out * price_out) / 1e6
+        return estimate
 
     @staticmethod
     def _parse(content: str, schema: type[T]) -> T:
@@ -164,7 +186,10 @@ class LlmClient:
         ).hexdigest()
         path = self._cache_path(key)
         if path.is_file():
-            return self._parse(json.loads(path.read_text())["content"], schema)
+            try:
+                return self._parse(json.loads(path.read_text())["content"], schema)
+            except ValueError, KeyError, TypeError:
+                path.unlink(missing_ok=True)  # truncated/stale entry: refetch, never trust
 
         messages = [{"role": "system", "content": system_full}, {"role": "user", "content": user}]
         content = self._send(model, messages, max_tokens)
@@ -185,5 +210,7 @@ class LlmClient:
             except ValidationError as second:
                 raise LlmError(f"invalid output after retry: {second}") from second
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps({"model": model, "content": content}))
+        tmp = path.with_suffix(".tmp")
+        tmp.write_text(json.dumps({"model": model, "content": content}))
+        os.replace(tmp, path)  # atomic: a crash never leaves a half-written entry
         return result
