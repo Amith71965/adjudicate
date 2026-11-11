@@ -38,7 +38,7 @@ def _site(broken: bool = False) -> httpx.MockTransport:
         if url.endswith(".pdf"):
             if broken:
                 return httpx.Response(404)
-            return httpx.Response(200, content=b"%PDF-1.4 " + url.encode())
+            return httpx.Response(200, content=b"%PDF-1.4 " + url.encode() + b"\n%%EOF\n")
         return httpx.Response(200, text=page0 if "page=0" in url else end)
 
     return httpx.MockTransport(handler)
