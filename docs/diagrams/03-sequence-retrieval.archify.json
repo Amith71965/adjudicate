@@ -1,0 +1,151 @@
+{
+ "schema_version": 1,
+ "diagram_type": "sequence",
+ "meta": {
+  "title": "Hybrid retrieval request",
+  "output": ".archify/sequence-retrieval-20261111-010308/seq.html",
+  "quality_profile": "showcase",
+  "locale": "en"
+ },
+ "participants": [
+  {
+   "id": "agent",
+   "type": "external",
+   "label": "Agent",
+   "sublabel": "any MCP client"
+  },
+  {
+   "id": "mcp",
+   "type": "backend",
+   "label": "MCP server",
+   "sublabel": "TypeScript, stdio"
+  },
+  {
+   "id": "api",
+   "type": "backend",
+   "label": "Retrieval API",
+   "sublabel": "FastAPI"
+  },
+  {
+   "id": "emb",
+   "type": "backend",
+   "label": "bge-small",
+   "sublabel": "local, 384-d"
+  },
+  {
+   "id": "pg",
+   "type": "database",
+   "label": "Postgres 17",
+   "sublabel": "pgvector + FTS"
+  }
+ ],
+ "segments": [
+  {
+   "from": 150,
+   "to": 210,
+   "label": "Validate + proxy"
+  },
+  {
+   "from": 225,
+   "to": 330,
+   "label": "Two retrievers"
+  },
+  {
+   "from": 345,
+   "to": 460,
+   "label": "Fuse, dedupe, cite"
+  }
+ ],
+ "messages": [
+  {
+   "id": "m1",
+   "from": "agent",
+   "to": "mcp",
+   "y": 160,
+   "label": "search_reasoning(query, k)",
+   "variant": "emphasis"
+  },
+  {
+   "id": "m2",
+   "from": "mcp",
+   "to": "api",
+   "y": 195,
+   "label": "GET /search?q&k&mode",
+   "variant": "emphasis",
+   "note": "zod: 1 \u2264 k \u2264 50"
+  },
+  {
+   "id": "m3",
+   "from": "api",
+   "to": "emb",
+   "y": 240,
+   "label": "query_embed(query)"
+  },
+  {
+   "id": "m4",
+   "from": "emb",
+   "to": "api",
+   "y": 268,
+   "label": "384-d vector",
+   "variant": "dashed"
+  },
+  {
+   "id": "m5",
+   "from": "api",
+   "to": "pg",
+   "y": 296,
+   "label": "cosine HNSW top-100"
+  },
+  {
+   "id": "m6",
+   "from": "api",
+   "to": "pg",
+   "y": 324,
+   "label": "ts_rank_cd top-100 (OR terms)"
+  },
+  {
+   "id": "m7",
+   "from": "pg",
+   "to": "api",
+   "y": 358,
+   "label": "two ranked chunk lists",
+   "variant": "dashed",
+   "note": "RRF k=60, one hit per decision"
+  },
+  {
+   "id": "m8",
+   "from": "api",
+   "to": "mcp",
+   "y": 412,
+   "label": "hits: decision_id, url, snippet",
+   "variant": "dashed"
+  },
+  {
+   "id": "m9",
+   "from": "mcp",
+   "to": "agent",
+   "y": 444,
+   "label": "citable results (or isError)",
+   "variant": "emphasis"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Measured (44 known-item queries)",
+   "items": [
+    "hybrid recall@10 0.864, MRR 0.661",
+    "vector only 0.818 / 0.586",
+    "lexical only 0.705 / 0.420"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Fails loudly",
+   "items": [
+    "DB down \u2192 HTTP 503, MCP isError",
+    "never an empty list that reads as 'no precedent'"
+   ]
+  }
+ ]
+}

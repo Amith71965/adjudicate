@@ -54,7 +54,8 @@ _TWO_PART = frozenset(
         Criterion.ORIGINAL_CONTRIBUTIONS,
     }
 )
-_CFR_PARAGRAPH = re.compile(r"204\.5\(h\)\(3\)\((x|ix|viii|vii|vi|v|iv|iii|ii|i)\)")
+# (?!-): the boilerplate range "(h)(3)(i)-(x)" names no single criterion.
+_CFR_PARAGRAPH = re.compile(r"204\.5\(h\)\(3\)\((x|ix|viii|vii|vi|v|iv|iii|ii|i)\)(?!-)")
 # Ordered: earlier, more specific phrases win ("original contributions" before "award").
 _KEYWORDS: list[tuple[re.Pattern[str], Criterion]] = [
     (re.compile(r"leading or critical", re.I), Criterion.LEADING_ROLE),
@@ -177,7 +178,7 @@ def split_sections(text: str) -> list[Section]:
     if analysis_span is not None:
         for m in _SUB.finditer(text, *analysis_span):
             kind, criterion = _sub_kind(m.group(1))
-            if kind is SectionKind.OTHER:
+            if kind is SectionKind.OTHER and "criteria" not in m.group(1).lower():
                 # Headings like "B. Role": fall back to the CFR paragraph cited up front.
                 opening = text[m.end() : m.end() + _OPENING_CHARS]
                 if (cite := _CFR_PARAGRAPH.search(opening)) is not None:
