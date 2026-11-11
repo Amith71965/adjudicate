@@ -1,0 +1,12 @@
+{
+  "model": "anthropic/claude-haiku-5.5",
+  "petitions": 20,
+  "scored": 20,
+  "failures": [],
+  "artifacts": 151,
+  "top1": 1,
+  "modeARecall": 1,
+  "falseFlags": 0,
+  "gate": "PASS",
+  "api_calls": 20
+}

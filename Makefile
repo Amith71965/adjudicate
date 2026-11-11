@@ -6,7 +6,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 PY := .venv/bin
 
-.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
+.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
 
 help: ## list targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
@@ -55,6 +55,16 @@ api: ## retrieval API on :8000 (memory: don't run alongside a video render)
 
 mcp: ## MCP server over stdio (expects the API on :8000)
 	cd web && npx tsx mcp/stdio.ts
+
+schemas: ## export JSON Schema from Pydantic and generate Zod (single source of truth)
+	$(PY)/python -c "from pathlib import Path; from adjudicate.schemas.petition import export_json_schemas as e; e(Path('web/lib/schemas'))"
+	cd web && npm run -s gen:zod
+
+synth: ## regenerate the seeded synthetic petition set (phase 4)
+	$(PY)/python -c "import json; from pathlib import Path; from adjudicate.synth.petitions import generate_set as g; Path('eval/synthetic/phase4_petitions.json').write_text(json.dumps([c.to_json() for c in g(n=20, seed=20261111)], indent=2) + chr(10))"
+
+eval-mapper: ## phase-4 gate: blind mapper on 20 synthetic petitions (Haiku, <= $0.16, cached)
+	cd web && npx tsx scripts/eval-mapper.ts
 
 lint-py:
 	$(PY)/ruff check py
