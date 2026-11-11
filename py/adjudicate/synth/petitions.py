@@ -161,13 +161,19 @@ def _petition(index: int, rng: random.Random) -> SyntheticCase:
     rng.shuffle(pool)
     truths: list[Criterion | None] = pool[: rng.randint(5, 8)] + [None] * rng.randint(1, 2)
     rng.shuffle(truths)
-    misfile = {i for i in rng.sample(range(len(truths)), k=len(truths)) if truths[i] is not None}
-    misfile = set(sorted(misfile)[: rng.randint(2, 3)])
+    real = [i for i, t in enumerate(truths) if t is not None]
+    misfile = set(rng.sample(real, k=min(len(real), rng.randint(2, 3))))  # random positions
+    decoys = [i for i, t in enumerate(truths) if t is None]
+    claimed_decoy = (
+        rng.choice(decoys) if rng.random() < 0.6 else None
+    )  # weak evidence, filed anyway
     artifacts, truth, planted = [], {}, set()
     for i, crit in enumerate(truths):
         aid = f"A{i + 1:02d}"
         kind, title, desc = rng.choice(TEMPLATES[crit])
         claimed = MISFILED_AS[crit] if (crit is not None and i in misfile) else crit
+        if i == claimed_decoy:
+            claimed = rng.choice(list(Criterion))
         if claimed != crit:
             planted.add(aid)
         artifacts.append(

@@ -8,12 +8,13 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { findMismatches, mapPetition, SYSTEM, type PetitionInput, type PetitionMapping } from "../lib/examiner/mapper";
+import { findMismatches, mapPetition, SYSTEM, validateMapping, type PetitionInput, type PetitionMapping } from "../lib/examiner/mapper";
 import { scoreMapper, type ScoredCase } from "../lib/examiner/mapper-eval";
 
 const ROOT = path.resolve(__dirname, "../..");
 const MODEL = "anthropic/claude-haiku-5.5";
 const MAX_CALLS = 25;
+const CACHE_VERSION = "mapper-v2"; // bump when the prompt template or schema changes
 const env = Object.fromEntries(
   readFileSync(path.join(ROOT, ".env"), "utf8").split("\n").filter((l) => l.includes("=") && !l.startsWith("#"))
     .map((l) => [l.slice(0, l.indexOf("=")).trim(), l.slice(l.indexOf("=") + 1).trim()]),
@@ -32,12 +33,12 @@ async function main(): Promise<number> {
   const scored: ScoredCase[] = [];
   const failures: string[] = [];
   for (const c of cases) {
-    const key = createHash("sha256").update(JSON.stringify([MODEL, SYSTEM, c.petition])).digest("hex");
+    const key = createHash("sha256").update(JSON.stringify([CACHE_VERSION, MODEL, SYSTEM, c.petition])).digest("hex");
     const file = path.join(cacheDir, `${key}.json`);
     let mapping: PetitionMapping;
     try {
       if (existsSync(file)) {
-        mapping = JSON.parse(readFileSync(file, "utf8")) as PetitionMapping;
+        mapping = validateMapping(c.petition, JSON.parse(readFileSync(file, "utf8")));
       } else {
         if (++calls > MAX_CALLS) throw new Error(`call cap ${MAX_CALLS} reached`);
         mapping = await mapPetition(c.petition, { model });

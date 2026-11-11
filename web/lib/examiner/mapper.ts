@@ -42,6 +42,9 @@ at least 0.3, set strength to that best score, and give a one-sentence rationale
 artifact's own content. Judge only what the artifact shows; do not assume facts not described.`;
 
 function validateCoverage(petition: Petition, mapping: PetitionMapping): void {
+  if (mapping.petition_id !== petition.id) {
+    throw new MapperError(`mapping is for ${mapping.petition_id}, not ${petition.id}`);
+  }
   const expected = new Set(petition.artifacts.map((a) => a.id));
   const seen = new Set<string>();
   for (const m of mapping.mappings) {
@@ -52,9 +55,24 @@ function validateCoverage(petition: Petition, mapping: PetitionMapping): void {
     if (m.scores.length !== 10 || CRITERIA.some((c) => !crits.has(c))) {
       throw new MapperError(`artifact ${m.artifact_id}: scores must cover the ten criteria exactly once`);
     }
+    if (m.best_criterion !== null) {
+      const top = Math.max(...m.scores.map((s) => s.strength));
+      const best = m.scores.find((s) => s.criterion === m.best_criterion)?.strength ?? -1;
+      if (best < top - 1e-6) {
+        throw new MapperError(`artifact ${m.artifact_id}: best_criterion ${m.best_criterion} is not its top score`);
+      }
+    }
   }
   const missing = [...expected].filter((id) => !seen.has(id));
   if (missing.length) throw new MapperError(`mapping is missing artifact(s) ${missing.join(", ")}`);
+}
+
+/** Schema + coverage + consistency. Apply to every mapping, fresh or cached. */
+export function validateMapping(input: PetitionInput, raw: unknown): PetitionMapping {
+  const petition = petitionSchema.parse(input);
+  const mapping = petitionMappingSchema.parse(raw);
+  validateCoverage(petition, mapping);
+  return mapping;
 }
 
 export async function mapPetition(
@@ -74,10 +92,9 @@ export async function mapPetition(
     output: Output.object({ schema: petitionMappingSchema }),
     temperature: 0,
     maxOutputTokens,
+    maxRetries: 0, // retries are hidden spend; callers count and cap calls themselves
   });
-  const mapping = petitionMappingSchema.parse(output);
-  validateCoverage(petition, mapping);
-  return mapping;
+  return validateMapping(petition, output);
 }
 
 export interface Mismatch {
