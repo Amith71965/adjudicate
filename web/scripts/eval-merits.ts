@@ -2,8 +2,9 @@
  * Phase-6 exit gate (merits): Kazarian step two over 6 seeded strong/weak pairs that both pass
  * step one. usage: make api (other terminal), then npx tsx scripts/eval-merits.ts [--heldout]
  *   → eval/results/phase6_merits.json (dev) or phase6_merits_heldout.json
- * Gate: every pair ordered, verdict accuracy >= 0.9, 0 fabricated citations (re-verified against
- * freshly fetched passages), nothing dropped. Spend bound: <= MAX_CALLS calls on Haiku 5.5, cached.
+ * Gate: every weak petition judged unfavorable, every pair ordered by >= 0.2 risk, 0 fabricated
+ * citations (re-verified against freshly fetched passages), nothing dropped. Strong-favorable
+ * rate is reported, not gated (ADR-016). Spend bound: <= MAX_CALLS calls on Haiku 5.5, cached.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -70,7 +71,7 @@ async function main(): Promise<number> {
   const out = {
     phase: 6, part: "merits", model: MODEL, cache_version: CACHE_VERSION, set: SET,
     llm: { ...stats, estimated_cost_usd: Number(cost.toFixed(4)), note: "calls/tokens count this run's provider calls only; cache hits are free" },
-    score: { ...score, accuracy: round4(score.accuracy) },
+    score: { ...score, accuracy: round4(score.accuracy), min_margin: round4(score.min_margin) },
     petitions: outcomes.map((o, i) => ({
       petition_id: o.petition_id, tier: raw[i].tier, pair: raw[i].pair, status: o.status, attempts: o.attempts,
       ...(o.status === "reviewed"

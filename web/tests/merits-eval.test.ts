@@ -19,7 +19,8 @@ const good = () => [reviewed("P01", true, 0.2), reviewed("P02", false, 0.8), rev
 describe("scoreMerits", () => {
   it("passes when every pair is ordered, verdicts match the tier and citations resolve", () => {
     const s = scoreMerits(cases, good(), DB);
-    expect(s).toMatchObject({ pairs: 2, ordered_pairs: 2, accuracy: 1, citations: 4, fabricated_citations: 0, dropped: 0 });
+    expect(s).toMatchObject({ pairs: 2, ordered_pairs: 2, accuracy: 1, citations: 4, fabricated_citations: 0, dropped: 0, weak_caught: 2, strong_favorable: 2 });
+    expect(s.min_margin).toBeCloseTo(0.4);
     expect(s.gate.passed).toBe(true);
   });
 
@@ -46,6 +47,29 @@ describe("scoreMerits", () => {
     const s = scoreMerits(cases, out, DB);
     expect(s).toMatchObject({ dropped: 1, ordered_pairs: 1 });
     expect(s.gate.failures.join(" ")).toMatch(/dropped/);
+  });
+
+  it("reports, but does not gate on, a strong petition judged unfavorable", () => {
+    const out = good();
+    out[0] = reviewed("P01", false, 0.45);
+    const s = scoreMerits(cases, out, DB);
+    expect(s).toMatchObject({ strong_favorable: 1, weak_caught: 2, accuracy: 0.75 });
+    expect(s.gate.passed).toBe(true);
+  });
+
+  it("fails when a weak petition is judged favorable", () => {
+    const out = good();
+    out[1] = reviewed("P02", true, 0.8);
+    expect(scoreMerits(cases, out, DB).gate.failures.join(" ")).toMatch(/weak petition/);
+  });
+
+  it("fails when a pair is ordered by less than the minimum risk margin", () => {
+    const out = good();
+    out[1] = reviewed("P02", false, 0.3);
+    const s = scoreMerits(cases, out, DB);
+    expect(s.ordered_pairs).toBe(2);
+    expect(s.min_margin).toBeCloseTo(0.1);
+    expect(s.gate.failures.join(" ")).toMatch(/margin/);
   });
 
   it("rejects outcomes that do not line up with the cases", () => {
