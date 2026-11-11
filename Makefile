@@ -60,8 +60,8 @@ schemas: ## export JSON Schema from Pydantic and generate Zod (single source of 
 	$(PY)/python -c "from pathlib import Path; from adjudicate.schemas.petition import export_json_schemas as e; e(Path('web/lib/schemas'))"
 	cd web && npm run -s gen:zod
 
-synth: ## regenerate the seeded synthetic petition set (phase 4)
-	$(PY)/python -c "import json; from pathlib import Path; from adjudicate.synth.petitions import generate_set as g; Path('eval/synthetic/phase4_petitions.json').write_text(json.dumps([c.to_json() for c in g(n=20, seed=20261111)], indent=2) + chr(10))"
+synth: ## regenerate the seeded synthetic petition sets (phases 4 and 5)
+	$(PY)/python scripts/gen-synth.py
 
 eval-mapper: ## phase-4 gate: blind mapper on 20 synthetic petitions (Haiku, <= $0.16, cached)
 	cd web && npx tsx scripts/eval-mapper.ts
