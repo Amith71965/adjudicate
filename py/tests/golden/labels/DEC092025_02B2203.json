@@ -1,0 +1,13 @@
+{
+  "decision_id": "DEC092025_02B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "waived"},
+    "published_material": {"director": "not_met", "aao": "waived"},
+    "original_contributions": {"director": "not_met", "aao": "not_met"},
+    "scholarly_articles": {"director": "met", "aao": "not_addressed"},
+    "leading_role": {"director": "met", "aao": "not_addressed"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Failure mode D twice over: claims abandoned on appeal are waived (Matter of Landers); and generalised (v) arguments are 'forfeited or waived' (Matter of Garcia) yet the AAO still concludes (v) not met - labelled not_met. Seven criteria claimed initially but only five are named."
+}

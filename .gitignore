@@ -30,3 +30,6 @@ web/test-results/
 
 # os
 .DS_Store
+
+# local llm response cache (may contain decision text + model output)
+.cache/

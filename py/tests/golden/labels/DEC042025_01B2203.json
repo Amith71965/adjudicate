@@ -1,0 +1,11 @@
+{
+  "decision_id": "DEC042025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "judging": {"director": "not_met", "aao": "met"},
+    "scholarly_articles": {"director": "met", "aao": "met"},
+    "high_salary": {"director": "met", "aao": "met"}
+  },
+  "final_merits": "not_met",
+  "notes": "AAO reverses SCOPS on judging (peer review evidence SCOPS did not discuss), reaching 3; reserves the other (unnamed) claimed criteria; conducts final merits itself (SCOPS had not) and denies. Petitioner's other three claimed criteria are not named in the decision, so not labelled."
+}

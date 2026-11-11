@@ -1,0 +1,13 @@
+{
+  "decision_id": "OCT012025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "membership": {"director": "not_met", "aao": "not_met"},
+    "original_contributions": {"director": "not_met", "aao": "not_met"},
+    "leading_role": {"director": "not_addressed", "aao": "not_met"},
+    "high_salary": {"director": "met", "aao": "not_met"}
+  },
+  "final_merits": "not_reached",
+  "notes": "SCOPS never analysed leading role (harmless error); AAO decides it on the role prong alone (mentoring is not a leading/critical organizational role) and withdraws SCOPS' high-salary finding. Equity arguments cannot waive regulatory requirements."
+}

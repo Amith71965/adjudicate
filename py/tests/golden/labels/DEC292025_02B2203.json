@@ -1,0 +1,13 @@
+{
+  "decision_id": "DEC292025_02B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "judging": {"director": "met", "aao": "not_reached"},
+    "original_contributions": {"director": "not_met", "aao": "not_reached"},
+    "scholarly_articles": {"director": "met", "aao": "not_reached"},
+    "leading_role": {"director": "not_met", "aao": "not_reached"},
+    "high_salary": {"director": "met", "aao": "not_reached"}
+  },
+  "final_merits": "not_met",
+  "notes": "Stage-2 case. AAO expressly 'will not disturb this conclusion or discuss the individual criteria' -> not_reached for all five by the labelling convention. Final merits: unsolicited-looking reviewer invitations may be form letters; 47 citations over a decade not shown high relative to the field; citations concentrated in undergraduate-era papers (not sustained)."
+}

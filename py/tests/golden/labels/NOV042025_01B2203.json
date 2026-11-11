@@ -1,0 +1,15 @@
+{
+  "decision_id": "NOV042025_01B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_met"},
+    "published_material": {"director": "not_met", "aao": "not_met"},
+    "judging": {"director": "met", "aao": "met"},
+    "original_contributions": {"director": "not_met", "aao": "not_met"},
+    "scholarly_articles": {"director": "met", "aao": "met"},
+    "display": {"director": "not_met", "aao": "waived"},
+    "leading_role": {"director": "not_met", "aao": "not_met"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Display claimed via comparable evidence; not contested on appeal -> abandoned/waived. Leading role: a PI leads a PROJECT, and a project is not an 'organization or establishment' (mode A). Published material does not name the petitioner. State-level commendation is not national recognition."
+}

@@ -1,0 +1,228 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "Parse, filter and extract pipeline",
+  "output": ".archify/workflow-parse-20261110-231850/parse.html",
+  "quality_profile": "showcase",
+  "locale": "en",
+  "legend": {
+   "entries": {
+    "database": {
+     "label": "Stored"
+    },
+    "backend": {
+     "label": "Deterministic step"
+    },
+    "security": {
+     "label": "Gate"
+    },
+    "cloud": {
+     "label": "LLM (Haiku 5.5)"
+    },
+    "messagebus": {
+     "label": "Rejected, kept with reason"
+    }
+   }
+  }
+ },
+ "lanes": [
+  {
+   "id": "parse",
+   "label": "Deterministic parse"
+  },
+  {
+   "id": "llm",
+   "label": "Grounded extraction"
+  },
+  {
+   "id": "reject",
+   "label": "Rejected (counted, never dropped)",
+   "variant": "exception"
+  }
+ ],
+ "mainPath": [
+  "raw",
+  "norm",
+  "filter",
+  "structure",
+  "llm_call",
+  "ground",
+  "verdicts"
+ ],
+ "nodes": [
+  {
+   "id": "raw",
+   "lane": "parse",
+   "col": 0,
+   "type": "database",
+   "label": "raw_decision",
+   "sublabel": "PDF bytes"
+  },
+  {
+   "id": "norm",
+   "lane": "parse",
+   "col": 1,
+   "type": "backend",
+   "label": "Text + normalise",
+   "sublabel": "pdftotext, OCR repair"
+  },
+  {
+   "id": "filter",
+   "lane": "parse",
+   "col": 2,
+   "type": "security",
+   "label": "Procedural filter",
+   "sublabel": "posture, headings, criteria"
+  },
+  {
+   "id": "structure",
+   "lane": "parse",
+   "col": 3,
+   "type": "backend",
+   "label": "Structure",
+   "sublabel": "outcome, sections, cites"
+  },
+  {
+   "id": "llm_call",
+   "lane": "llm",
+   "col": 3,
+   "type": "cloud",
+   "label": "Verdicts",
+   "sublabel": "Director vs AAO"
+  },
+  {
+   "id": "ground",
+   "lane": "llm",
+   "col": 4,
+   "type": "security",
+   "label": "Grounding gate",
+   "sublabel": "quote verbatim?"
+  },
+  {
+   "id": "verdicts",
+   "lane": "llm",
+   "col": 5,
+   "type": "database",
+   "label": "criterion_verdict",
+   "sublabel": "grounded only"
+  },
+  {
+   "id": "unreadable",
+   "lane": "reject",
+   "col": 1,
+   "type": "messagebus",
+   "label": "unreadable",
+   "sublabel": "no text layer"
+  },
+  {
+   "id": "motion",
+   "lane": "reject",
+   "col": 2,
+   "type": "messagebus",
+   "label": "motion / legacy",
+   "sublabel": "unstructured, no analysis"
+  },
+  {
+   "id": "error",
+   "lane": "reject",
+   "col": 4,
+   "type": "messagebus",
+   "label": "extraction error",
+   "sublabel": "retryable, cost kept"
+  }
+ ],
+ "edges": [
+  {
+   "id": "e1",
+   "from": "raw",
+   "to": "norm",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e3",
+   "from": "norm",
+   "to": "filter",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e4",
+   "from": "filter",
+   "to": "structure",
+   "label": "merits",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e5",
+   "from": "structure",
+   "to": "llm_call",
+   "label": "EB-1A",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e6",
+   "from": "llm_call",
+   "to": "ground",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e7",
+   "from": "ground",
+   "to": "verdicts",
+   "label": "all quotes found",
+   "variant": "emphasis"
+  },
+  {
+   "id": "r1",
+   "from": "norm",
+   "to": "unreadable",
+   "variant": "security",
+   "role": "error"
+  },
+  {
+   "id": "r2",
+   "from": "filter",
+   "to": "motion",
+   "label": "not merits",
+   "variant": "security",
+   "role": "error"
+  },
+  {
+   "id": "r3",
+   "from": "ground",
+   "to": "error",
+   "label": "fabricated twice",
+   "variant": "security",
+   "role": "error"
+  },
+  {
+   "id": "retry",
+   "from": "ground",
+   "to": "llm_call",
+   "label": "1 retry",
+   "variant": "dashed",
+   "role": "return"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Real corpus, 729 PDFs",
+   "items": [
+    "EB-1A: 359 merits of 450",
+    "O-1: 153 of 219; NIW: 45 of 60",
+    "0 unreadable"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Why the filter has four tests",
+   "items": [
+    "posture (motions cite the law too)",
+    "headings repaired for OCR first",
+    "criterion evidence counted after ANALYSIS only",
+    "stage-2 decisions named in prose are kept"
+   ]
+  }
+ ]
+}

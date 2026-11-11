@@ -1,0 +1,12 @@
+{
+  "decision_id": "NOV242025_02B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "membership": {"director": "not_met", "aao": "not_met"},
+    "judging": {"director": "met", "aao": "not_reached"},
+    "scholarly_articles": {"director": "not_met", "aao": "not_met"},
+    "leading_role": {"director": "not_met", "aao": "not_reached"}
+  },
+  "final_merits": "not_reached",
+  "notes": "Lawyer. Bar-association membership is not achievement-based. Article on a legal-tech platform not shown to be a scholarly/professional publication. AAO expressly reserves SCOPS' favourable judging finding and the role claim."
+}

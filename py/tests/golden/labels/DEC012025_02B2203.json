@@ -1,0 +1,14 @@
+{
+  "decision_id": "DEC012025_02B2203",
+  "outcome": "dismissed",
+  "criteria": {
+    "awards": {"director": "not_met", "aao": "not_reached"},
+    "published_material": {"director": "met", "aao": "met"},
+    "judging": {"director": "met", "aao": "met"},
+    "display": {"director": "not_met", "aao": "not_reached"},
+    "leading_role": {"director": "met", "aao": "met"},
+    "high_salary": {"director": "met", "aao": "met"}
+  },
+  "final_merits": "not_met",
+  "notes": "Kazarian stage-2 denial. AAO: 'record supports SCOPS findings' on four criteria; need not determine awards/display (comparable evidence claim). Membership mentioned by SCOPS but never claimed - excluded."
+}

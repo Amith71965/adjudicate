@@ -1,0 +1,446 @@
+{
+ "schema_version": 1,
+ "diagram_type": "erd",
+ "meta": {
+  "title": "Adjudicate corpus schema",
+  "locale": "en",
+  "output": ".archify/erd-corpus-20261110-231052/erd.html",
+  "quality_profile": "standard"
+ },
+ "layout": {
+  "mode": "grid",
+  "gapY": 38,
+  "gapX": 90
+ },
+ "entities": [
+  {
+   "id": "raw_decision",
+   "label": "raw_decision",
+   "tag": "harvest",
+   "row": 0,
+   "col": 0,
+   "width": 250,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "bigint",
+     "key": "pk"
+    },
+    {
+     "name": "url",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "decision_id",
+     "type": "text"
+    },
+    {
+     "name": "category",
+     "type": "text"
+    },
+    {
+     "name": "visa_type",
+     "type": "text"
+    },
+    {
+     "name": "listing_topic",
+     "type": "smallint"
+    },
+    {
+     "name": "issued_year",
+     "type": "smallint"
+    },
+    {
+     "name": "display_date",
+     "type": "date"
+    },
+    {
+     "name": "decision_date",
+     "type": "date"
+    },
+    {
+     "name": "discovered_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "fetched_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "http_status",
+     "type": "smallint"
+    },
+    {
+     "name": "content_type",
+     "type": "text"
+    },
+    {
+     "name": "byte_size",
+     "type": "integer"
+    },
+    {
+     "name": "sha256",
+     "type": "text"
+    },
+    {
+     "name": "content",
+     "type": "bytea"
+    },
+    {
+     "name": "fetch_error",
+     "type": "text"
+    },
+    {
+     "name": "fetch_attempts",
+     "type": "integer"
+    },
+    {
+     "name": "last_attempt_at",
+     "type": "timestamptz"
+    }
+   ]
+  },
+  {
+   "id": "harvest_run",
+   "label": "harvest_run",
+   "tag": "harvest",
+   "row": 1,
+   "col": 0,
+   "width": 250,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "bigint",
+     "key": "pk"
+    },
+    {
+     "name": "topic",
+     "type": "smallint"
+    },
+    {
+     "name": "started_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "finished_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "pages_walked",
+     "type": "integer"
+    },
+    {
+     "name": "discovered_new",
+     "type": "integer"
+    },
+    {
+     "name": "fetched",
+     "type": "integer"
+    },
+    {
+     "name": "failed",
+     "type": "integer"
+    },
+    {
+     "name": "error",
+     "type": "text"
+    },
+    {
+     "name": "total_listed",
+     "type": "integer"
+    },
+    {
+     "name": "reached_end",
+     "type": "boolean"
+    },
+    {
+     "name": "abandoned",
+     "type": "integer"
+    },
+    {
+     "name": "warnings",
+     "type": "integer"
+    }
+   ]
+  },
+  {
+   "id": "decision",
+   "label": "decision",
+   "tag": "parse",
+   "row": 0,
+   "col": 1,
+   "width": 250,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "bigint",
+     "key": "pk"
+    },
+    {
+     "name": "raw_decision_id",
+     "type": "bigint",
+     "key": [
+      "fk",
+      "uk"
+     ],
+     "references": "raw_decision.id"
+    },
+    {
+     "name": "parser_version",
+     "type": "text"
+    },
+    {
+     "name": "kind",
+     "type": "text"
+    },
+    {
+     "name": "kind_reason",
+     "type": "text"
+    },
+    {
+     "name": "words",
+     "type": "integer"
+    },
+    {
+     "name": "outcome",
+     "type": "text"
+    },
+    {
+     "name": "text",
+     "type": "text"
+    },
+    {
+     "name": "repairs",
+     "type": "jsonb"
+    },
+    {
+     "name": "parsed_at",
+     "type": "timestamptz"
+    }
+   ]
+  },
+  {
+   "id": "decision_section",
+   "label": "decision_section",
+   "tag": "parse",
+   "row": 1,
+   "col": 1,
+   "width": 250,
+   "attributes": [
+    {
+     "name": "decision_id",
+     "type": "bigint",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "decision.id"
+    },
+    {
+     "name": "ordinal",
+     "type": "smallint",
+     "key": "pk"
+    },
+    {
+     "name": "kind",
+     "type": "text"
+    },
+    {
+     "name": "title",
+     "type": "text"
+    },
+    {
+     "name": "criterion",
+     "type": "text"
+    },
+    {
+     "name": "start_char",
+     "type": "integer"
+    },
+    {
+     "name": "end_char",
+     "type": "integer"
+    }
+   ]
+  },
+  {
+   "id": "decision_citation",
+   "label": "decision_citation",
+   "tag": "parse",
+   "row": 2,
+   "col": 1,
+   "width": 250,
+   "attributes": [
+    {
+     "name": "decision_id",
+     "type": "bigint",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "decision.id"
+    },
+    {
+     "name": "reporter",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "name",
+     "type": "text"
+    }
+   ]
+  },
+  {
+   "id": "decision_extraction",
+   "label": "decision_extraction",
+   "tag": "extract",
+   "row": 0,
+   "col": 2,
+   "width": 250,
+   "attributes": [
+    {
+     "name": "decision_id",
+     "type": "bigint",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "decision.id"
+    },
+    {
+     "name": "model",
+     "type": "text"
+    },
+    {
+     "name": "final_merits",
+     "type": "text"
+    },
+    {
+     "name": "cost_usd",
+     "type": "numeric(10,6)"
+    },
+    {
+     "name": "error",
+     "type": "text"
+    },
+    {
+     "name": "extracted_at",
+     "type": "timestamptz"
+    }
+   ]
+  },
+  {
+   "id": "criterion_verdict",
+   "label": "criterion_verdict",
+   "tag": "extract",
+   "row": 1,
+   "col": 2,
+   "width": 250,
+   "attributes": [
+    {
+     "name": "decision_id",
+     "type": "bigint",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "decision_extraction.decision_id"
+    },
+    {
+     "name": "criterion",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "director",
+     "type": "text"
+    },
+    {
+     "name": "aao",
+     "type": "text"
+    },
+    {
+     "name": "failed_prong",
+     "type": "text"
+    },
+    {
+     "name": "quote",
+     "type": "text"
+    }
+   ]
+  }
+ ],
+ "relationships": [
+  {
+   "id": "raw-decision",
+   "from": "raw_decision",
+   "to": "decision",
+   "fromCardinality": "one",
+   "toCardinality": "one",
+   "toOptional": true,
+   "label": "parsed into"
+  },
+  {
+   "id": "decision-sections",
+   "from": "decision",
+   "to": "decision_section",
+   "fromCardinality": "one",
+   "toCardinality": "many",
+   "toOptional": true,
+   "identifying": true,
+   "label": "spans"
+  },
+  {
+   "id": "decision-citations",
+   "from": "decision",
+   "to": "decision_citation",
+   "fromCardinality": "one",
+   "toCardinality": "many",
+   "toOptional": true,
+   "identifying": true,
+   "label": "cites"
+  },
+  {
+   "id": "decision-extraction",
+   "from": "decision",
+   "to": "decision_extraction",
+   "fromCardinality": "one",
+   "toCardinality": "one",
+   "toOptional": true,
+   "identifying": true,
+   "label": "LLM attempt"
+  },
+  {
+   "id": "extraction-verdicts",
+   "from": "decision_extraction",
+   "to": "criterion_verdict",
+   "fromCardinality": "one",
+   "toCardinality": "many",
+   "toOptional": true,
+   "identifying": true,
+   "label": "grounded verdicts"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Integrity",
+   "items": [
+    "content present \u21d2 sha256, size, fetched_at, no fetch_error",
+    "decision.text NULL \u21d4 kind = unreadable",
+    "a verdict row only exists for a successful, grounded extraction",
+    "section kind = criterion \u21d4 criterion is set"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Grounding",
+   "items": [
+    "criterion_verdict.quote is verbatim from decision.text",
+    "ungrounded or invalid LLM output is stored as decision_extraction.error, never as a verdict"
+   ]
+  }
+ ]
+}

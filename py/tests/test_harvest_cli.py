@@ -96,10 +96,10 @@ def test_stats_report_counts_and_duplicates(db: psycopg.Connection[tuple[object,
         db.execute(
             "INSERT INTO raw_decision (url, decision_id, category, visa_type, issued_year,"
             " content, sha256, byte_size, fetched_at)"
-            " VALUES (%s, 'x', 'c', %s, %s, %s, CASE WHEN %s::bytea IS NULL THEN NULL"
+            " VALUES (%s, md5(%s), 'c', %s, %s, %s, CASE WHEN %s::bytea IS NULL THEN NULL"
             " ELSE encode(sha256(%s::bytea), 'hex') END, octet_length(%s::bytea),"
             " CASE WHEN %s::bytea IS NULL THEN NULL ELSE now() END)",
-            (url, visa, year, content, content, content, content, content),
+            (url, url, visa, year, content, content, content, content, content),
         )
     s = corpus_stats(db)
     assert (s.total, s.fetched, s.pending) == (4, 3, 1)
