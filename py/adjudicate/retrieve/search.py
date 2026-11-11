@@ -36,6 +36,30 @@ DOMAIN_STOPWORDS = frozenset(
         "aao",
         "appeal",
         "regulation",
+        # plain English stopwords (Postgres drops these too; keep the term list honest)
+        *[
+            "the",
+            "of",
+            "and",
+            "an",
+            "to",
+            "in",
+            "for",
+            "on",
+            "with",
+            "under",
+            "by",
+            "is",
+            "was",
+            "that",
+            "this",
+            "as",
+            "at",
+            "or",
+            "be",
+            "not",
+        ],
+        *["his", "her", "their", "its"],
     }
 )
 
