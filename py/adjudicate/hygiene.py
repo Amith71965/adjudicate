@@ -23,12 +23,18 @@ PII_PATTERNS: dict[str, re.Pattern[str]] = {
     "ssn_bare": re.compile(r"\b\d{9}\b"),
     # USCIS alien registration number: A + 8-9 digits, optionally dash-grouped.
     "a_number": re.compile(r"\bA-?\d{3}-?\d{3}-?\d{2,3}\b", re.IGNORECASE),
-    "email": re.compile(r"\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b"),
+    # Domain labels must start with a letter: excludes retina assets like icon@2x.png.
+    "email": re.compile(r"\b[\w.+-]+@[A-Za-z][\w-]*(?:\.[A-Za-z][\w-]*)+\b"),
     "phone": re.compile(r"(?:\(\d{3}\)\s?|\b\d{3}[-.\s])\d{3}[-.\s]\d{4}\b"),
     "dob": re.compile(
         r"\b(?:DOB|date of birth|born)\b[:\s]+\d{1,2}/\d{1,2}/\d{2,4}", re.IGNORECASE
     ),
 }
+
+
+# Public institutional role mailboxes that appear in harvested government pages.
+# Exact addresses only (case-insensitive) — never a domain wildcard.
+PUBLIC_ROLE_ADDRESSES = frozenset({"uscis.webmaster@dhs.gov"})
 
 
 class UnscannableFileError(RuntimeError):
@@ -53,6 +59,7 @@ def scan_for_pii(text: str) -> list[PiiFinding]:
         PiiFinding(kind, m.group(0))
         for kind, pattern in PII_PATTERNS.items()
         for m in pattern.finditer(text)
+        if not (kind == "email" and m.group(0).lower() in PUBLIC_ROLE_ADDRESSES)
     ]
 
 
