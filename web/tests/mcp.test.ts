@@ -62,7 +62,7 @@ describe("adjudicate MCP server", () => {
 
   it("get_decision surfaces a 404 as an explicit not-found error", async () => {
     const client = await connect(vi.fn<FetchLike>().mockResolvedValue(json({ detail: "no decision X" }, 404)));
-    const res = await client.callTool({ name: "get_decision", arguments: { decision_id: "X" } });
+    const res = await client.callTool({ name: "get_decision", arguments: { decision_id: "NOPE12345" } });
     expect(res.isError).toBe(true);
     expect((res.content as { text: string }[])[0].text).toMatch(/not found/i);
   });
