@@ -179,3 +179,16 @@ def test_merits_sets_are_committed_with_disjoint_held_out_wording() -> None:
     assert texts(dev).isdisjoint(texts(held))
     for c in [*dev, *held]:
         assert scan_for_pii(c.input.model_dump_json()) == []
+
+
+def test_strong_profiles_date_their_evidence_so_acclaim_can_read_as_sustained() -> None:
+    # A merits pass rightly asked "sustained since when?" of undated strong evidence (v2 run).
+    import re
+
+    from adjudicate.synth.merits import generate_merits_set
+
+    for heldout, seed in ((False, 20261116), (True, 20261117)):
+        for c in generate_merits_set(n_pairs=6, seed=seed, heldout=heldout):
+            if c.tier == "strong":
+                for a in c.input.petition.artifacts:
+                    assert re.search(r"\b20[0-2]\d\b", a.description), a.description

@@ -29,79 +29,76 @@ C, K = Criterion, EvidenceKind
 Template = tuple[EvidenceKind, str, str]
 
 # {f}=field, {t}=topic, {o}=organization
-STRONG: dict[Criterion, tuple[Template, Template]] = {  # (dev, held-out)
+STRONG: dict[Criterion, tuple[Template, Template]] = {  # (dev, held-out); dated: "sustained"
     C.AWARDS: (
         (
             K.CERTIFICATE,
             "National academy young investigator medal",
-            "Awarded each year to one researcher nationwide for work on {t}; the award was "
-            "reported "
-            "by two national newspapers.",
+            "Awarded each year to one researcher nationwide; the beneficiary received it in 2019 "
+            "for work on {t}, and two national newspapers reported the award.",
         ),
         (
             K.CERTIFICATE,
             "Gold medal of an international {f} society",
-            "Given once a year to one person from the society's sixty member countries; the "
-            "citation "
-            "names the beneficiary's work on {t}.",
+            "Given once a year to one person from sixty member countries; awarded to the "
+            "beneficiary in 2021, with a citation naming their work on {t} since 2014.",
         ),
     ),
     C.PUBLISHED_MATERIAL: (
         (
             K.ARTICLE,
-            "Feature profile in a national science magazine",
-            "A four-page profile of the beneficiary and their work on {t} in a national magazine "
-            "with a circulation of four hundred thousand.",
+            "Feature profiles in a national science magazine",
+            "A four-page 2024 profile of the beneficiary and their work on {t} in a national "
+            "magazine with a circulation of four hundred thousand, after shorter features in "
+            "2018 and 2021.",
         ),
         (
             K.ARTICLE,
             "Broadcast and newspaper coverage of the beneficiary",
-            "A national public-radio segment and a front-page business-section article, both about "
-            "the beneficiary and the adoption of their {t} work.",
+            "A 2023 national public-radio segment and a 2020 front-page business-section article, "
+            "both about the beneficiary and the adoption of their {t} work.",
         ),
     ),
     C.JUDGING: (
         (
             K.RECORD,
             "Grant panel chair and editorial board service",
-            "Chaired the national science agency's {t} grant panel for two cycles and sits on the "
-            "editorial board of the field's leading journal.",
+            "Chaired the national science agency's {t} grant panel in 2021 and 2023, and has sat "
+            "on the editorial board of the field's leading journal since 2017.",
         ),
         (
             K.RECORD,
             "Program committee chair of the flagship {f} conference",
-            "Served as program chair of the field's largest annual conference, overseeing the "
-            "review "
-            "of about three thousand submissions.",
+            "Program chair of the field's largest annual conference in 2022, overseeing about "
+            "three thousand submissions, after serving as area chair every year since 2016.",
         ),
     ),
     C.ORIGINAL_CONTRIBUTIONS: (
         (
             K.RECORD,
             "Adoption record for the beneficiary's {t} method",
-            "The method runs in production at {o} and four other organizations; the founding paper "
-            "has been cited over two thousand times.",
+            "The method has run in production at {o} since 2018 and at four other organizations "
+            "since; the 2015 founding paper has been cited over two thousand times.",
         ),
         (
             K.RECORD,
             "Industry standard built on the beneficiary's {t} design",
-            "A national standards body adopted the beneficiary's design as the reference approach "
-            "to {t}; six vendors ship products that implement it.",
+            "In 2019 a national standards body adopted the beneficiary's design as the reference "
+            "approach to {t}; six vendors have shipped products implementing it since 2020.",
         ),
     ),
     C.HIGH_SALARY: (
         (
             K.CONTRACT,
-            "Compensation statement and national wage survey",
+            "Compensation statements and national wage survey",
             "Base salary above the 99th percentile for {f} in the national occupational wage "
-            "survey "
-            "for the beneficiary's region.",
+            "survey in every year from 2020 to 2025.",
         ),
         (
             K.CONTRACT,
             "Employment contract and industry pay benchmark",
-            "Total pay is more than three times the median for senior {f} professionals according "
-            "to an independent industry compensation benchmark.",
+            "Total pay has exceeded three times the median for senior {f} professionals in an "
+            "independent industry compensation benchmark each year since 2021.",
         ),
     ),
 }
