@@ -89,6 +89,15 @@ def _pending(conn: Conn, topic: int, min_year: int | None, limit: int | None) ->
     return [str(r[0]) for r in rows]
 
 
+def _already_fetched(conn: Conn, topic: int, min_year: int | None) -> int:
+    row = conn.execute(
+        "SELECT count(*) FROM raw_decision WHERE content IS NOT NULL AND listing_topic = %s"
+        " AND (%s::int IS NULL OR issued_year IS NULL OR issued_year >= %s::int)",
+        (topic, min_year, min_year),
+    ).fetchone()
+    return int(str(row[0])) if row else 0
+
+
 def _abandoned(conn: Conn, topic: int) -> int:
     row = conn.execute(
         "SELECT count(*) FROM raw_decision WHERE content IS NULL AND listing_topic = %s"
@@ -190,6 +199,7 @@ def harvest(
     max_pages: int,
     min_year: int | None = None,
     fetch_limit: int | None = None,
+    target_fetched: int | None = None,
     allowed: Callable[[str], bool] = lambda _url: True,
     log: Callable[[str], None] = lambda _msg: None,
 ) -> HarvestStats:
@@ -205,7 +215,14 @@ def harvest(
     error: str | None = None
     try:
         _walk(client, conn, topic, max_pages, stats, log)
-        pending = _pending(conn, topic, min_year, fetch_limit)
+        limit = fetch_limit
+        if target_fetched is not None:
+            # A target *total* (not a per-run cap) makes repeated runs idempotent.
+            have = _already_fetched(conn, topic, min_year)
+            remaining = max(0, target_fetched - have)
+            log(f"target {target_fetched} fetched: have {have}, need {remaining}")
+            limit = remaining if limit is None else min(limit, remaining)
+        pending = _pending(conn, topic, min_year, limit)
         log(f"{len(pending)} pending PDF(s) to fetch")
         for i, url in enumerate(pending, 1):
             problem = _fetch_one(client, conn, url, allowed)

@@ -25,11 +25,12 @@ down: ## stop infra to free RAM (do this before any render)
 migrate: ## apply pending SQL migrations
 	$(PY)/python -m adjudicate.migrate
 
-# Phase-1 corpus. Polite: robots Crawl-delay (10 s) between every request; ~2-3 h total.
+# Phase-1 corpus. Polite: robots Crawl-delay (10 s) between every request; ~2 h first run.
+# Idempotent: --target-fetched is a total, so a repeat run discovers and downloads nothing.
 harvest: ## harvest modern EB-1A, O-1 and NIW decisions (slow, resumable)
-	$(PY)/python -m adjudicate.harvest --topic 19 --max-pages 8 --min-year 2017 --fetch-limit 450
+	$(PY)/python -m adjudicate.harvest --topic 19 --max-pages 8 --min-year 2017 --target-fetched 450
 	$(PY)/python -m adjudicate.harvest --topic 4 --max-pages 8 --min-year 2017
-	$(PY)/python -m adjudicate.harvest --topic 18 --max-pages 1 --min-year 2017 --fetch-limit 60
+	$(PY)/python -m adjudicate.harvest --topic 18 --max-pages 1 --min-year 2017 --target-fetched 60
 
 harvest-stats: ## print corpus counts (Phase-1 exit criterion)
 	$(PY)/python -m adjudicate.harvest.stats

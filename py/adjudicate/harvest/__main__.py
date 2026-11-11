@@ -39,7 +39,10 @@ def _parse(argv: Sequence[str]) -> argparse.Namespace:
     p.add_argument("--topic", type=int, required=True, choices=sorted(TOPICS))
     p.add_argument("--max-pages", type=_positive_int, required=True)
     p.add_argument("--min-year", type=int, default=None)
-    p.add_argument("--fetch-limit", type=_positive_int, default=None)
+    p.add_argument("--fetch-limit", type=_positive_int, default=None, help="per-run cap")
+    p.add_argument(
+        "--target-fetched", type=_positive_int, default=None, help="total to hold (idempotent)"
+    )
     p.add_argument("--min-interval", type=float, default=None, help="seconds; >= robots delay")
     return p.parse_args(argv)
 
@@ -91,6 +94,7 @@ def main(
                 max_pages=args.max_pages,
                 min_year=args.min_year,
                 fetch_limit=args.fetch_limit,
+                target_fetched=args.target_fetched,
                 allowed=rules.allows,
                 log=say,
             )
