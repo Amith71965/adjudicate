@@ -390,5 +390,5 @@ def test_drift_warnings_are_aggregated_per_page(
     stats = _harvest(site, db, max_pages=1, fetch_limit=1, log=logs.append)
     drift_lines = [m for m in logs if "drift" in m]
     assert len(drift_lines) == 1
-    assert "100 row(s)" in drift_lines[0]
+    assert "98 row(s)" in drift_lines[0]  # 2 of the 100 rows are 2025 decisions, untouched
     assert stats.warnings == 1

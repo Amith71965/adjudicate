@@ -19,7 +19,8 @@ from bs4 import BeautifulSoup, Tag
 from adjudicate.harvest.categories import VisaType, visa_type_for_category
 from adjudicate.harvest.urls import canonical_url
 
-_FILENAME = re.compile(r"^([A-Z]{3})(\d{2})(\d{4})_(\d{2})([A-Z]\d{4,5})\.pdf$")
+# Month is upper-case since ~2013 (SEP152026) and title-case before (Dec132006).
+_FILENAME = re.compile(r"^([A-Za-z]{3})(\d{2})(\d{4})_(\d{2})([A-Z]\d{4,5})\.pdf$")
 _ISSUED_DIR = re.compile(r"^Decisions_Issued_in_(\d{4})$")
 _NO_RESULTS_CLASS = "block-msg--no-results"
 _TOTAL = re.compile(r"\bof\s+([\d,]+)")

@@ -172,9 +172,12 @@ def _walk(
             stats.reached_end = True
             return
         entries = dedupe(page.entries)
-        for problem in page.drift:
+        if page.drift:
             stats.warnings += 1
-            log(f"WARNING date drift: {problem}")
+            log(
+                f"WARNING date drift on page {page_no}: {len(page.drift)} row(s),"
+                f" e.g. {page.drift[0]}"
+            )
         off_topic = Counter(e.visa_type.value for e in entries if e.visa_type is not expected)
         if expected is not None and off_topic:
             stats.warnings += 1
