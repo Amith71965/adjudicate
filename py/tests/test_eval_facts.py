@@ -90,17 +90,39 @@ def test_clean_extraction_becomes_a_petition_for_the_examiner() -> None:
     assert "awards" in client.users[0] and "text" in client.users[0]
 
 
-def test_a_leak_is_retried_once_naming_the_words_then_the_decision_is_dropped() -> None:
+def test_a_leak_is_retried_naming_the_words_then_the_decision_is_dropped() -> None:
     leaky = {"field": "f", "artifacts": [art("judging", "The Director found this insufficient.")]}
-    client = FakeClient(leaky, leaky)
+    client = FakeClient(leaky, leaky, leaky)
     out = extract_facts(client, _decision(["judging"]), index=1)
-    assert out.status == "leaky" and out.petition is None and out.attempts == 2
+    assert out.status == "leaky" and out.petition is None and out.attempts == 3
     assert out.leaks == ["the director", "insufficient"]
     assert "director" in client.users[1] and "insufficient" in client.users[1]
 
     fixed = FakeClient(leaky, {"field": "f", "artifacts": [art("judging", "Review invitations.")]})
     again = extract_facts(fixed, _decision(["judging"]), index=1)
     assert again.status == "ok" and again.attempts == 2
+
+
+def test_a_second_leak_gets_one_last_try_that_forbids_filing_stage() -> None:
+    # full run: 16/145 dropped, mostly "filed in response to the request for evidence" / "on
+    # appeal" — the prompt forbade what an RFE said, not when a document was filed
+    staged = {"field": "f", "artifacts": [
+        art("judging", "Review invitations submitted in response to the request for evidence.")
+    ]}  # fmt: skip
+    clean = {"field": "f", "artifacts": [art("judging", "Two review invitations from 2021.")]}
+    client = FakeClient(staged, staged, clean)
+    out = extract_facts(client, _decision(["judging"]), index=1)
+    assert out.status == "ok" and out.attempts == 3
+    assert client.users[1].startswith(client.users[0])  # attempt 2 unchanged: cache keys hold
+    last = client.users[2].lower()
+    assert "stage" in last and "request for evidence" in last and "appeal" in last
+
+
+def test_missing_criteria_alone_do_not_earn_a_third_try() -> None:
+    sparse = {"field": "f", "artifacts": [art("awards", "A prize in 2020.")]}
+    client = FakeClient(sparse, sparse)
+    out = extract_facts(client, _decision(["awards", "judging"]), index=1)
+    assert out.status == "ok" and out.attempts == 2 and out.placeholders == ["judging"]
 
 
 def test_a_criterion_the_decision_never_describes_gets_a_placeholder_and_is_reported() -> None:

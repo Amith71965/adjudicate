@@ -161,6 +161,17 @@ def extract_facts(
                 f"\n\nYour previous answer was rejected because {'; and '.join(problems)}. "
                 "Answer again following every rule."
             )
+        if leaks:
+            # the attempts above are unchanged so their cache keys hold; this one runs only for
+            # decisions still leaking, and names the rule the system prompt left implicit
+            attempts = 3
+            facts, leaks, missing = ask(
+                f"\n\nYour previous answers were rejected twice for adjudication language: "
+                f"{', '.join(leaks)}. Do not say at what stage any document was filed or "
+                "submitted (initially, in response to a request for evidence, on appeal or on "
+                "motion), and do not mention any finding or conclusion. Describe each document "
+                "only by what it is and what it says. Answer again following every rule."
+            )
     except BudgetExceededError:
         raise  # the spend cap stops the run; it is not one decision's problem
     except LlmError as exc:
