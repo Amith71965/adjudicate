@@ -8,7 +8,7 @@ PY := .venv/bin
 
 
 .PHONY: web
-.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper eval-examiner eval-letters eval-merits eval-real verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
+.PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper eval-examiner eval-letters eval-merits eval-real e2e verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
 
 help: ## list targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
@@ -82,6 +82,10 @@ web: ## serve the web app (examiner at /api/examine) on :3000 (memory: not along
 
 eval-real: ## phase-7: real held-out 2026 decisions (needs `make api` and `make web`; capped, cached)
 	$(PY)/python -m adjudicate.eval
+
+e2e: ## phase-8 gate: browser review flow on a throwaway review log (needs `make up`; not alongside web/api/render)
+	cd web && npx next build
+	scripts/e2e.sh
 
 lint-py:
 	$(PY)/ruff check py
