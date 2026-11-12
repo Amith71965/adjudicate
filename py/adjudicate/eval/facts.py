@@ -13,15 +13,16 @@ import re
 from dataclasses import dataclass, field
 from typing import Protocol
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from adjudicate.eval.realset import TestDecision
-from adjudicate.llm.client import TruncatedError
+from adjudicate.llm.client import BudgetExceededError, LlmError, TruncatedError
 from adjudicate.parse.structure import Criterion
 from adjudicate.schemas.petition import Artifact, EvidenceKind, Petition
 
 MODEL = "anthropic/claude-haiku-5.5"
 PLACEHOLDER = "Not described in the decision."
+FIELD_MAX = 120
 
 # Whole words unless they end in "*" (stems). USCIS's Director is "the director", not a job title
 # ("Director of Engineering") or a "Directory" printout — both seen in pilot extractions.
@@ -69,9 +70,24 @@ class ExtractedArtifact(BaseModel):
     description: str = Field(min_length=1, max_length=1200)
 
 
+def clip_words(text: str, limit: int) -> str:
+    text = " ".join(text.split())
+    if len(text) <= limit:
+        return text
+    cut = text[: limit + 1].rsplit(" ", 1)[0]
+    return (cut if cut else text[:limit]).rstrip(" ,;:(-")
+
+
 class ExtractedFacts(BaseModel):
-    field: str = Field(min_length=1, max_length=120)
+    field: str = Field(min_length=1, max_length=FIELD_MAX)
     artifacts: list[ExtractedArtifact] = Field(min_length=1, max_length=60)
+
+    # a label, not evidence: an overlong one is clipped rather than failing the decision. A
+    # validator, not a wider max_length, so the JSON schema (and every cache key) is unchanged.
+    @field_validator("field", mode="before")
+    @classmethod
+    def _clip_field(cls, v: object) -> object:
+        return clip_words(v, FIELD_MAX) if isinstance(v, str) else v
 
 
 SYSTEM = """You turn a USCIS AAO decision on an EB-1A petition back into the evidence inventory the
@@ -95,12 +111,13 @@ class JsonCompleter(Protocol):
 @dataclass(slots=True)
 class FactsOutcome:
     decision_id: str
-    status: str  # ok | leaky
+    status: str  # ok | leaky | failed
     attempts: int
     petition: Petition | None
     leaks: list[str] = field(default_factory=list)
     soft: list[str] = field(default_factory=list)
     placeholders: list[str] = field(default_factory=list)  # criteria with nothing described
+    error: str | None = None  # why a "failed" extraction failed
 
 
 def _text(facts: ExtractedFacts) -> str:
@@ -131,18 +148,26 @@ def extract_facts(
         return facts, hard_leaks(_text(facts)), [c for c in claimed if c not in given]
 
     attempts = 1
-    facts, leaks, missing = ask("")
-    if leaks or missing:
-        problems = []
-        if leaks:
-            problems.append(f"it used adjudication language: {', '.join(leaks)}")
-        if missing:
-            problems.append(f"it gave nothing for: {', '.join(missing)}")
-        attempts = 2
-        facts, leaks, missing = ask(
-            f"\n\nYour previous answer was rejected because {'; and '.join(problems)}. "
-            "Answer again following every rule."
-        )
+    try:
+        facts, leaks, missing = ask("")
+        if leaks or missing:
+            problems = []
+            if leaks:
+                problems.append(f"it used adjudication language: {', '.join(leaks)}")
+            if missing:
+                problems.append(f"it gave nothing for: {', '.join(missing)}")
+            attempts = 2
+            facts, leaks, missing = ask(
+                f"\n\nYour previous answer was rejected because {'; and '.join(problems)}. "
+                "Answer again following every rule."
+            )
+    except BudgetExceededError:
+        raise  # the spend cap stops the run; it is not one decision's problem
+    except LlmError as exc:
+        # one unparseable answer must not abort 145 decisions: recorded, counted, gated
+        # first line only: validation details echo the model's (real-decision) text
+        reason = (str(exc).splitlines() or [type(exc).__name__])[0][:200]
+        return FactsOutcome(decision.decision_id, "failed", attempts, None, error=reason)
     if leaks:
         return FactsOutcome(decision.decision_id, "leaky", attempts, None, leaks)
     artifacts = [a for a in facts.artifacts if a.criterion.value in claimed]

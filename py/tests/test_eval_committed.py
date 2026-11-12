@@ -28,11 +28,12 @@ def test_the_split_held_on_every_retrieved_passage(report: dict) -> None:  # typ
 def test_coverage_is_honest(report: dict) -> None:  # type: ignore[type-arg]
     facts, counts = report["facts"], report["score"]["counts"]
     assert facts["leaky"] <= 0.10 * report["test_decisions"]
+    assert facts["failed"] <= 0.05 * report["test_decisions"]
     assert counts["unpredicted"] <= 0.05 * counts["labelled"]
 
 
 def test_results_carry_no_fact_text(report: dict) -> None:  # type: ignore[type-arg]
-    allowed = {"decision_id", "outcome", "status", "leaks", "placeholders", "rfe_risk",
+    allowed = {"decision_id", "outcome", "status", "leaks", "error", "placeholders", "rfe_risk",
                "complete", "criteria"}  # fmt: skip
     for d in report["decisions"]:
         assert set(d) <= allowed

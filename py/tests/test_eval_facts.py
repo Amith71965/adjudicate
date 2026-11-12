@@ -154,3 +154,38 @@ def test_a_truncated_answer_is_retried_once_with_a_larger_output_budget() -> Non
     client = Truncating()
     out = extract_facts(client, _decision(["judging"]), index=1)
     assert out.status == "ok" and client.budgets == [6000, 16000]
+
+
+def test_a_long_field_label_is_clipped_at_a_word_boundary() -> None:
+    # full run: a 130-character field label failed validation twice and stopped the run
+    long_field = "Television direction and production " * 6 + "(travel programming)"
+    client = FakeClient({"field": long_field, "artifacts": [art("judging", "Two reviews.")]})
+    out = extract_facts(client, _decision(["judging"]), index=1)
+    assert out.petition is not None
+    assert len(out.petition.field) <= 120
+    assert out.petition.field.startswith("Television direction and production")
+    assert not out.petition.field.endswith(" ")
+
+
+class FailingClient:
+    def __init__(self, exc: Exception) -> None:
+        self.exc = exc
+
+    def complete_json(self, *args: Any, **kwargs: Any) -> Any:
+        raise self.exc
+
+
+def test_an_extraction_error_is_recorded_for_that_decision_not_raised() -> None:
+    from adjudicate.llm.client import LlmError
+
+    client = FailingClient(LlmError("invalid output after retry"))
+    out = extract_facts(client, _decision(["judging"]), index=1)
+    assert out.status == "failed" and out.petition is None
+    assert out.error is not None and "invalid output" in out.error
+
+
+def test_a_budget_stop_still_stops_the_run() -> None:
+    from adjudicate.llm.client import BudgetExceededError
+
+    with pytest.raises(BudgetExceededError):
+        extract_facts(FailingClient(BudgetExceededError("cap")), _decision(["judging"]), index=1)

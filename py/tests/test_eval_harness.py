@@ -145,3 +145,17 @@ def test_run_fits_the_threshold_on_decisions_before_the_calibration_end() -> Non
     cal = report["score"]["calibrated"]  # type: ignore[index]
     assert cal["fit_decisions"] == 1 and cal["test_decisions"] == 1 and cal["threshold"] == 0.9
     assert report["calibration_end"] == "2026-07-01"
+
+
+def test_a_failed_extraction_is_counted_and_scored_as_unpredicted() -> None:
+    split = Split(CUT, (decision("D1", [("awards", "not_met")]),), frozenset({"OLD1"}))
+    report = run(
+        split,
+        facts=lambda d, i: FactsOutcome("D1", "failed", 1, None, error="invalid output"),
+        examine=lambda p, b: pytest.fail("a failed extraction must not be examined"),
+        chunk_decisions=lambda ids: {},
+    )
+    assert report["facts"]["failed"] == 1 and report["facts"]["ok"] == 0
+    assert report["score"]["counts"]["unpredicted"] == 1
+    assert report["decisions"][0]["status"] == "failed"
+    assert report["decisions"][0]["error"] == "invalid output"

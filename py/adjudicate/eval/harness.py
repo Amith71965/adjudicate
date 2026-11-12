@@ -125,9 +125,12 @@ def run(
     decisions: list[Json] = []
     checked = 0
     llm: object = {}
-    counts = {"ok": 0, "leaky": 0, "retried": 0, "placeholders": 0, "with_soft_terms": 0}
+    counts = {"ok": 0, "leaky": 0, "failed": 0, "retried": 0, "placeholders": 0,
+              "with_soft_terms": 0}  # fmt: skip
     for d, f, response in results():
-        counts["ok" if f.status == "ok" else "leaky"] += 1
+        if f.status not in ("ok", "leaky", "failed"):
+            raise HarnessError(f"{d.decision_id}: unknown facts status {f.status!r}")
+        counts[f.status] += 1
         counts["retried"] += f.attempts > 1
         counts["placeholders"] += len(f.placeholders)
         counts["with_soft_terms"] += bool(f.soft)
@@ -151,6 +154,7 @@ def run(
                 "outcome": d.outcome,
                 "status": "examined" if result is not None else f.status,
                 "leaks": f.leaks,
+                "error": f.error,
                 "placeholders": f.placeholders,
                 "rfe_risk": _r4(result.get("rfe_risk") if result else None),  # type: ignore[arg-type]
                 "complete": result.get("complete") if result else None,
