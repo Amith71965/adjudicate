@@ -8,6 +8,14 @@ cd "$(dirname "$0")/.."
 PY=.venv/bin
 LOGS=$(mktemp -d "${TMPDIR:-/tmp}/adjudicate-e2e.XXXXXX")
 
+# A leftover `make api` or `next start` on these ports would answer the health checks with the
+# real review log behind it, and the test would sign off and export into it irreversibly.
+for port in 8001 3100; do
+  if lsof -nP -iTCP:$port -sTCP:LISTEN >/dev/null 2>&1; then
+    echo "e2e: port $port is already in use; stop that server first" >&2; exit 1
+  fi
+done
+
 $PY/python -m adjudicate.migrate >/dev/null # corpus tables at the latest schema
 SANDBOX=$($PY/python -m adjudicate.e2e create)
 pids=()
@@ -29,5 +37,12 @@ for url in http://127.0.0.1:8001/health http://127.0.0.1:3100/; do
   for _ in $(seq 1 90); do curl -fs -o /dev/null "$url" 2>/dev/null && break || sleep 1; done
   curl -fsS -o /dev/null "$url" || { echo "e2e: $url never came up (see $LOGS)" >&2; exit 1; }
 done
+
+for p in "${pids[@]}"; do kill -0 "$p" 2>/dev/null || { echo "e2e: a server exited (see $LOGS)" >&2; exit 1; }; done
+schema=$(curl -fs http://127.0.0.1:8001/health | $PY/python -c 'import json,sys; print(json.load(sys.stdin)["review_log_schema"])' || true)
+case "$schema" in
+  e2e_*) ;;
+  *) echo "e2e: the API's review log is in schema '$schema', not a sandbox; refusing to run" >&2; exit 1 ;;
+esac
 
 (cd web && E2E_BASE_URL=http://127.0.0.1:3100 npx playwright test)

@@ -1,7 +1,7 @@
 import { defineConfig } from "@playwright/test";
 
-// Run through `make e2e`: it clones the corpus database, starts the API and `next start`
-// against the clone, runs this suite, then stops everything and drops the clone.
+// Run through `make e2e`: it creates a throwaway review-log schema, starts the API and
+// `next start` bound to it, runs this suite, then stops everything and drops the schema.
 export default defineConfig({
   testDir: "./e2e",
   workers: 1,

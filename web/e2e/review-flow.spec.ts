@@ -93,4 +93,19 @@ test("an attorney reviews every objection before the memo can be exported", asyn
   await expect(page.getByText("1 objection still open")).toBeVisible();
   await expect(page.getByRole("link", { name: /export review memo/i })).toHaveCount(0);
   expect((await request.get(`/api/cases/${CASE}/export`)).status()).toBe(409);
+
+  // a second tab that loaded the same state cannot overwrite the first tab's decision
+  const stale = await page.context().newPage();
+  await stale.goto(`/cases/${CASE}`);
+  const openHere = page.locator('[data-testid="objection"][data-status="open"]').first();
+  await openHere.getByLabel("Attorney note").fill("Missing page added as exhibit 3a.");
+  await openHere.getByRole("button", { name: "Resolve" }).click();
+  await expect(page.getByTestId("open-count")).toHaveText("0");
+  const openThere = stale.locator('[data-testid="objection"][data-status="open"]').first();
+  await openThere.getByLabel("Attorney note").fill("Dismissing from the other tab.");
+  await openThere.getByRole("button", { name: "Dismiss" }).click();
+  // refused either by the action's reload ("already resolved") or by the API's last-event check
+  await expect(stale.locator('[data-testid="objection"] [role="alert"]')).toContainText(/already resolved|changed in another tab/);
+  await page.reload();
+  await expect(page.getByRole("region", { name: "Version history" })).not.toContainText("Dismissing from the other tab.");
 });

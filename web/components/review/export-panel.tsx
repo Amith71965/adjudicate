@@ -1,10 +1,9 @@
 import { ATTESTATION } from "@/lib/review/actions-core";
 import type { ReviewState } from "@/lib/review/state";
-
-type Action = (form: FormData) => Promise<void>;
+import { ActionForm, type ReviewAction } from "./action-form";
 
 /** Sign-off and export. The server re-checks the same gate on export (409 otherwise). */
-export function ExportPanel({ caseId, state, signoff }: { caseId: string; state: ReviewState; signoff: Action }) {
+export function ExportPanel({ caseId, state, signoff, reviewer }: { caseId: string; state: ReviewState; signoff: ReviewAction; reviewer?: string }) {
   const { gate } = state;
   return (
     <section aria-label="Sign-off and export" className="rounded-lg border border-[var(--line)] bg-[var(--card)] p-5">
@@ -29,10 +28,10 @@ export function ExportPanel({ caseId, state, signoff }: { caseId: string; state:
           ))}
         </ul>
       )}
-      <form action={signoff} className="mt-5 space-y-3 border-t border-[var(--line)] pt-4">
+      <ActionForm action={signoff} className="mt-5 space-y-3 border-t border-[var(--line)] pt-4">
         <label className="block text-sm">
           <span className="font-mono text-xs text-[var(--muted)]">Your full name</span>
-          <input name="actor" required maxLength={80} autoComplete="name" className="mt-1 block w-full rounded border border-[var(--line)] bg-[var(--paper)] p-2" />
+          <input name="actor" defaultValue={reviewer} required maxLength={80} autoComplete="name" className="mt-1 block w-full rounded border border-[var(--line)] bg-[var(--paper)] p-2" />
         </label>
         <label className="flex gap-2 text-sm leading-snug">
           <input type="checkbox" name="attest" required className="mt-1" />
@@ -45,7 +44,8 @@ export function ExportPanel({ caseId, state, signoff }: { caseId: string; state:
           Sign off
         </button>
         {state.open > 0 && <p className="text-xs text-[var(--muted)]">Resolve or dismiss every item before signing off.</p>}
-      </form>
+        <p className="text-xs text-[var(--muted)]">Names are self-reported: this prototype has no authentication.</p>
+      </ActionForm>
     </section>
   );
 }

@@ -1,8 +1,7 @@
 import type { ReviewItem } from "@/lib/review/cases";
 import { citeHref, itemAnchor, itemTitle, label, pct } from "@/lib/review/format";
 import type { ItemState } from "@/lib/review/state";
-
-type Action = (form: FormData) => Promise<void>;
+import { ActionForm, type ReviewAction } from "./action-form";
 
 const KIND = {
   prong: { tag: "AI objection", tone: "text-[var(--red)]" },
@@ -66,7 +65,7 @@ function Body({ caseId, item }: { caseId: string; item: ReviewItem }) {
   );
 }
 
-export function ObjectionCard({ caseId, item, state, dispose }: { caseId: string; item: ReviewItem; state: ItemState; dispose: Action }) {
+export function ObjectionCard({ caseId, item, state, dispose }: { caseId: string; item: ReviewItem; state: ItemState; dispose: ReviewAction }) {
   const kind = KIND[item.kind];
   const noteId = `note-${itemAnchor(item.id)}`;
   const done = state.status !== "open";
@@ -88,7 +87,7 @@ export function ObjectionCard({ caseId, item, state, dispose }: { caseId: string
         )}
       </header>
       <Body caseId={caseId} item={item} />
-      <form action={dispose} className="mt-4 border-t border-[var(--line)] pt-4">
+      <ActionForm action={dispose} className="mt-4 border-t border-[var(--line)] pt-4">
         <input type="hidden" name="item_id" value={item.id} />
         {done && (
           <div className="mb-3 text-sm">
@@ -120,7 +119,7 @@ export function ObjectionCard({ caseId, item, state, dispose }: { caseId: string
             </>
           )}
         </div>
-      </form>
+      </ActionForm>
     </article>
   );
 }

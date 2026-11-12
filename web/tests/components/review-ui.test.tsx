@@ -161,3 +161,53 @@ describe("History", () => {
     expect(screen.getByText(/no review actions yet/i)).toBeTruthy();
   });
 });
+
+// --- phase-8 review fixes ----------------------------------------------------------------------
+import userEvent from "@testing-library/user-event";
+
+describe("refused actions", () => {
+  it("show the reason next to the form and keep the attorney's note", async () => {
+    const refuse = async () => ({ error: "prong:judging/whole is already resolved" });
+    render(<ObjectionCard caseId="P01" item={PRONG} state={{ status: "open" }} dispose={refuse} />);
+    const note = screen.getByLabelText(/attorney note/i) as HTMLTextAreaElement;
+    await userEvent.type(note, "Exhibit 14 has the reports.");
+    await userEvent.click(screen.getByRole("button", { name: "Resolve" }));
+    expect((await screen.findByRole("alert")).textContent).toMatch(/already resolved/);
+    expect((screen.getByLabelText(/attorney note/i) as HTMLTextAreaElement).value).toBe("Exhibit 14 has the reports.");
+  });
+});
+
+describe("PassageDrawer as a dialog", () => {
+  const passage = {
+    chunk_id: 1, decision_id: "JAN212026_02B2203", url: "https://www.uscis.gov/x.pdf", section_kind: "criterion",
+    criterion: "judging", body: "Petitioners must show that they actually participated in judging.", start_char: 0, end_char: 9,
+  };
+
+  it("is modal and takes focus when it opens", () => {
+    render(<PassageDrawer passage={passage} quote="Petitioners must show" closeHref="/cases/P01" />);
+    const dialog = screen.getByRole("dialog");
+    expect(dialog.getAttribute("aria-modal")).toBe("true");
+    expect(document.activeElement).toBe(dialog);
+  });
+
+  it("closes on Escape", async () => {
+    render(<PassageDrawer passage={passage} quote="Petitioners must show" closeHref="/cases/P01" />);
+    let closed = false;
+    screen.getByRole("link", { name: "Close" }).addEventListener("click", (e) => { e.preventDefault(); closed = true; });
+    await userEvent.keyboard("{Escape}");
+    expect(closed).toBe(true);
+  });
+
+  it("links only to an https source", () => {
+    render(<PassageDrawer passage={{ ...passage, url: "javascript:alert(1)" }} quote="Petitioners must show" closeHref="/cases/P01" />);
+    expect(screen.queryByRole("link", { name: /JAN212026_02B2203/ })).toBeNull();
+    expect(screen.getByText("JAN212026_02B2203")).toBeTruthy();
+  });
+});
+
+describe("sign-off name", () => {
+  it("defaults to the reviewer the actions are logged under", () => {
+    render(<ExportPanel caseId="P01" state={reviewState([PRONG], [ev(1, "resolve", PRONG.id)])} signoff={noop} reviewer="Attorney A" />);
+    expect((screen.getByLabelText(/your full name/i) as HTMLInputElement).value).toBe("Attorney A");
+  });
+});

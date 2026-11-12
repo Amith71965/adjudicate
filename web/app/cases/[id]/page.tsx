@@ -82,7 +82,7 @@ async function CaseView({ params, searchParams }: Pick<PageProps<"/cases/[id]">,
           ))}
         </section>
         <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
-          <ExportPanel caseId={c.id} state={state} signoff={signOff.bind(null, c.id)} />
+          <ExportPanel caseId={c.id} state={state} signoff={signOff.bind(null, c.id)} reviewer={reviewer} />
           <section aria-label="Risk by criterion" className="rounded-lg border border-[var(--line)] bg-[var(--card)] p-5">
             <h2 className="mb-4 font-serif text-xl">Risk by criterion</h2>
             <RiskBars risks={c.criterion_risk} />
