@@ -1,6 +1,7 @@
-"""The end-to-end review flow runs against a throwaway clone of the corpus database: the review
-log is append-only, so a test run must never write into the real one. Only e2e_* clones on
-the local compose database may be created or dropped."""
+"""The end-to-end review flow writes to a throwaway review log, never the real one: the log is
+append-only, so a browser test that wrote there could never be cleaned up. The sandbox is a
+schema `e2e_<random>` holding its own review_event table; the API reaches it through the
+connection's search_path, while passages still come from the real corpus tables."""
 
 from __future__ import annotations
 
@@ -8,36 +9,49 @@ from pathlib import Path
 
 import psycopg
 import pytest
-from psycopg.conninfo import conninfo_to_dict
 
 from adjudicate.db import UnsafeDatabaseError
-from adjudicate.e2e import clone_database, drop_database
+from adjudicate.e2e import RESOLVED_SCHEMA, create_review_sandbox, drop_review_sandbox
 from adjudicate.migrate import apply_migrations
 
 pytestmark = pytest.mark.db
 REPO_MIGRATIONS = Path(__file__).resolve().parents[2] / "db" / "migrations"
+INSERT = (
+    "INSERT INTO review_event (case_id, item_id, action, note, actor)"
+    " VALUES ('P01', 'prong:judging/whole', 'resolve', 'note', 'A')"
+)
 
 
-def test_a_clone_has_the_template_data_and_is_dropped_after(scratch_db_url: str) -> None:
+@pytest.fixture
+def db_url(scratch_db_url: str) -> str:
     with psycopg.connect(scratch_db_url, autocommit=True) as conn:
         apply_migrations(conn, REPO_MIGRATIONS)
-    template = str(conninfo_to_dict(scratch_db_url)["dbname"])
-    url = clone_database(scratch_db_url, template)
+    return scratch_db_url
+
+
+def test_a_sandbox_has_its_own_review_log_and_is_dropped_after(db_url: str) -> None:
+    sandbox = create_review_sandbox(db_url)
     try:
-        assert str(conninfo_to_dict(url)["dbname"]).startswith("e2e_")
-        with psycopg.connect(url) as conn:
-            assert conn.execute("SELECT count(*) FROM review_event").fetchone() == (0,)
+        with psycopg.connect(sandbox, autocommit=True) as conn:
+            schema = conn.execute(RESOLVED_SCHEMA).fetchone()
+            assert schema is not None and str(schema[0]).startswith("e2e_")
+            conn.execute(INSERT)
+            with pytest.raises(psycopg.Error, match="append-only"):
+                conn.execute("DELETE FROM review_event")  # same guarantees as the real log
+            assert conn.execute("SELECT count(*) FROM schema_migrations").fetchone()  # corpus side
     finally:
-        drop_database(url)
-    with pytest.raises(psycopg.OperationalError):
-        psycopg.connect(url).close()
+        drop_review_sandbox(sandbox)
+    with psycopg.connect(db_url) as conn:
+        assert conn.execute("SELECT count(*) FROM public.review_event").fetchone() == (0,)
+        left = conn.execute("SELECT count(*) FROM pg_namespace WHERE nspname LIKE 'e2e_%'")
+        assert left.fetchone() == (0,)
 
 
-def test_only_e2e_clones_can_be_dropped(scratch_db_url: str) -> None:
-    with pytest.raises(UnsafeDatabaseError, match="e2e_"):
-        drop_database(scratch_db_url)
+def test_only_sandboxes_can_be_dropped(db_url: str) -> None:
+    with pytest.raises(UnsafeDatabaseError, match="sandbox"):
+        drop_review_sandbox(db_url)
 
 
 def test_remote_databases_are_refused() -> None:
     with pytest.raises(UnsafeDatabaseError):
-        clone_database("postgresql://u:p@db.example.com:5432/adjudicate", "adjudicate")
+        create_review_sandbox("postgresql://u:p@db.example.com:5432/adjudicate")
