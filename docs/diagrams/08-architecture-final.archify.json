@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Adjudicate — architecture as built (phase 8)",
+    "output": ".archify/architecture-final-20261112-162835/architecture-final.html",
+    "quality_profile": "showcase",
+    "locale": "en"
+  },
+  "components": [
+    {
+      "id": "attorney",
+      "type": "external",
+      "label": "Attorney",
+      "sublabel": "human in the loop",
+      "pos": [
+        40,
+        60
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "ui",
+      "type": "frontend",
+      "label": "Review UI",
+      "sublabel": "Next.js · server actions",
+      "pos": [
+        250,
+        60
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "examiner",
+      "type": "backend",
+      "label": "Examiner",
+      "sublabel": "/api/examine · AI SDK",
+      "pos": [
+        460,
+        200
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "mcp",
+      "type": "backend",
+      "label": "MCP server",
+      "sublabel": "corpus as tools",
+      "pos": [
+        670,
+        200
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "FastAPI",
+      "sublabel": "search · passages · log",
+      "pos": [
+        880,
+        60
+      ],
+      "size": [
+        130,
+        60
+      ],
+      "tag": "local embeddings"
+    },
+    {
+      "id": "llm",
+      "type": "cloud",
+      "label": "OpenRouter",
+      "sublabel": "Claude Haiku · cached",
+      "pos": [
+        250,
+        360
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "agents",
+      "type": "external",
+      "label": "Other agents",
+      "sublabel": "any MCP client",
+      "pos": [
+        670,
+        360
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "runs",
+      "type": "database",
+      "label": "Recorded runs",
+      "sublabel": "committed JSON",
+      "pos": [
+        40,
+        200
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "eval",
+      "type": "backend",
+      "label": "Eval harness",
+      "sublabel": "held-out 2026 AAO",
+      "pos": [
+        460,
+        360
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "Postgres 17",
+      "sublabel": "corpus · review log",
+      "pos": [
+        880,
+        200
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "harvest",
+      "type": "backend",
+      "label": "Harvest + parse",
+      "sublabel": "Python batch",
+      "pos": [
+        1090,
+        200
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "uscis",
+      "type": "external",
+      "label": "USCIS AAO",
+      "sublabel": "non-precedent PDFs",
+      "pos": [
+        1090,
+        60
+      ],
+      "size": [
+        130,
+        60
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "TypeScript · Next.js",
+      "wraps": [
+        "ui",
+        "examiner",
+        "mcp"
+      ]
+    },
+    {
+      "kind": "security-group",
+      "label": "OrbStack · docker compose",
+      "wraps": [
+        "pg"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "attorney-ui",
+      "from": "attorney",
+      "to": "ui",
+      "label": "disposes, signs off",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ui-api",
+      "from": "ui",
+      "to": "api",
+      "label": "review log, passages",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ui-runs",
+      "from": "ui",
+      "to": "runs",
+      "label": "reads cases"
+    },
+    {
+      "id": "examiner-runs",
+      "from": "examiner",
+      "to": "runs",
+      "label": "records",
+      "variant": "dashed"
+    },
+    {
+      "id": "examiner-api",
+      "from": "examiner",
+      "to": "api",
+      "label": "search, before cutoff",
+      "variant": "emphasis"
+    },
+    {
+      "id": "examiner-llm",
+      "from": "examiner",
+      "to": "llm",
+      "label": "structured output"
+    },
+    {
+      "id": "agents-mcp",
+      "from": "agents",
+      "to": "mcp",
+      "label": "MCP"
+    },
+    {
+      "id": "mcp-api",
+      "from": "mcp",
+      "to": "api",
+      "label": "HTTP"
+    },
+    {
+      "id": "api-pg",
+      "from": "api",
+      "to": "pg",
+      "label": "SQL + ANN"
+    },
+    {
+      "id": "eval-examiner",
+      "from": "eval",
+      "to": "examiner",
+      "label": "HTTP, verdict hidden",
+      "variant": "dashed"
+    },
+    {
+      "id": "eval-pg",
+      "from": "eval",
+      "to": "pg",
+      "label": "test split"
+    },
+    {
+      "id": "harvest-pg",
+      "from": "harvest",
+      "to": "pg",
+      "label": "upsert"
+    },
+    {
+      "id": "uscis-harvest",
+      "from": "uscis",
+      "to": "harvest",
+      "label": "crawl-delay 10 s",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Attorney in the loop",
+      "items": [
+        "Each AI item is resolved or dismissed with a note",
+        "Export is a 409 until signed off after the last change",
+        "The append-only review log is the version history"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Grounding",
+      "items": [
+        "Every objection cites retrieved AAO passages",
+        "One click opens the passage, quote highlighted",
+        "Unreviewable prongs are shown, never passed"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Honest evaluation",
+      "items": [
+        "145 AAO decisions after a temporal cutoff",
+        "Score printed beside its baselines",
+        "CI fails if it regresses"
+      ]
+    }
+  ]
+}
