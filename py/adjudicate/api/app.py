@@ -11,8 +11,9 @@ from enum import StrEnum
 from typing import Annotated
 
 import psycopg
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Path, Query
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field, model_validator
 
 from adjudicate.parse.structure import Criterion, SectionKind
 from adjudicate.retrieve.chunk import CHUNKABLE_KINDS
@@ -195,7 +196,68 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
             ],
         }
 
+    @app.get("/cases/{case_id}/events")
+    def case_events(case_id: CaseId) -> dict[str, object]:
+        with db() as conn:
+            rows = conn.execute(
+                "SELECT id, case_id, item_id, action, note, actor, created_at FROM review_event"
+                " WHERE case_id = %s ORDER BY id",
+                (case_id,),
+            ).fetchall()
+        return {"case_id": case_id, "events": [_event(r) for r in rows]}
+
+    @app.post("/cases/{case_id}/events", status_code=201)
+    def append_event(case_id: CaseId, event: ReviewEventIn) -> dict[str, object]:
+        with db() as conn:
+            row = conn.execute(
+                "INSERT INTO review_event (case_id, item_id, action, note, actor)"
+                " VALUES (%s, %s, %s, %s, %s)"
+                " RETURNING id, case_id, item_id, action, note, actor, created_at",
+                (case_id, event.item_id, event.action, event.note, event.actor),
+            ).fetchone()
+        if row is None:  # INSERT ... RETURNING always yields the row
+            raise HTTPException(500, "event was not recorded")
+        return _event(row)
+
     return app
+
+
+CaseId = Annotated[str, Path(pattern=r"^P\d{2,4}$")]
+
+
+class ReviewAction(StrEnum):
+    RESOLVE = "resolve"
+    DISMISS = "dismiss"
+    REOPEN = "reopen"
+    SIGNOFF = "signoff"
+    EXPORT = "export"
+
+
+ITEM_ACTIONS = {ReviewAction.RESOLVE, ReviewAction.DISMISS, ReviewAction.REOPEN}
+
+
+class ReviewEventIn(BaseModel):
+    """One entry in the attorney's review log; mirrors the review_event CHECKs."""
+
+    item_id: str | None = Field(default=None, pattern=r"^[a-z]+:[a-z0-9_/:-]{1,80}$")
+    action: ReviewAction
+    note: str = Field(max_length=2000)
+    actor: str = Field(max_length=80)
+
+    @model_validator(mode="after")
+    def _scoped_and_accountable(self) -> ReviewEventIn:
+        if len(self.note.strip()) < 3:
+            raise ValueError("an attorney note is required")
+        if not self.actor.strip():
+            raise ValueError("actor is required")
+        if (self.action in ITEM_ACTIONS) != (self.item_id is not None):
+            raise ValueError("resolve/dismiss/reopen name an item; signoff/export do not")
+        return self
+
+
+def _event(row: tuple[object, ...]) -> dict[str, object]:
+    keys = ("id", "case_id", "item_id", "action", "note", "actor", "created_at")
+    return dict(zip(keys, row, strict=True))
 
 
 def production_app() -> FastAPI:  # pragma: no cover — wired for `uvicorn --factory`
