@@ -21,7 +21,7 @@ describe("disposition", () => {
   const ok = { item_id: "prong:judging/whole", action: "resolve", note: "  Added the review reports.  " };
 
   it("builds the event from the form and the reviewer", () => {
-    expect(disposition(form(ok), OPEN, "Attorney A")).toEqual({ item_id: "prong:judging/whole", action: "resolve", note: "Added the review reports.", actor: "Attorney A" });
+    expect(disposition(form(ok), OPEN, "Attorney A")).toEqual({ item_id: "prong:judging/whole", action: "resolve", note: "Added the review reports.", actor: "Attorney A", expected_last_id: 0 });
   });
 
   it.each([
@@ -43,7 +43,7 @@ describe("disposition", () => {
 describe("signoffEvent", () => {
   it("records the attestation under the attorney's typed name", () => {
     const e = signoffEvent(form({ actor: " Attorney A ", attest: "on" }), DONE);
-    expect(e).toMatchObject({ item_id: null, action: "signoff", actor: "Attorney A" });
+    expect(e).toMatchObject({ item_id: null, action: "signoff", actor: "Attorney A", expected_last_id: 1 }); // the log it saw
     expect(e.note).toMatch(/take responsibility/);
   });
 

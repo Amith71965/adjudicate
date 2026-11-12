@@ -56,6 +56,15 @@ describe("buildCase", () => {
     expect(() => buildCase(PETITION, bad, { model: "m", cache_version: "v" })).toThrow(/no citation/);
   });
 
+  it.each([
+    [{ ...CITE, quote: "  " }, /quote/],
+    [{ ...CITE, chunk_id: 0 }, /chunk/],
+    [{ ...CITE, decision_id: "" }, /decision/],
+  ])("refuses a citation that cannot be checked: %j", (cite, error) => {
+    const bad = { ...RUN, reviews: [{ ...RUN.reviews[0], citations: [cite] }] };
+    expect(() => buildCase(PETITION, bad, { model: "m", cache_version: "v" })).toThrow(error);
+  });
+
   it("refuses a run that belongs to another petition", () => {
     expect(() => buildCase(PETITION, { ...RUN, petition_id: "P91" }, { model: "m", cache_version: "v" })).toThrow(/P91/);
   });

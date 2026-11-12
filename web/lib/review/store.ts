@@ -6,6 +6,8 @@
 import type { ReviewAction, ReviewEvent } from "./state";
 
 export class ReviewStoreError extends Error {}
+/** The log moved on since the caller read it (another tab, a retried request): reload, never append. */
+export class ReviewConflictError extends ReviewStoreError {}
 
 export interface Passage {
   chunk_id: number;
@@ -23,6 +25,8 @@ export interface NewEvent {
   action: ReviewAction;
   note: string;
   actor: string;
+  /** id of the last event the caller saw (0: none); the API refuses the write if the log moved */
+  expected_last_id: number;
 }
 
 export interface ReviewStore {
@@ -42,6 +46,7 @@ async function call(fetchFn: typeof fetch, url: string, init: RequestInit, timeo
     throw new ReviewStoreError(`request to ${url} failed: ${err instanceof Error ? err.message : String(err)}`);
   }
   const text = await res.text();
+  if (res.status === 409) throw new ReviewConflictError(`${url} answered 409: ${text.slice(0, 300)}`);
   if (!res.ok) throw new ReviewStoreError(`${url} answered ${res.status}: ${text.slice(0, 300)}`);
   try {
     return JSON.parse(text);

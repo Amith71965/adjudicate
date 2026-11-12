@@ -4,7 +4,7 @@
  * like an empty history, and a quote that is not in its passage is flagged, not hidden.
  */
 import { describe, expect, it } from "vitest";
-import { httpReviewStore, locateQuote, ReviewStoreError } from "@/lib/review/store";
+import { httpReviewStore, locateQuote, ReviewConflictError, ReviewStoreError } from "@/lib/review/store";
 
 type Call = { url: string; init?: RequestInit };
 function fakeFetch(responses: Response[]) {
@@ -30,10 +30,10 @@ describe("httpReviewStore", () => {
 
   it("appends an event with a JSON POST", async () => {
     const { fn, calls } = fakeFetch([json(EVENT, 201)]);
-    const out = await httpReviewStore("http://api", fn).append("P01", { item_id: EVENT.item_id, action: "resolve", note: EVENT.note, actor: "A" });
+    const out = await httpReviewStore("http://api", fn).append("P01", { item_id: EVENT.item_id, action: "resolve", note: EVENT.note, actor: "A", expected_last_id: 0 });
     expect(out).toEqual(EVENT);
     expect(calls[0].init?.method).toBe("POST");
-    expect(JSON.parse(String(calls[0].init?.body))).toMatchObject({ action: "resolve", item_id: EVENT.item_id });
+    expect(JSON.parse(String(calls[0].init?.body))).toMatchObject({ action: "resolve", item_id: EVENT.item_id, expected_last_id: 0 });
   });
 
   it("refuses to build a URL from a case id that is not one", async () => {
@@ -47,8 +47,17 @@ describe("httpReviewStore", () => {
     await expect(httpReviewStore("http://api", down.fn).events("P01")).rejects.toThrow(/503/);
     const refused = fakeFetch([json({ detail: "an attorney note is required" }, 422)]);
     await expect(
-      httpReviewStore("http://api", refused.fn).append("P01", { item_id: null, action: "signoff", note: "", actor: "A" }),
+      httpReviewStore("http://api", refused.fn).append("P01", { item_id: null, action: "signoff", note: "", actor: "A", expected_last_id: 0 }),
     ).rejects.toThrow(/422.*note/);
+  });
+
+  it("names a stale write as a conflict, distinct from an outage", async () => {
+    const { fn } = fakeFetch([json({ detail: "the review log changed" }, 409)]);
+    const err = await httpReviewStore("http://api", fn)
+      .append("P01", { item_id: EVENT.item_id, action: "resolve", note: "n o t e", actor: "A", expected_last_id: 0 })
+      .catch((e: unknown) => e);
+    expect(err).toBeInstanceOf(ReviewConflictError);
+    expect(err).toBeInstanceOf(ReviewStoreError);
   });
 
   it("rejects a malformed body", async () => {

@@ -11,6 +11,9 @@ export const ATTESTATION =
 
 export class ReviewInputError extends Error {}
 
+/** The write is only valid against the log the user was looking at. */
+const lastSeen = (state: ReviewState) => state.history.at(-1)?.id ?? 0;
+
 const text = (form: FormData, key: string) => {
   const v = form.get(key);
   return typeof v === "string" ? v.trim() : "";
@@ -30,7 +33,7 @@ export function disposition(form: FormData, state: ReviewState, reviewer: string
   if (action !== "reopen" && current.status !== "open") throw new ReviewInputError(`${item_id} is already ${current.status}`);
   const note = text(form, "note");
   if (note.length < 3 || note.length > 2000) throw new ReviewInputError("an attorney note of 3 to 2000 characters is required");
-  return { item_id, action, note, actor };
+  return { item_id, action, note, actor, expected_last_id: lastSeen(state) };
 }
 
 export function signoffEvent(form: FormData, state: ReviewState): NewEvent {
@@ -38,5 +41,5 @@ export function signoffEvent(form: FormData, state: ReviewState): NewEvent {
   const actor = text(form, "actor");
   if (!actor || actor.length > 80) throw new ReviewInputError("sign-off requires your full name");
   if (state.open > 0) throw new ReviewInputError("resolve or dismiss every item before signing off");
-  return { item_id: null, action: "signoff", note: ATTESTATION, actor };
+  return { item_id: null, action: "signoff", note: ATTESTATION, actor, expected_last_id: lastSeen(state) };
 }

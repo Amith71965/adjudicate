@@ -108,6 +108,11 @@ export function buildCase(input: PetitionInput, run: RecordedRun, meta: Case["ru
   for (const r of run.reviews) {
     const id = `prong:${r.criterion}/${r.prong}`;
     if (r.citations.length === 0) throw new Error(`${petition.id} ${id} has no citation: an ungrounded objection is never shown`);
+    for (const c of r.citations) {
+      if (!Number.isInteger(c.chunk_id) || c.chunk_id < 1) throw new Error(`${petition.id} ${id} cites chunk ${c.chunk_id}: not a passage`);
+      if (!c.decision_id.trim()) throw new Error(`${petition.id} ${id} cites a passage with no decision id`);
+      if (c.quote.trim().length < 30) throw new Error(`${petition.id} ${id} cites a quote too short to check (${JSON.stringify(c.quote)})`);
+    }
     checkEvidence(id, r.artifact_ids);
     items.push({
       kind: "prong", id, criterion: r.criterion, prong: r.prong, test: testFor(r.criterion, r.prong),
