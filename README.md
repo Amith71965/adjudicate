@@ -284,4 +284,4 @@ adjudicate/
 
 ---
 
-<sub>Synthetic petitions and applicants only; no real personal data is stored anywhere in this repository. AAO decisions are public, redacted government records, fetched from uscis.gov at the rate its robots.txt asks for. This is an engineering prototype, not legal advice.</sub>
+<sub>Synthetic petitions and applicants only; no real personal data is stored anywhere in this repository. AAO decisions are public, redacted government records, fetched from uscis.gov at the rate its robots.txt asks for; the only decision text committed is the 25-decision gold set and six parser fixtures (see <a href="py/tests/golden/README.md">the gold-set README</a>). Everything binds to localhost. This is an engineering prototype, not legal advice.</sub>

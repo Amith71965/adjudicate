@@ -44,3 +44,11 @@ themselves. `test_gold_blind_check.py` fails if a label later drifts from it.
 ## Known skew
 24 dismissed, 1 sustained, **0 remanded** (no 2025 merits decision was a remand), so
 remand handling is not tested here; it is covered in the Phase-7 set.
+
+## Public-record exception
+`texts/` holds the normalised text of these 25 decisions, and `../fixtures/decisions/` holds six
+decision PDFs used by parser tests. They are public AAO non-precedent decisions, published and
+redacted by USCIS (applicants appear only as "the Petitioner"; no names, A-numbers or contact
+details), and they are the only real decision text in the repository: they are what the parser is
+measured against. Everything about applicants elsewhere is synthetic, and the Phase-7 evaluation
+commits only decision IDs, labels and metrics.

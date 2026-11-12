@@ -78,7 +78,7 @@ eval-merits: ## phase-6 gate: kazarian step two on 6 strong/weak pairs (needs `m
 	cd web && npx tsx scripts/eval-merits.ts
 
 web: ## serve the web app (examiner at /api/examine) on :3000 (memory: not alongside a render)
-	cd web && npx next dev -p 3000
+	cd web && npx next dev -H 127.0.0.1 -p 3000
 
 eval-real: ## phase-7: real held-out 2026 decisions (needs `make api` and `make web`; capped, cached)
 	$(PY)/python -m adjudicate.eval
