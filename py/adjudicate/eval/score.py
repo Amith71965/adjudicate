@@ -28,6 +28,7 @@ class Row:
     risk: float | None  # examiner criterion risk; None = no prediction
     outcome: str | None  # the AAO's outcome for the decision
     placeholder: bool  # the decision described no evidence for this criterion
+    unreviewed: bool = False  # a prong could not be grounded: the examiner scores it 1.0
 
 
 def _pairs(rows: Iterable[Row], threshold: float) -> list[tuple[bool, bool]]:
@@ -82,13 +83,18 @@ def youden_threshold(rows: Sequence[Row]) -> float:
 def _calibrated(
     scored: Sequence[Row], calibration_ids: frozenset[str], *, seed: int, n_boot: int
 ) -> dict[str, object]:
-    fit = [r for r in scored if r.decision_id in calibration_ids]
+    # fit and score on the same population: criteria the AAO itself decided
+    fit = [r for r in scored if r.decision_id in calibration_ids and r.source == "aao"]
     test = [r for r in scored if r.decision_id not in calibration_ids and r.source == "aao"]
-    t = youden_threshold(fit)
+    sizes = {"fit_decisions": len({r.decision_id for r in fit}),
+             "test_decisions": len({r.decision_id for r in test})}  # fmt: skip
+    try:
+        t = youden_threshold(fit)
+    except ValueError as exc:  # reported, and the regression gate fails on the missing F1
+        return {"threshold": None, "reason": str(exc), **sizes, "examiner": None}
     return {
         "threshold": t,
-        "fit_decisions": len({r.decision_id for r in fit}),
-        "test_decisions": len({r.decision_id for r in test}),
+        **sizes,
         "examiner": _block(test, t, seed=seed, n_boot=n_boot),
         "always_not_met": _prf_dict(prf(confusion((r.label == "not_met", True) for r in test))),
         "copy_director": _prf_dict(
@@ -139,10 +145,15 @@ def score(
             "unlabelled": len(rows) - len(labelled),
             "unpredicted": len(labelled) - len(scored),
             "placeholders": sum(r.placeholder for r in rows),
+            "unreviewed": sum(r.unreviewed for r in scored),
             "decisions": len(decisions),
         },
         "examiner": {
             "aao_decided": _block(aao, threshold, seed=seed, n_boot=n_boot),
+            # sensitivity: unreviewed criteria carry a default 1.0, not a judgement
+            "aao_decided_reviewed_only": _block(
+                [r for r in aao if not r.unreviewed], threshold, seed=seed, n_boot=n_boot
+            ),
             "all_labelled": _block(scored, threshold, seed=seed, n_boot=n_boot),
         },
         "baselines": {
@@ -192,7 +203,8 @@ def regression_failures(
             if not isinstance(node, dict):
                 return None
             node = node.get(key)
-        return node if isinstance(node, (int, float)) else None
+        ok = isinstance(node, (int, float)) and not isinstance(node, bool)
+        return float(node) if ok else None  # type: ignore[arg-type]
 
     failures = []
     for name, path in (
@@ -202,6 +214,8 @@ def regression_failures(
         value, ref = get(current, path), get(baseline, path)
         if value is None:
             failures.append(f"{name} is undefined")
-        elif ref is not None and value < ref - tolerance:
+        elif ref is None:
+            failures.append(f"baseline {name} is missing")
+        elif value < ref - tolerance:
             failures.append(f"{name} {value:.3f} < baseline {ref:.3f} - {tolerance}")
     return failures

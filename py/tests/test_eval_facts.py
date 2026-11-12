@@ -181,7 +181,7 @@ def test_an_extraction_error_is_recorded_for_that_decision_not_raised() -> None:
     client = FailingClient(LlmError("invalid output after retry"))
     out = extract_facts(client, _decision(["judging"]), index=1)
     assert out.status == "failed" and out.petition is None
-    assert out.error is not None and "invalid output" in out.error
+    assert out.error == "LlmError: invalid_output"
 
 
 def test_a_budget_stop_still_stops_the_run() -> None:
@@ -189,3 +189,24 @@ def test_a_budget_stop_still_stops_the_run() -> None:
 
     with pytest.raises(BudgetExceededError):
         extract_facts(FailingClient(BudgetExceededError("cap")), _decision(["judging"]), index=1)
+
+
+def test_a_failed_extraction_records_a_fixed_reason_not_model_text() -> None:
+    from adjudicate.llm.client import LlmError
+
+    for exc, reason in [
+        (LlmError("invalid output after retry: 1 validation error\n input_value='real text'"),
+         "LlmError: invalid_output"),
+        (LlmError("HTTP 502: <html>real text</html>"), "LlmError: http"),
+        (LlmError("non-JSON body: real text"), "LlmError: other"),
+    ]:  # fmt: skip
+        assert extract_facts(FailingClient(exc), _decision(["judging"]), index=1).error == reason
+
+
+def test_a_criterion_the_model_itself_marks_undescribed_counts_as_a_placeholder() -> None:
+    client = FakeClient({"field": "physics", "artifacts": [
+        art("judging", "Not described in the decision."),
+        art("awards", "A prize awarded in 2020."),
+    ]})  # fmt: skip
+    out = extract_facts(client, _decision(["judging", "awards"]), index=1)
+    assert out.placeholders == ["judging"]

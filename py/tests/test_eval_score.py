@@ -43,7 +43,7 @@ def test_examiner_metrics_on_aao_decided_and_all_labelled() -> None:
     allc = s["examiner"]["all_labelled"]
     assert allc["confusion"] == {"tp": 2, "fp": 1, "fn": 1, "tn": 1}
     assert s["counts"] == {"rows": 7, "labelled": 6, "unlabelled": 1, "unpredicted": 1,
-                           "placeholders": 0, "decisions": 3}  # fmt: skip
+                           "placeholders": 0, "unreviewed": 0, "decisions": 3}  # fmt: skip
 
 
 def test_auroc_uses_the_risk_score_without_a_threshold() -> None:
@@ -126,3 +126,39 @@ def test_calibrated_threshold_is_fit_on_calibration_decisions_and_scored_on_the_
     assert cal["always_not_met"]["confusion"] == {"tp": 1, "fp": 2, "fn": 0, "tn": 0}
     assert cal["copy_director"]["confusion"] == {"tp": 1, "fp": 1, "fn": 0, "tn": 1}
     assert score(test, threshold=THRESHOLD)["calibrated"] is None  # no calibration set given
+
+
+def test_rows_from_unreviewed_criteria_are_counted_and_excluded_in_a_sensitivity_block() -> None:
+    from dataclasses import replace
+
+    rows = [*ROWS[:4], replace(row("D4", "awards", "not_met", 1.0), unreviewed=True)]
+    s = score(rows, threshold=THRESHOLD)
+    assert s["counts"]["unreviewed"] == 1
+    assert s["examiner"]["aao_decided"]["n"] == 5
+    assert s["examiner"]["aao_decided_reviewed_only"]["n"] == 4
+
+
+def test_calibration_fits_on_aao_decided_rows_only() -> None:
+    calib = [row("C1", "a", "not_met", 0.95), row("C1", "b", "met", 0.85),
+             row("C1", "c", "not_met", 0.86, source="director")]  # fmt: skip
+    test = [row("T1", "a", "not_met", 0.97)]
+    cal = score(calib + test, threshold=THRESHOLD, calibration_ids=frozenset({"C1"}))["calibrated"]
+    assert cal["threshold"] == 0.95  # fit on all rows, the director-sourced 0.86 gives 0.86
+
+
+def test_calibration_without_both_classes_is_reported_not_raised() -> None:
+    calib = [row("C1", "a", "not_met", 0.95)]
+    s = score([*calib, row("T1", "a", "met", 0.9)], threshold=THRESHOLD,
+              calibration_ids=frozenset({"C1"}))  # fmt: skip
+    cal = s["calibrated"]
+    assert cal["threshold"] is None and "both classes" in cal["reason"]
+    assert cal["examiner"] is None
+
+
+def test_regression_gate_fails_when_the_baseline_value_is_missing_or_not_a_number() -> None:
+    cur = {"examiner": {"aao_decided": {"auroc": 0.8}}, "calibrated": {"examiner": {"f1": 0.7}}}
+    assert regression_failures(cur, {"examiner": {}, "calibrated": None}, tolerance=0.05) == [
+        "baseline aao_decided auroc is missing", "baseline calibrated f1 is missing",
+    ]  # fmt: skip
+    as_bool = {"examiner": {"aao_decided": {"auroc": True}}, "calibrated": cur["calibrated"]}
+    assert regression_failures(as_bool, cur, tolerance=0.05) == ["aao_decided auroc is undefined"]

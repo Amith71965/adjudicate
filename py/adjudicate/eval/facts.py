@@ -165,9 +165,12 @@ def extract_facts(
         raise  # the spend cap stops the run; it is not one decision's problem
     except LlmError as exc:
         # one unparseable answer must not abort 145 decisions: recorded, counted, gated
-        # first line only: validation details echo the model's (real-decision) text
-        reason = (str(exc).splitlines() or [type(exc).__name__])[0][:200]
-        return FactsOutcome(decision.decision_id, "failed", attempts, None, error=reason)
+        # a fixed vocabulary: error messages can echo the model's (real-decision) text
+        msg = str(exc)
+        kind = ("invalid_output" if msg.startswith("invalid output")
+                else "http" if msg.startswith("HTTP") else "other")  # fmt: skip
+        return FactsOutcome(decision.decision_id, "failed", attempts, None,
+                            error=f"{type(exc).__name__}: {kind}")  # fmt: skip
     if leaks:
         return FactsOutcome(decision.decision_id, "leaky", attempts, None, leaks)
     artifacts = [a for a in facts.artifacts if a.criterion.value in claimed]
@@ -175,6 +178,13 @@ def extract_facts(
         ExtractedArtifact(criterion=Criterion(c), kind=EvidenceKind.OTHER, title="Evidence",
                           description=PLACEHOLDER)
         for c in missing
+    ]  # fmt: skip
+    # the model is told to write PLACEHOLDER itself when nothing is described: those count too
+    blank = PLACEHOLDER.lower().rstrip(".")
+    placeholders = [
+        c for c in claimed
+        if all(a.description.strip().lower().rstrip(".") == blank
+               for a in artifacts if a.criterion.value == c)
     ]  # fmt: skip
     petition = Petition(
         id=f"P{index:04d}",
@@ -198,5 +208,5 @@ def extract_facts(
         attempts,
         petition,
         soft=soft_hits(_text(facts)),
-        placeholders=missing,
+        placeholders=placeholders,
     )

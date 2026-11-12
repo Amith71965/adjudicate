@@ -72,6 +72,10 @@ def main() -> int:
     print(f"facts: {report['facts']} | facts spend ${client.spent_usd:.4f} | llm {report['llm']}")
     if args.set_baseline:
         keep = {"examiner": s["examiner"], "calibrated": s["calibrated"]}  # type: ignore[index]
+        undefined = regression_failures(keep, keep, tolerance=TOLERANCE)
+        if undefined:  # a baseline with a missing metric would wave every later run through
+            print(f"baseline NOT written: {'; '.join(undefined)}", file=sys.stderr)
+            return 1
         BASELINE.write_text(json.dumps(keep, indent=2) + "\n")
         print(f"baseline written: {BASELINE.relative_to(ROOT)}")
         return 0
@@ -81,6 +85,7 @@ def main() -> int:
         for f in failures:
             print(f"REGRESSION: {f}", file=sys.stderr)
         return 1 if failures else 0
+    print(f"no baseline at {BASELINE.relative_to(ROOT)}: nothing compared", file=sys.stderr)
     return 0
 
 

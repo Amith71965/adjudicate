@@ -80,6 +80,11 @@ def split_guard(
 
 def rows_for(d: TestDecision, facts: FactsOutcome, result: Json | None) -> list[Row]:
     risks: dict[str, float] = (result or {}).get("criterion_risk") or {}  # type: ignore[assignment]
+    unreviewed = {str(u).split("/")[0] for u in (result or {}).get("unreviewed") or []}  # type: ignore[attr-defined]
+    if result is not None:
+        for c in d.criteria:
+            if not isinstance(risks.get(c.criterion), (int, float)):
+                raise HarnessError(f"{d.decision_id}: examiner returned no risk for {c.criterion}")
     return [
         Row(
             decision_id=d.decision_id,
@@ -90,9 +95,15 @@ def rows_for(d: TestDecision, facts: FactsOutcome, result: Json | None) -> list[
             risk=risks.get(c.criterion) if result is not None else None,
             outcome=d.outcome,
             placeholder=c.criterion in facts.placeholders,
+            unreviewed=c.criterion in unreviewed,
         )
         for c in d.criteria
     ]
+
+
+def _calls(stats: Json) -> int:
+    calls = stats.get("calls")
+    return calls if isinstance(calls, int) else -1
 
 
 def _r4(x: float | None) -> float | None:
@@ -117,14 +128,17 @@ def run(
         items = list(enumerate(split.test))
         if workers <= 1:
             yield from map(process, items)
-        else:
-            with ThreadPoolExecutor(max_workers=workers) as pool:
-                yield from pool.map(process, items)
+            return
+        pool = ThreadPoolExecutor(max_workers=workers)
+        try:
+            yield from pool.map(process, items)
+        finally:  # on an error, queued decisions are not started (and not paid for)
+            pool.shutdown(wait=True, cancel_futures=True)
 
     rows: list[Row] = []
     decisions: list[Json] = []
-    checked = 0
-    llm: object = {}
+    checked = examined = 0
+    llm: Json = {}
     counts = {"ok": 0, "leaky": 0, "failed": 0, "retried": 0, "placeholders": 0,
               "with_soft_terms": 0}  # fmt: skip
     for d, f, response in results():
@@ -145,8 +159,14 @@ def run(
             )
             if violations:
                 raise HarnessError(f"split guard, {d.decision_id}: {'; '.join(violations[:5])}")
+            if n == 0:  # a renamed field would otherwise make the guard check nothing
+                raise HarnessError(f"split guard, {d.decision_id}: no retrieved passages to check")
             checked += n
-            llm = response.get("llm") or llm
+            examined += 1
+            # cumulative server counters; responses finish out of order under workers > 1
+            stats = response.get("llm")
+            if isinstance(stats, dict) and _calls(stats) >= _calls(llm):
+                llm = stats
         rows += rows_for(d, f, result)
         decisions.append(
             {
@@ -165,6 +185,7 @@ def run(
                         "source": r.source,
                         "director": r.director,
                         "risk": _r4(r.risk),
+                        "unreviewed": r.unreviewed,
                     }
                     for r in rows
                     if r.decision_id == d.decision_id
@@ -180,7 +201,7 @@ def run(
         "cutoff": split.cutoff.isoformat(),
         "test_decisions": len(split.test),
         "facts": counts,
-        "split_guard": {"checked_chunks": checked, "violations": []},
+        "split_guard": {"checked_chunks": checked, "examined_decisions": examined},
         "llm": llm,
         "calibration_end": calibration_end.isoformat() if calibration_end else None,
         "score": score(rows, threshold=threshold, calibration_ids=calibration),

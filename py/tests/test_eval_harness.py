@@ -112,7 +112,7 @@ def test_run_scores_examined_decisions_and_counts_leaky_ones_as_unpredicted() ->
     )
     assert calls == ["P0001"]
     assert report["facts"]["ok"] == 1 and report["facts"]["leaky"] == 1
-    assert report["split_guard"] == {"checked_chunks": 3, "violations": []}
+    assert report["split_guard"] == {"checked_chunks": 3, "examined_decisions": 1}
     assert report["score"]["counts"]["unpredicted"] == 1
     assert [d["status"] for d in report["decisions"]] == ["examined", "leaky"]
 
@@ -159,3 +159,46 @@ def test_a_failed_extraction_is_counted_and_scored_as_unpredicted() -> None:
     assert report["score"]["counts"]["unpredicted"] == 1
     assert report["decisions"][0]["status"] == "failed"
     assert report["decisions"][0]["error"] == "invalid output"
+
+
+def _ok(d: TestDecision, i: int) -> FactsOutcome:
+    return FactsOutcome(d.decision_id, "ok", 1, petition([c.criterion for c in d.criteria]))
+
+
+def test_an_examined_petition_that_retrieved_nothing_stops_the_run() -> None:
+    # a renamed field on the TS side would make the guard check nothing and pass
+    split = Split(CUT, (decision("D1", [("awards", "not_met")]),), frozenset({"OLD1"}))
+    empty = {"criterion_risk": {"awards": 0.9}, "reviews": [], "dropped": []}
+    with pytest.raises(HarnessError, match="no retrieved passages"):
+        run(split, facts=_ok, examine=lambda p, b: {"result": empty, "llm": {}},
+            chunk_decisions=lambda ids: {})  # fmt: skip
+
+
+def test_a_claimed_criterion_without_a_risk_stops_the_run() -> None:
+    split = Split(CUT, (decision("D1", [("awards", "not_met"), ("judging", "met")]),),
+                  frozenset({"OLD1"}))  # fmt: skip
+    partial = {**RESULT, "criterion_risk": {"awards": 0.9}}
+    with pytest.raises(HarnessError, match="no risk for judging"):
+        run(split, facts=_ok, examine=lambda p, b: {"result": partial, "llm": {}},
+            chunk_decisions=lambda ids: {i: "OLD1" for i in ids})  # fmt: skip
+
+
+def test_unreviewed_criteria_are_marked_and_the_report_has_no_dead_violations_key() -> None:
+    split = Split(CUT, (decision("D1", [("awards", "not_met"), ("judging", "met")]),),
+                  frozenset({"OLD1"}))  # fmt: skip
+    res = {**RESULT, "unreviewed": ["awards/requirement"], "complete": False}
+    report = run(split, facts=_ok, examine=lambda p, b: {"result": res, "llm": {}},
+                 chunk_decisions=lambda ids: {i: "OLD1" for i in ids})  # fmt: skip
+    assert report["split_guard"] == {"checked_chunks": 3, "examined_decisions": 1}
+    assert report["score"]["counts"]["unreviewed"] == 1
+    crits = report["decisions"][0]["criteria"]
+    assert [c["unreviewed"] for c in crits] == [True, False]
+
+
+def test_llm_stats_keep_the_highest_cumulative_count() -> None:
+    tests = (decision("D1", [("awards", "not_met")]), decision("D2", [("awards", "not_met")]))
+    stats = iter([{"calls": 9}, {"calls": 5}])  # D2's response was sent earlier, finished later
+    report = run(Split(CUT, tests, frozenset({"OLD1"})), facts=_ok,
+                 examine=lambda p, b: {"result": RESULT, "llm": next(stats)},
+                 chunk_decisions=lambda ids: {i: "OLD1" for i in ids})  # fmt: skip
+    assert report["llm"] == {"calls": 9}
