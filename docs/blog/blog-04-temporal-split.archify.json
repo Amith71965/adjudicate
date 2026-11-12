@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "diagram_type": "timeline",
+  "meta": {
+    "title": "How the examiner was kept from seeing the answers",
+    "subtitle": "A calendar split: everything the examiner can read was issued before 1 June 2026; everything it is graded on was issued after.",
+    "output": ".archify/timeline-temporal-split-20261112-170523/temporal-split.html",
+    "evidence": "observed",
+    "timezone": "UTC",
+    "quality_profile": "showcase"
+  },
+  "layout": {
+    "breaks": "auto"
+  },
+  "lanes": [
+    {
+      "id": "index",
+      "label": "What it can read"
+    },
+    {
+      "id": "labels",
+      "label": "Answer keys"
+    },
+    {
+      "id": "test",
+      "label": "What it is graded on"
+    },
+    {
+      "id": "runs",
+      "label": "Runs"
+    }
+  ],
+  "events": [
+    {
+      "id": "corpus-start",
+      "at": "2017-01-01T00:00:00Z",
+      "title": "2017: corpus begins",
+      "detail": "Modern EB-1A AAO decisions harvested from 2017 on.",
+      "lane": "index",
+      "kind": "default"
+    },
+    {
+      "id": "gold",
+      "at": "2025-06-30T00:00:00Z",
+      "title": "2025: 25 decisions hand-labelled",
+      "detail": "Hand-labelled to check the parser (94% of fields right).",
+      "lane": "labels",
+      "kind": "action"
+    },
+    {
+      "id": "index-end",
+      "at": "2026-05-31T00:00:00Z",
+      "title": "31 May 2026: last citable decision",
+      "detail": "Search is filtered to decisions issued before the cutoff; every cited passage is checked.",
+      "lane": "index",
+      "kind": "change"
+    },
+    {
+      "id": "cutoff",
+      "at": "2026-06-01T00:00:00Z",
+      "title": "1 Jun 2026: cutoff, test set starts",
+      "detail": "145 EB-1A merits decisions, June to September 2026.",
+      "lane": "test",
+      "kind": "alert"
+    },
+    {
+      "id": "fit",
+      "at": "2026-06-15T00:00:00Z",
+      "title": "June: threshold fitted on 34",
+      "detail": "34 decisions pick the risk threshold, then they are set aside.",
+      "lane": "test",
+      "kind": "action"
+    },
+    {
+      "id": "score",
+      "at": "2026-08-15T00:00:00Z",
+      "title": "Jul to Sep: scored on 94",
+      "detail": "94 decisions the threshold never saw.",
+      "lane": "test",
+      "kind": "action"
+    },
+    {
+      "id": "last",
+      "at": "2026-09-30T00:00:00Z",
+      "title": "30 Sep 2026: last test decision",
+      "detail": "Facts only: verdict words removed before the examiner sees them.",
+      "lane": "test",
+      "kind": "default"
+    },
+    {
+      "id": "run",
+      "at": "2026-11-11T00:00:00Z",
+      "title": "11 Nov 2026: graded, 0 leaks",
+      "detail": "5,864 cited passages checked against the cutoff: 0 violations.",
+      "lane": "runs",
+      "kind": "recovery"
+    },
+    {
+      "id": "blind",
+      "at": "2026-11-12T00:00:00Z",
+      "title": "12 Nov 2026: blind check 68/68",
+      "detail": "Owner relabelled 5 decisions from the PDFs: 68 of 68 fields agree.",
+      "lane": "labels",
+      "kind": "recovery"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Why a calendar split",
+      "items": [
+        "A random split leaks: later decisions quote earlier ones",
+        "The test decisions did not exist when the index was built",
+        "Any passage from on or after 1 June stops the run"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "What the score means",
+      "items": [
+        "Recall 0.99: it rarely misses a rejected criterion",
+        "At a threshold it ties always saying not met",
+        "Copying the Director, an oracle, still wins"
+      ]
+    }
+  ]
+}
