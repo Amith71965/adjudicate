@@ -79,6 +79,10 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
                 (embedder.name,),
             ).fetchone()
             problems = index_problems(conn)
+            log = conn.execute(
+                "SELECT n.nspname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace"
+                " WHERE c.oid = to_regclass('review_event')"
+            ).fetchone()
         chunks, embedded = (int(str(row[0])), int(str(row[1]))) if row else (0, 0)
         body = {
             "db": "ok",
@@ -87,6 +91,8 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
             "chunks": chunks,
             "embedded": embedded,
             "embed_model": embedder.name,
+            # which schema the review log resolves to: the e2e runner refuses anything but e2e_*
+            "review_log_schema": str(log[0]) if log else None,
         }
         return JSONResponse(body, status_code=503 if problems else 200)
 
@@ -208,7 +214,18 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
 
     @app.post("/cases/{case_id}/events", status_code=201)
     def append_event(case_id: CaseId, event: ReviewEventIn) -> dict[str, object]:
-        with db() as conn:
+        # One writer per case at a time (advisory lock), so ids follow commit order, and a
+        # writer that read an older log (another tab, a retried request) is refused, not appended.
+        with db() as conn, conn.transaction():
+            conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", (case_id,))
+            last = conn.execute(
+                "SELECT coalesce(max(id), 0) FROM review_event WHERE case_id = %s", (case_id,)
+            ).fetchone()
+            last_id = int(str(last[0])) if last else 0
+            if event.expected_last_id is not None and event.expected_last_id != last_id:
+                raise HTTPException(
+                    409, f"the review log changed (last event {last_id}); reload the case"
+                )
             row = conn.execute(
                 "INSERT INTO review_event (case_id, item_id, action, note, actor)"
                 " VALUES (%s, %s, %s, %s, %s)"
@@ -222,7 +239,7 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
     return app
 
 
-CaseId = Annotated[str, Path(pattern=r"^P\d{2,4}$")]
+CaseId = Annotated[str, Path(pattern=r"^P[0-9]{2,4}$")]  # ASCII: \d would admit any digit
 
 
 class ReviewAction(StrEnum):
@@ -243,9 +260,12 @@ class ReviewEventIn(BaseModel):
     action: ReviewAction
     note: str = Field(max_length=2000)
     actor: str = Field(max_length=80)
+    expected_last_id: int | None = Field(default=None, ge=0)  # optimistic concurrency
 
     @model_validator(mode="after")
     def _scoped_and_accountable(self) -> ReviewEventIn:
+        if "\x00" in self.note or "\x00" in self.actor:
+            raise ValueError("NUL characters are not allowed")
         if len(self.note.strip()) < 3:
             raise ValueError("an attorney note is required")
         if not self.actor.strip():

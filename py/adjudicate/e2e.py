@@ -51,9 +51,13 @@ def create_review_sandbox(url: str) -> str:
     sandbox_url = make_conninfo(**params)  # type: ignore[arg-type]
     with psycopg.connect(url, autocommit=True) as conn:
         conn.execute(sql.SQL("CREATE SCHEMA {}").format(sql.Identifier(name)))
-    with psycopg.connect(sandbox_url, autocommit=True) as conn:
-        conn.execute(REVIEW_LOG_DDL.read_text())  # trusted repo DDL, no parameters
-        found = conn.execute(RESOLVED_SCHEMA).fetchone()
+    try:
+        with psycopg.connect(sandbox_url, autocommit=True) as conn:
+            conn.execute(REVIEW_LOG_DDL.read_text())  # trusted repo DDL, no parameters
+            found = conn.execute(RESOLVED_SCHEMA).fetchone()
+    except BaseException:
+        drop_review_sandbox(sandbox_url)  # the caller has no URL yet, so nothing else would
+        raise
     if found is None or found[0] != name:
         drop_review_sandbox(sandbox_url)
         raise UnsafeDatabaseError(f"sandbox review log did not resolve to {name} (got {found})")

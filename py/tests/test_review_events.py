@@ -110,3 +110,41 @@ def test_a_database_outage_is_a_503_not_an_empty_history() -> None:
     with TestClient(create_app(down, FakeEmbedder())) as c:
         assert c.get("/cases/P01/events").status_code == 503
         assert c.post("/cases/P01/events", json=RESOLVE).status_code == 503
+
+
+# --- phase-8 review fixes --------------------------------------------------------------------
+
+
+def test_non_ascii_digits_are_a_422_not_a_database_500(client: TestClient) -> None:
+    arabic_indic = chr(0x661) + chr(0x662)  # pass a Unicode \d, fail the DB CHECK [0-9]
+    assert client.get(f"/cases/P{arabic_indic}/events").status_code == 422
+
+
+@pytest.mark.parametrize("field", ["note", "actor"])
+def test_nul_characters_are_refused(client: TestClient, field: str) -> None:
+    body = {**RESOLVE, field: "Added the\x00 reports."}
+    assert client.post("/cases/P01/events", json=body).status_code == 422
+
+
+def test_a_stale_writer_is_refused_so_two_tabs_cannot_both_dispose(client: TestClient) -> None:
+    # both tabs loaded an empty log; the first write wins, the second must not land
+    first = client.post("/cases/P01/events", json={**RESOLVE, "expected_last_id": 0})
+    second = client.post(
+        "/cases/P01/events", json={**RESOLVE, "action": "dismiss", "expected_last_id": 0}
+    )
+    assert first.status_code == 201 and second.status_code == 409
+    assert [e["action"] for e in client.get("/cases/P01/events").json()["events"]] == ["resolve"]
+    third = {**RESOLVE, "action": "reopen", "expected_last_id": first.json()["id"]}
+    assert client.post("/cases/P01/events", json=third).status_code == 201
+
+
+def test_the_precondition_is_per_case(client: TestClient) -> None:
+    client.post("/cases/P02/events", json={**RESOLVE, "expected_last_id": 0})
+    fresh = client.post("/cases/P01/events", json={**RESOLVE, "expected_last_id": 0})
+    assert fresh.status_code == 201
+
+
+def test_health_names_the_schema_that_holds_the_review_log(db_url: str) -> None:
+    app = create_app(lambda: psycopg.connect(db_url, autocommit=True), FakeEmbedder())
+    with TestClient(app) as c:
+        assert c.get("/health").json()["review_log_schema"] == "public"
