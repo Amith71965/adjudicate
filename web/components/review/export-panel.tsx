@@ -1,9 +1,7 @@
+import { ATTESTATION } from "@/lib/review/actions-core";
 import type { ReviewState } from "@/lib/review/state";
 
 type Action = (form: FormData) => Promise<void>;
-
-export const ATTESTATION =
-  "I reviewed every AI objection, finding and source in this case, and I take responsibility for what is filed.";
 
 /** Sign-off and export. The server re-checks the same gate on export (409 otherwise). */
 export function ExportPanel({ caseId, state, signoff }: { caseId: string; state: ReviewState; signoff: Action }) {
