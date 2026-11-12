@@ -1,0 +1,60 @@
+# The same gate as `make verify` (and `make verify-clean`): lint, types and every test,
+# Python and web, against a throwaway Postgres 17 + pgvector. No network beyond package
+# installs, no model calls, no secrets.
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      db:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: adjudicate
+          POSTGRES_PASSWORD: adjudicate # CI-only throwaway database, same as the local dev default
+          POSTGRES_DB: adjudicate
+        ports:
+          - 54329:5432
+        options: >-
+          --health-cmd "pg_isready -U adjudicate -d adjudicate"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+    env:
+      DATABASE_URL: postgresql://adjudicate:adjudicate@localhost:54329/adjudicate
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pdftotext (poppler)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        run: make setup
+
+      - name: Migrate the throwaway database
+        run: .venv/bin/python -m adjudicate.migrate
+
+      - name: Lint, types and tests
+        run: make verify
