@@ -6,6 +6,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from dataclasses import asdict
+from datetime import date
 from enum import StrEnum
 from typing import Annotated
 
@@ -96,6 +97,7 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
         visa: Visa | None = None,
         criterion: CriterionCode | None = None,
         section: SectionKind | None = None,
+        before: date | None = None,  # temporal split: only decisions issued before this date
     ) -> dict[str, object]:
         if section is not None and section.value not in CHUNKABLE_KINDS:
             # never indexed: an empty answer would look like "no precedent", so refuse instead
@@ -112,11 +114,13 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
                 visa=visa.value if visa else None,
                 criterion=criterion.value if criterion else None,
                 section=section.value if section else None,
+                before=before,
             )
         filters = {
             "visa": visa.value if visa else None,
             "criterion": criterion.value if criterion else None,
             "section": section.value if section else None,
+            "before": before.isoformat() if before else None,
         }
         # echoed so a client can tell an applied filter from one an older API ignored
         return {

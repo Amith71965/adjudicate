@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Evaluation on real held-out AAO decisions",
+    "output": ".archify/workflow-real-eval-20261111-190000/real-eval.html",
+    "quality_profile": "showcase",
+    "locale": "en",
+    "legend": {
+      "entries": {
+        "database": { "label": "Data" },
+        "backend": { "label": "Deterministic step" },
+        "security": { "label": "Guard" },
+        "cloud": { "label": "LLM (Haiku 5.5)" },
+        "messagebus": { "label": "Dropped or stopped, counted" }
+      }
+    }
+  },
+  "lanes": [
+    { "id": "py", "label": "Python harness" },
+    { "id": "ts", "label": "TypeScript examiner over HTTP" },
+    { "id": "out", "label": "Scored against the AAO" },
+    { "id": "stop", "label": "Never scored silently", "variant": "exception" }
+  ],
+  "mainPath": ["split", "facts", "leak", "route", "exam", "guard", "rows", "score"],
+  "nodes": [
+    { "id": "split", "lane": "py", "col": 0, "type": "database", "label": "Temporal split", "sublabel": "test: Jun-Sep 2026" },
+    { "id": "facts", "lane": "py", "col": 1, "type": "cloud", "label": "Facts extraction", "sublabel": "no verdict fields" },
+    { "id": "leak", "lane": "py", "col": 2, "type": "security", "label": "Leak guard", "sublabel": "verdict lexicon" },
+    { "id": "route", "lane": "ts", "col": 3, "type": "backend", "label": "/api/examine", "sublabel": "petition + before" },
+    { "id": "retr", "lane": "ts", "col": 5, "type": "backend", "label": "Retrieval", "sublabel": "decisions before cutoff" },
+    { "id": "exam", "lane": "ts", "col": 4, "type": "cloud", "label": "Examiner", "sublabel": "per prong, cited" },
+    { "id": "guard", "lane": "py", "col": 4, "type": "security", "label": "Split guard", "sublabel": "every passage checked" },
+    { "id": "rows", "lane": "out", "col": 4, "type": "backend", "label": "Criterion rows", "sublabel": "risk vs AAO label" },
+    { "id": "score", "lane": "out", "col": 5, "type": "database", "label": "Scores", "sublabel": "AUROC, calibrated F1" },
+    { "id": "base", "lane": "out", "col": 3, "type": "backend", "label": "Baselines", "sublabel": "always fail, copy Director" },
+    { "id": "leaky", "lane": "stop", "col": 2, "type": "messagebus", "label": "Leaky decision", "sublabel": "dropped, counted" },
+    { "id": "halt", "lane": "stop", "col": 4, "type": "messagebus", "label": "Run stops", "sublabel": "test passage seen" }
+  ],
+  "edges": [
+    { "id": "e1", "from": "split", "to": "facts", "variant": "emphasis" },
+    { "id": "e2", "from": "facts", "to": "leak", "variant": "emphasis" },
+    { "id": "e3", "from": "leak", "to": "route", "label": "clean", "variant": "emphasis" },
+    { "id": "e4", "from": "route", "to": "exam", "variant": "emphasis" },
+    { "id": "e5", "from": "retr", "to": "exam", "label": "AAO passages" },
+    { "id": "e6", "from": "exam", "to": "guard", "label": "risks + chunk ids", "variant": "emphasis" },
+    { "id": "e7", "from": "guard", "to": "rows", "variant": "emphasis" },
+    { "id": "e8", "from": "rows", "to": "score", "variant": "emphasis" },
+    { "id": "e9", "from": "base", "to": "score" },
+    { "id": "r1", "from": "leak", "to": "facts", "label": "≤2 retries", "variant": "dashed", "role": "return" },
+    { "id": "x1", "from": "leak", "to": "leaky", "label": "still leaks", "variant": "security", "role": "error" },
+    { "id": "x2", "from": "guard", "to": "halt", "label": "violation", "variant": "security", "role": "error" }
+  ]
+}

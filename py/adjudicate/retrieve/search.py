@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from datetime import date
 from enum import StrEnum
 
 import psycopg
@@ -96,6 +97,8 @@ def _vector_ids(conn: Conn, qv: str, params: dict[str, object], n: int) -> list[
         " WHERE (%(visa)s::text IS NULL OR r.visa_type = %(visa)s)"
         " AND (%(criterion)s::text IS NULL OR s.criterion = %(criterion)s)"
         " AND (%(section)s::text IS NULL OR s.kind = %(section)s)"
+        # an undated decision cannot be shown to precede the cutoff: excluded when one is set
+        " AND (%(before)s::date IS NULL OR r.decision_date < %(before)s::date)"
         " AND c.embedding IS NOT NULL AND c.embed_model = %(model)s"
         " ORDER BY c.embedding <=> %(qv)s::vector LIMIT %(n)s",
         {**params, "qv": qv, "n": n},
@@ -116,6 +119,8 @@ def _lexical_ids(conn: Conn, query: str, params: dict[str, object], n: int) -> l
         " WHERE (%(visa)s::text IS NULL OR r.visa_type = %(visa)s)"
         " AND (%(criterion)s::text IS NULL OR s.criterion = %(criterion)s)"
         " AND (%(section)s::text IS NULL OR s.kind = %(section)s)"
+        # an undated decision cannot be shown to precede the cutoff: excluded when one is set
+        " AND (%(before)s::date IS NULL OR r.decision_date < %(before)s::date)"
         " AND c.fts @@ q.tq"
         " ORDER BY ts_rank_cd(c.fts, q.tq) DESC, c.id LIMIT %(n)s",
         {**params, "tq": " | ".join(terms), "n": n},
@@ -133,6 +138,7 @@ def search(
     visa: str | None = None,
     criterion: str | None = None,
     section: str | None = None,
+    before: date | None = None,
     candidates: int = 100,
 ) -> list[SearchHit]:
     if not query.strip():
@@ -144,6 +150,7 @@ def search(
         "visa": visa,
         "criterion": criterion,
         "section": section,
+        "before": before,
         "model": embedder.name,
     }
     rankings: list[list[int]] = []

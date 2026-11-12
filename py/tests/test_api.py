@@ -14,7 +14,7 @@ from adjudicate.api.app import create_app
 from adjudicate.migrate import apply_migrations
 from adjudicate.parse.pipeline import parse_pending
 from adjudicate.retrieve.index import build_index
-from tests.test_retrieve_index import FIXTURES, FakeEmbedder
+from tests.test_retrieve_index import FIXTURES, FakeEmbedder, decided_on
 
 pytestmark = pytest.mark.db
 FIX = Path(__file__).parent / "fixtures" / "decisions"
@@ -29,7 +29,8 @@ def client(scratch_db_url: str) -> Iterator[TestClient]:
             body = (FIX / f"{did}.pdf").read_bytes()
             conn.execute(
                 "INSERT INTO raw_decision (url, decision_id, category, visa_type, content, sha256,"
-                " byte_size, fetched_at) VALUES (%s, %s, 'c', %s, %s, %s, %s, now())",
+                " byte_size, fetched_at, decision_date)"
+                " VALUES (%s, %s, 'c', %s, %s, %s, %s, now(), %s)",
                 (
                     f"https://www.uscis.gov/{did}.pdf",
                     did,
@@ -37,6 +38,7 @@ def client(scratch_db_url: str) -> Iterator[TestClient]:
                     body,
                     hashlib.sha256(body).hexdigest(),
                     len(body),
+                    decided_on(did),
                 ),
             )
         parse_pending(conn)
@@ -71,7 +73,19 @@ def test_search_by_section_returns_only_final_merits_reasoning(client: TestClien
     assert r.status_code == 200 and hits
     assert {h["section_kind"] for h in hits} == {"final_merits"}
     # echoed, so a client can tell an applied filter from one an older API ignored
-    assert r.json()["filters"] == {"visa": None, "criterion": None, "section": "final_merits"}
+    assert r.json()["filters"] == {
+        "visa": None,
+        "criterion": None,
+        "section": "final_merits",
+        "before": None,
+    }
+
+
+def test_search_before_a_date_is_echoed(client: TestClient) -> None:
+    r = client.get("/search", params={"q": "acclaim", "before": "2000-01-01"})
+    assert r.status_code == 200 and r.json()["results"] == []
+    assert r.json()["filters"]["before"] == "2000-01-01"
+    assert client.get("/search", params={"q": "x", "before": "June"}).status_code == 422
 
 
 def test_passage_round_trip(client: TestClient) -> None:

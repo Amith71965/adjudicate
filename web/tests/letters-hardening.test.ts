@@ -121,3 +121,14 @@ it("#15 refuses results from an API that did not apply the section filter", asyn
   const current = httpRetriever("http://api", vi.fn(async () => ok({ results: [], filters: { section: "final_merits", visa: "EB-1A", criterion: null } })) as unknown as typeof fetch);
   await expect(current.search("q", { section: "final_merits", visa: "EB-1A", k: 3 })).resolves.toEqual([]);
 });
+
+it("a retriever bound to a cutoff sends it and refuses an answer that did not apply it", async () => {
+  const ok = (body: unknown) => new Response(JSON.stringify(body), { status: 200 });
+  const calls: string[] = [];
+  const fetchFn = vi.fn(async (url: string) => { calls.push(url); return ok({ results: [], filters: { before: "2026-06-01" } }); });
+  await httpRetriever("http://api", fetchFn as unknown as typeof fetch, 1000, { before: "2026-06-01" })
+    .search("q", { criterion: "judging", visa: "EB-1A", k: 3 });
+  expect(new URL(calls[0]).searchParams.get("before")).toBe("2026-06-01");
+  const ignoring = httpRetriever("http://api", (async () => ok({ results: [], filters: {} })) as unknown as typeof fetch, 1000, { before: "2026-06-01" });
+  await expect(ignoring.search("q", { criterion: "judging", visa: "EB-1A", k: 3 })).rejects.toThrow(/before/);
+});

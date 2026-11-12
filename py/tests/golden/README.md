@@ -9,9 +9,17 @@ labelling; `labels/` holds one hand-written label per decision.
 Labelled by the developer (an AI coding assistant working with the repository owner),
 **not by an attorney**. Decisions were read from the ANALYSIS section to the ORDER
 (the first 7 in full; the rest from verdict-bearing sentences, with the full passage
-pulled wherever a verdict was ambiguous). The repository owner blind-checks a random
-5. Treat these labels as careful but non-expert, and the extraction scores measured
-against them accordingly.
+pulled wherever a verdict was ambiguous). Treat these labels as careful but non-expert,
+and the extraction scores measured against them accordingly.
+
+## Blind check
+The repository owner independently labelled 5 of the 25 from the PDFs, without seeing
+`labels/` (an AI assistant organised the form with page-cited quotes; the owner verified
+every cell against the PDF). Result in `blind_check.json`: **68 of 68 fields agree**
+(5 outcomes, 5 final-merits verdicts, 29 criteria × Director and AAO), including the
+waived, reserved (`not_reached`) and withdrawn-finding cases. Both readings follow the
+conventions below, so this checks the reading of the decisions, not the conventions
+themselves. `test_gold_blind_check.py` fails if a label later drifts from it.
 
 ## Fields
 - `outcome`: from the ORDER line.

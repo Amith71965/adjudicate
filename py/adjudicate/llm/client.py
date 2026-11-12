@@ -17,6 +17,7 @@ import json
 import math
 import os
 import re
+import threading
 from pathlib import Path
 from typing import TypeVar
 
@@ -41,6 +42,10 @@ class LlmError(RuntimeError):
 
 class BudgetExceededError(LlmError):
     """Sending this request could exceed the run's spend cap; nothing was sent."""
+
+
+class TruncatedError(LlmError):
+    """The model hit max_tokens (often hidden reasoning); the answer is incomplete."""
 
 
 class UnknownModelError(LlmError):
@@ -73,6 +78,9 @@ class LlmClient:
         self.spent_usd = 0.0
         self._max_seen_cost = 0.0
         self._cache_dir = cache_dir
+        # One send at a time: the pooled TLS connection is not safe to share across threads
+        # (seen as "bad record mac"), and budget check + spend update must be atomic.
+        self._lock = threading.Lock()
         self._http = httpx.Client(
             base_url=base_url,
             transport=transport,
@@ -112,6 +120,10 @@ class LlmClient:
 
     # -- call ---------------------------------------------------------------------------
     def _send(self, model: str, messages: list[dict[str, str]], max_tokens: int) -> str:
+        with self._lock:
+            return self._send_locked(model, messages, max_tokens)
+
+    def _send_locked(self, model: str, messages: list[dict[str, str]], max_tokens: int) -> str:
         chars = sum(len(m["content"]) for m in messages)
         estimate = self._check_budget(model, chars, max_tokens)
         try:
@@ -147,7 +159,7 @@ class LlmClient:
         choices = body.get("choices") or [{}]
         if isinstance(choices[0], dict) and choices[0].get("finish_reason") == "length":
             details = (body.get("usage") or {}).get("completion_tokens_details") or {}
-            raise LlmError(
+            raise TruncatedError(
                 f"output truncated at max_tokens={max_tokens}"
                 f" (hidden reasoning tokens: {details.get('reasoning_tokens', '?')})"
             )
@@ -194,12 +206,20 @@ class LlmClient:
         path = self._cache_path(key)
         if path.is_file():
             try:
-                return self._parse(json.loads(path.read_text())["content"], schema)
-            except ValueError, KeyError, TypeError:
-                path.unlink(missing_ok=True)  # truncated/stale entry: refetch, never trust
+                entry = json.loads(path.read_text())
+                if entry.get("truncated") is True:
+                    # a replay must take the same path the original run took
+                    raise TruncatedError(f"cached: output hit max_tokens={max_tokens}")
+                return self._parse(entry["content"], schema)
+            except ValueError, KeyError, TypeError, AttributeError:
+                path.unlink(missing_ok=True)  # half-written/stale entry: refetch, never trust
 
         messages = [{"role": "system", "content": system_full}, {"role": "user", "content": user}]
-        content = self._send(model, messages, max_tokens)
+        try:
+            content = self._send(model, messages, max_tokens)
+        except TruncatedError:
+            self._store(path, {"model": model, "truncated": True})
+            raise
         try:
             result = self._parse(content, schema)
         except ValidationError as first:
@@ -216,8 +236,12 @@ class LlmClient:
                 result = self._parse(content, schema)
             except ValidationError as second:
                 raise LlmError(f"invalid output after retry: {second}") from second
+        self._store(path, {"model": model, "content": content})
+        return result
+
+    @staticmethod
+    def _store(path: Path, entry: dict[str, object]) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         tmp = path.with_suffix(".tmp")
-        tmp.write_text(json.dumps({"model": model, "content": content}))
+        tmp.write_text(json.dumps(entry))
         os.replace(tmp, path)  # atomic: a crash never leaves a half-written entry
-        return result

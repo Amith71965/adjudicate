@@ -1,0 +1,160 @@
+{
+ "checked_by": "repository owner",
+ "method": "Read each decision PDF without seeing golden/labels/; used an AI assistant (Codex) to organise the form with page-cited quotes, then verified every cell against the PDF.",
+ "date": "2026-11-12",
+ "fields": 68,
+ "agree": 68,
+ "decisions": [
+  {
+   "decision_id": "DEC162025_04B2203",
+   "outcome": "dismissed",
+   "criteria": {
+    "awards": {
+     "director": "not_met",
+     "aao": "not_reached"
+    },
+    "scholarly_articles": {
+     "director": "not_met",
+     "aao": "not_met"
+    },
+    "leading_role": {
+     "director": "not_addressed",
+     "aao": "not_reached"
+    },
+    "high_salary": {
+     "director": "not_met",
+     "aao": "not_met"
+    }
+   },
+   "final_merits": "not_reached"
+  },
+  {
+   "decision_id": "DEC292025_02B2203",
+   "outcome": "dismissed",
+   "criteria": {
+    "judging": {
+     "director": "met",
+     "aao": "not_reached"
+    },
+    "original_contributions": {
+     "director": "not_met",
+     "aao": "not_reached"
+    },
+    "scholarly_articles": {
+     "director": "met",
+     "aao": "not_reached"
+    },
+    "leading_role": {
+     "director": "not_met",
+     "aao": "not_reached"
+    },
+    "high_salary": {
+     "director": "met",
+     "aao": "not_reached"
+    }
+   },
+   "final_merits": "not_met"
+  },
+  {
+   "decision_id": "NOV072025_01B2203",
+   "outcome": "dismissed",
+   "criteria": {
+    "awards": {
+     "director": "not_met",
+     "aao": "not_met"
+    },
+    "membership": {
+     "director": "not_met",
+     "aao": "not_met"
+    },
+    "published_material": {
+     "director": "met",
+     "aao": "not_met"
+    },
+    "judging": {
+     "director": "met",
+     "aao": "not_met"
+    },
+    "original_contributions": {
+     "director": "not_met",
+     "aao": "not_reached"
+    },
+    "scholarly_articles": {
+     "director": "not_met",
+     "aao": "waived"
+    },
+    "leading_role": {
+     "director": "not_met",
+     "aao": "not_met"
+    },
+    "high_salary": {
+     "director": "met",
+     "aao": "not_met"
+    }
+   },
+   "final_merits": "not_met"
+  },
+  {
+   "decision_id": "NOV212025_01B2203",
+   "outcome": "dismissed",
+   "criteria": {
+    "awards": {
+     "director": "not_met",
+     "aao": "not_met"
+    },
+    "membership": {
+     "director": "not_met",
+     "aao": "not_met"
+    },
+    "published_material": {
+     "director": "not_met",
+     "aao": "waived"
+    },
+    "judging": {
+     "director": "met",
+     "aao": "not_addressed"
+    },
+    "original_contributions": {
+     "director": "not_met",
+     "aao": "not_met"
+    },
+    "scholarly_articles": {
+     "director": "met",
+     "aao": "not_addressed"
+    },
+    "leading_role": {
+     "director": "not_met",
+     "aao": "not_met"
+    }
+   },
+   "final_merits": "not_reached"
+  },
+  {
+   "decision_id": "NOV252025_01B2203",
+   "outcome": "dismissed",
+   "criteria": {
+    "membership": {
+     "director": "not_met",
+     "aao": "waived"
+    },
+    "judging": {
+     "director": "met",
+     "aao": "not_addressed"
+    },
+    "original_contributions": {
+     "director": "not_met",
+     "aao": "not_reached"
+    },
+    "leading_role": {
+     "director": "not_met",
+     "aao": "not_met"
+    },
+    "high_salary": {
+     "director": "not_met",
+     "aao": "waived"
+    }
+   },
+   "final_merits": "not_reached"
+  }
+ ]
+}
