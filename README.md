@@ -13,12 +13,14 @@ Every objection is grounded in AAO decisions, and nothing leaves without an atto
 [**Results**](#-results)
 
 ![Phases](https://img.shields.io/badge/phases-9%2F9%20gated-2f7a52?style=flat-square)
-![Tests](https://img.shields.io/badge/tests-706%20passing-2f7a52?style=flat-square)
+[![verify](https://img.shields.io/github/actions/workflow/status/Amith71965/adjudicate/verify.yml?branch=main&style=flat-square&label=verify)](https://github.com/Amith71965/adjudicate/actions/workflows/verify.yml)
+![Tests](https://img.shields.io/badge/tests-706-2f7a52?style=flat-square)
 ![Fabricated citations](https://img.shields.io/badge/fabricated%20citations-0-2f7a52?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white)
 ![Postgres](https://img.shields.io/badge/Postgres%2017-pgvector-4169E1?style=flat-square&logo=postgresql&logoColor=white)
 ![Status](https://img.shields.io/badge/status-prototype-a8352a?style=flat-square)
+[![License: MIT](https://img.shields.io/badge/license-MIT-62666d?style=flat-square)](LICENSE)
 
 <br>
 
@@ -116,7 +118,7 @@ The whole project ran on about **$4** of model calls. Every call is cached and c
 - **The synthetic gates are easy.** Phases 4 to 6 ran on generated petitions with planted flaws. The same developer wrote the generator and the system, so those scores prove the machinery, not generalization.
 - **Labels are not an attorney's.** They were checked against a hand-labelled gold set and a blind re-label, not by immigration counsel.
 - **The text is OCR.** Redacted PDFs come with defects such as `EB-I`, `ofthe` and `8 C.F .R.`. The common ones are repaired, not all of them.
-- **O-1 is thin.** O-1 decisions are harvested, but the examiner and the evaluation cover EB-1A only.
+- **O-1 is thin.** O-1 decisions are harvested and parsed, but they are not split into O-1A (sciences, business) and O-1B (arts). That sub-classifier was planned and not built, so the examiner and the evaluation cover EB-1A only.
 - **It is a prototype.** It has no authentication, and reviewer names are self-reported.
 </details>
 
@@ -203,7 +205,7 @@ docs/            diagrams, explainers, screenshots, and the live site
 
 ## ✦ How it was built
 
-Nine phases, one branch and one pull request each, and each finished only when its measured gate passed. Every behavior started as a failing test. There are 512 Python tests, 194 TypeScript tests and a browser flow. Independent review passes looked for silent failures, security issues and retrieval mistakes at every phase boundary. Every model call goes through a client with a hard dollar cap and a disk cache.
+Nine phases, one branch and one pull request each, and each finished only when its measured gate passed. Every behavior started as a failing test. There are 512 Python tests, 194 TypeScript tests and a browser flow, and GitHub Actions runs the whole gate against a throwaway Postgres on every push and pull request. Independent review passes looked for silent failures, security issues and retrieval mistakes at every phase boundary. Every model call goes through a client with a hard dollar cap and a disk cache.
 
 <details>
 <summary><b>What failed, and what I would change</b></summary>
@@ -214,9 +216,9 @@ Nine phases, one branch and one pull request each, and each finished only when i
 - **Full runs broke before one finished.** A shared TLS connection, outputs truncated by hidden reasoning tokens, one over-long field, and replays that were not deterministic. Each fix is now a test.
 - **The synthetic gates were too kind.** One honest run on real decisions told me more than perfect synthetic scores. I would run a real pilot much earlier.
 - **Copying the database crashed Postgres.** Browser tests now write to a throwaway schema instead, because the real review log is append-only and must never be touched by a test.
-- **Next:** real authentication, O-1 and NIW reasoning, variance across runs, and a review by a practicing immigration attorney.
+- **Next:** real authentication, an O-1A / O-1B split and O-1 and NIW reasoning, variance across runs, and a review by a practicing immigration attorney.
 </details>
 
 ---
 
-<sub>Synthetic petitions and applicants only; no real personal data is stored in this repository. AAO decisions are public, redacted government records, fetched from uscis.gov at the rate its robots.txt asks for. The only decision text committed is the 25-decision gold set and six parser fixtures (see the <a href="py/tests/golden/README.md">gold-set README</a>). Everything binds to localhost. This is an engineering prototype, not legal advice.</sub>
+<sub>Synthetic petitions and applicants only; no real personal data is stored in this repository. AAO decisions are public, redacted government records, fetched from uscis.gov at the rate its robots.txt asks for. The only decision text committed is the 25-decision gold set and six parser fixtures (see the <a href="py/tests/golden/README.md">gold-set README</a>). Everything binds to localhost. This is an engineering prototype, not legal advice. Code is MIT licensed; see <a href="LICENSE">LICENSE</a>.</sub>
