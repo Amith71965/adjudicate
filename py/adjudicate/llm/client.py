@@ -206,12 +206,20 @@ class LlmClient:
         path = self._cache_path(key)
         if path.is_file():
             try:
-                return self._parse(json.loads(path.read_text())["content"], schema)
-            except ValueError, KeyError, TypeError:
-                path.unlink(missing_ok=True)  # truncated/stale entry: refetch, never trust
+                entry = json.loads(path.read_text())
+                if entry.get("truncated") is True:
+                    # a replay must take the same path the original run took
+                    raise TruncatedError(f"cached: output hit max_tokens={max_tokens}")
+                return self._parse(entry["content"], schema)
+            except ValueError, KeyError, TypeError, AttributeError:
+                path.unlink(missing_ok=True)  # half-written/stale entry: refetch, never trust
 
         messages = [{"role": "system", "content": system_full}, {"role": "user", "content": user}]
-        content = self._send(model, messages, max_tokens)
+        try:
+            content = self._send(model, messages, max_tokens)
+        except TruncatedError:
+            self._store(path, {"model": model, "truncated": True})
+            raise
         try:
             result = self._parse(content, schema)
         except ValidationError as first:
@@ -228,8 +236,12 @@ class LlmClient:
                 result = self._parse(content, schema)
             except ValidationError as second:
                 raise LlmError(f"invalid output after retry: {second}") from second
+        self._store(path, {"model": model, "content": content})
+        return result
+
+    @staticmethod
+    def _store(path: Path, entry: dict[str, object]) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         tmp = path.with_suffix(".tmp")
-        tmp.write_text(json.dumps({"model": model, "content": content}))
+        tmp.write_text(json.dumps(entry))
         os.replace(tmp, path)  # atomic: a crash never leaves a half-written entry
-        return result

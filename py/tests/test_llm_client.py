@@ -17,6 +17,7 @@ from adjudicate.llm.client import (
     BudgetExceededError,
     LlmClient,
     LlmError,
+    TruncatedError,
     UnknownModelError,
 )
 
@@ -265,3 +266,25 @@ def test_concurrent_callers_never_share_a_send_and_the_budget_holds(tmp_path: Pa
         t.join()
     assert peak[0] == 1
     assert client.spent_usd <= 0.035 + 1e-9 and errors  # the cap stopped the excess calls
+
+
+def test_a_truncation_is_cached_so_a_replay_never_resends_it(tmp_path: Path) -> None:
+    # Phase-7 replay: truncated first attempts were never cached, so every replay re-sent
+    # them; one came back whole and changed that decision's facts (a non-reproducible eval)
+    sent: list[int] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        sent.append(1)
+        return httpx.Response(200, json={
+            "choices": [{"finish_reason": "length", "message": {"content": '{"verdict": "me'}}],
+            "usage": {"cost": 0.003},
+        })  # fmt: skip
+
+    def client() -> LlmClient:
+        return LlmClient(api_key="k", budget_usd=1.0, cache_dir=tmp_path,
+                         transport=httpx.MockTransport(handler))  # fmt: skip
+
+    for c in (client(), client()):
+        with pytest.raises(TruncatedError):
+            c.complete_json(HAIKU, system="s", user="u", schema=Answer, max_tokens=10)
+    assert len(sent) == 1
