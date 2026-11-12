@@ -47,6 +47,11 @@ describe("reviewState", () => {
     expect(s.orphans).toEqual(["prong:awards/whole"]);
   });
 
+  it("lets a later entry for an item no longer in the case void the sign-off too", () => {
+    const s = reviewState(ITEMS, [ev("resolve", J), ev("dismiss", W), ev("signoff"), ev("resolve", "prong:awards/whole")]);
+    expect(s.gate.ready).toBe(false);
+  });
+
   it("still requires a sign-off for a case with nothing to dispose of", () => {
     expect(reviewState([], []).gate).toEqual({ ready: false, reasons: ["attorney sign-off required"] });
   });
