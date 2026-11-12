@@ -28,7 +28,8 @@ export function PassageDrawer({ passage, quote, closeHref }: { passage: Passage;
           The cited quote was not found verbatim in this passage. Treat the citation as unverified.
         </p>
       )}
-      <p className="mt-5 leading-relaxed whitespace-pre-line">
+      {/* PDF hard line breaks collapse like any whitespace: the passage reads as prose */}
+      <p className="mt-5 leading-relaxed">
         {at === null ? (
           passage.body
         ) : (
