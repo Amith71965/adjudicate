@@ -11,7 +11,7 @@ PY := .venv/bin
 .PHONY: help setup up down migrate harvest harvest-stats parse extract index eval-parse eval-retrieval api mcp schemas synth eval-mapper eval-examiner eval-letters eval-merits eval-real e2e verify verify-clean verify-py verify-web lint-py type-py test-py test-web lint-web type-web nuke
 
 help: ## list targets
-	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
+	@grep -E '^[a-z0-9-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
 
 setup: ## create .venv and install python + node deps
 	uv sync --frozen
