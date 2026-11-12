@@ -1,0 +1,291 @@
+{
+  "what": "Phase-7 test-label audit: a seeded random sample (setseed 0.20261111) of 40 AAO-decided criterion labels on held-out decisions; each label's grounding quote was read and judged by the developer (Claude), not an attorney.",
+  "summary": {
+    "sampled": 40,
+    "supported": 36,
+    "ambiguous": 4,
+    "contradicted": 0
+  },
+  "items": [
+    {
+      "decision_id": "JUL282026_02B2203",
+      "criterion": "judging",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL152026_02B2203",
+      "criterion": "judging",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN092026_02B2203",
+      "criterion": "awards",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "SEP142026_02B2203",
+      "criterion": "original_contributions",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN032026_01B2203",
+      "criterion": "high_salary",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "AUG262026_02B2203",
+      "criterion": "scholarly_articles",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "SEP082026_02B2203",
+      "criterion": "published_material",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN052026_01B2203",
+      "criterion": "published_material",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN162026_01B2203",
+      "criterion": "membership",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN122026_02B2203",
+      "criterion": "scholarly_articles",
+      "aao_label": "met",
+      "check": "ambiguous",
+      "note": "quote says two further criteria were not evaluated; does not name which three were met"
+    },
+    {
+      "decision_id": "AUG172026_01B2203",
+      "criterion": "judging",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "AUG172026_01B2203",
+      "criterion": "original_contributions",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN172026_03B2203",
+      "criterion": "published_material",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL062026_01B2203",
+      "criterion": "judging",
+      "aao_label": "met",
+      "check": "ambiguous",
+      "note": "quote says one criterion was satisfied without naming it"
+    },
+    {
+      "decision_id": "JUN052026_02B2203",
+      "criterion": "scholarly_articles",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "SEP042026_01B2203",
+      "criterion": "published_material",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN012026_02B2203",
+      "criterion": "high_salary",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN042026_02B2203",
+      "criterion": "judging",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL212026_01B2203",
+      "criterion": "awards",
+      "aao_label": "met",
+      "check": "ambiguous",
+      "note": "quote says one criterion was satisfied without naming it"
+    },
+    {
+      "decision_id": "SEP162026_01B2203",
+      "criterion": "membership",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN092026_01B2203",
+      "criterion": "original_contributions",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "SEP032026_02B2203",
+      "criterion": "scholarly_articles",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN112026_03B2203",
+      "criterion": "published_material",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "SEP032026_01B2203",
+      "criterion": "awards",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL172026_03B2203",
+      "criterion": "original_contributions",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL272026_04B2203",
+      "criterion": "high_salary",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "SEP142026_02B2203",
+      "criterion": "scholarly_articles",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL242026_02B2203",
+      "criterion": "leading_role",
+      "aao_label": "met",
+      "check": "ambiguous",
+      "note": "quote is final-merits weighing; step-one status not stated in it"
+    },
+    {
+      "decision_id": "JUN042026_06B2203",
+      "criterion": "high_salary",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN022026_04B2203",
+      "criterion": "leading_role",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN042026_06B2203",
+      "criterion": "published_material",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL082026_02B2203",
+      "criterion": "leading_role",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL012026_03B2203",
+      "criterion": "display",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN012026_03B2203",
+      "criterion": "leading_role",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "AUG192026_03B2203",
+      "criterion": "high_salary",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN252026_02B2203",
+      "criterion": "leading_role",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "AUG252026_02B2203",
+      "criterion": "display",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUN042026_01B2203",
+      "criterion": "leading_role",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "SEP152026_02B2203",
+      "criterion": "commercial_success",
+      "aao_label": "met",
+      "check": "supported",
+      "note": null
+    },
+    {
+      "decision_id": "JUL292026_01B2203",
+      "criterion": "membership",
+      "aao_label": "not_met",
+      "check": "supported",
+      "note": null
+    }
+  ]
+}
