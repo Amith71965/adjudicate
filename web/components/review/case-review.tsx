@@ -14,6 +14,7 @@ import type { ItemState } from "@/lib/review/state";
 import type { ActionResult, ReviewAction } from "./action-form";
 import { ExhibitDialog, ExhibitProvider } from "./exhibit";
 import { ObjectionCard, type CardMode } from "./objection-card";
+import { FILTER_EVENT } from "./risk-bars";
 
 export interface CaseReviewProps {
   caseId: string;
@@ -89,6 +90,13 @@ function Review({ caseId, items, states, dispose, canAct, artifacts = [] }: Case
     const ordered = [...visible.slice(start + 1), ...visible.slice(0, start + 1)];
     go(ordered.find((i) => optimistic[i.id]?.status === "open")?.id);
   }, [focused, visible, optimistic, go]);
+
+  useEffect(() => {
+    // a click on a risk bar filters the objections to that criterion
+    const onFilter = (e: Event) => { setStatus("all"); setCriterion((e as CustomEvent<string>).detail); };
+    window.addEventListener(FILTER_EVENT, onFilter);
+    return () => window.removeEventListener(FILTER_EVENT, onFilter);
+  }, []);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {

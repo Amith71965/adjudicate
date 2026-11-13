@@ -12,7 +12,7 @@ test("jump to an objection with the palette", async ({ page, context }) => {
   await page.keyboard.press("ControlOrMeta+k");
   const box = page.getByRole("combobox", { name: /search cases and objections/i });
   await box.fill("marrowfield judging");
-  await expect(page.getByRole("option")).toHaveCount(1);
+  await expect(page.getByRole("listbox").getByRole("option")).toHaveCount(1);
   await box.press("Enter");
   await expect(page).toHaveURL(/\/cases\/P08#item-prong-judging-whole$/);
   await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toContainText("P08");
