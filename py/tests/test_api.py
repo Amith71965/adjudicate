@@ -146,3 +146,32 @@ def test_partial_index_is_degraded_and_search_refuses(
     assert h.status_code == 503 and h.json()["status"] == "degraded"
     r = client.get("/search", params={"q": "acclaim"})
     assert r.status_code == 503 and "index incomplete" in r.json()["detail"]
+
+
+# --- U2 decision viewer ------------------------------------------------------------------------
+
+
+def test_the_stored_pdf_is_served_inline(client: TestClient) -> None:
+    r = client.get("/decisions/SEP152026_01B2203/pdf")
+    assert r.status_code == 200
+    assert r.headers["content-type"] == "application/pdf"
+    assert r.headers["content-disposition"].startswith("inline")
+    assert r.content == (FIX / "SEP152026_01B2203.pdf").read_bytes()
+
+
+def test_unknown_and_malformed_decisions_are_refused(client: TestClient) -> None:
+    assert client.get("/decisions/JAN012030_01B2203/pdf").status_code == 404
+    assert client.get("/decisions/x;drop/pdf").status_code == 422
+    assert (
+        client.get("/decisions/x;drop/locate", params={"q": "some words here"}).status_code == 422
+    )
+
+
+def test_locate_returns_the_page_of_a_quote(client: TestClient) -> None:
+    from tests.test_decision_viewer import PAGES, phrase_on
+
+    r = client.get("/decisions/SEP152026_01B2203/locate", params={"q": phrase_on(3)})
+    assert r.status_code == 200
+    assert r.json() == {"decision_id": "SEP152026_01B2203", "page": 3, "pages": len(PAGES)}
+    absent = {"q": "no such sentence anywhere in this decision"}
+    assert client.get("/decisions/SEP152026_01B2203/locate", params=absent).json()["page"] is None

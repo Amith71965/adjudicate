@@ -12,9 +12,10 @@ from typing import Annotated
 
 import psycopg
 from fastapi import FastAPI, HTTPException, Path, Query
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, Field, model_validator
 
+from adjudicate.api.locate import page_texts, quote_page
 from adjudicate.parse.structure import Criterion, SectionKind
 from adjudicate.retrieve.chunk import CHUNKABLE_KINDS
 from adjudicate.retrieve.embed import Embedder
@@ -202,6 +203,38 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
             ],
         }
 
+    def decision_pdf_bytes(decision_id: str) -> bytes:
+        with db() as conn:
+            row = conn.execute(
+                "SELECT content FROM raw_decision WHERE decision_id = %s AND content IS NOT NULL",
+                (decision_id,),
+            ).fetchone()
+        if row is None:
+            raise HTTPException(404, f"no stored PDF for {decision_id}")
+        content = row[0]
+        if not isinstance(content, (bytes, memoryview)):
+            raise HTTPException(500, f"stored PDF for {decision_id} is not bytes")
+        return bytes(content)
+
+    @app.get("/decisions/{decision_id}/pdf")
+    def decision_pdf(decision_id: DecisionId) -> Response:
+        return Response(
+            decision_pdf_bytes(decision_id),
+            media_type="application/pdf",
+            headers={"content-disposition": f'inline; filename="{decision_id}.pdf"'},
+        )
+
+    @app.get("/decisions/{decision_id}/locate")
+    def decision_locate(
+        decision_id: DecisionId, q: Annotated[str, Query(min_length=1, max_length=2000)]
+    ) -> dict[str, object]:
+        pages = page_texts(decision_pdf_bytes(decision_id))
+        return {
+            "decision_id": decision_id,
+            "page": quote_page(b"", q, pages),
+            "pages": len(pages),
+        }
+
     @app.get("/cases/{case_id}/events")
     def case_events(case_id: CaseId) -> dict[str, object]:
         with db() as conn:
@@ -239,6 +272,7 @@ def create_app(connect: ConnFactory, embedder: Embedder) -> FastAPI:
     return app
 
 
+DecisionId = Annotated[str, Path(pattern=r"^[A-Z]{3}[0-9]{6}_[0-9]{2}[A-Z][0-9]{4}$")]
 CaseId = Annotated[str, Path(pattern=r"^P[0-9]{2,4}$")]  # ASCII: \d would admit any digit
 
 
