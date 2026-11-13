@@ -32,7 +32,9 @@ export function EvidenceMatrix({ artifacts, items }: { artifacts: Case["artifact
                   <td key={c} className="px-2 py-3 text-center">
                     {a.claimed_criterion === c && <span role="img" aria-label={`claimed for ${label(c)}`} className="mx-auto mb-1 block h-2.5 w-2.5 rounded-full bg-[var(--ink)]" />}
                     {named.map((i) => (
-                      <a key={i.id} href={`#${itemAnchor(i.id)}`} aria-label={itemTitle(i)} title={itemTitle(i)} className="mx-auto block h-3 w-3 rounded-sm border-2 border-[var(--seal)] hover:bg-[var(--seal)]" />
+                      <a key={i.id} href={`#${itemAnchor(i.id)}`} aria-label={itemTitle(i)} title={itemTitle(i)} className="group mx-auto grid h-6 w-6 place-items-center rounded">
+                        <span aria-hidden="true" className="block h-3 w-3 rounded-sm border-2 border-[var(--seal)] group-hover:bg-[var(--seal)]" />
+                      </a>
                     ))}
                   </td>
                 );

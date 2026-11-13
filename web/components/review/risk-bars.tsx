@@ -17,7 +17,7 @@ export function RiskBars({ risks }: { risks: Record<string, number> }) {
     <div>
       <div className="space-y-1">
         {rows.map(([criterion, risk]) => (
-          <button key={criterion} type="button" onClick={() => pick(criterion)} aria-label={`Show ${label(criterion)} objections`} className="grid w-full grid-cols-[9rem_1fr_3rem] items-center gap-3 rounded-lg px-1 py-1 text-left text-sm hover:bg-[var(--paper)]">
+          <button key={criterion} type="button" onClick={() => pick(criterion)} aria-label={`${label(criterion)} ${pct(risk)}%: show these objections`} className="grid w-full grid-cols-[9rem_1fr_3rem] items-center gap-3 rounded-lg px-1 py-1 text-left text-sm hover:bg-[var(--paper)]">
             <span className="truncate">{label(criterion)}</span>
             <span role="meter" aria-label={`${label(criterion)} risk ${pct(risk)}%`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct(risk)} className="h-2 overflow-hidden rounded bg-[var(--line)]">
               <span className="block h-full rounded" style={{ width: `${pct(risk)}%`, background: risk >= 0.7 ? "var(--red)" : risk >= 0.4 ? "var(--amber)" : "var(--green)" }} />
