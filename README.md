@@ -14,7 +14,7 @@ Every objection is grounded in AAO decisions, and nothing leaves without an atto
 
 ![Phases](https://img.shields.io/badge/phases-9%2F9%20gated-2f7a52?style=flat-square)
 [![verify](https://img.shields.io/github/actions/workflow/status/Amith71965/adjudicate/verify.yml?branch=main&style=flat-square&label=verify)](https://github.com/Amith71965/adjudicate/actions/workflows/verify.yml)
-![Tests](https://img.shields.io/badge/tests-783-2f7a52?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-785-2f7a52?style=flat-square)
 ![Fabricated citations](https://img.shields.io/badge/fabricated%20citations-0-2f7a52?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white)
@@ -211,7 +211,7 @@ docs/            diagrams, explainers, screenshots, and the live site
 
 ## ✦ How it was built
 
-Nine phases, one branch and one pull request each, and each finished only when its measured gate passed. Every behavior started as a failing test. There are 520 Python tests, 263 TypeScript tests, and browser tests that walk the review flow and check accessibility in light and dark, and GitHub Actions runs the whole gate against a throwaway Postgres on every push and pull request. Independent review passes looked for silent failures, security issues and retrieval mistakes at every phase boundary. Every model call goes through a client with a hard dollar cap and a disk cache.
+Nine phases, one branch and one pull request each, and each finished only when its measured gate passed. Every behavior started as a failing test. There are 520 Python tests, 265 TypeScript tests, and browser tests that walk the review flow and check accessibility in light and dark, and GitHub Actions runs the whole gate against a throwaway Postgres on every push and pull request. Independent review passes looked for silent failures, security issues and retrieval mistakes at every phase boundary. Every model call goes through a client with a hard dollar cap and a disk cache.
 
 <details>
 <summary><b>What failed, and what I would change</b></summary>

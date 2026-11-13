@@ -174,15 +174,15 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 </div></nav>
 
 <header class="hero" id="top"><div class="wrap">
-  <div class="kicker rv">EB-1A pre-filing review · prototype</div>
-  <h1 class="rv" style="--d:.06s">Meet the reader who wants to say no, <span>before you file.</span></h1>
-  <p class="lede rv" style="--d:.12s">Adjudicate reads an extraordinary-ability petition the way a skeptical USCIS officer would. It writes <b>the strongest objection on every criterion the petition claims</b>, backs each one with the Administrative Appeals Office's own reasoning, quoted word for word, and nothing leaves until <b>an attorney resolves every objection and signs off</b>.</p>
-  <div class="cta rv" style="--d:.18s">
+  <div class="kicker">EB-1A pre-filing review · prototype</div>
+  <h1>Meet the reader who wants to say no, <span>before you file.</span></h1>
+  <p class="lede">Adjudicate reads an extraordinary-ability petition the way a skeptical USCIS officer would. It writes <b>the strongest objection on every criterion the petition claims</b>, backs each one with the Administrative Appeals Office's own reasoning, quoted word for word, and nothing leaves until <b>an attorney resolves every objection and signs off</b>.</p>
+  <div class="cta">
     <a class="btn primary" href="#how">See how it works</a>
     <a class="btn" href="https://github.com/Amith71965/adjudicate#readme">Read the README</a>
     <a class="btn" href="#diagrams">Explore the diagrams</a>
   </div>
-  <figure class="rv" style="--d:.24s;margin:0">
+  <figure class="rv" style="margin:0">
     <div class="frame">
       <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="url">localhost:3000 · review queue → P01 → AAO decision</span></div>
       <div class="stage">
@@ -198,7 +198,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <div><b data-to="145">145</b><span>real AAO decisions it had never seen</span></div>
     <div><b data-to="0.99" data-dp="2">0.99</b><span>of rejected criteria caught</span></div>
     <div><b>0</b><span>fabricated citations</span></div>
-    <div><b data-to="783">783</b><span>tests, plus browser and accessibility checks</span></div>
+    <div><b data-to="785">785</b><span>tests, plus browser and accessibility checks</span></div>
     <div><b data-to="4" data-pre="~$">~$4</b><span>of model calls, all cached</span></div>
   </div>
 </div></header>
@@ -210,8 +210,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <div class="rv"><div class="n">01</div><h3>An objection on every claimed criterion</h3>
         <p class="muted">For each criterion, and each half of the two-part ones, it argues the request for evidence an officer would write: invitations with no proof the review happened, a "leading role" letter that never describes the role, praise with no mechanism behind it. The attorney works through them one at a time, with a progress bar, filters and keyboard shortcuts.</p></div>
       <div class="visual rv" style="--d:.1s"><div class="shot"><picture>
-        <source media="(prefers-color-scheme: dark)" srcset="images/review-case-dark.webp" type="image/webp">
-        <source srcset="images/review-case-light.webp" type="image/webp">
+        <source media="(prefers-color-scheme: dark)" srcset="images/review-case-dark-1280.webp 1280w, images/review-case-dark.webp 2560w" sizes="(max-width: 820px) 100vw, 640px" type="image/webp">
+        <source srcset="images/review-case-light-1280.webp 1280w, images/review-case-light.webp 2560w" sizes="(max-width: 820px) 100vw, 640px" type="image/webp">
         <img src="images/review-case-light.png" width="2560" height="1720" alt="The case review page: a progress bar and filters over the objections, one membership objection resolved with the attorney's note, and the sign-off panel still locked" loading="lazy" decoding="async">
       </picture></div></div>
     </div>
@@ -220,13 +220,13 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         <p class="muted">Citations may only point at passages that were actually retrieved, and the quote must appear verbatim. Hover one for a preview; click it and the full AAO passage slides in with the quoted words marked. One more click opens the decision PDF itself, on the right page, with the sentence highlighted. A prong it cannot ground is shown as "not reviewed", never quietly passed.</p></div>
       <div class="visual stack rv" style="--d:.1s">
         <div class="shot"><picture>
-          <source media="(prefers-color-scheme: dark)" srcset="images/review-passage-dark.webp" type="image/webp">
-          <source srcset="images/review-passage-light.webp" type="image/webp">
+          <source media="(prefers-color-scheme: dark)" srcset="images/review-passage-dark-1280.webp 1280w, images/review-passage-dark.webp 2560w" sizes="(max-width: 820px) 84vw, 540px" type="image/webp">
+          <source srcset="images/review-passage-light-1280.webp 1280w, images/review-passage-light.webp 2560w" sizes="(max-width: 820px) 84vw, 540px" type="image/webp">
           <img src="images/review-passage-light.png" width="2560" height="1720" alt="The passage drawer: the full AAO decision passage with the cited sentence highlighted, and buttons to open the decision or copy the quote" loading="lazy" decoding="async">
         </picture></div>
         <div class="shot front"><picture>
-          <source media="(prefers-color-scheme: dark)" srcset="images/review-viewer-dark.webp" type="image/webp">
-          <source srcset="images/review-viewer-light.webp" type="image/webp">
+          <source media="(prefers-color-scheme: dark)" srcset="images/review-viewer-dark-1280.webp 1280w, images/review-viewer-dark.webp 2560w" sizes="(max-width: 820px) 84vw, 540px" type="image/webp">
+          <source srcset="images/review-viewer-light-1280.webp 1280w, images/review-viewer-light.webp 2560w" sizes="(max-width: 820px) 84vw, 540px" type="image/webp">
           <img src="images/review-viewer-light.png" width="2560" height="1720" alt="The decision viewer: the AAO decision PDF opened at page 3 of 4 with the quoted sentence highlighted" loading="lazy" decoding="async">
         </picture></div>
       </div>
