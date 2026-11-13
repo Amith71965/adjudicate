@@ -1,7 +1,8 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
-import { Suspense } from "react";
+import { Suspense, ViewTransition } from "react";
 import { disposeItem, setReviewer, signOff } from "@/app/actions";
 import { EvidenceMatrix } from "@/components/review/evidence-matrix";
 import { ExportPanel } from "@/components/review/export-panel";
@@ -12,7 +13,10 @@ import { RiskBars } from "@/components/review/risk-bars";
 import type { Case } from "@/lib/review/cases";
 import { itemAnchor, pct } from "@/lib/review/format";
 import { getCase, REVIEWER_COOKIE, reviewStore } from "@/lib/review/server";
+import { buildMemo } from "@/lib/review/export";
 import { reviewState } from "@/lib/review/state";
+
+export const metadata: Metadata = { title: "Case review" };
 
 type Search = Record<string, string | string[] | undefined>;
 
@@ -29,9 +33,13 @@ async function Drawer({ c, search }: { c: Case; search: Search }) {
   if (typeof itemId !== "string" || typeof cite !== "string") return null;
   const item = c.items.find((i) => i.id === itemId);
   const citation = item?.kind === "prong" ? item.citations[Number(cite)] : undefined;
-  if (!item || !citation) return null;
+  if (!item || item.kind !== "prong" || !citation) return null;
   const passage = await reviewStore().passage(citation.chunk_id);
-  return <PassageDrawer passage={passage} quote={citation.quote} closeHref={`/cases/${c.id}#${itemAnchor(item.id)}`} />;
+  return (
+    <ViewTransition enter="drawer-in" exit="drawer-out" default="none">
+      <PassageDrawer passage={passage} quote={citation.quote} closeHref={`/cases/${c.id}#${itemAnchor(item.id)}`} caseId={c.id} item={item} n={Number(cite)} />
+    </ViewTransition>
+  );
 }
 
 async function CaseView({ params, searchParams }: Pick<PageProps<"/cases/[id]">, "params" | "searchParams">) {
@@ -74,9 +82,9 @@ async function CaseView({ params, searchParams }: Pick<PageProps<"/cases/[id]">,
       )}
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
-        <CaseReview caseId={c.id} items={c.items} states={state.items} dispose={dispose} canAct={Boolean(reviewer)} />
+        <CaseReview caseId={c.id} items={c.items} states={state.items} dispose={dispose} canAct={Boolean(reviewer)} artifacts={c.artifacts} />
         <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
-          <ExportPanel caseId={c.id} state={state} signoff={signOff.bind(null, c.id)} reviewer={reviewer} />
+          <ExportPanel caseId={c.id} state={state} signoff={signOff.bind(null, c.id)} reviewer={reviewer} memo={state.gate.ready ? buildMemo(c, events) : undefined} />
           <section aria-label="Risk by criterion" className="rounded-lg border border-[var(--line)] bg-[var(--card)] p-5">
             <h2 className="mb-4 font-serif text-xl">Risk by criterion</h2>
             <RiskBars risks={c.criterion_risk} />

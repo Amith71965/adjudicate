@@ -3,6 +3,7 @@
  * the review log: the UI's disabled button is a convenience, not the protection.
  */
 import type { Case, ReviewItem } from "./cases";
+import { label } from "./format";
 import { reviewState, type ReviewEvent } from "./state";
 import { ReviewConflictError, ReviewStoreError, type ReviewStore } from "./store";
 
@@ -13,8 +14,8 @@ const json = (body: unknown, status: number) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 
 function heading(item: ReviewItem): string {
-  if (item.kind === "waiver") return `${item.criterion}: ${item.finding.replace(/_/g, " ")} (waiver check)`;
-  return `${item.criterion} / ${item.prong}${item.kind === "manual" ? " (not reviewed by the examiner)" : ""}`;
+  if (item.kind === "waiver") return `${label(item.criterion)}: ${label(item.finding)} (waiver check)`;
+  return `${label(item.criterion)} / ${item.prong}${item.kind === "manual" ? " (not reviewed by the examiner)" : ""}`;
 }
 
 export function buildMemo(c: Case, events: ReviewEvent[]): string {
@@ -25,7 +26,7 @@ export function buildMemo(c: Case, events: ReviewEvent[]): string {
     "",
     `Field: ${c.field}. Synthetic petition; not legal advice.`,
     `Examiner run: ${c.run.model} (${c.run.cache_version}), RFE risk ${c.rfe_risk.toFixed(2)}${c.complete ? "" : ", incomplete run"}.`,
-    signoff ? `Signed off by ${flat(signoff.actor)} at ${signoff.created_at}: ${flat(signoff.note)}` : "Not signed off.",
+    signoff ? `Signed off by ${flat(signoff.actor)} at ${signoff.created_at.slice(0, 16).replace("T", " ")} UTC: ${flat(signoff.note)}` : "Not signed off.",
     "Names are self-reported: this prototype has no authentication.",
     "",
   ];

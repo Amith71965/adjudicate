@@ -21,3 +21,13 @@ export function itemTitle(item: ReviewItem | string): string {
 
 export const citeHref = (caseId: string, itemId: string, n: number) =>
   `/cases/${caseId}?${new URLSearchParams({ item: itemId, cite: String(n) })}#passage`;
+
+const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+/** "AUG172026_02B2203" → "17 Aug 2026": USCIS encodes the issue date in the decision id. */
+export function decisionDate(decisionId: string): string {
+  const m = /^([A-Z]{3})(\d{2})(\d{4})_/.exec(decisionId);
+  const month = m ? MONTHS.indexOf(m[1]) : -1;
+  if (!m || month < 0) return "";
+  return `${Number(m[2])} ${m[1][0]}${m[1].slice(1).toLowerCase()} ${m[3]}`;
+}

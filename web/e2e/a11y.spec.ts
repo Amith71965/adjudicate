@@ -6,6 +6,8 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
 async function serious(page: Page) {
+  // after a client-side navigation Next re-streams <title>; check the settled page
+  await expect(page).toHaveTitle(/\S/);
   const { violations } = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
   return violations
     .filter((v) => v.impact === "serious" || v.impact === "critical")

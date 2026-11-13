@@ -35,7 +35,13 @@ export interface ReviewStore {
   passage(chunkId: number): Promise<Passage>;
 }
 
+export interface DecisionStore {
+  decisionPdf(decisionId: string): Promise<ArrayBuffer>;
+  locate(decisionId: string, quote: string): Promise<{ page: number | null; pages: number }>;
+}
+
 const CASE_ID = /^P\d{2,4}$/;
+export const DECISION_ID = /^[A-Z]{3}[0-9]{6}_[0-9]{2}[A-Z][0-9]{4}$/;
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
 
 async function call(fetchFn: typeof fetch, url: string, init: RequestInit, timeoutMs: number): Promise<unknown> {
@@ -55,7 +61,7 @@ async function call(fetchFn: typeof fetch, url: string, init: RequestInit, timeo
   }
 }
 
-export function httpReviewStore(baseUrl: string, fetchFn: typeof fetch = fetch, timeoutMs = 10_000): ReviewStore {
+export function httpReviewStore(baseUrl: string, fetchFn: typeof fetch = fetch, timeoutMs = 10_000): ReviewStore & DecisionStore {
   const base = baseUrl.replace(/\/$/, "");
   const caseUrl = (caseId: string) => {
     if (!CASE_ID.test(caseId)) throw new ReviewStoreError(`not a case id: ${JSON.stringify(caseId)}`);
@@ -77,6 +83,28 @@ export function httpReviewStore(baseUrl: string, fetchFn: typeof fetch = fetch, 
       }, timeoutMs);
       if (!isRecord(body) || typeof body.id !== "number") throw new ReviewStoreError(`${url}: malformed response`);
       return body as unknown as ReviewEvent;
+    },
+    async decisionPdf(decisionId) {
+      if (!DECISION_ID.test(decisionId)) throw new ReviewStoreError(`not a decision id: ${JSON.stringify(decisionId)}`);
+      const url = `${base}/decisions/${decisionId}/pdf`;
+      let res: Response;
+      try {
+        res = await fetchFn(url, { signal: AbortSignal.timeout(timeoutMs) });
+      } catch (err) {
+        throw new ReviewStoreError(`request to ${url} failed: ${err instanceof Error ? err.message : String(err)}`);
+      }
+      if (!res.ok) throw new ReviewStoreError(`${url} answered ${res.status}: ${(await res.text()).slice(0, 200)}`);
+      const bytes = await res.arrayBuffer();
+      const head = new TextDecoder().decode(new Uint8Array(bytes.slice(0, 5)));
+      if (head !== "%PDF-") throw new ReviewStoreError(`${url} answered something that is not a PDF`);
+      return bytes;
+    },
+    async locate(decisionId, quote) {
+      if (!DECISION_ID.test(decisionId)) throw new ReviewStoreError(`not a decision id: ${JSON.stringify(decisionId)}`);
+      const url = `${base}/decisions/${decisionId}/locate?${new URLSearchParams({ q: quote })}`;
+      const body = await call(fetchFn, url, {}, timeoutMs);
+      if (!isRecord(body) || typeof body.pages !== "number") throw new ReviewStoreError(`${url}: malformed response`);
+      return { page: typeof body.page === "number" ? body.page : null, pages: body.pages };
     },
     async passage(chunkId) {
       if (!Number.isInteger(chunkId) || chunkId < 1) throw new ReviewStoreError(`not a chunk id: ${chunkId}`);
