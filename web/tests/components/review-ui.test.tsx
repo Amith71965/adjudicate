@@ -5,7 +5,8 @@
  * finding or unreviewed prong to the evidence rows it names.
  */
 import { cleanup, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Case, ProngItem, ReviewItem } from "@/lib/review/cases";
 import { reviewState, type ReviewEvent } from "@/lib/review/state";
 import { EvidenceMatrix } from "@/components/review/evidence-matrix";
@@ -48,6 +49,23 @@ describe("ObjectionCard", () => {
     expect(screen.getByText("Invitations alone are not judging.")).toBeTruthy();
   });
 
+  it("shows two quotes from the same passage without a React key clash", () => {
+    // 11 recorded objections cite one AAO passage twice, with different quotes
+    const twice: ProngItem = { ...PRONG, citations: [
+      { chunk_id: 10423, decision_id: "AUG172026_02B2203", quote: "Expert letters should specifically describe a petitioner's contribution." },
+      { chunk_id: 10423, decision_id: "AUG172026_02B2203", quote: "and its significance to the field, not merely praise the petitioner." },
+    ] };
+    const errors = vi.spyOn(console, "error").mockImplementation(() => {});
+    render(<ObjectionCard caseId="P01" item={twice} state={{ status: "open" }} dispose={noop} />);
+    const clashes = errors.mock.calls.filter((c) => String(c[0]).includes("same key"));
+    errors.mockRestore();
+    expect(clashes).toEqual([]);
+    expect(screen.getAllByRole("link", { name: /AUG172026_02B2203/ }).map((a) => a.getAttribute("href"))).toEqual([
+      "/cases/P01?item=prong%3Ajudging%2Fwhole&cite=0#passage",
+      "/cases/P01?item=prong%3Ajudging%2Fwhole&cite=1#passage",
+    ]);
+  });
+
   it.each([WAIVER, MANUAL])("links a %s finding to the evidence it names", (item) => {
     render(<ObjectionCard caseId="P01" item={item} state={{ status: "open" }} dispose={noop} />);
     const card = screen.getByTestId("objection");
@@ -60,13 +78,14 @@ describe("ObjectionCard", () => {
     expect(screen.getByText(/could not ground/i)).toBeTruthy();
   });
 
-  it("asks for a note before resolving or dismissing an open item", () => {
+  it("asks for a note once you choose to resolve or dismiss an open item", async () => {
     render(<ObjectionCard caseId="P01" item={PRONG} state={{ status: "open" }} dispose={noop} />);
+    expect(screen.getByRole("button", { name: "Dismiss" })).toBeTruthy();
+    await userEvent.click(screen.getByRole("button", { name: "Resolve" }));
     const note = screen.getByLabelText(/attorney note/i) as HTMLTextAreaElement;
     expect(note.required).toBe(true);
     expect(note.minLength).toBe(3);
-    expect(screen.getByRole("button", { name: "Resolve" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Dismiss" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /confirm resolve/i })).toBeTruthy();
   });
 
   it("shows who disposed an item and why, and offers to reopen it", () => {
@@ -163,15 +182,15 @@ describe("History", () => {
 });
 
 // --- phase-8 review fixes ----------------------------------------------------------------------
-import userEvent from "@testing-library/user-event";
 
 describe("refused actions", () => {
   it("show the reason next to the form and keep the attorney's note", async () => {
     const refuse = async () => ({ error: "prong:judging/whole is already resolved" });
     render(<ObjectionCard caseId="P01" item={PRONG} state={{ status: "open" }} dispose={refuse} />);
+    await userEvent.click(screen.getByRole("button", { name: "Resolve" }));
     const note = screen.getByLabelText(/attorney note/i) as HTMLTextAreaElement;
     await userEvent.type(note, "Exhibit 14 has the reports.");
-    await userEvent.click(screen.getByRole("button", { name: "Resolve" }));
+    await userEvent.click(screen.getByRole("button", { name: /confirm resolve/i }));
     expect((await screen.findByRole("alert")).textContent).toMatch(/already resolved/);
     expect((screen.getByLabelText(/attorney note/i) as HTMLTextAreaElement).value).toBe("Exhibit 14 has the reports.");
   });

@@ -59,8 +59,10 @@ test("an attorney reviews every objection before the memo can be exported", asyn
   await expect(page.getByRole("button", { name: "Change" })).toBeVisible();
   for (let i = 0; i < total; i++) {
     const card = page.locator('[data-testid="objection"][data-status="open"]').first();
-    await card.getByLabel("Attorney note").fill(`Checked against the exhibits (${i + 1}).`);
-    await card.getByRole("button", { name: i % 3 === 2 ? "Dismiss" : "Resolve" }).click();
+    const verb = i % 3 === 2 ? "Dismiss" : "Resolve";
+    await card.getByRole("button", { name: verb, exact: true }).click(); // choose, then say why
+    await card.getByLabel(/attorney note/i).fill(`Checked against the exhibits (${i + 1}).`);
+    await card.getByRole("button", { name: `Confirm ${verb.toLowerCase()}` }).click();
     await expect(page.getByTestId("open-count")).toHaveText(String(total - i - 1));
   }
 
@@ -88,8 +90,9 @@ test("an attorney reviews every objection before the memo can be exported", asyn
   await expect(history).toContainText("exported the memo");
 
   const first = objections(page).first();
-  await first.getByLabel(/attorney note/i).fill("Reopened: exhibit 3 is missing a page.");
   await first.getByRole("button", { name: "Reopen" }).click();
+  await first.getByLabel(/attorney note/i).fill("Reopened: exhibit 3 is missing a page.");
+  await first.getByRole("button", { name: "Confirm reopen" }).click();
   await expect(page.getByText("1 objection still open")).toBeVisible();
   await expect(page.getByRole("link", { name: /export review memo/i })).toHaveCount(0);
   expect((await request.get(`/api/cases/${CASE}/export`)).status()).toBe(409);
@@ -98,12 +101,14 @@ test("an attorney reviews every objection before the memo can be exported", asyn
   const stale = await page.context().newPage();
   await stale.goto(`/cases/${CASE}`);
   const openHere = page.locator('[data-testid="objection"][data-status="open"]').first();
-  await openHere.getByLabel("Attorney note").fill("Missing page added as exhibit 3a.");
-  await openHere.getByRole("button", { name: "Resolve" }).click();
+  await openHere.getByRole("button", { name: "Resolve", exact: true }).click();
+  await openHere.getByLabel(/attorney note/i).fill("Missing page added as exhibit 3a.");
+  await openHere.getByRole("button", { name: "Confirm resolve" }).click();
   await expect(page.getByTestId("open-count")).toHaveText("0");
   const openThere = stale.locator('[data-testid="objection"][data-status="open"]').first();
-  await openThere.getByLabel("Attorney note").fill("Dismissing from the other tab.");
-  await openThere.getByRole("button", { name: "Dismiss" }).click();
+  await openThere.getByRole("button", { name: "Dismiss", exact: true }).click();
+  await openThere.getByLabel(/attorney note/i).fill("Dismissing from the other tab.");
+  await openThere.getByRole("button", { name: "Confirm dismiss" }).click();
   // refused either by the action's reload ("already resolved") or by the API's last-event check
   await expect(stale.locator('[data-testid="objection"] [role="alert"]')).toContainText(/already resolved|changed in another tab/);
   await page.reload();
