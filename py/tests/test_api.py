@@ -172,6 +172,7 @@ def test_locate_returns_the_page_of_a_quote(client: TestClient) -> None:
 
     r = client.get("/decisions/SEP152026_01B2203/locate", params={"q": phrase_on(3)})
     assert r.status_code == 200
-    assert r.json() == {"decision_id": "SEP152026_01B2203", "page": 3, "pages": len(PAGES)}
+    real = len(PAGES) - (not PAGES[-1].strip())  # without the empty piece after the last page
+    assert r.json() == {"decision_id": "SEP152026_01B2203", "page": 3, "pages": real}
     absent = {"q": "no such sentence anywhere in this decision"}
     assert client.get("/decisions/SEP152026_01B2203/locate", params=absent).json()["page"] is None

@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { pct } from "@/lib/review/format";
 import { allCases, reviewStore } from "@/lib/review/server";
 import { reviewState, type ReviewEvent } from "@/lib/review/state";
+
+export const metadata: Metadata = { title: "Review queue" };
 
 export default function Home() {
   return (

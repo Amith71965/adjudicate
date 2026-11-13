@@ -9,9 +9,11 @@ import { Check, ChevronDown, RotateCcw, X } from "lucide-react";
 import { useState } from "react";
 import { KindIcon, StatusIcon } from "@/components/ui/icons";
 import type { ReviewItem } from "@/lib/review/cases";
-import { citeHref, itemAnchor, itemTitle, label, pct } from "@/lib/review/format";
+import { itemAnchor, itemTitle, label, pct } from "@/lib/review/format";
 import type { ItemState } from "@/lib/review/state";
 import type { ActionResult, ReviewAction } from "./action-form";
+import { CitationLink } from "./citation-link";
+import { EvidenceLink } from "./exhibit";
 
 export type CardMode = "resolve" | "dismiss" | "reopen";
 
@@ -34,9 +36,7 @@ function EvidenceLinks({ ids, source }: { ids: string[]; source: boolean }) {
       {ids.map((id, i) => (
         <span key={id}>
           {i > 0 && ", "}
-          <a href={`#artifact-${id}`} data-source={source ? "" : undefined} className="rounded underline decoration-dotted underline-offset-2 hover:text-[var(--accent)]">
-            {id}
-          </a>
+          <EvidenceLink id={id} source={source} />
         </span>
       ))}
     </p>
@@ -52,9 +52,7 @@ function Body({ caseId, item }: { caseId: string; item: ReviewItem }) {
         <ul className="mt-4 space-y-2">
           {item.citations.map((c, n) => (
             <li key={`${c.chunk_id}:${n}`} className="measure rounded-lg border border-[var(--line)] bg-[var(--paper)] px-3 py-2 text-sm">
-              <a href={citeHref(caseId, item.id, n)} data-source="" className="font-mono text-xs text-[var(--accent)] underline underline-offset-2">
-                {c.decision_id} · passage {c.chunk_id}
-              </a>
+              <CitationLink caseId={caseId} itemId={item.id} n={n} citation={c} />
               <q className="mt-1 block text-[var(--muted)] italic">{c.quote}</q>
             </li>
           ))}

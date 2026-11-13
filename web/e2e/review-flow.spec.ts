@@ -46,9 +46,13 @@ test("an attorney reviews every objection before the memo can be exported", asyn
         await expect(drawer).toHaveCount(0);
       } else {
         const href = await link.getAttribute("href");
-        await link.click();
+        await link.click(); // one click: the exhibit opens as a document sheet
+        const exhibit = page.getByRole("dialog", { name: new RegExp(`exhibit ${href!.replace("#artifact-", "")}`, "i") });
+        await expect(exhibit).toBeVisible();
         await expect(page).toHaveURL(new RegExp(`${href}$`));
-        await expect(page.locator(href!)).toBeVisible();
+        await expect(page.locator(href!)).toBeAttached();
+        await page.keyboard.press("Escape");
+        await expect(exhibit).toHaveCount(0);
       }
     }
   }
@@ -76,6 +80,14 @@ test("an attorney reviews every objection before the memo can be exported", asyn
 
   const exportLink = page.getByRole("link", { name: /export review memo/i });
   await expect(exportLink).toBeVisible();
+
+  // read the memo before exporting it: the preview logs nothing
+  await page.getByRole("button", { name: /preview memo/i }).click();
+  const memoDialog = page.getByRole("dialog", { name: /review memo/i });
+  await expect(memoDialog.getByRole("heading", { level: 1 })).toHaveText(`Adjudicate pre-filing review: ${CASE}`);
+  await expect(memoDialog).toContainText("Checked against the exhibits (1).");
+  await page.keyboard.press("Escape");
+  await expect(memoDialog).toHaveCount(0);
   const [download] = await Promise.all([page.waitForEvent("download"), exportLink.click()]);
   expect(download.suggestedFilename()).toBe(`adjudicate-${CASE}-review.md`);
   const memo = await (await download.createReadStream()).toArray().then((b) => Buffer.concat(b).toString("utf8"));

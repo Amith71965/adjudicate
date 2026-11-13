@@ -21,7 +21,10 @@ def _flat(text: str) -> str:
 
 
 def page_texts(pdf: bytes) -> list[str]:
-    return [_flat(p) for p in pdf_to_text(pdf).split("\f")]
+    pages = pdf_to_text(pdf).split("\f")
+    if len(pages) > 1 and not pages[-1].strip():
+        pages.pop()  # pdftotext ends every page with a form feed: no empty page after the last
+    return [_flat(p) for p in pages]
 
 
 def quote_page(pdf: bytes, quote: str, pages: list[str] | None = None) -> int | None:

@@ -11,7 +11,7 @@ from adjudicate.parse.pdf import pdf_to_text
 
 FIX = Path(__file__).parent / "fixtures" / "decisions"
 PDF = (FIX / "SEP152026_01B2203.pdf").read_bytes()
-PAGES = pdf_to_text(PDF).split("\f")
+PAGES = pdf_to_text(PDF).split("\f")  # raw split: may end with an empty piece
 
 
 def phrase_on(page: int, words: int = 12) -> str:
@@ -38,3 +38,15 @@ def test_a_quote_that_is_not_there_has_no_page() -> None:
 
 def test_a_too_short_quote_is_not_guessed() -> None:
     assert quote_page(PDF, "the") is None
+
+
+def test_the_page_count_is_the_real_one() -> None:
+    # pdftotext ends every page with a form feed, so a naive split adds an empty last "page"
+    import subprocess
+
+    from adjudicate.api.locate import page_texts
+
+    info = subprocess.run(["pdfinfo", "-"], input=PDF, capture_output=True, check=True).stdout
+    lines = info.decode().splitlines()
+    pages = int(next(line.split()[-1] for line in lines if line.startswith("Pages:")))
+    assert len(page_texts(PDF)) == pages

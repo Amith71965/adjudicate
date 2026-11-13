@@ -8,10 +8,11 @@ import { ArrowDownToLine, Keyboard, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useOptimistic, useState } from "react";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { ToastProvider, useToast } from "@/components/ui/toast";
-import type { ReviewItem } from "@/lib/review/cases";
+import type { Case, ReviewItem } from "@/lib/review/cases";
 import { itemAnchor, itemTitle, label } from "@/lib/review/format";
 import type { ItemState } from "@/lib/review/state";
 import type { ActionResult, ReviewAction } from "./action-form";
+import { ExhibitDialog, ExhibitProvider } from "./exhibit";
 import { ObjectionCard, type CardMode } from "./objection-card";
 
 export interface CaseReviewProps {
@@ -20,6 +21,7 @@ export interface CaseReviewProps {
   states: Record<string, ItemState>;
   dispose: ReviewAction;
   canAct: boolean;
+  artifacts?: Case["artifacts"];
 }
 
 type StatusFilter = "all" | "open" | "decided";
@@ -38,7 +40,7 @@ function focusCard(id: string) {
   el.scrollIntoView?.({ block: "center", behavior: reduce ? "auto" : "smooth" });
 }
 
-function Review({ caseId, items, states, dispose, canAct }: CaseReviewProps) {
+function Review({ caseId, items, states, dispose, canAct, artifacts = [] }: CaseReviewProps) {
   const toast = useToast();
   const [optimistic, setOptimistic] = useOptimistic(states, (cur, u: { id: string; state: ItemState }) => ({ ...cur, [u.id]: u.state }));
   const [modes, setModes] = useState<Record<string, CardMode | null>>({});
@@ -46,6 +48,9 @@ function Review({ caseId, items, states, dispose, canAct }: CaseReviewProps) {
   const [criterion, setCriterion] = useState<string | null>(null);
   const [focused, setFocused] = useState<string | null>(null);
   const [help, setHelp] = useState(false);
+  const [exhibit, setExhibit] = useState<string | null>(null);
+  const closeExhibit = useCallback(() => setExhibit(null), []);
+  const shownExhibit = artifacts.find((a) => a.id === exhibit);
 
   const decided = items.filter((i) => optimistic[i.id]?.status !== "open").length;
   const criteria = useMemo(() => [...new Set(items.map((i) => i.criterion))], [items]);
@@ -106,6 +111,7 @@ function Review({ caseId, items, states, dispose, canAct }: CaseReviewProps) {
   const count = (f: (s: string) => boolean) => items.filter((i) => f(optimistic[i.id]?.status ?? "open")).length;
 
   return (
+    <ExhibitProvider open={setExhibit}>
     <section aria-label="Objections" className="min-w-0 space-y-4">
       <div className="z-20 -mx-2 rounded-b-2xl md:sticky md:top-14 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--paper)_88%,transparent)] px-2 pt-3 pb-3 backdrop-blur-md">
         <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
@@ -185,7 +191,9 @@ function Review({ caseId, items, states, dispose, canAct }: CaseReviewProps) {
           </div>
         </div>
       )}
+      {shownExhibit && <ExhibitDialog artifact={shownExhibit} items={items} onClose={closeExhibit} />}
     </section>
+    </ExhibitProvider>
   );
 }
 
