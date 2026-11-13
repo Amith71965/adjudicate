@@ -8,6 +8,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PdfViewer } from "@/components/review/pdf-viewer";
+import { PageTransition } from "@/components/ui/page-transition";
 import { decisionDate } from "@/lib/review/format";
 import { reviewStore } from "@/lib/review/server";
 import { DECISION_ID } from "@/lib/review/store";
@@ -18,9 +19,11 @@ const SAFE_BACK = /^\/cases\/P\d{2,4}(\?[^#\s]*)?$/; // only back into this app'
 
 export default function DecisionPage({ params, searchParams }: PageProps<"/decisions/[id]">) {
   return (
-    <Suspense fallback={<p className="p-10 text-sm text-[var(--muted)]">Opening the decision…</p>}>
-      <Viewer params={params} searchParams={searchParams} />
-    </Suspense>
+    <PageTransition>
+      <Suspense fallback={<p className="p-10 text-sm text-[var(--muted)]">Opening the decision…</p>}>
+        <Viewer params={params} searchParams={searchParams} />
+      </Suspense>
+    </PageTransition>
   );
 }
 
@@ -41,7 +44,7 @@ async function Viewer({ params, searchParams }: Pick<PageProps<"/decisions/[id]"
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 pt-6 pb-16 sm:px-8">
-      <Link href={back} className="inline-flex items-center gap-1 font-mono text-xs text-[var(--muted)] underline underline-offset-4">
+      <Link href={back} transitionTypes={["nav-back"]} className="inline-flex items-center gap-1 font-mono text-xs text-[var(--muted)] underline underline-offset-4">
         <ArrowLeft aria-hidden="true" width={13} height={13} />Back to the citation
       </Link>
       <header className="mt-3 flex flex-wrap items-end justify-between gap-4">

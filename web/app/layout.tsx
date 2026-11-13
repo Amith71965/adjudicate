@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { EB_Garamond, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import Link from "next/link";
+import { Suspense } from "react";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { CommandPalette, type PaletteEntry } from "@/components/ui/command-palette";
+import { ReviewerChip } from "@/components/ui/reviewer-chip";
+import { itemAnchor, itemTitle } from "@/lib/review/format";
+import { allCases } from "@/lib/review/server";
 import { BrandMark } from "@/components/ui/brand-mark";
 import { ThemeToggle } from "@/components/ui/theme";
 import { themeScript } from "@/components/ui/theme-script";
@@ -14,6 +20,13 @@ export const metadata: Metadata = {
   title: { default: "Adjudicate", template: "%s · Adjudicate" },
   description: "Adversarial pre-filing review for extraordinary-ability petitions, with an attorney in the loop.",
 };
+
+function paletteEntries(): PaletteEntry[] {
+  return allCases().flatMap((c) => [
+    { href: `/cases/${c.id}`, title: `${c.id} · ${c.beneficiary}`, hint: c.field, kind: "case" as const },
+    ...c.items.map((i) => ({ href: `/cases/${c.id}#${itemAnchor(i.id)}`, title: itemTitle(i), hint: `${c.id} · ${c.beneficiary}`, kind: "item" as const })),
+  ]);
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -29,8 +42,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <BrandMark size={26} />
               <span className="font-serif text-xl font-semibold tracking-tight">Adjudicate</span>
             </Link>
-            <span className="hidden font-mono text-[11px] tracking-[0.18em] text-[var(--muted)] uppercase sm:inline">pre-filing review</span>
-            <div className="ml-auto">
+            <span className="mx-1 hidden h-5 w-px bg-[var(--line)] md:block" aria-hidden="true" />
+            {/* the path is request data: stream it so dynamic routes still prerender their shell */}
+            <Suspense fallback={<span className="hidden font-mono text-xs text-[var(--muted)] md:inline">Review queue</span>}><Breadcrumb /></Suspense>
+            <div className="ml-auto flex items-center gap-3">
+              <CommandPalette entries={paletteEntries()} />
+              <Suspense fallback={null}><ReviewerChip /></Suspense>
               <ThemeToggle />
             </div>
           </div>
