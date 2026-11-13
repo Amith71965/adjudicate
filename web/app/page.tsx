@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Suspense, ViewTransition } from "react";
+import { Suspense } from "react";
+import { QueueView, type QueueRow } from "@/components/review/queue-view";
 import { PageTransition, Reveal, SkeletonExit } from "@/components/ui/page-transition";
 import { QueueSkeleton } from "@/components/ui/skeleton";
-import { pct } from "@/lib/review/format";
 import { allCases, reviewStore } from "@/lib/review/server";
 import { reviewState, type ReviewEvent } from "@/lib/review/state";
 
@@ -49,36 +48,14 @@ async function CaseTable() {
       </p>
     );
   }
-  return (
-    <div className="mt-8 overflow-x-auto">
-      <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
-        <thead className="font-mono text-[11px] tracking-wider text-[var(--muted)] uppercase">
-          <tr className="border-b border-[var(--line)]">
-            <th className="py-2 pr-3">Case</th>
-            <th className="py-2 pr-3">Field</th>
-            <th className="py-2 pr-3 text-right">RFE risk</th>
-            <th className="py-2 pr-3 text-right">Items</th>
-            <th className="py-2">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cases.map((c, i) => {
-            const state = reviewState(c.items, logs[i]);
-            return (
-              <tr key={c.id} className="border-b border-[var(--line)] hover:bg-[var(--card)]">
-                <td className="py-3 pr-3">
-                  <Link href={`/cases/${c.id}`} transitionTypes={["nav-forward"]} className="font-mono underline underline-offset-4">{c.id}</Link>
-                  <ViewTransition name={`case-${c.id}`} share="morph" default="none"><span className="ml-3 inline-block">{c.beneficiary}</span></ViewTransition>
-                </td>
-                <td className="py-3 pr-3 text-[var(--muted)]">{c.field}</td>
-                <td className="py-3 pr-3 text-right font-mono">{pct(c.rfe_risk)}%</td>
-                <td className="py-3 pr-3 text-right font-mono">{c.items.length}</td>
-                <td className="py-3">{status(logs[i], state.gate.ready, state.open)}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+  const rows: QueueRow[] = cases.map((c, i) => {
+    const state = reviewState(c.items, logs[i]);
+    const s = status(logs[i], state.gate.ready, state.open);
+    return {
+      id: c.id, beneficiary: c.beneficiary, field: c.field, rfe_risk: c.rfe_risk, total: c.items.length,
+      decided: c.items.length - state.open,
+      status: s === "Exported" ? "exported" : s === "Ready to export" ? "ready" : s === "Awaiting sign-off" ? "awaiting" : "open",
+    };
+  });
+  return <QueueView rows={rows} />;
 }
