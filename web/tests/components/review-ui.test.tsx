@@ -5,6 +5,7 @@
  * finding or unreviewed prong to the evidence rows it names.
  */
 import { cleanup, render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import type { Case, ProngItem, ReviewItem } from "@/lib/review/cases";
 import { reviewState, type ReviewEvent } from "@/lib/review/state";
@@ -60,13 +61,14 @@ describe("ObjectionCard", () => {
     expect(screen.getByText(/could not ground/i)).toBeTruthy();
   });
 
-  it("asks for a note before resolving or dismissing an open item", () => {
+  it("asks for a note once you choose to resolve or dismiss an open item", async () => {
     render(<ObjectionCard caseId="P01" item={PRONG} state={{ status: "open" }} dispose={noop} />);
+    expect(screen.getByRole("button", { name: "Dismiss" })).toBeTruthy();
+    await userEvent.click(screen.getByRole("button", { name: "Resolve" }));
     const note = screen.getByLabelText(/attorney note/i) as HTMLTextAreaElement;
     expect(note.required).toBe(true);
     expect(note.minLength).toBe(3);
-    expect(screen.getByRole("button", { name: "Resolve" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Dismiss" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /confirm resolve/i })).toBeTruthy();
   });
 
   it("shows who disposed an item and why, and offers to reopen it", () => {
@@ -163,15 +165,15 @@ describe("History", () => {
 });
 
 // --- phase-8 review fixes ----------------------------------------------------------------------
-import userEvent from "@testing-library/user-event";
 
 describe("refused actions", () => {
   it("show the reason next to the form and keep the attorney's note", async () => {
     const refuse = async () => ({ error: "prong:judging/whole is already resolved" });
     render(<ObjectionCard caseId="P01" item={PRONG} state={{ status: "open" }} dispose={refuse} />);
+    await userEvent.click(screen.getByRole("button", { name: "Resolve" }));
     const note = screen.getByLabelText(/attorney note/i) as HTMLTextAreaElement;
     await userEvent.type(note, "Exhibit 14 has the reports.");
-    await userEvent.click(screen.getByRole("button", { name: "Resolve" }));
+    await userEvent.click(screen.getByRole("button", { name: /confirm resolve/i }));
     expect((await screen.findByRole("alert")).textContent).toMatch(/already resolved/);
     expect((screen.getByLabelText(/attorney note/i) as HTMLTextAreaElement).value).toBe("Exhibit 14 has the reports.");
   });
