@@ -51,7 +51,7 @@ function Body({ caseId, item }: { caseId: string; item: ReviewItem }) {
         <p className="measure mt-3 leading-relaxed">{item.objection}</p>
         <ul className="mt-4 space-y-2">
           {item.citations.map((c, n) => (
-            <li key={c.chunk_id} className="measure rounded-lg border border-[var(--line)] bg-[var(--paper)] px-3 py-2 text-sm">
+            <li key={`${c.chunk_id}:${n}`} className="measure rounded-lg border border-[var(--line)] bg-[var(--paper)] px-3 py-2 text-sm">
               <a href={citeHref(caseId, item.id, n)} data-source="" className="font-mono text-xs text-[var(--accent)] underline underline-offset-2">
                 {c.decision_id} · passage {c.chunk_id}
               </a>
