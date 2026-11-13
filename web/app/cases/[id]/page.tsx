@@ -6,7 +6,7 @@ import { disposeItem, setReviewer, signOff } from "@/app/actions";
 import { EvidenceMatrix } from "@/components/review/evidence-matrix";
 import { ExportPanel } from "@/components/review/export-panel";
 import { History } from "@/components/review/history";
-import { ObjectionCard } from "@/components/review/objection-card";
+import { CaseReview } from "@/components/review/case-review";
 import { PassageDrawer } from "@/components/review/passage-drawer";
 import { RiskBars } from "@/components/review/risk-bars";
 import type { Case } from "@/lib/review/cases";
@@ -65,7 +65,6 @@ async function CaseView({ params, searchParams }: Pick<PageProps<"/cases/[id]">,
           <input name="reviewer" defaultValue={reviewer} required maxLength={80} className="mt-1 block w-64 rounded border border-[var(--line)] bg-[var(--card)] p-2" />
         </label>
         <button className="rounded border border-[var(--line)] px-3 py-2">{reviewer ? "Change" : "Start reviewing"}</button>
-        {!reviewer && <p className="text-[var(--amber)]">Name yourself before resolving or dismissing items; every action is logged under that name.</p>}
       </form>
 
       {!c.complete && (
@@ -75,13 +74,8 @@ async function CaseView({ params, searchParams }: Pick<PageProps<"/cases/[id]">,
       )}
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
-        <section aria-label="Objections" className="space-y-4">
-          <h2 className="font-serif text-2xl">Objections and findings</h2>
-          {c.items.map((item) => (
-            <ObjectionCard key={item.id} caseId={c.id} item={item} state={state.items[item.id]} dispose={dispose} />
-          ))}
-        </section>
-        <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
+        <CaseReview caseId={c.id} items={c.items} states={state.items} dispose={dispose} canAct={Boolean(reviewer)} />
+        <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
           <ExportPanel caseId={c.id} state={state} signoff={signOff.bind(null, c.id)} reviewer={reviewer} />
           <section aria-label="Risk by criterion" className="rounded-lg border border-[var(--line)] bg-[var(--card)] p-5">
             <h2 className="mb-4 font-serif text-xl">Risk by criterion</h2>
