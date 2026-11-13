@@ -75,6 +75,8 @@ describe("evidence matrix grid", () => {
     expect(within(a02).getByRole("img", { name: /claimed for judging/i })).toBeTruthy();
     expect(within(a02).getByRole("link", { name: /judging \/ whole/i }).getAttribute("href")).toBe("#item-prong-judging-whole");
     expect(within(document.getElementById("artifact-A01")!).getByRole("link", { name: /high salary waiver check/i })).toBeTruthy();
+    // a 24 px target (WCAG 2.5.8) around the small mark
+    for (const link of within(a02).getAllByRole("link")) expect(link.className).toMatch(/\bh-6\b.*\bw-6\b/);
   });
 });
 
@@ -98,7 +100,8 @@ describe("risk bars that filter", () => {
         <CaseReview caseId="P01" items={[PRONG, WAIVER]} states={{ [PRONG.id]: { status: "open" }, [WAIVER.id]: { status: "open" } }} dispose={async () => {}} canAct />
       </>,
     );
-    await userEvent.click(screen.getByRole("button", { name: /show judging objections/i }));
+    // label in name (WCAG 2.5.3): the accessible name starts with what the button shows
+    await userEvent.click(screen.getByRole("button", { name: /^judging 35%.*show these objections/i }));
     expect(document.querySelector(`[data-item-id="${WAIVER.id}"]`)).toBeNull();
     expect(document.querySelector(`[data-item-id="${PRONG.id}"]`)).toBeTruthy();
   });
