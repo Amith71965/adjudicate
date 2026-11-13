@@ -86,3 +86,30 @@ describe("locateQuote", () => {
     expect(locateQuote(body, "The petitioner clearly meets the judging criterion.")).toBeNull();
   });
 });
+
+describe("decision viewer client", () => {
+  it("fetches a stored decision PDF as bytes", async () => {
+    const pdf = new Uint8Array([0x25, 0x50, 0x44, 0x46, 0x2d]); // %PDF-
+    const { fn, calls } = fakeFetch([new Response(pdf, { status: 200, headers: { "content-type": "application/pdf" } })]);
+    const out = await httpReviewStore("http://api", fn).decisionPdf("AUG172026_02B2203");
+    expect(new Uint8Array(out)).toEqual(pdf);
+    expect(calls[0].url).toBe("http://api/decisions/AUG172026_02B2203/pdf");
+  });
+
+  it("asks which page holds a quote", async () => {
+    const { fn, calls } = fakeFetch([json({ decision_id: "AUG172026_02B2203", page: 3, pages: 5 })]);
+    expect(await httpReviewStore("http://api", fn).locate("AUG172026_02B2203", "Expert letters should describe")).toEqual({ page: 3, pages: 5 });
+    expect(calls[0].url).toBe("http://api/decisions/AUG172026_02B2203/locate?q=Expert+letters+should+describe");
+  });
+
+  it("refuses a decision id that is not one before any request", async () => {
+    const { fn, calls } = fakeFetch([]);
+    await expect(httpReviewStore("http://api", fn).decisionPdf("../cases")).rejects.toThrow(ReviewStoreError);
+    expect(calls).toEqual([]);
+  });
+
+  it("does not mistake a non-PDF answer for a decision", async () => {
+    const { fn } = fakeFetch([new Response("<html>gateway</html>", { status: 200, headers: { "content-type": "text/html" } })]);
+    await expect(httpReviewStore("http://api", fn).decisionPdf("AUG172026_02B2203")).rejects.toThrow(/not a PDF/);
+  });
+});

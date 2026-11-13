@@ -5,7 +5,7 @@
  */
 import path from "node:path";
 import { loadCases, type Case } from "./cases";
-import { httpReviewStore, type ReviewStore } from "./store";
+import { httpReviewStore, type DecisionStore, type ReviewStore } from "./store";
 
 export const REVIEWER_COOKIE = "adjudicate_reviewer";
 
@@ -18,4 +18,4 @@ export function allCases(): Case[] {
 
 export const getCase = (id: string): Case | undefined => allCases().find((c) => c.id === id);
 
-export const reviewStore = (): ReviewStore => httpReviewStore(process.env.ADJUDICATE_API ?? "http://127.0.0.1:8000");
+export const reviewStore = (): ReviewStore & DecisionStore => httpReviewStore(process.env.ADJUDICATE_API ?? "http://127.0.0.1:8000");
