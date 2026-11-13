@@ -25,7 +25,7 @@ export function PassageDrawer({ passage, quote, closeHref }: { passage: Passage;
   const safeUrl = /^https:\/\//.test(passage.url); // corpus data, but never an href it shouldn't be
   return (
     <>
-      <a href={closeHref} aria-hidden tabIndex={-1} className="fixed inset-0 z-10 bg-black/20" />
+      <a href={closeHref} aria-hidden tabIndex={-1} className="fixed inset-0 z-40 bg-black/20" />
       <aside
         ref={dialog}
         id="passage"
@@ -33,7 +33,7 @@ export function PassageDrawer({ passage, quote, closeHref }: { passage: Passage;
         aria-modal="true"
         aria-label="AAO passage"
         tabIndex={-1}
-        className="fixed inset-y-0 right-0 z-20 flex w-full max-w-xl flex-col overflow-y-auto border-l border-[var(--line)] bg-[var(--paper)] p-6 shadow-2xl focus:outline-none"
+        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-xl flex-col overflow-y-auto border-l border-[var(--line)] bg-[var(--paper)] p-6 shadow-2xl focus:outline-none"
       >
         <div className="flex items-baseline justify-between gap-4">
           <p className="font-mono text-[11px] tracking-widest text-[var(--muted)] uppercase">AAO passage {passage.chunk_id}</p>

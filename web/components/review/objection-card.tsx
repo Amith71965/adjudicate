@@ -1,10 +1,11 @@
 import type { ReviewItem } from "@/lib/review/cases";
 import { citeHref, itemAnchor, itemTitle, label, pct } from "@/lib/review/format";
 import type { ItemState } from "@/lib/review/state";
+import { KindIcon } from "@/components/ui/icons";
 import { ActionForm, type ReviewAction } from "./action-form";
 
 const KIND = {
-  prong: { tag: "AI objection", tone: "text-[var(--red)]" },
+  prong: { tag: "AI objection", tone: "text-[var(--seal)]" },
   waiver: { tag: "Waiver check", tone: "text-[var(--amber)]" },
   manual: { tag: "Not reviewed", tone: "text-[var(--amber)]" },
 } as const;
@@ -34,7 +35,7 @@ function Body({ caseId, item }: { caseId: string; item: ReviewItem }) {
         <ul className="mt-3 space-y-2">
           {item.citations.map((c, n) => (
             <li key={c.chunk_id} className="border-l-2 border-[var(--line)] pl-3 text-sm">
-              <a href={citeHref(caseId, item.id, n)} data-source="" className="font-mono text-xs text-[var(--red)] underline underline-offset-2">
+              <a href={citeHref(caseId, item.id, n)} data-source="" className="font-mono text-xs text-[var(--accent)] underline underline-offset-2">
                 {c.decision_id} · passage {c.chunk_id}
               </a>
               <q className="mt-1 block text-[var(--muted)] italic">{c.quote}</q>
@@ -78,7 +79,7 @@ export function ObjectionCard({ caseId, item, state, dispose }: { caseId: string
       className={`scroll-mt-6 rounded-lg border border-[var(--line)] bg-[var(--card)] p-5 ${done ? "opacity-75" : ""}`}
     >
       <header className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className={`font-mono text-[11px] tracking-widest uppercase ${kind.tone}`}>{kind.tag}</span>
+        <span className={`inline-flex items-center gap-1.5 font-mono text-[11px] tracking-widest uppercase ${kind.tone}`}><KindIcon kind={item.kind} decorative size={14} />{kind.tag}</span>
         <h3 className="font-serif text-xl">{itemTitle(item)}</h3>
         {item.kind === "prong" && (
           <span className="ml-auto font-mono text-xs text-[var(--muted)]">

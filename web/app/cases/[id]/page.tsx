@@ -48,7 +48,7 @@ async function CaseView({ params, searchParams }: Pick<PageProps<"/cases/[id]">,
       <Link href="/" className="font-mono text-xs text-[var(--muted)] underline underline-offset-4">All cases</Link>
       <header className="mt-4 flex flex-wrap items-end justify-between gap-6 border-b border-[var(--line)] pb-6">
         <div>
-          <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--red)] uppercase">{c.id} · EB-1A · synthetic</p>
+          <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--accent)] uppercase">{c.id} · EB-1A · synthetic</p>
           <h1 className="mt-2 font-serif text-4xl">{c.beneficiary}</h1>
           <p className="mt-1 text-[var(--muted)]">{c.field}</p>
         </div>
@@ -65,7 +65,7 @@ async function CaseView({ params, searchParams }: Pick<PageProps<"/cases/[id]">,
           <input name="reviewer" defaultValue={reviewer} required maxLength={80} className="mt-1 block w-64 rounded border border-[var(--line)] bg-[var(--card)] p-2" />
         </label>
         <button className="rounded border border-[var(--line)] px-3 py-2">{reviewer ? "Change" : "Start reviewing"}</button>
-        {!reviewer && <p className="text-[var(--red)]">Name yourself before resolving or dismissing items; every action is logged under that name.</p>}
+        {!reviewer && <p className="text-[var(--amber)]">Name yourself before resolving or dismissing items; every action is logged under that name.</p>}
       </form>
 
       {!c.complete && (

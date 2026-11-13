@@ -6,8 +6,8 @@ import { reviewState, type ReviewEvent } from "@/lib/review/state";
 
 export default function Home() {
   return (
-    <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-8">
-      <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--red)] uppercase">Adjudicate · pre-filing review</p>
+    <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-8">
+      <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--accent)] uppercase">Review queue</p>
       <h1 className="mt-3 font-serif text-5xl">Cases</h1>
       <p className="mt-3 max-w-2xl text-[var(--muted)]">
         Sixteen synthetic EB-1A petitions, each with a recorded run of the adversarial examiner. Every AI objection
