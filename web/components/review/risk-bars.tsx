@@ -11,7 +11,7 @@ export function RiskBars({ risks }: { risks: Record<string, number> }) {
   const rows = Object.entries(risks).sort(([a, x], [b, y]) => y - x || a.localeCompare(b));
   const pick = (criterion: string) => {
     window.dispatchEvent(new CustomEvent(FILTER_EVENT, { detail: criterion }));
-    document.querySelector('[aria-label="Objections"]')?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.querySelector('[aria-label="Objections"]')?.scrollIntoView?.({ behavior: "smooth", block: "start" });
   };
   return (
     <div>
