@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, ViewTransition } from "react";
+import { PageTransition, Reveal, SkeletonExit } from "@/components/ui/page-transition";
+import { QueueSkeleton } from "@/components/ui/skeleton";
 import { pct } from "@/lib/review/format";
 import { allCases, reviewStore } from "@/lib/review/server";
 import { reviewState, type ReviewEvent } from "@/lib/review/state";
@@ -9,6 +11,7 @@ export const metadata: Metadata = { title: "Review queue" };
 
 export default function Home() {
   return (
+    <PageTransition>
     <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-8">
       <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--accent)] uppercase">Review queue</p>
       <h1 className="mt-3 font-serif text-5xl">Cases</h1>
@@ -16,11 +19,12 @@ export default function Home() {
         Sixteen synthetic EB-1A petitions, each with a recorded run of the adversarial examiner. Every AI objection
         must be resolved or dismissed with a note, and the case signed off, before its review memo can be exported.
       </p>
-      <Suspense fallback={<p className="mt-10 text-sm text-[var(--muted)]">Loading the review log…</p>}>
-        <CaseTable />
+      <Suspense fallback={<SkeletonExit><QueueSkeleton /></SkeletonExit>}>
+        <Reveal><CaseTable /></Reveal>
       </Suspense>
       <p className="mt-10 text-xs text-[var(--muted)]">Synthetic petitions and applicants only. Not legal advice.</p>
     </main>
+    </PageTransition>
   );
 }
 
@@ -63,8 +67,8 @@ async function CaseTable() {
             return (
               <tr key={c.id} className="border-b border-[var(--line)] hover:bg-[var(--card)]">
                 <td className="py-3 pr-3">
-                  <Link href={`/cases/${c.id}`} className="font-mono underline underline-offset-4">{c.id}</Link>
-                  <span className="ml-3">{c.beneficiary}</span>
+                  <Link href={`/cases/${c.id}`} transitionTypes={["nav-forward"]} className="font-mono underline underline-offset-4">{c.id}</Link>
+                  <ViewTransition name={`case-${c.id}`} share="morph" default="none"><span className="ml-3 inline-block">{c.beneficiary}</span></ViewTransition>
                 </td>
                 <td className="py-3 pr-3 text-[var(--muted)]">{c.field}</td>
                 <td className="py-3 pr-3 text-right font-mono">{pct(c.rfe_risk)}%</td>

@@ -8,11 +8,13 @@ import { EvidenceMatrix } from "@/components/review/evidence-matrix";
 import { ExportPanel } from "@/components/review/export-panel";
 import { History } from "@/components/review/history";
 import { CaseReview } from "@/components/review/case-review";
+import { PageTransition, Reveal, SkeletonExit } from "@/components/ui/page-transition";
+import { CaseSkeleton } from "@/components/ui/skeleton";
 import { PassageDrawer } from "@/components/review/passage-drawer";
 import { RiskBars } from "@/components/review/risk-bars";
 import type { Case } from "@/lib/review/cases";
 import { itemAnchor, pct } from "@/lib/review/format";
-import { getCase, REVIEWER_COOKIE, reviewStore } from "@/lib/review/server";
+import { allCases, getCase, REVIEWER_COOKIE, reviewStore } from "@/lib/review/server";
 import { buildMemo } from "@/lib/review/export";
 import { reviewState } from "@/lib/review/state";
 
@@ -20,11 +22,21 @@ export const metadata: Metadata = { title: "Case review" };
 
 type Search = Record<string, string | string[] | undefined>;
 
-export default function CasePage({ params, searchParams }: PageProps<"/cases/[id]">) {
+/** The 16 cases are known at build time: their shells prerender, and any other id is a real 404. */
+export function generateStaticParams() {
+  return allCases().map((c) => ({ id: c.id }));
+}
+
+export default async function CasePage({ params, searchParams }: PageProps<"/cases/[id]">) {
+  // Cache Components streams the layout shell first, so an unknown id shows the not-found page
+  // (with Next's noindex tag) under a 200; dynamicParams=false is not available with it.
+  if (!getCase((await params).id)) notFound();
   return (
-    <Suspense fallback={<p className="p-10 text-sm text-[var(--muted)]">Loading the case…</p>}>
-      <CaseView params={params} searchParams={searchParams} />
-    </Suspense>
+    <PageTransition>
+      <Suspense fallback={<SkeletonExit><CaseSkeleton /></SkeletonExit>}>
+        <Reveal><CaseView params={params} searchParams={searchParams} /></Reveal>
+      </Suspense>
+    </PageTransition>
   );
 }
 
@@ -53,11 +65,11 @@ async function CaseView({ params, searchParams }: Pick<PageProps<"/cases/[id]">,
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-8">
-      <Link href="/" className="font-mono text-xs text-[var(--muted)] underline underline-offset-4">All cases</Link>
+      <Link href="/" transitionTypes={["nav-back"]} className="font-mono text-xs text-[var(--muted)] underline underline-offset-4">All cases</Link>
       <header className="mt-4 flex flex-wrap items-end justify-between gap-6 border-b border-[var(--line)] pb-6">
         <div>
           <p className="font-mono text-[11px] tracking-[0.2em] text-[var(--accent)] uppercase">{c.id} · EB-1A · synthetic</p>
-          <h1 className="mt-2 font-serif text-4xl">{c.beneficiary}</h1>
+          <ViewTransition name={`case-${c.id}`} share="morph" default="none"><h1 className="mt-2 w-fit font-serif text-4xl">{c.beneficiary}</h1></ViewTransition>
           <p className="mt-1 text-[var(--muted)]">{c.field}</p>
         </div>
         <dl className="flex gap-8 font-mono text-sm">

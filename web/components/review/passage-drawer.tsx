@@ -92,7 +92,7 @@ export function PassageDrawer({ passage, quote, closeHref, caseId, item, n }: Pr
           {safeUrl ? " · opens the USCIS PDF" : ""}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
-          <Link href={viewer} className={pill}><FileSearch aria-hidden="true" width={14} height={14} />Open in decision</Link>
+          <Link href={viewer} transitionTypes={["nav-forward"]} className={pill}><FileSearch aria-hidden="true" width={14} height={14} />Open in decision</Link>
           <button type="button" onClick={copy} className={pill}>
             {copied ? <Check aria-hidden="true" width={14} height={14} className="text-[var(--green)]" /> : <Copy aria-hidden="true" width={14} height={14} />}
             {copied ? "Copied" : "Copy quote"}
