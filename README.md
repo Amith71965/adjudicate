@@ -14,7 +14,7 @@ Every objection is grounded in AAO decisions, and nothing leaves without an atto
 
 ![Phases](https://img.shields.io/badge/phases-9%2F9%20gated-2f7a52?style=flat-square)
 [![verify](https://img.shields.io/github/actions/workflow/status/Amith71965/adjudicate/verify.yml?branch=main&style=flat-square&label=verify)](https://github.com/Amith71965/adjudicate/actions/workflows/verify.yml)
-![Tests](https://img.shields.io/badge/tests-706-2f7a52?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-783-2f7a52?style=flat-square)
 ![Fabricated citations](https://img.shields.io/badge/fabricated%20citations-0-2f7a52?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white)
@@ -26,10 +26,10 @@ Every objection is grounded in AAO decisions, and nothing leaves without an atto
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/review-case-dark.png">
-  <img src="docs/images/review-case-light.png" alt="The case review page: an AI objection on the membership criterion with its cited AAO passages, the sign-off panel and per-criterion risk" width="880">
+  <img src="docs/images/review-case-light.png" alt="The case review page: a progress bar and filters over the objections, one membership objection resolved with the attorney's note, and the sign-off panel still locked" width="880">
 </picture>
 
-<sub>A synthetic case under review. Each objection cites the AAO passages it relies on.</sub>
+<sub>A synthetic case under review: one objection resolved with a note, eight to go, and the export still locked.</sub>
 
 </div>
 
@@ -47,7 +47,7 @@ Adjudicate turns that record into a reviewer that argues against your petition o
 | It will not skip… | How |
 |---|---|
 | **An objection on every claimed criterion** | For each criterion, and each half of the two-part ones, it writes the request for evidence an officer would. |
-| **Every claim shows its source** | Citations must point to retrieved AAO passages, with the quote verbatim. One click opens the passage with the words highlighted. |
+| **Every claim shows its source** | Citations must point to retrieved AAO passages, with the quote verbatim. Hover for a preview; one click opens the passage, one more opens the decision PDF, the words highlighted. |
 | **An attorney signs before anything leaves** | Each objection is resolved or dismissed with a note, in an append-only log. The server refuses to export until a sign-off postdates the last change. |
 
 <div align="center">
@@ -56,6 +56,12 @@ Adjudicate turns that record into a reviewer that argues against your petition o
   <img src="docs/images/review-passage-light.png" alt="The passage drawer: the full AAO passage with the cited sentence highlighted" width="880">
 </picture>
 <br><sub>One click from a citation: the full AAO passage, with the quoted words highlighted.</sub>
+<br><br>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/review-viewer-dark.png">
+  <img src="docs/images/review-viewer-light.png" alt="The decision viewer: the AAO decision PDF opened at page 3 of 4 with the quoted sentence highlighted" width="880">
+</picture>
+<br><sub>One more: the decision itself, opened on the right page, with the sentence marked in the PDF.</sub>
 </div>
 
 ### The four failure modes it looks for
@@ -205,7 +211,7 @@ docs/            diagrams, explainers, screenshots, and the live site
 
 ## ✦ How it was built
 
-Nine phases, one branch and one pull request each, and each finished only when its measured gate passed. Every behavior started as a failing test. There are 512 Python tests, 194 TypeScript tests and a browser flow, and GitHub Actions runs the whole gate against a throwaway Postgres on every push and pull request. Independent review passes looked for silent failures, security issues and retrieval mistakes at every phase boundary. Every model call goes through a client with a hard dollar cap and a disk cache.
+Nine phases, one branch and one pull request each, and each finished only when its measured gate passed. Every behavior started as a failing test. There are 520 Python tests, 263 TypeScript tests, and browser tests that walk the review flow and check accessibility in light and dark, and GitHub Actions runs the whole gate against a throwaway Postgres on every push and pull request. Independent review passes looked for silent failures, security issues and retrieval mistakes at every phase boundary. Every model call goes through a client with a hard dollar cap and a disk cache.
 
 <details>
 <summary><b>What failed, and what I would change</b></summary>

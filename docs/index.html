@@ -5,36 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Adjudicate</title>
 <meta name="description" content="An adversarial pre-filing reviewer for EB-1A petitions: an objection on every claimed criterion, grounded in AAO decisions, with an attorney sign-off before anything leaves.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314161b'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23efe8da'%3EA%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Adjudicate: the reader who wants to say no, before you file">
+<meta property="og:description" content="An objection on every claimed EB-1A criterion, quoted from the AAO's own decisions, and nothing leaves until an attorney signs off.">
+<meta property="og:image" content="https://amityada.me/adjudicate/images/review-case-light.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121419" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231a1c21'/%3E%3Cpath d='M9 24.5 15.2 7.5h1.6L23 24.5' fill='none' stroke='%23f7f4ee' stroke-width='2.2' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M8.5 17.5h15' stroke='%23f7f4ee' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='23.5' cy='9' r='2.6' fill='%23b8432f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* The review app's own tokens (web/app/globals.css): ink-blue for what you can act on, red only for risk. */
 :root{
-  --paper:#f7f4ee;--card:#fffdf8;--ink:#1a1c21;--muted:#62666d;--line:#e2dbcd;
-  --red:#a8352a;--amber:#8f5d10;--green:#2f7a52;--highlight:#f4e1a0;--shadow:0 18px 50px rgba(26,28,33,.10);
+  --paper:#f7f4ee;--card:#fffdf8;--raised:#fff;--ink:#1a1c21;--muted:#62666d;--line:#e2dbcd;--line-strong:#cfc6b4;
+  --accent:#2b4a7e;--accent-soft:#e5ebf5;--red:#a8352a;--red-soft:#f7e4e0;--green:#24663f;--green-soft:#e2f0e7;
+  --highlight:#f4e1a0;--seal:#b8432f;
+  --shadow-1:0 1px 2px rgb(26 28 33/.06),0 1px 1px rgb(26 28 33/.04);--shadow-2:0 18px 50px rgb(26 28 33/.11),0 2px 6px rgb(26 28 33/.05);
+  --ease-out:cubic-bezier(.22,1,.36,1);
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#14161b;--card:#1a1d23;--ink:#efe8da;--muted:#9aa0a8;--line:#2d313a;
-    --red:#e0675b;--amber:#d9a441;--green:#6fbf8e;--highlight:#5c4b14;--shadow:0 18px 50px rgba(0,0,0,.45);
+    --paper:#121419;--card:#1a1d23;--raised:#20242b;--ink:#ece6d8;--muted:#9aa0a8;--line:#2b2f37;--line-strong:#3a3f49;
+    --accent:#93b2e6;--accent-soft:#1c2940;--red:#e8776b;--red-soft:#3a1f1c;--green:#79c79a;--green-soft:#1a2e23;
+    --highlight:#5c4b14;--seal:#e0675b;--shadow-1:0 1px 2px rgb(0 0 0/.4);--shadow-2:0 18px 50px rgb(0 0 0/.5);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#14161b;--card:#1a1d23;--ink:#efe8da;--muted:#9aa0a8;--line:#2d313a;
-  --red:#e0675b;--amber:#d9a441;--green:#6fbf8e;--highlight:#5c4b14;--shadow:0 18px 50px rgba(0,0,0,.45);
+  --paper:#121419;--card:#1a1d23;--raised:#20242b;--ink:#ece6d8;--muted:#9aa0a8;--line:#2b2f37;--line-strong:#3a3f49;
+  --accent:#93b2e6;--accent-soft:#1c2940;--red:#e8776b;--red-soft:#3a1f1c;--green:#79c79a;--green-soft:#1a2e23;
+  --highlight:#5c4b14;--seal:#e0675b;--shadow-1:0 1px 2px rgb(0 0 0/.4);--shadow-2:0 18px 50px rgb(0 0 0/.5);
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit}
-a:focus-visible,button:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:4px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+@media (max-width:480px){.wrap{padding:0 16px}}
 .mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
-.kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--red)}
+.kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
 h1,h2,h3{font-family:'EB Garamond',Georgia,serif;font-weight:600;letter-spacing:-.01em;margin:0}
 h2{font-size:clamp(30px,4vw,40px);line-height:1.1}
 h3{font-size:22px;line-height:1.2}
@@ -42,12 +55,13 @@ p{margin:0}
 .muted{color:var(--muted)}
 
 /* nav */
-nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;gap:24px;height:58px}
-nav .brand{font-family:'EB Garamond',serif;font-size:22px;font-weight:600;text-decoration:none;margin-right:auto}
-nav a.l{font-family:'IBM Plex Mono',monospace;font-size:13px;text-decoration:none;color:var(--muted)}
+nav .brand{display:inline-flex;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:22px;font-weight:600;text-decoration:none;margin-right:auto}
+nav a.l{white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:13px;text-decoration:none;color:var(--muted);transition:color .15s}
 nav a.l:hover{color:var(--ink)}
-@media (max-width:640px){nav a.hide-sm{display:none}}
+@media (max-width:640px){nav a.hide-sm{display:none}nav .wrap{gap:16px}}
+@media (max-width:440px){nav a.hide-xs{display:none}}
 
 /* hero */
 .hero{padding:72px 0 40px}
@@ -56,45 +70,63 @@ nav a.l:hover{color:var(--ink)}
 .lede{font-size:18px;max-width:62ch;color:var(--muted)}
 .lede b{color:var(--ink);font-weight:500}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-.btn{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:14px;padding:11px 18px;border-radius:8px;text-decoration:none;border:1px solid var(--ink)}
-.btn.primary{background:var(--ink);color:var(--paper)}
-.btn:hover{transform:translateY(-1px)}
-.video{margin-top:44px;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#14161b;aspect-ratio:16/9}
-.video video{display:block;width:100%;height:100%}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:14px;padding:11px 18px;border-radius:8px;text-decoration:none;border:1px solid var(--line-strong);background:var(--card);transition:transform .2s var(--ease-out),box-shadow .2s var(--ease-out),border-color .2s}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-1);border-color:var(--accent)}
+
+/* the live product loop, in a browser frame */
+.frame{margin-top:48px;border-radius:14px;overflow:hidden;border:1px solid var(--line-strong);box-shadow:var(--shadow-2);background:var(--card)}
+.frame .bar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--raised)}
+.frame .bar i{width:10px;height:10px;border-radius:50%;background:var(--line-strong)}
+.frame .bar .url{margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);padding:3px 14px;border-radius:6px;background:var(--paper);border:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
+.frame .stage{position:relative;aspect-ratio:1280/760;background:#f7f4ee}
+.frame video,.frame .stage img{display:block;width:100%;height:100%;object-fit:cover}
+.frame .stage img{position:absolute;inset:0}
+.frame .toggle{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;font:500 12px 'IBM Plex Mono',monospace;color:#f7f4ee;background:rgb(26 28 33/.72);border:0;border-radius:999px;padding:7px 12px;cursor:pointer;backdrop-filter:blur(6px)}
+.frame .toggle:hover{background:rgb(26 28 33/.88)}
+.caption{margin-top:12px;font-size:13px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 
 /* numbers */
 .nums{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:56px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .nums div{padding:22px 18px;border-left:1px solid var(--line)}
 .nums div:first-child{border-left:0;padding-left:0}
-.nums b{display:block;font-family:'EB Garamond',serif;font-size:40px;font-weight:600;line-height:1}
+.nums b{display:block;font-family:'EB Garamond',serif;font-size:40px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
 .nums span{display:block;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);line-height:1.4}
 @media (max-width:820px){.nums{grid-template-columns:repeat(2,1fr)}.nums div{border-left:0;padding-left:0;border-top:1px solid var(--line)}.nums div:nth-child(-n+2){border-top:0}}
 
-section{padding:84px 0 0}
-.head{display:flex;flex-direction:column;gap:12px;margin-bottom:30px;max-width:70ch}
+section{padding:96px 0 0}
+.head{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;max-width:70ch}
 
 /* steps */
-.steps{display:grid;gap:28px}
-.step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:36px;align-items:center}
-.step:nth-child(even) .shot{order:-1}
-.step .n{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red);letter-spacing:.18em}
+.steps{display:grid;gap:56px}
+.step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:center}
+.step:nth-child(even){grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.step:nth-child(even) .visual{order:-1}
+.step .n{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.18em}
 .step h3{font-size:28px;margin:8px 0 10px}
-.shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--card)}
+.shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-2);background:var(--card)}
 .shot img{display:block;width:100%;height:auto}
-.gate{padding:28px;font-family:'IBM Plex Sans',sans-serif}
+.stack{display:grid}
+.stack>.shot{grid-area:1/1;width:84%;align-self:start}
+.stack>.shot.front{justify-self:end;margin-top:22%;transition:transform .5s var(--ease-out)}
+.stack:hover>.shot.front{transform:translateY(-6px)}
+.gate{padding:28px}
 .gate .row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
 .gate .row:last-child{border-bottom:0}
 .gate code{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted)}
-.gate .no{color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:13px}
-.gate .ok{color:var(--green);font-family:'IBM Plex Mono',monospace;font-size:13px}
-@media (max-width:820px){.step{grid-template-columns:1fr;gap:18px}.step:nth-child(even) .shot{order:0}}
+.gate .no,.gate .ok{font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:2px 8px;border-radius:999px;white-space:nowrap;align-self:center}
+.gate .no{color:var(--red);background:var(--red-soft)}
+.gate .ok{color:var(--green);background:var(--green-soft)}
+@media (max-width:820px){.step,.step:nth-child(even){grid-template-columns:1fr;gap:18px}.step:nth-child(even) .visual{order:0}}
 
 /* results */
 .tbl{width:100%;border-collapse:collapse;font-size:15px}
 .tbl th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;font-weight:500;padding:10px 12px;border-bottom:1px solid var(--line)}
 .tbl th:first-child,.tbl td:first-child{text-align:left;padding-left:0}
 .tbl td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.tbl tr:last-child td{border-bottom:0}
 .tbl tr.us td{font-weight:500}
+.tbl tr.us td:first-child{box-shadow:inset 3px 0 0 var(--accent);padding-left:12px}
 .tbl td small{display:block;color:var(--muted);font-size:12px;font-weight:400}
 .tblwrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 22px}
 .read{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
@@ -104,15 +136,16 @@ section{padding:84px 0 0}
 
 /* diagrams */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
-.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;text-decoration:none;transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),border-color .25s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-2);border-color:var(--line-strong)}
 .card .thumb{aspect-ratio:16/9;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.card .thumb img{width:100%;height:100%;object-fit:contain;padding:10px}
+.card .thumb img{width:100%;height:100%;object-fit:contain;padding:10px;transition:transform .4s var(--ease-out)}
+.card:hover .thumb img{transform:scale(1.04)}
 .card .body{padding:16px 18px 18px}
 .card .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .card h3{font-size:20px;margin:6px 0 6px}
 .card p{font-size:14px;color:var(--muted)}
-.card .go{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red)}
+.card .go{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent)}
 @media (max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:600px){.grid{grid-template-columns:1fr}}
 
@@ -123,78 +156,99 @@ section{padding:84px 0 0}
 
 footer{margin-top:96px;padding:28px 0 48px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+/* reveal on scroll: only once the script has run, and never under reduced motion */
+.motion .rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);transition-delay:var(--d,0s)}
+.motion .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important}}
 </style>
 </head>
 <body>
 
 <nav><div class="wrap">
-  <a class="brand" href="#top">Adjudicate</a>
+  <a class="brand" href="#top"><svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--ink)"/><path d="M9 24.5 15.2 7.5h1.6L23 24.5" fill="none" stroke="var(--paper)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M8.5 17.5h15" stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round"/><circle cx="23.5" cy="9" r="2.6" fill="var(--seal)"/></svg>Adjudicate</a>
   <a class="l" href="#how">How it works</a>
-  <a class="l" href="#results">Results</a>
+  <a class="l hide-xs" href="#results">Results</a>
   <a class="l hide-sm" href="#diagrams">Diagrams</a>
   <a class="l" href="https://github.com/Amith71965/adjudicate">GitHub</a>
 </div></nav>
 
 <header class="hero" id="top"><div class="wrap">
-  <div class="kicker">EB-1A pre-filing review · prototype</div>
-  <h1>Meet the reader who wants to say no, <span>before you file.</span></h1>
-  <p class="lede">Adjudicate reads an extraordinary-ability petition the way a skeptical USCIS officer would. It writes <b>the strongest objection on every criterion the petition claims</b>, backs each one with the Administrative Appeals Office's own reasoning, quoted word for word, and nothing leaves until <b>an attorney resolves every objection and signs off</b>.</p>
-  <div class="cta">
-    <a class="btn primary" href="#tour">▶ Watch the 24-second tour</a>
+  <div class="kicker rv">EB-1A pre-filing review · prototype</div>
+  <h1 class="rv" style="--d:.06s">Meet the reader who wants to say no, <span>before you file.</span></h1>
+  <p class="lede rv" style="--d:.12s">Adjudicate reads an extraordinary-ability petition the way a skeptical USCIS officer would. It writes <b>the strongest objection on every criterion the petition claims</b>, backs each one with the Administrative Appeals Office's own reasoning, quoted word for word, and nothing leaves until <b>an attorney resolves every objection and signs off</b>.</p>
+  <div class="cta rv" style="--d:.18s">
+    <a class="btn primary" href="#how">See how it works</a>
     <a class="btn" href="https://github.com/Amith71965/adjudicate#readme">Read the README</a>
     <a class="btn" href="#diagrams">Explore the diagrams</a>
   </div>
-  <div class="video" id="tour">
-    <video controls preload="none" playsinline poster="media/adjudicate-tour.jpg" aria-label="A 24-second tour of Adjudicate">
-      <source src="media/adjudicate-tour.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="nums">
-    <div><b>145</b><span>real AAO decisions it had never seen</span></div>
-    <div><b>0.99</b><span>of rejected criteria caught</span></div>
+  <figure class="rv" style="--d:.24s;margin:0">
+    <div class="frame">
+      <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="url">localhost:3000 · review queue → P01 → AAO decision</span></div>
+      <div class="stage">
+        <video id="loop" muted loop playsinline preload="none" poster="media/review-loop.webp" width="1280" height="760" aria-label="The review app in use: the case queue, a case's objections, a citation preview, the passage drawer, and the AAO decision PDF with the quoted sentence highlighted">
+          <source src="media/review-loop.mp4" type="video/mp4">
+        </video>
+        <button class="toggle" id="loop-toggle" type="button" aria-controls="loop" hidden>Pause</button>
+      </div>
+    </div>
+    <figcaption class="caption">A real session, unedited and at real speed: queue → case → hover a citation → the passage → the decision PDF, quote highlighted. Synthetic petition.</figcaption>
+  </figure>
+  <div class="nums rv">
+    <div><b data-to="145">145</b><span>real AAO decisions it had never seen</span></div>
+    <div><b data-to="0.99" data-dp="2">0.99</b><span>of rejected criteria caught</span></div>
     <div><b>0</b><span>fabricated citations</span></div>
-    <div><b>706</b><span>tests, plus a browser flow</span></div>
-    <div><b>~$4</b><span>of model calls, all cached</span></div>
+    <div><b data-to="783">783</b><span>tests, plus browser and accessibility checks</span></div>
+    <div><b data-to="4" data-pre="~$">~$4</b><span>of model calls, all cached</span></div>
   </div>
 </div></header>
 
 <section id="how"><div class="wrap">
-  <div class="head"><div class="kicker">How it works</div><h2>Three things it will not skip</h2></div>
+  <div class="head rv"><div class="kicker">How it works</div><h2>Three things it will not skip</h2></div>
   <div class="steps">
     <div class="step">
-      <div><div class="n">01</div><h3>An objection on every claimed criterion</h3>
-        <p class="muted">For each criterion, and each half of the two-part ones, it argues the request for evidence an officer would write: invitations with no proof the review happened, a "leading role" letter that never describes the role, praise with no mechanism behind it.</p></div>
-      <div class="shot"><picture>
-        <source media="(prefers-color-scheme: dark)" srcset="images/review-case-dark.png">
-        <img src="images/review-case-light.png" alt="The case review page: an AI objection on the membership criterion with its cited AAO passages, the sign-off panel and per-criterion risk" loading="lazy">
-      </picture></div>
+      <div class="rv"><div class="n">01</div><h3>An objection on every claimed criterion</h3>
+        <p class="muted">For each criterion, and each half of the two-part ones, it argues the request for evidence an officer would write: invitations with no proof the review happened, a "leading role" letter that never describes the role, praise with no mechanism behind it. The attorney works through them one at a time, with a progress bar, filters and keyboard shortcuts.</p></div>
+      <div class="visual rv" style="--d:.1s"><div class="shot"><picture>
+        <source media="(prefers-color-scheme: dark)" srcset="images/review-case-dark.webp" type="image/webp">
+        <source srcset="images/review-case-light.webp" type="image/webp">
+        <img src="images/review-case-light.png" width="2560" height="1720" alt="The case review page: a progress bar and filters over the objections, one membership objection resolved with the attorney's note, and the sign-off panel still locked" loading="lazy" decoding="async">
+      </picture></div></div>
     </div>
     <div class="step">
-      <div><div class="n">02</div><h3>Every claim shows its source, in one click</h3>
-        <p class="muted">Citations may only point at passages that were actually retrieved, and the quote must appear verbatim. Click one and the full AAO passage opens with the quoted words highlighted. A prong it cannot ground is shown as "not reviewed", never quietly passed.</p></div>
-      <div class="shot"><picture>
-        <source media="(prefers-color-scheme: dark)" srcset="images/review-passage-dark.png">
-        <img src="images/review-passage-light.png" alt="The passage drawer: the full AAO decision passage with the cited sentence highlighted" loading="lazy">
-      </picture></div>
+      <div class="rv"><div class="n">02</div><h3>Every claim shows its source, in one click</h3>
+        <p class="muted">Citations may only point at passages that were actually retrieved, and the quote must appear verbatim. Hover one for a preview; click it and the full AAO passage slides in with the quoted words marked. One more click opens the decision PDF itself, on the right page, with the sentence highlighted. A prong it cannot ground is shown as "not reviewed", never quietly passed.</p></div>
+      <div class="visual stack rv" style="--d:.1s">
+        <div class="shot"><picture>
+          <source media="(prefers-color-scheme: dark)" srcset="images/review-passage-dark.webp" type="image/webp">
+          <source srcset="images/review-passage-light.webp" type="image/webp">
+          <img src="images/review-passage-light.png" width="2560" height="1720" alt="The passage drawer: the full AAO decision passage with the cited sentence highlighted, and buttons to open the decision or copy the quote" loading="lazy" decoding="async">
+        </picture></div>
+        <div class="shot front"><picture>
+          <source media="(prefers-color-scheme: dark)" srcset="images/review-viewer-dark.webp" type="image/webp">
+          <source srcset="images/review-viewer-light.webp" type="image/webp">
+          <img src="images/review-viewer-light.png" width="2560" height="1720" alt="The decision viewer: the AAO decision PDF opened at page 3 of 4 with the quoted sentence highlighted" loading="lazy" decoding="async">
+        </picture></div>
+      </div>
     </div>
     <div class="step">
-      <div><div class="n">03</div><h3>An attorney signs before anything leaves</h3>
+      <div class="rv"><div class="n">03</div><h3>An attorney signs before anything leaves</h3>
         <p class="muted">Each objection is resolved or dismissed with a note, in an append-only log the database refuses to edit. The memo exports only after a sign-off that postdates the last change, and the server enforces it, not just the button.</p></div>
-      <div class="shot gate" aria-label="The export gate, step by step">
+      <div class="visual rv" style="--d:.1s"><div class="shot gate" aria-label="The export gate, step by step">
         <div class="row"><span>9 objections open</span><span class="no">export → 409</span></div>
         <div class="row"><span>All resolved or dismissed, with notes</span><span class="no">export → 409</span></div>
         <div class="row"><span>Signed off by the attorney</span><span class="ok">export → 200 · memo</span></div>
         <div class="row"><span>One objection reopened</span><span class="no">sign-off void · 409</span></div>
         <div class="row"><code>a second tab with an old view</code><span class="no">write refused</span></div>
-      </div>
+      </div></div>
     </div>
   </div>
 </div></section>
 
 <section id="results"><div class="wrap">
-  <div class="head"><div class="kicker">Results</div><h2>Graded on the real thing, beside its baselines</h2>
+  <div class="head rv"><div class="kicker">Results</div><h2>Graded on the real thing, beside its baselines</h2>
     <p class="muted">Every EB-1A merits decision the AAO issued from June to September 2026, reduced to facts only, with retrieval cut off before 1 June. 5,864 cited passages were checked against the cutoff: zero leaks.</p></div>
-  <div class="tblwrap"><table class="tbl">
+  <div class="tblwrap rv"><table class="tbl">
     <thead><tr><th>Criteria the AAO decided</th><th>F1</th><th>Recall</th><th>Precision</th><th>AUROC</th><th>F1, fitted threshold</th></tr></thead>
     <tbody>
       <tr class="us"><td>Adjudicate<small>risk ≥ 0.5; threshold fitted on June, scored Jul–Sep</small></td><td>0.80</td><td>0.99</td><td>0.67</td><td>0.66</td><td>0.79</td></tr>
@@ -202,34 +256,34 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <tr><td>Copy the Director's finding<small>an oracle no pre-filing tool has</small></td><td>0.83</td><td>0.78</td><td>0.90</td><td>n/a</td><td>0.84</td></tr>
     </tbody></table></div>
   <div class="read">
-    <div><b>A strong objector</b>It misses 3 of the 348 criteria the AAO rejected.</div>
-    <div><b>Not yet a sharp judge</b>At a fitted threshold it ties "always say not met". Judging is its weakest criterion.</div>
-    <div><b>So the baseline ships with the score</b>And <span class="mono">make verify</span> fails if a later change drops it.</div>
+    <div class="rv"><b>A strong objector</b>It misses 3 of the 348 criteria the AAO rejected.</div>
+    <div class="rv" style="--d:.08s"><b>Not yet a sharp judge</b>At a fitted threshold it ties "always say not met". Judging is its weakest criterion.</div>
+    <div class="rv" style="--d:.16s"><b>So the baseline ships with the score</b>And <span class="mono">make verify</span> fails if a later change drops it.</div>
   </div>
 </div></section>
 
 <section id="diagrams"><div class="wrap">
-  <div class="head"><div class="kicker">Explore the system</div><h2>Interactive diagrams</h2>
+  <div class="head rv"><div class="kicker">Explore the system</div><h2>Interactive diagrams</h2>
     <p class="muted">Each one opens full screen: pan, zoom, switch light and dark, and trace a relationship by hovering it. Start with the architecture, then follow whichever part you are curious about.</p></div>
   <div class="grid">
-    <a class="card" href="interactive/architecture-as-built.html"><div class="thumb"><img src="diagrams/08-architecture-final.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Architecture</div><h3>The system as built</h3><p>Python owns the data, TypeScript the agent and UI; one Postgres.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/two-stage-test.html"><div class="thumb"><img src="blog/blog-01-two-stage-test.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">The law</div><h3>The two-stage test</h3><p>Three of ten criteria, then a holistic final merits look.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/failure-modes.html"><div class="thumb"><img src="blog/blog-02-four-failure-modes.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">What it looks for</div><h3>Four failure modes</h3><p>Wrong criterion, half a criterion, assertion without mechanism, waiver.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/harvest-dataflow.html"><div class="thumb"><img src="diagrams/01-dataflow-harvest.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Data</div><h3>Harvesting decisions</h3><p>A polite crawler that honors the 10-second crawl delay.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/parse-workflow.html"><div class="thumb"><img src="diagrams/02-workflow-parse.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Data</div><h3>From PDF to verdicts</h3><p>OCR repair, structure, and per-criterion verdicts with quotes.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/corpus-erd.html"><div class="thumb"><img src="diagrams/02-erd-corpus.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Data</div><h3>The corpus schema</h3><p>Every table, column and key behind the search.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/retrieval-sequence.html"><div class="thumb"><img src="diagrams/03-sequence-retrieval.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Retrieval</div><h3>A search, step by step</h3><p>Vector and full-text search, fused with reciprocal rank fusion.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/examiner-sequence.html"><div class="thumb"><img src="diagrams/05-sequence-examiner.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Examiner</div><h3>Arguing, then checking itself</h3><p>Every citation validated after generation; one retry, then dropped.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/letters-merits-workflow.html"><div class="thumb"><img src="diagrams/06-workflow-letters-merits.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Examiner</div><h3>Letters and final merits</h3><p>Boilerplate, independence, and the Kazarian step two.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/real-eval-workflow.html"><div class="thumb"><img src="diagrams/07-workflow-real-eval.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Evaluation</div><h3>The held-out evaluation</h3><p>Facts-only extraction, leak guards, metrics and baselines.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/temporal-split.html"><div class="thumb"><img src="blog/blog-04-temporal-split.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Evaluation</div><h3>Why the test was unseen</h3><p>A calendar split, on a timeline.</p><div class="go">Open interactive →</div></div></a>
-    <a class="card" href="interactive/architecture-plan.html"><div class="thumb"><img src="diagrams/00-architecture-system.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">History</div><h3>The original plan</h3><p>Phase 0's design, to compare with what was built.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" href="interactive/architecture-as-built.html"><div class="thumb"><img src="diagrams/08-architecture-final.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Architecture</div><h3>The system as built</h3><p>Python owns the data, TypeScript the agent and UI; one Postgres.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" style="--d:.06s" href="interactive/two-stage-test.html"><div class="thumb"><img src="blog/blog-01-two-stage-test.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">The law</div><h3>The two-stage test</h3><p>Three of ten criteria, then a holistic final merits look.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" style="--d:.12s" href="interactive/failure-modes.html"><div class="thumb"><img src="blog/blog-02-four-failure-modes.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">What it looks for</div><h3>Four failure modes</h3><p>Wrong criterion, half a criterion, assertion without mechanism, waiver.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" href="interactive/harvest-dataflow.html"><div class="thumb"><img src="diagrams/01-dataflow-harvest.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Data</div><h3>Harvesting decisions</h3><p>A polite crawler that honors the 10-second crawl delay.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" style="--d:.06s" href="interactive/parse-workflow.html"><div class="thumb"><img src="diagrams/02-workflow-parse.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Data</div><h3>From PDF to verdicts</h3><p>OCR repair, structure, and per-criterion verdicts with quotes.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" style="--d:.12s" href="interactive/corpus-erd.html"><div class="thumb"><img src="diagrams/02-erd-corpus.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Data</div><h3>The corpus schema</h3><p>Every table, column and key behind the search.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" href="interactive/retrieval-sequence.html"><div class="thumb"><img src="diagrams/03-sequence-retrieval.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Retrieval</div><h3>A search, step by step</h3><p>Vector and full-text search, fused with reciprocal rank fusion.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" style="--d:.06s" href="interactive/examiner-sequence.html"><div class="thumb"><img src="diagrams/05-sequence-examiner.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Examiner</div><h3>Arguing, then checking itself</h3><p>Every citation validated after generation; one retry, then dropped.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" style="--d:.12s" href="interactive/letters-merits-workflow.html"><div class="thumb"><img src="diagrams/06-workflow-letters-merits.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Examiner</div><h3>Letters and final merits</h3><p>Boilerplate, independence, and the Kazarian step two.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" href="interactive/real-eval-workflow.html"><div class="thumb"><img src="diagrams/07-workflow-real-eval.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Evaluation</div><h3>The held-out evaluation</h3><p>Facts-only extraction, leak guards, metrics and baselines.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" style="--d:.06s" href="interactive/temporal-split.html"><div class="thumb"><img src="blog/blog-04-temporal-split.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">Evaluation</div><h3>Why the test was unseen</h3><p>A calendar split, on a timeline.</p><div class="go">Open interactive →</div></div></a>
+    <a class="card rv" style="--d:.12s" href="interactive/architecture-plan.html"><div class="thumb"><img src="diagrams/00-architecture-system.svg" alt="" loading="lazy"></div><div class="body"><div class="tag">History</div><h3>The original plan</h3><p>Phase 0's design, to compare with what was built.</p><div class="go">Open interactive →</div></div></a>
   </div>
 </div></section>
 
 <section id="caveats"><div class="wrap">
-  <div class="head"><div class="kicker">Read before you trust it</div><h2>What the numbers do not tell you</h2></div>
-  <div class="cav">
+  <div class="head rv"><div class="kicker">Read before you trust it</div><h2>What the numbers do not tell you</h2></div>
+  <div class="cav rv">
     <p><b>Survivorship bias.</b> AAO decisions exist only for denied, appealed petitions, so "not met" is usually right.</p>
     <p><b>The synthetic gates are easy.</b> Phases 4 to 6 ran on generated petitions with planted flaws; they prove the machinery, not generalization.</p>
     <p><b>Labels are not an attorney's.</b> They were checked against a hand-labelled gold set and a blind re-label, not by immigration counsel.</p>
@@ -242,5 +296,46 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <span><a href="https://github.com/Amith71965/adjudicate">Source on GitHub</a></span>
 </div></footer>
 
+<script>
+(() => {
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const seen = (els, fn, opts) => {
+    if (!("IntersectionObserver" in window)) { els.forEach(fn); return; }
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); fn(e.target); } }), opts);
+    els.forEach((el) => io.observe(el));
+  };
+
+  // Scroll reveals and count-ups: the page reads the same without them.
+  if (!still) {
+    document.documentElement.classList.add("motion");
+    seen(document.querySelectorAll(".rv"), (el) => el.classList.add("in"), { rootMargin: "0px 0px -8% 0px" });
+    const nums = document.querySelectorAll("[data-to]");
+    nums.forEach((el) => { el.textContent = (el.dataset.pre || "") + (0).toFixed(+(el.dataset.dp || 0)); });
+    seen(nums, (el) => {
+      const to = +el.dataset.to, dp = +(el.dataset.dp || 0), pre = el.dataset.pre || "", t0 = performance.now(), ms = 1300;
+      const tick = (t) => {
+        const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 4);
+        el.textContent = pre + (to * e).toFixed(dp);
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.6 });
+  }
+
+  // The product loop plays only while on screen, never under reduced motion, and can be paused.
+  const v = document.getElementById("loop"), b = document.getElementById("loop-toggle");
+  if (!v || !b) return;
+  let paused = still;
+  b.hidden = false;
+  const label = () => { b.textContent = paused ? "▶ Play" : "❚❚ Pause"; b.setAttribute("aria-label", paused ? "Play the product loop" : "Pause the product loop"); };
+  label();
+  let visible = false;
+  const sync = () => { if (visible && !paused) v.play().catch(() => {}); else v.pause(); };
+  b.addEventListener("click", () => { paused = !paused; label(); sync(); });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }, { threshold: 0.25 }).observe(v);
+  } else { visible = true; sync(); }
+})();
+</script>
 </body>
 </html>
