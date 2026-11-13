@@ -1,5 +1,10 @@
 <div align="center">
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/logo-dark.svg">
+  <img src="docs/images/logo-light.svg" alt="Adjudicate logo: a serif A whose crossbar is a balance beam, with a red seal" width="96" height="96">
+</picture>
+
 # Adjudicate
 
 **Meet the reader who wants to say no, before you file.**
@@ -9,7 +14,7 @@ Every objection is grounded in AAO decisions, and nothing leaves without an atto
 
 [**Live site**](https://amith71965.github.io/adjudicate/) &nbsp;·&nbsp;
 [**Interactive diagrams**](https://amith71965.github.io/adjudicate/#diagrams) &nbsp;·&nbsp;
-[**24-second tour**](https://amith71965.github.io/adjudicate/#tour) &nbsp;·&nbsp;
+[**See it in action**](https://amith71965.github.io/adjudicate/#top) &nbsp;·&nbsp;
 [**Results**](#-results)
 
 ![Phases](https://img.shields.io/badge/phases-9%2F9%20gated-2f7a52?style=flat-square)
